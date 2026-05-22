@@ -1,184 +1,109 @@
-# 02 - Modelado de Datos
+# 02 - Modelado de datos
 
-## Diagrama Entidad-Relación (DER)
+## 1. Introduccion
 
-```
-usuarios ──┬─→ roles
-           │
-           ├─→ noticias
-           │
-           ├─→ preguntas_frecuentes
-           │
-           ├─→ materiales_estudio
-           │
-           └─→ historial_actividad
+Este documento describe el modelo de datos del sistema de Educacion Vial IMSJ.
+Define las entidades principales, sus atributos y las relaciones entre ellas.
 
-noticias ──→ noticias_multimedia
-         ──→ enlaces_utiles
+## 2. Entidades principales
 
-franjas_disponibilidad ──→ tipos_tramite
-                      ──→ agendas
+### 2.1 Usuario
 
-agendas ──→ tipos_tramite
-         ──→ franjas_disponibilidad
-```
+Representa al personal administrativo con acceso al panel del IMSJ.
 
-## Tablas y Campos
+| Atributo        | Tipo          | Descripcion                                |
+|-----------------|---------------|--------------------------------------------|
+| id              | entero        | Identificador unico                        |
+| nombre          | texto         | Nombre completo                            |
+| email           | texto         | Direccion de correo, unica                 |
+| password_hash   | texto         | Hash de la contrasena                      |
+| rol             | enumerado     | `admin` o `superadmin`                     |
+| activo          | booleano      | Indica si el usuario puede iniciar sesion  |
+| creado_en       | timestamp     | Fecha de alta                              |
 
-### usuarios
-```
-id (INT, PK)
-nombre (VARCHAR 100)
-email (VARCHAR 100, UNIQUE)
-password (VARCHAR 255, HASHED)
-rol_id (INT, FK)
-estado (ENUM: 'activo', 'inactivo')
-fecha_creacion (TIMESTAMP)
-fecha_actualizacion (TIMESTAMP)
-```
+### 2.2 Novedad
 
-### roles
-```
-id (INT, PK)
-nombre (VARCHAR 50)
-descripcion (TEXT)
-permisos (JSON)
-```
+Publicaciones difundidas en el sitio publico.
 
-### noticias
-```
-id (INT, PK)
-titulo (VARCHAR 255)
-cuerpo (LONGTEXT)
-imagen_portada (VARCHAR 255)
-fecha_inicio_vigencia (DATE)
-fecha_fin_vigencia (DATE)
-estado (ENUM: 'publicada', 'no_publicada', 'archivada')
-usuario_id (INT, FK)
-fecha_creacion (TIMESTAMP)
-fecha_actualizacion (TIMESTAMP)
-```
+| Atributo        | Tipo          | Descripcion                                |
+|-----------------|---------------|--------------------------------------------|
+| id              | entero        | Identificador unico                        |
+| titulo          | texto         | Titulo de la novedad                       |
+| cuerpo          | texto largo   | Contenido en formato markdown              |
+| imagen          | texto         | Ruta a la imagen asociada                  |
+| publicado       | booleano      | Indica si esta visible al publico          |
+| autor_id        | entero        | Referencia a `Usuario`                     |
+| publicado_en    | timestamp     | Fecha de publicacion                       |
 
-### noticias_multimedia
-```
-id (INT, PK)
-noticia_id (INT, FK)
-url_media (VARCHAR 255)
-tipo_media (ENUM: 'imagen', 'video')
-orden (INT)
-fecha_subida (TIMESTAMP)
-```
+### 2.3 Cronograma
 
-### enlaces_utiles
-```
-id (INT, PK)
-noticias_id (INT, FK)
-url (VARCHAR 255)
-descripcion (VARCHAR 255)
-tipo (ENUM: 'video', 'documento', 'otro')
-```
+Eventos y turnos disponibles para la ciudadania.
 
-### franjas_disponibilidad
-```
-id (INT, PK)
-tipo_tramite_id (INT, FK)
-fecha (DATE)
-hora_inicio (TIME)
-hora_fin (TIME)
-cupos (INT)
-cupos_disponibles (INT)
-modalidad (ENUM: 'normal', 'urgente', 'manejo')
-usuario_id (INT, FK)
-fecha_creacion (TIMESTAMP)
-```
+| Atributo        | Tipo          | Descripcion                                |
+|-----------------|---------------|--------------------------------------------|
+| id              | entero        | Identificador unico                        |
+| titulo          | texto         | Nombre del evento o turno                  |
+| descripcion     | texto         | Detalle del evento                         |
+| fecha_inicio    | timestamp     | Fecha y hora de inicio                     |
+| fecha_fin       | timestamp     | Fecha y hora de finalizacion               |
+| cupo            | entero        | Cantidad de cupos disponibles              |
+| ubicacion       | texto         | Lugar fisico o modalidad                   |
 
-### tipos_tramite
-```
-id (INT, PK)
-nombre (VARCHAR 100)
-descripcion (TEXT)
-costo_normal (DECIMAL 10,2)
-costo_urgente (DECIMAL 10,2)
-```
+### 2.4 Material
 
-### agendas
-```
-id (INT, PK)
-ciudadano_nombre (VARCHAR 100)
-ciudadano_documento (VARCHAR 20)
-ciudadano_email (VARCHAR 100)
-ciudadano_telefono (VARCHAR 20)
-tipo_tramite_id (INT, FK)
-franja_id (INT, FK)
-modalidad (ENUM: 'normal', 'urgente')
-estado (ENUM: 'pendiente', 'confirmada', 'cancelada', 'completada')
-costo_especial (DECIMAL 10,2, NULLABLE)
-fecha_creacion (TIMESTAMP)
-fecha_confirmacion (TIMESTAMP, NULLABLE)
-fecha_cancelacion (TIMESTAMP, NULLABLE)
-```
+Recursos descargables de estudio.
 
-### materiales_estudio
-```
-id (INT, PK)
-titulo (VARCHAR 255)
-descripcion (TEXT)
-archivo (VARCHAR 255, NULLABLE)
-enlace (VARCHAR 255, NULLABLE)
-estado (ENUM: 'publicado', 'no_publicado')
-usuario_id (INT, FK)
-fecha_creacion (TIMESTAMP)
-fecha_actualizacion (TIMESTAMP)
-```
+| Atributo        | Tipo          | Descripcion                                |
+|-----------------|---------------|--------------------------------------------|
+| id              | entero        | Identificador unico                        |
+| titulo          | texto         | Nombre del material                        |
+| descripcion     | texto         | Descripcion del contenido                  |
+| archivo         | texto         | Ruta al archivo almacenado                 |
+| tipo            | enumerado     | `pdf`, `video`, `audio`, `enlace`          |
+| categoria       | texto         | Agrupacion tematica                        |
+| subido_por      | entero        | Referencia a `Usuario`                     |
+| subido_en       | timestamp     | Fecha de carga                             |
 
-### preguntas_frecuentes
-```
-id (INT, PK)
-pregunta (VARCHAR 255)
-respuesta (LONGTEXT)
-estado (ENUM: 'visible', 'no_visible')
-usuario_id (INT, FK)
-fecha_creacion (TIMESTAMP)
-fecha_actualizacion (TIMESTAMP)
-```
+### 2.5 PreguntaFrecuente
 
-### enlaces_preguntas
-```
-id (INT, PK)
-pregunta_id (INT, FK)
-url (VARCHAR 255)
-descripcion (VARCHAR 255)
-tipo (ENUM: 'video', 'documento', 'otro')
-```
+Listado de preguntas habituales con sus respuestas.
 
-### historial_actividad
-```
-id (INT, PK)
-usuario_id (INT, FK)
-accion (VARCHAR 255)
-tabla_afectada (VARCHAR 100)
-id_registro (INT)
-cambios (JSON)
-fecha (TIMESTAMP)
-```
+| Atributo        | Tipo          | Descripcion                                |
+|-----------------|---------------|--------------------------------------------|
+| id              | entero        | Identificador unico                        |
+| pregunta        | texto         | Texto de la pregunta                       |
+| respuesta       | texto         | Texto de la respuesta                      |
+| orden           | entero        | Orden de aparicion                         |
+| activa          | booleano      | Indica si se muestra al publico            |
 
-## Índices
+### 2.6 Auditoria
 
-```sql
--- Búsqueda rápida
-CREATE INDEX idx_noticias_estado ON noticias(estado);
-CREATE INDEX idx_noticias_vigencia ON noticias(fecha_inicio_vigencia, fecha_fin_vigencia);
-CREATE INDEX idx_agendas_estado ON agendas(estado);
-CREATE INDEX idx_agendas_franja ON agendas(franja_id);
-CREATE INDEX idx_franjas_fecha ON franjas_disponibilidad(fecha);
-CREATE INDEX idx_usuarios_email ON usuarios(email);
-```
+Registro de operaciones realizadas por los administradores.
 
-## Relaciones y Constraints
+| Atributo        | Tipo          | Descripcion                                |
+|-----------------|---------------|--------------------------------------------|
+| id              | entero        | Identificador unico                        |
+| usuario_id      | entero        | Referencia a `Usuario`                     |
+| accion          | texto         | Operacion realizada                        |
+| entidad         | texto         | Entidad afectada                           |
+| entidad_id      | entero        | Identificador de la entidad afectada       |
+| detalle         | texto         | Informacion adicional                      |
+| fecha           | timestamp     | Momento de la operacion                    |
 
-- Cada noticia puede tener múltiples imágenes
-- Cada franja puede tener múltiples agendas
-- Cada agenda está vinculada a una franja
-- No se permite eliminar franjas con agendas activas
-- Solo usuarios con rol admin pueden publicar/despublicar
-- Historial de cambios es inmutable
+## 3. Relaciones
+
+- Un `Usuario` puede publicar muchas `Novedad`.
+- Un `Usuario` puede cargar muchos `Material`.
+- Una `Auditoria` referencia un `Usuario` y opcionalmente una entidad
+  identificada por `entidad` y `entidad_id`.
+- `Cronograma` y `PreguntaFrecuente` no requieren relacion directa con
+  `Usuario` mas alla de la auditoria correspondiente.
+
+## 4. Consideraciones
+
+- Todas las tablas incluyen claves primarias autoincrementales.
+- Los campos de texto libre se almacenan con codificacion UTF-8.
+- Las marcas temporales utilizan zona horaria UTC; el frontend realiza la
+  conversion a hora local.
+- Las eliminaciones logicas se priorizan sobre las fisicas cuando exista
+  riesgo de perdida de informacion historica.

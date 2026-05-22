@@ -1,382 +1,165 @@
-# 03 - API REST Documentation
+# 03 - API
 
-## Base URL
-```
-http://localhost:8000/api
-```
+## 1. Introduccion
 
-## Autenticación
+Este documento describe el contrato de la API REST expuesta por el backend.
+Todos los endpoints intercambian datos en formato JSON y utilizan los codigos
+de estado HTTP estandar.
 
-### Login
-```
-POST /auth/login
-Content-Type: application/json
+## 2. Convenciones generales
 
+- URL base: `/api/v1`.
+- Autenticacion: cabecera `Authorization: Bearer <token>` para los endpoints
+  privados.
+- Formato de fechas: ISO 8601 en UTC (`2026-05-22T14:30:00Z`).
+- Errores: respuesta con el siguiente formato:
+
+```json
 {
-  "email": "usuario@imsj.gub.uy",
-  "password": "contraseña"
+  "error": {
+    "codigo": "VALIDACION",
+    "mensaje": "Descripcion legible del error",
+    "detalles": []
+  }
 }
+```
 
-Response 200:
+## 3. Autenticacion
+
+### POST /auth/login
+
+Inicia sesion y devuelve un token de acceso.
+
+Cuerpo:
+
+```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIs...",
+  "email": "usuario@imsj.gob",
+  "password": "secreto"
+}
+```
+
+Respuesta:
+
+```json
+{
+  "token": "<jwt>",
+  "expira_en": "2026-05-22T18:30:00Z",
   "usuario": {
     "id": 1,
-    "nombre": "Usuario",
-    "email": "usuario@imsj.gub.uy",
+    "nombre": "Juan Perez",
     "rol": "admin"
   }
 }
 ```
 
-### Logout
-```
-POST /auth/logout
-Authorization: Bearer {token}
-
-Response 200:
-{
-  "mensaje": "Sesión cerrada exitosamente"
-}
-```
-
-### Me (Usuario Actual)
-```
-GET /auth/me
-Authorization: Bearer {token}
-
-Response 200:
-{
-  "id": 1,
-  "nombre": "Usuario",
-  "email": "usuario@imsj.gub.uy",
-  "rol": "admin"
-}
-```
-
-## Noticias
-
-### Crear Noticia
-```
-POST /noticias
-Authorization: Bearer {token}
-Content-Type: multipart/form-data
-
-titulo: "Título de la noticia"
-cuerpo: "Contenido..."
-imagen_portada: [file]
-fecha_inicio_vigencia: "2026-05-22"
-fecha_fin_vigencia: "2026-06-22"
-
-Response 201:
-{
-  "id": 1,
-  "titulo": "...",
-  "estado": "no_publicada"
-}
-```
-
-### Listar Noticias Publicadas
-```
-GET /noticias/publicadas
-Response 200: [{...}, {...}]
-```
-
-### Listar Todas las Noticias (Admin)
-```
-GET /noticias
-Authorization: Bearer {token}
-Response 200: [{...}, {...}]
-```
-
-### Obtener Noticia
-```
-GET /noticias/{id}
-Response 200: {...}
-```
-
-### Actualizar Noticia
-```
-PATCH /noticias/{id}
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-  "titulo": "Nuevo título",
-  "cuerpo": "Nuevo contenido"
-}
-
-Response 200: {...}
-```
-
-### Publicar Noticia
-```
-PATCH /noticias/{id}/publicar
-Authorization: Bearer {token}
-Response 200: {"estado": "publicada"}
-```
-
-### Despublicar Noticia
-```
-PATCH /noticias/{id}/despublicar
-Authorization: Bearer {token}
-Response 200: {"estado": "no_publicada"}
-```
-
-### Eliminar Noticia
-```
-DELETE /noticias/{id}
-Authorization: Bearer {token}
-Response 204: (sin contenido)
-```
-
-## Multimedia
-
-### Subir Imagen a Noticia
-```
-POST /noticias/{id}/media
-Authorization: Bearer {token}
-Content-Type: multipart/form-data
-
-media: [file]
-tipo: "imagen"
-
-Response 201:
-{
-  "id": 1,
-  "url": "/storage/media/..."
-}
-```
-
-### Obtener Media
-```
-GET /media/{id}
-Response 200: (archivo)
-```
-
-### Eliminar Media
-```
-DELETE /media/{id}
-Authorization: Bearer {token}
-Response 204
-```
-
-## Franjas de Disponibilidad
-
-### Crear Franja
-```
-POST /franjas
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-  "tipo_tramite_id": 1,
-  "fecha": "2026-05-25",
-  "hora_inicio": "09:00",
-  "hora_fin": "10:00",
-  "cupos": 5,
-  "modalidad": "normal"
-}
-
-Response 201: {...}
-```
-
-### Listar Franjas Disponibles
-```
-GET /franjas/disponibles
-Response 200: [{...}]
-```
-
-### Listar Todas las Franjas (Admin)
-```
-GET /franjas
-Authorization: Bearer {token}
-Response 200: [{...}]
-```
-
-### Actualizar Franja
-```
-PATCH /franjas/{id}
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-  "cupos": 10
-}
-
-Response 200: {...}
-```
-
-### Eliminar Franja
-```
-DELETE /franjas/{id}
-Authorization: Bearer {token}
-Response 204
-```
-
-## Agendas
-
-### Crear Agenda
-```
-POST /agendas
-Content-Type: application/json
-
-{
-  "ciudadano_nombre": "Juan Pérez",
-  "ciudadano_documento": "12345678",
-  "ciudadano_email": "juan@example.com",
-  "ciudadano_telefono": "5551234567",
-  "tipo_tramite_id": 1,
-  "franja_id": 5,
-  "modalidad": "normal"
-}
-
-Response 201:
-{
-  "id": 1,
-  "estado": "pendiente"
-}
-```
-
-### Mis Agendas
-```
-GET /agendas/my
-Content-Type: application/json
-
-{
-  "ciudadano_documento": "12345678"
-}
-
-Response 200: [{...}]
-```
-
-### Listar Agendas (Admin)
-```
-GET /agendas
-Authorization: Bearer {token}
-Response 200: [{...}]
-```
-
-### Confirmar Agenda
-```
-PATCH /agendas/{id}/confirmar
-Authorization: Bearer {token}
-Response 200: {"estado": "confirmada"}
-```
-
-### Cancelar Agenda
-```
-PATCH /agendas/{id}/cancelar
-Authorization: Bearer {token}
-Response 200: {"estado": "cancelada"}
-```
-
-## Materiales de Estudio
-
-### Crear Material
-```
-POST /materiales
-Authorization: Bearer {token}
-Content-Type: multipart/form-data
-
-titulo: "Reglamento de Tránsito"
-descripcion: "Descripción del material"
-archivo: [file]
-enlace: "https://example.com"
-
-Response 201: {...}
-```
-
-### Listar Materiales Publicados
-```
-GET /materiales/publicados
-Response 200: [{...}]
-```
-
-### Listar Todos los Materiales (Admin)
-```
-GET /materiales
-Authorization: Bearer {token}
-Response 200: [{...}]
-```
-
-### Actualizar Material
-```
-PATCH /materiales/{id}
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-  "estado": "publicado"
-}
-
-Response 200: {...}
-```
-
-### Eliminar Material
-```
-DELETE /materiales/{id}
-Authorization: Bearer {token}
-Response 204
-```
-
-## Preguntas Frecuentes
-
-### Crear Pregunta
-```
-POST /preguntas-frecuentes
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-  "pregunta": "¿Cuál es el horario de atención?",
-  "respuesta": "Atendemos de 8:00 a 17:00...",
-  "estado": "visible"
-}
-
-Response 201: {...}
-```
-
-### Listar Preguntas Publicadas
-```
-GET /preguntas-frecuentes/publicadas
-Response 200: [{...}]
-```
-
-### Listar Todas las Preguntas (Admin)
-```
-GET /preguntas-frecuentes
-Authorization: Bearer {token}
-Response 200: [{...}]
-```
-
-### Actualizar Pregunta
-```
-PATCH /preguntas-frecuentes/{id}
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-  "respuesta": "Nueva respuesta"
-}
-
-Response 200: {...}
-```
-
-### Eliminar Pregunta
-```
-DELETE /preguntas-frecuentes/{id}
-Authorization: Bearer {token}
-Response 204
-```
-
-## Códigos de Estado HTTP
-
-- `200`: OK - Solicitud exitosa
-- `201`: Created - Recurso creado
-- `204`: No Content - Solicitud exitosa sin respuesta
-- `400`: Bad Request - Validación fallida
-- `401`: Unauthorized - Sin autenticación
-- `403`: Forbidden - Sin permisos
-- `404`: Not Found - Recurso no encontrado
-- `500`: Internal Server Error - Error del servidor
+### POST /auth/logout
+
+Invalida el token actual. Requiere autenticacion.
+
+## 4. Novedades
+
+### GET /novedades
+
+Lista las novedades publicadas. Acepta los parametros `pagina` y
+`por_pagina`.
+
+### GET /novedades/{id}
+
+Obtiene una novedad por su identificador.
+
+### POST /novedades
+
+Crea una novedad. Requiere rol `admin`.
+
+### PUT /novedades/{id}
+
+Actualiza una novedad existente. Requiere rol `admin`.
+
+### DELETE /novedades/{id}
+
+Elimina una novedad. Requiere rol `admin`.
+
+## 5. Cronograma
+
+### GET /cronograma
+
+Lista los eventos vigentes y futuros.
+
+### POST /cronograma
+
+Crea un evento. Requiere rol `admin`.
+
+### PUT /cronograma/{id}
+
+Modifica un evento. Requiere rol `admin`.
+
+### DELETE /cronograma/{id}
+
+Elimina un evento. Requiere rol `admin`.
+
+## 6. Materiales
+
+### GET /materiales
+
+Lista los materiales disponibles. Acepta los parametros `categoria` y
+`tipo`.
+
+### POST /materiales
+
+Carga un nuevo material. Requiere rol `admin` y envio multipart cuando
+incluye archivo.
+
+### DELETE /materiales/{id}
+
+Elimina un material. Requiere rol `admin`.
+
+## 7. Preguntas frecuentes
+
+### GET /faqs
+
+Lista las preguntas activas, ordenadas por el campo `orden`.
+
+### POST /faqs
+
+Crea una nueva pregunta. Requiere rol `admin`.
+
+### PUT /faqs/{id}
+
+Modifica una pregunta. Requiere rol `admin`.
+
+### DELETE /faqs/{id}
+
+Elimina una pregunta. Requiere rol `admin`.
+
+## 8. Usuarios administrativos
+
+### GET /usuarios
+
+Lista los usuarios administrativos. Requiere rol `superadmin`.
+
+### POST /usuarios
+
+Crea un nuevo usuario. Requiere rol `superadmin`.
+
+### PUT /usuarios/{id}
+
+Actualiza datos de un usuario. Requiere rol `superadmin`.
+
+### DELETE /usuarios/{id}
+
+Desactiva un usuario. Requiere rol `superadmin`.
+
+## 9. Codigos de estado
+
+| Codigo | Significado                                              |
+|--------|----------------------------------------------------------|
+| 200    | Operacion exitosa                                        |
+| 201    | Recurso creado correctamente                             |
+| 204    | Operacion exitosa sin contenido                          |
+| 400    | Error de validacion en la solicitud                      |
+| 401    | Falta autenticacion o token invalido                     |
+| 403    | Autenticado pero sin permisos suficientes                |
+| 404    | Recurso inexistente                                      |
+| 409    | Conflicto con el estado actual del recurso               |
+| 500    | Error inesperado del servidor                            |

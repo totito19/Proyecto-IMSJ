@@ -1,298 +1,89 @@
-# 06 - Testing y QA
+# 06 - Testing
 
-## Estrategia de Testing
+## 1. Introduccion
 
-### Pirámide de Testing
-```
-       /\        E2E
-      /  \       (10%)
-     /----\
-    /      \     Integration
-   /        \    (30%)
-  /----------\
- /            \  Unit
-/              \ (60%)
-```
+Este documento describe la estrategia de pruebas aplicada al sistema de
+Educacion Vial IMSJ, los tipos de prueba previstos y los criterios para
+considerar exitosa cada etapa de verificacion.
 
-## Testing Unitario (Backend)
+## 2. Objetivos
 
-### Framework
-- PHPUnit (incluido en Laravel)
+- Asegurar el cumplimiento de los requerimientos funcionales.
+- Detectar defectos tempranamente en el ciclo de desarrollo.
+- Verificar el correcto funcionamiento de la integracion entre frontend y
+  backend.
+- Confirmar el cumplimiento de los requerimientos no funcionales.
 
-### Cobertura Objetivo
-- 80% mínimo
-- Enfoque en lógica de negocio
+## 3. Tipos de prueba
 
-### Áreas de Testing
+### 3.1 Pruebas unitarias
 
-#### Autenticación
-```php
-class AuthControllerTest extends TestCase
-{
-    public function test_login_con_credenciales_validas()
-    { ... }
-    
-    public function test_login_falla_con_password_incorrecto()
-    { ... }
-    
-    public function test_token_expira_correctamente()
-    { ... }
-}
-```
+- Alcance: funciones y servicios del backend de manera aislada.
+- Herramientas: framework de pruebas estandar del lenguaje utilizado.
+- Criterio de exito: cobertura minima definida por el equipo y ausencia de
+  fallas en la suite.
 
-#### Validación
-```php
-class NoticiasTest extends TestCase
-{
-    public function test_noticia_requiere_titulo()
-    { ... }
-    
-    public function test_fecha_vigencia_valida()
-    { ... }
-}
-```
+### 3.2 Pruebas de integracion
 
-#### Lógica de Negocio
-```php
-class AgendasTest extends TestCase
-{
-    public function test_no_permite_doble_reserva()
-    { ... }
-    
-    public function test_controla_cupos_disponibles()
-    { ... }
-    
-    public function test_modalidad_urgente_aplica_costo()
-    { ... }
-}
-```
+- Alcance: interaccion entre el backend y la base de datos, y entre el
+  frontend y la API.
+- Datos: se utiliza una base de datos de prueba con datos representativos.
+- Criterio de exito: los flujos principales se completan sin errores.
 
-### Ejecución
-```bash
-# Todos los tests
-php artisan test
+### 3.3 Pruebas funcionales
 
-# Solo una clase
-php artisan test tests/Unit/AuthTest.php
+- Alcance: validacion de los flujos de usuario definidos en los
+  requerimientos.
+- Ejecucion: manual o automatizada mediante herramientas de prueba de
+  interfaz.
+- Criterio de exito: cada flujo cumple con el resultado esperado.
 
-# Con cobertura
-php artisan test --coverage
+### 3.4 Pruebas de seguridad
 
-# Watch mode
-php artisan test --watch
-```
+- Alcance: control de acceso, manejo de sesiones, validacion de entradas y
+  proteccion contra inyecciones y XSS.
+- Criterio de exito: ausencia de vulnerabilidades criticas y altas
+  identificadas.
 
-## Testing Funcional (Backend)
+### 3.5 Pruebas de rendimiento
 
-### Tests de API
-```php
-class NoticiasApiTest extends TestCase
-{
-    public function test_crear_noticia()
-    {
-        $response = $this->post('/api/noticias', [...]);
-        $response->assertStatus(201);
-    }
-    
-    public function test_acceso_denegado_sin_autorizacion()
-    {
-        $response = $this->get('/api/noticias');
-        $response->assertStatus(401);
-    }
-}
-```
+- Alcance: comportamiento del backend bajo carga normal y carga elevada.
+- Criterio de exito: tiempos de respuesta dentro de los limites definidos en
+  los requerimientos no funcionales.
 
-### Características Testeadas
-- Autenticación requerida
-- Validación de entrada
-- Permisos de usuario
-- Respuestas correctas
-- Códigos de estado HTTP
+### 3.6 Pruebas de accesibilidad
 
-## Testing Frontend
+- Alcance: sitio publico y panel administrativo.
+- Referencia: WCAG nivel AA.
+- Criterio de exito: cumplimiento de los criterios obligatorios para los
+  flujos principales.
 
-### Manual Testing Checklist
+## 4. Casos de prueba representativos
 
-#### Frontend Público
-- [ ] Cargar página principal
-- [ ] Navegar entre secciones
-- [ ] Ver noticias publicadas
-- [ ] Agendar prueba de manejo
-- [ ] Agendar renovación normal
-- [ ] Agendar renovación urgente
-- [ ] Ver materiales de estudio
-- [ ] Ver preguntas frecuentes
-- [ ] Responsive en móvil
-- [ ] Responsive en tablet
+| ID    | Descripcion                                              | Tipo        |
+|-------|----------------------------------------------------------|-------------|
+| CP-01 | Listar novedades publicadas desde el sitio publico       | Funcional   |
+| CP-02 | Crear una novedad desde el panel administrativo          | Funcional   |
+| CP-03 | Login con credenciales validas                           | Funcional   |
+| CP-04 | Login con credenciales invalidas y bloqueo posterior     | Seguridad   |
+| CP-05 | Cargar un material superior al tamano permitido          | Seguridad   |
+| CP-06 | Consultar `/novedades` sin token                         | Seguridad   |
+| CP-07 | Consultar `/usuarios` con rol `admin`                    | Seguridad   |
+| CP-08 | Tiempo de respuesta de `/cronograma` bajo carga          | Rendimiento |
+| CP-09 | Navegacion del sitio publico con lector de pantalla      | Accesibilidad |
+| CP-10 | Recuperacion del sistema tras reinicio de la base        | Integracion |
 
-#### Frontend Admin
-- [ ] Login funciona
-- [ ] Dashboard carga datos
-- [ ] Crear noticia
-- [ ] Publicar noticia
-- [ ] Editar noticia
-- [ ] Ver agendas
-- [ ] Confirmar agenda
-- [ ] Cancelar agenda
-- [ ] Crear franja
-- [ ] Crear material
-- [ ] Crear pregunta
+## 5. Entornos
 
-### Testing en Navegadores
-- Chrome (últimas versiones)
-- Firefox
-- Safari
-- Edge
+- **Desarrollo**: entorno local de cada integrante del equipo.
+- **Pruebas**: entorno compartido con datos representativos y aislado de
+  produccion.
+- **Produccion**: entorno final del IMSJ; no se ejecutan pruebas destructivas
+  sobre este entorno.
 
-### Dispositivos
-- Desktop (1920x1080)
-- Tablet (768x1024)
-- Mobile (375x667)
+## 6. Reportes
 
-## Testing de Integración
-
-### Flujos Críticos
-
-#### Flujo de Agenda Completo
-1. Usuario anónimo ve franjas disponibles
-2. Usuario completa formulario de agenda
-3. Sistema confirma reserva
-4. Admin ve agenda pendiente
-5. Admin confirma agenda
-6. Sistema envía confirmación por email
-
-#### Flujo de Publicación de Noticia
-1. Admin crea noticia
-2. Sube imagen
-3. Ingresa fechas de vigencia
-4. Publica noticia
-5. Noticia aparece en frontend público
-6. Noticia desaparece cuando vence
-
-## Testing de Seguridad
-
-### Checklist de Seguridad
-- [ ] Contraseña hasheada correctamente
-- [ ] Tokens JWT válidos y con expiración
-- [ ] CSRF protection activo
-- [ ] SQL injection imposible
-- [ ] XSS prevenido
-- [ ] Datos personales no en logs
-- [ ] Rate limiting funciona
-- [ ] Validación de entrada en todos lados
-
-### Tests Específicos
-```php
-class SecurityTest extends TestCase
-{
-    public function test_no_expone_credenciales_en_logs()
-    { ... }
-    
-    public function test_hash_de_password_es_unico()
-    { ... }
-    
-    public function test_previene_sql_injection()
-    { ... }
-}
-```
-
-## Performance Testing
-
-### Benchmarks
-- Carga de página pública: < 1s
-- Carga de dashboard: < 2s
-- Creación de noticia: < 500ms
-- Listar 1000 agendas: < 2s
-
-### Herramientas
-- Lighthouse (Google)
-- PageSpeed Insights
-- Apache JMeter
-
-## Testing de Accesibilidad
-
-### WCAG 2.1 Nivel A
-- [ ] Contraste de colores válido
-- [ ] Textos alternativos en imágenes
-- [ ] Navegación por teclado funciona
-- [ ] Focus indicador visible
-- [ ] Formularios etiquetados
-- [ ] Mensajes de error claros
-
-### Herramientas
-- axe DevTools
-- WAVE
-- Lighthouse
-
-## Bugs Conocidos y Reportes
-
-### Sistema de Reportes
-```
-## Bug Report Template
-
-**Título**: [Componente] Descripción breve
-
-**Severidad**: Critical / High / Medium / Low
-
-**Pasos para reproducir**:
-1. ...
-2. ...
-3. ...
-
-**Comportamiento esperado**:
-...
-
-**Comportamiento actual**:
-...
-
-**Screenshots/Video**:
-...
-
-**Entorno**:
-- Browser: Chrome 120
-- SO: Windows 11
-- Resolución: 1920x1080
-```
-
-## Plan de QA
-
-### Antes de Release
-1. Ejecutar suite completa de tests
-2. Testing manual en todos los navegadores
-3. Testing de seguridad
-4. Testing de performance
-5. Validación de accesibilidad
-6. Code review de cambios críticos
-
-### Testing por Fase
-
-| Semana | Actividad |
-|--------|-----------|
-| 8 | Pruebas unitarias de backend |
-| 10 | Pruebas de integración API |
-| 12 | Testing funcional frontend |
-| 13 | Testing completo + seguridad |
-| 14 | Testing final + fixes |
-
-## Documentación de Tests
-
-Cada test debe documentar:
-- Qué se está testeando
-- Por qué es importante
-- Casos edge incluidos
-- Datos de prueba utilizados
-
-Ejemplo:
-```php
-/**
- * Test que valida que no se permita doble reserva
- * en la misma franja y hora.
- * 
- * Importancia: Crítico para evitar sobrebooking
- * Casos: usuario intenta reservar mismo slot 2 veces
- * 
- * @test
- */
-public function test_previene_doble_reserva()
-{ ... }
-```
+- Se generan reportes al cierre de cada etapa de pruebas.
+- Cada defecto identificado se registra con: descripcion, pasos para
+  reproducirlo, severidad y prioridad.
+- Los defectos resueltos se incluyen en el reporte final de cada entrega.

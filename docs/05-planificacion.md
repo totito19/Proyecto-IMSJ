@@ -1,162 +1,100 @@
-# 05 - Planificación y Gestión de Proyecto
+# 05 - Planificacion
 
-## Timeline General
+## 1. Introduccion
 
-- **Semana 1-2**: Setup inicial, configuración de herramientas
-- **Semana 3-4**: Diseño y modelado de datos
-- **Semana 5-8**: Desarrollo del backend
-- **Semana 9-12**: Desarrollo del frontend
-- **Semana 13-14**: Testing e integración
-- **Semana 15**: Presentación y defensa
+Este documento describe la planificacion del proyecto, las etapas previstas,
+los entregables asociados y los criterios de aceptacion.
 
-## Hitos Principales
+## 2. Etapas
 
-### Hito 1: Setup (Fin Semana 2)
-- [ ] Repositorio Git configurado
-- [ ] Estructura de carpetas creada
-- [ ] Entorno de desarrollo funcional
-- [ ] README.md actualizado
+### Etapa 1 - Analisis y diseno
 
-### Hito 2: Diseño (Fin Semana 4)
-- [ ] Modelo de datos finalizado
-- [ ] Diseño de interfaces (wireframes/mockups)
-- [ ] Documentación de requerimientos completada
-- [ ] Plan de desarrollo aprobado
+- Relevamiento de requerimientos con el IMSJ.
+- Modelado de datos y definicion del contrato de la API.
+- Definicion de la arquitectura general del sistema.
 
-### Hito 3: Backend MVP (Fin Semana 8)
-- [ ] Autenticación funcional
-- [ ] CRUD de noticias
-- [ ] CRUD de agendas
-- [ ] Sistema de franjas
-- [ ] Tests unitarios
+Entregables:
 
-### Hito 4: Frontend MVP (Fin Semana 12)
-- [ ] Frontend público funcional
-- [ ] Dashboard administrativo funcional
-- [ ] Integración con API
-- [ ] Responsividad testeada
+- Documento de requerimientos.
+- Documento de modelado.
+- Documento de API.
 
-### Hito 5: Finalización (Fin Semana 14)
-- [ ] Bug fixes y optimizaciones
-- [ ] Documentación completa
-- [ ] Tests de integración
-- [ ] Preparación de demo
+### Etapa 2 - Desarrollo del backend
 
-## Distribución de Tareas por Rol
+- Implementacion de la API REST segun el contrato definido.
+- Configuracion de la base de datos y migraciones iniciales.
+- Implementacion de autenticacion y autorizacion.
+- Pruebas unitarias de servicios y endpoints.
 
-### Líder de Proyecto
-- Coordinación del equipo
-- Seguimiento de timeline
-- Resolución de bloqueos
-- Comunicación con stakeholders
-- Gestión del repositorio Git
-- **Tiempo estimado**: 50% del proyecto
+Entregables:
 
-### Desarrollador Backend
-- Implementación de API REST
-- Gestión de base de datos
-- Lógica de negocio
-- Autenticación y autorización
-- **Tiempo estimado**: 40% del proyecto
-- **Habilidades**: PHP/Laravel, MySQL, REST API
+- Backend funcional con endpoints documentados.
+- Base de datos con esquema vigente.
+- Cobertura minima de pruebas unitarias definida.
 
-### Desarrollador Frontend (Principal)
-- Frontend público
-- Integración con API
-- Testing en navegador
-- **Tiempo estimado**: 35% del proyecto
-- **Habilidades**: HTML, CSS, JavaScript, Responsive Design
+### Etapa 3 - Desarrollo del frontend publico
 
-### Desarrollador Frontend (Secundario)
-- Frontend administrativo
-- Componentes reutilizables
-- Estilos y temas
-- **Tiempo estimado**: 35% del proyecto
-- **Habilidades**: HTML, CSS, JavaScript, UI/UX
+- Maquetado y estilos del sitio publico.
+- Integracion con los endpoints publicos del backend.
+- Adaptacion responsive y validaciones de accesibilidad.
 
-### Especialista BD/Seguridad
-- Diseño de base de datos
-- Migraciones y seeders
-- Implementación de seguridad
-- Validación de datos
-- **Tiempo estimado**: 30% del proyecto
-- **Habilidades**: MySQL, SQL, Seguridad web, GDPR
+Entregables:
 
-## Flujo de Trabajo Git
+- Sitio publico navegable.
+- Integracion completa con la API publica.
 
-### Ramas
-```
-main                  (producción)
-├── develop           (integración)
-├── feature/auth      (feature branch)
-├── feature/noticias
-├── feature/agendas
-├── bugfix/validacion
-└── release/v1.0
-```
+### Etapa 4 - Desarrollo del panel administrativo
 
-### Workflow
-1. Crear feature branch desde `develop`
-2. Hacer commits frecuentes
-3. Crear Pull Request cuando completes
-4. Code review obligatorio (mínimo 1)
-5. Merge a `develop`
-6. Hacer release a `main` al final
+- Maquetado y estilos del panel.
+- Integracion con los endpoints privados del backend.
+- Implementacion de los flujos de carga, edicion y eliminacion de contenidos.
 
-### Convención de Commits
-```
-feat: agregar sistema de agendas
-fix: corregir validación de email
-docs: actualizar README
-refactor: limpiar código del controller
-test: agregar tests de autenticación
-```
+Entregables:
 
-## Reuniones y Reportes
+- Panel administrativo funcional para los roles definidos.
 
-### Reuniones Semanales
-- **Lunes 9:00**: Sprint planning (30 min)
-- **Miércoles 14:00**: Sincronización (15 min)
-- **Viernes 16:00**: Sprint review (30 min)
+### Etapa 5 - Pruebas y ajustes
 
-### Reportes Quincenales
-- Progreso completado
-- Blockers identificados
-- Trazabilidad Git
-- Métricas de calidad
+- Ejecucion de pruebas funcionales sobre los tres componentes.
+- Pruebas de seguridad y de carga basicas.
+- Correccion de defectos detectados.
 
-## Estimación de Esfuerzo
+Entregables:
 
-| Componente | Horas | Responsable |
-|-----------|-------|-------------|
-| Setup | 8 | Líder |
-| Modelado | 12 | BD/Seg |
-| Backend Auth | 16 | Backend |
-| Backend CRUD | 24 | Backend |
-| Backend Tests | 12 | Backend |
-| Frontend Público | 28 | Frontend 1 |
-| Frontend Admin | 28 | Frontend 2 |
-| Integración | 12 | Líder + Devs |
-| Testing | 16 | BD/Seg |
-| Documentación | 12 | Todos |
-| **Total** | **188 horas** | |
+- Informe de pruebas con resultados.
+- Listado de defectos resueltos.
 
-## Riesgos y Mitigación
+### Etapa 6 - Despliegue y capacitacion
 
-| Riesgo | Probabilidad | Impacto | Mitigación |
-|--------|-------------|--------|-----------|
-| Retrasos en diseño | Media | Alto | Iniciar con análisis temprano |
-| Falta de experiencia en Laravel | Media | Medio | Capacitación inicial, pair programming |
-| Cambios de scope | Baja | Alto | Documentar requerimientos, validar con IMSJ |
-| Problemas de BD | Baja | Alto | Revisar diseño temprano, tests |
-| Falta de testing | Alta | Medio | Dedicar tiempo específico, TDD |
+- Configuracion del entorno productivo del IMSJ.
+- Despliegue de los tres componentes.
+- Capacitacion al personal administrativo.
 
-## Criterios de Éxito
+Entregables:
 
-- ✓ Todos los requerimientos implementados
-- ✓ 80% de cobertura de tests
-- ✓ Documentación completa
-- ✓ Demo funcional sin errores críticos
-- ✓ Código limpio (linting OK)
-- ✓ Trazabilidad Git completa
-- ✓ Escalabilidad mínima (100 usuarios concurrentes)
+- Sistema en produccion.
+- Material de capacitacion entregado al IMSJ.
+
+## 3. Criterios de aceptacion
+
+- Cumplimiento de los requerimientos descritos en el documento
+  correspondiente.
+- Cobertura de pruebas conforme a la estrategia definida.
+- Ausencia de vulnerabilidades criticas en el momento del despliegue.
+- Documentacion completa y actualizada.
+
+## 4. Riesgos identificados
+
+- Demoras en la provision de contenidos iniciales por parte del IMSJ.
+- Cambios de alcance durante la etapa de desarrollo.
+- Indisponibilidad temporal de la infraestructura objetivo.
+- Recambio de personal asignado al proyecto.
+
+Para cada riesgo se contempla un plan de mitigacion comunicado al
+responsable del IMSJ.
+
+## 5. Seguimiento
+
+- Reuniones de seguimiento periodicas con el equipo del IMSJ.
+- Reporte de avance al cierre de cada etapa.
+- Tablero de tareas accesible a los integrantes del equipo.

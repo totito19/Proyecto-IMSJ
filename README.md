@@ -1,68 +1,62 @@
-# Proyecto Educación Vial IMSJ
-## Intendencia Municipal de San José - Sección Tránsito
+# Educacion Vial IMSJ
 
-Proyecto Egreso 2026
+Plataforma web del Instituto Municipal de Seguridad y Justicia (IMSJ) para
+la gestion y difusion de contenidos de educacion vial.
 
-## Integrantes
-- Nombre 1 – Rol
-- Nombre 2 – Rol
-- Nombre 3 – Rol
-- Nombre 4 – Rol
-- Nombre 5 – Rol
+## Descripcion
 
-## Tecnologías
-- Backend: Laravel + PHP
-- Base de datos: MySQL
-- Frontend: Vanilla JS / Vue.js
-- Estilos: Tailwind CSS / Bootstrap
-- Servidor: Apache/Nginx
+El proyecto comprende tres componentes principales:
 
-## Descripción del Proyecto
+- **backend**: API REST que centraliza la logica de negocio y el acceso a la
+  base de datos.
+- **frontend-publico**: sitio publico orientado a la ciudadania, con
+  informacion sobre tramites, materiales de estudio y novedades.
+- **frontend-imsj**: panel administrativo destinado al personal del IMSJ
+  para la carga y mantenimiento de contenidos.
 
-Aplicación web centralizada para la Sección Tránsito de la IMSJ que permite:
-- Publicar noticias y anuncios
-- Gestionar agendas de trámites (prueba de manejo, renovación)
-- Acceso a materiales de estudio
-- Preguntas frecuentes
-- Control administrativo de usuarios y permisos
+## Estructura del repositorio
 
-## Cómo ejecutar el proyecto
-
-### Backend
-1. Clonar repositorio
-2. Configurar archivo `.env` con credenciales de base de datos
-3. Ejecutar: `composer install`
-4. Ejecutar: `php artisan migrate`
-5. Ejecutar: `php artisan serve`
-6. Backend disponible en: `http://localhost:8000`
-
-### Frontend Público
-1. Abrir `frontend-publico/index.html` en navegador
-2. O ejecutar con servidor local: `python -m http.server 8001` en la carpeta frontend-publico
-
-### Frontend IMSJ
-1. Abrir `frontend-imsj/index.html` en navegador
-2. O ejecutar con servidor local: `python -m http.server 8002` en la carpeta frontend-imsj
-
-## Estructura del proyecto
 ```
 educacion-vial-imsj/
-├── backend/              # API REST con Laravel
-├── frontend-publico/     # Interfaz pública
-├── frontend-imsj/        # Dashboard administrativo
-├── docs/                 # Documentación
+├── backend/
+│   ├── app/
+│   ├── routes/
+│   ├── database/
+│   └── README.md
+├── frontend-publico/
+│   ├── index.html
+│   ├── css/
+│   ├── js/
+│   └── manifest.json
+├── frontend-imsj/
+│   ├── index.html
+│   ├── css/
+│   ├── js/
+│   └── manifest.json
+├── docs/
+│   ├── 01-requerimientos.md
+│   ├── 02-modelado.md
+│   ├── 03-api.md
+│   ├── 04-seguridad.md
+│   ├── 05-planificacion.md
+│   └── 06-testing.md
+├── .gitignore
+├── LICENSE
 └── README.md
 ```
 
-Para más detalles, ver la documentación completa en la carpeta `/docs`
+## Documentacion
 
-## Links útiles
+La documentacion del proyecto se encuentra en el directorio `docs/`:
+
 - [Requerimientos](docs/01-requerimientos.md)
 - [Modelado de datos](docs/02-modelado.md)
-- [API REST](docs/03-api.md)
+- [API](docs/03-api.md)
 - [Seguridad](docs/04-seguridad.md)
-- [Planificación](docs/05-planificacion.md)
+- [Planificacion](docs/05-planificacion.md)
 - [Testing](docs/06-testing.md)
 
 ## Licencia
-MIT
+
+Este proyecto se distribuye bajo los terminos de la licencia MIT. Para mas
+detalles ver el archivo [LICENSE](LICENSE).

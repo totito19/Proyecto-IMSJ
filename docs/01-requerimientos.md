@@ -1,99 +1,71 @@
-# 01 - Requerimientos del Proyecto
+# 01 - Requerimientos
 
-## Descripción General
+## 1. Introduccion
 
-Aplicación web para la Intendencia Municipal de San José (IMSJ), sección Tránsito, que centraliza la comunicación pública, la gestión de agendas de trámites y el acceso a materiales de educación vial.
+Este documento describe los requerimientos funcionales y no funcionales del
+sistema de Educacion Vial del IMSJ. El sistema busca centralizar la
+informacion publica de educacion vial, facilitar el acceso a materiales de
+estudio y proveer al personal del IMSJ una herramienta para administrar
+contenidos.
 
-## Público Objetivo
+## 2. Alcance
 
-- **Público General**: Ciudadanos que requieren realizar trámites de libreta de conducir
-- **Personal IMSJ**: Administrativos de la sección tránsito
+El sistema se compone de:
 
-## Objetivos Funcionales
+- Un sitio publico (`frontend-publico`) accesible a la ciudadania.
+- Un panel administrativo (`frontend-imsj`) para el personal autorizado.
+- Una API REST (`backend`) que centraliza la logica y los datos.
 
-### 1. Cartelera Pública de Noticias
+## 3. Actores
 
-- Visualización de noticias y anuncios vigentes
-- Cada noticia contiene:
-  - Título
-  - Imagen de portada
-  - Galería de imágenes
-  - Cuerpo del contenido
-  - Enlaces útiles a videos y recursos
-  - Fecha de vigencia (inicio y fin)
+- **Ciudadano**: usuario no autenticado que consulta el sitio publico.
+- **Administrador IMSJ**: personal autorizado que gestiona contenidos.
+- **Superadministrador**: rol con permisos completos sobre usuarios y
+  contenidos.
 
-### 2. Sistema de Agendas
+## 4. Requerimientos funcionales
 
-#### Prueba de Manejo
-- Agenda para aspirantes a obtener licencia de conducir
-- Datos recolectados: nombre, documento, email, teléfono
-- Confirmación visual para el ciudadano
+### 4.1 Sitio publico
 
-#### Renovación de Libreta
-- **Trámite Normal**: Agenda estándar
-- **Trámite Urgente**: Agenda con costo especial
-- Control de cupos disponibles
-- Prevención de doble reserva
+- RF-01: Visualizar novedades publicadas por el IMSJ.
+- RF-02: Consultar el cronograma de actividades y turnos disponibles.
+- RF-03: Descargar materiales de estudio en distintos formatos.
+- RF-04: Acceder a una seccion de preguntas frecuentes.
+- RF-05: Disponer de un formulario de contacto basico.
 
-### 3. Materiales de Estudio
-- Acceso a materiales educativos para aspirantes
-- Puede incluir archivos y enlaces externos
-- Control de publicación
+### 4.2 Panel administrativo
 
-### 4. Preguntas Frecuentes
-- Consulta de FAQ con respuestas
-- Enlaces útiles por pregunta
-- Control de visibilidad
+- RF-06: Autenticacion mediante credenciales personales.
+- RF-07: Alta, baja y modificacion de novedades.
+- RF-08: Gestion del cronograma y los cupos disponibles.
+- RF-09: Carga y eliminacion de materiales de estudio.
+- RF-10: Administracion del listado de preguntas frecuentes.
+- RF-11: Gestion de usuarios administrativos (solo superadministrador).
 
-### 5. Dashboard Administrativo
-- Vista de agendas:
-  - Diaria
-  - Semanal
-  - Mensual
-- Gestión de:
-  - Noticias (crear, editar, publicar)
-  - Franjas de disponibilidad
-  - Materiales de estudio
-  - Preguntas frecuentes
-- Control de roles y permisos
+### 4.3 Backend
 
-## Requisitos No Funcionales
+- RF-12: Exponer endpoints REST documentados para las operaciones anteriores.
+- RF-13: Registrar auditoria de las operaciones administrativas.
+- RF-14: Validar los datos recibidos antes de persistirlos.
 
-### Seguridad
-- Autenticación de usuarios IMSJ
-- Control de roles y permisos
-- Validación de entradas en todos los formularios
-- Protección de datos personales
-- Manejo ético de información (GDPR-like)
+## 5. Requerimientos no funcionales
 
-### Usabilidad
-- Interfaz responsive (mobile first)
-- Accesibilidad básica (WCAG 2.1 nivel A)
-- Navegación intuitiva
+- RNF-01: El sitio publico debe ser responsive y accesible (WCAG AA).
+- RNF-02: El tiempo de respuesta de la API debe ser inferior a un segundo
+  bajo carga normal.
+- RNF-03: La informacion sensible debe almacenarse de forma segura.
+- RNF-04: El sistema debe operar correctamente en los navegadores modernos
+  vigentes.
+- RNF-05: El codigo y la documentacion deben mantenerse en castellano.
 
-### Performance
-- Tiempo de carga < 3 segundos
-- Caché de contenido estático
+## 6. Restricciones
 
-### Mantenibilidad
-- Documentación completa
-- Código limpio y bien estructurado
-- Versionamiento Git con trazabilidad
+- El sistema se desplegara en la infraestructura provista por el IMSJ.
+- La base de datos sera relacional.
+- El proyecto se distribuye bajo licencia MIT.
 
-### Disponibilidad
-- Vigencia automática de noticias
-- Sistema de historial de cambios
+## 7. Supuestos
 
-## Restricciones
-
-- Datos personales se usan SOLO para el trámite requerido
-- Separación clara entre contenido publicado y no publicado
-- Control estricto de cupos en agendas
-- Confirmación de agenda para el ciudadano
-
-## Consideraciones Éticas
-
-- Protección de datos personales (nombres, documentos, contacto)
-- No compartir datos con terceros
-- Transparencia en el uso de información
-- Acceso equitativo a la plataforma
+- El IMSJ proveera los contenidos iniciales para la carga.
+- Los administradores cuentan con conectividad estable a internet.
+- Los ciudadanos acceden mayoritariamente desde dispositivos moviles.
