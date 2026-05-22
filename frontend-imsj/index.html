@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard IMSJ - Educación Vial</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>IMSJ Admin</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#dashboard" class="nav-link active">Dashboard</a></li>
+                    <li><a href="#noticias" class="nav-link">Cartelera de Anuncios</a></li>
+                    <li><a href="#agenda" class="nav-link">Agenda de Trámites</a></li>
+                    <li><a href="#franjas" class="nav-link">Franjas de Disponibilidad</a></li>
+                    <li><a href="#materiales" class="nav-link">Materiales de Estudio</a></li>
+                    <li><a href="#preguntas" class="nav-link">Preguntas Frecuentes</a></li>
+                    <li><a href="#logout" class="nav-link logout">Cerrar Sesión</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1>Dashboard Administrativo</h1>
+                <div class="user-info">
+                    <span id="user-name">Usuario</span>
+                    <button id="logout-btn" class="btn-logout">Logout</button>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <h2>Vista General</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Agendas Pendientes</h3>
+                        <p class="stat-number" id="agendas-pendientes">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Noticias Publicadas</h3>
+                        <p class="stat-number" id="noticias-publicadas">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Franjas Disponibles</h3>
+                        <p class="stat-number" id="franjas-disponibles">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Materiales Publicados</h3>
+                        <p class="stat-number" id="materiales-publicados">0</p>
+                    </div>
+                </div>
+
+                <div class="calendar-section">
+                    <h3>Calendario de Trámites</h3>
+                    <div class="calendar-view">
+                        <select id="calendar-view-select">
+                            <option value="daily">Diaria</option>
+                            <option value="weekly" selected>Semanal</option>
+                            <option value="monthly">Mensual</option>
+                        </select>
+                        <div id="calendar-container">
+                            <!-- Se carga dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="upcoming-section">
+                    <h3>Agendas Próximas</h3>
+                    <div id="agendas-container" class="agendas-list">
+                        <!-- Se carga dinámicamente -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Noticias Section -->
+            <section id="noticias" class="content-section">
+                <h2>Cartelera de Anuncios</h2>
+                <button class="btn-primary" onclick="mostrarFormularioNoticia()">+ Nueva Noticia</button>
+                
+                <form id="form-noticia" class="form-noticia" style="display: none;">
+                    <input type="text" name="titulo" placeholder="Título" required>
+                    <textarea name="cuerpo" placeholder="Contenido" rows="5" required></textarea>
+                    <input type="file" name="imagen_portada" accept="image/*">
+                    <input type="date" name="fecha_inicio_vigencia" required>
+                    <input type="date" name="fecha_fin_vigencia" required>
+                    <button type="submit" class="btn-primary">Guardar Noticia</button>
+                    <button type="button" class="btn-secondary" onclick="ocultarFormularioNoticia()">Cancelar</button>
+                </form>
+
+                <div id="noticias-list" class="noticias-list">
+                    <!-- Se carga dinámicamente -->
+                </div>
+            </section>
+
+            <!-- Agenda Section -->
+            <section id="agenda" class="content-section">
+                <h2>Agenda de Trámites</h2>
+                <div class="agenda-filters">
+                    <input type="date" id="agenda-date-filter" placeholder="Filtrar por fecha">
+                    <select id="agenda-tipo-filter">
+                        <option value="">Todos los tipos</option>
+                        <option value="manejo">Prueba de Manejo</option>
+                        <option value="renovacion-normal">Renovación Normal</option>
+                        <option value="renovacion-urgente">Renovación Urgente</option>
+                    </select>
+                </div>
+                <div id="agenda-list" class="agenda-list">
+                    <!-- Se carga dinámicamente -->
+                </div>
+            </section>
+
+            <!-- Franjas Section -->
+            <section id="franjas" class="content-section">
+                <h2>Franjas de Disponibilidad</h2>
+                <button class="btn-primary" onclick="mostrarFormularioFranja()">+ Nueva Franja</button>
+                
+                <form id="form-franja" class="form-franja" style="display: none;">
+                    <select name="tipo_tramite" required>
+                        <option value="">Seleccionar tipo</option>
+                        <option value="manejo">Prueba de Manejo</option>
+                        <option value="renovacion-normal">Renovación Normal</option>
+                        <option value="renovacion-urgente">Renovación Urgente</option>
+                    </select>
+                    <input type="date" name="fecha" required>
+                    <input type="time" name="hora_inicio" required>
+                    <input type="time" name="hora_fin" required>
+                    <input type="number" name="cupos" placeholder="Cantidad de cupos" required>
+                    <button type="submit" class="btn-primary">Guardar Franja</button>
+                    <button type="button" class="btn-secondary" onclick="ocultarFormularioFranja()">Cancelar</button>
+                </form>
+
+                <div id="franjas-list" class="franjas-list">
+                    <!-- Se carga dinámicamente -->
+                </div>
+            </section>
+
+            <!-- Materiales Section -->
+            <section id="materiales" class="content-section">
+                <h2>Materiales de Estudio</h2>
+                <button class="btn-primary" onclick="mostrarFormularioMaterial()">+ Nuevo Material</button>
+                
+                <form id="form-material" class="form-material" style="display: none;">
+                    <input type="text" name="titulo" placeholder="Título" required>
+                    <textarea name="descripcion" placeholder="Descripción" rows="3" required></textarea>
+                    <input type="file" name="archivo">
+                    <input type="url" name="enlace" placeholder="Enlace (opcional)">
+                    <button type="submit" class="btn-primary">Guardar Material</button>
+                    <button type="button" class="btn-secondary" onclick="ocultarFormularioMaterial()">Cancelar</button>
+                </form>
+
+                <div id="materiales-list" class="materiales-list">
+                    <!-- Se carga dinámicamente -->
+                </div>
+            </section>
+
+            <!-- Preguntas Frecuentes Section -->
+            <section id="preguntas" class="content-section">
+                <h2>Preguntas Frecuentes</h2>
+                <button class="btn-primary" onclick="mostrarFormularioPregunta()">+ Nueva Pregunta</button>
+                
+                <form id="form-pregunta" class="form-pregunta" style="display: none;">
+                    <input type="text" name="pregunta" placeholder="Pregunta" required>
+                    <textarea name="respuesta" placeholder="Respuesta" rows="5" required></textarea>
+                    <input type="url" name="enlace" placeholder="Enlace (opcional)">
+                    <button type="submit" class="btn-primary">Guardar Pregunta</button>
+                    <button type="button" class="btn-secondary" onclick="ocultarFormularioPregunta()">Cancelar</button>
+                </form>
+
+                <div id="preguntas-list" class="preguntas-list">
+                    <!-- Se carga dinámicamente -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
