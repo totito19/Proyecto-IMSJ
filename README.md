@@ -44,19 +44,3 @@ educacion-vial-imsj/
 ├── LICENSE
 └── README.md
 ```
-
-## Documentacion
-
-La documentacion del proyecto se encuentra en el directorio `docs/`:
-
-- [Requerimientos](docs/01-requerimientos.md)
-- [Modelado de datos](docs/02-modelado.md)
-- [API](docs/03-api.md)
-- [Seguridad](docs/04-seguridad.md)
-- [Planificacion](docs/05-planificacion.md)
-- [Testing](docs/06-testing.md)
-
-## Licencia
-
-Este proyecto se distribuye bajo los terminos de la licencia MIT. Para mas
-detalles ver el archivo [LICENSE](LICENSE).
