@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es-UY">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agenda Prueba de Manejo · IMSJ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/agenda.js" defer></script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+  <div id="navbar" data-active="prueba"></div>
+
+  <main class="flex-1 max-w-4xl mx-auto w-full px-4 py-8">
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold text-slate-800">Agenda para Prueba de Manejo</h1>
+      <p class="text-slate-600">Para obtener la licencia de conducir. Seleccioná un horario disponible.</p>
+    </header>
+
+    <div id="alert-container" class="mb-4"></div>
+
+    <section class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="font-bold text-lg mb-3">1. Seleccioná un horario</h2>
+      <div id="franjas-container">
+        <p class="text-slate-500">Cargando franjas disponibles…</p>
+      </div>
+    </section>
+
+    <form id="reserva-form" class="bg-white rounded-lg shadow p-6 hidden">
+      <h2 class="font-bold text-lg mb-3">2. Datos del aspirante</h2>
+      <p class="text-xs text-slate-500 mb-4">
+        Sus datos personales se utilizarán únicamente para identificar la reserva y para comunicación
+        administrativa relativa al trámite. Ver
+        <a href="faq.html" class="text-blue-700 underline">Preguntas frecuentes</a>.
+      </p>
+      <div class="grid md:grid-cols-2 gap-4">
+        <label class="block">
+          <span class="text-sm font-semibold">Nombre completo *</span>
+          <input name="nombre" required maxlength="150"
+                 class="mt-1 w-full border-slate-300 border rounded px-3 py-2">
+        </label>
+        <label class="block">
+          <span class="text-sm font-semibold">Documento (CI) *</span>
+          <input name="documento" required maxlength="20" pattern="[0-9.\-Kk]+"
+                 placeholder="1.234.567-8"
+                 class="mt-1 w-full border-slate-300 border rounded px-3 py-2">
+        </label>
+        <label class="block">
+          <span class="text-sm font-semibold">Email *</span>
+          <input name="email" type="email" required maxlength="150"
+                 class="mt-1 w-full border-slate-300 border rounded px-3 py-2">
+        </label>
+        <label class="block">
+          <span class="text-sm font-semibold">Teléfono</span>
+          <input name="telefono" maxlength="30"
+                 class="mt-1 w-full border-slate-300 border rounded px-3 py-2">
+        </label>
+      </div>
+      <div class="mt-6 flex items-center gap-3">
+        <button type="submit"
+                class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded font-semibold">
+          Confirmar reserva
+        </button>
+        <span id="franja-resumen" class="text-sm text-slate-600"></span>
+      </div>
+    </form>
+
+    <div id="confirmacion" class="hidden bg-green-50 border border-green-300 text-green-900 rounded-lg p-6 mt-6">
+      <h3 class="font-bold text-lg mb-2">¡Reserva confirmada!</h3>
+      <p>Conservá este código para futuras consultas:</p>
+      <p id="codigo-reserva" class="text-3xl font-mono font-bold my-3"></p>
+      <p id="datos-reserva" class="text-sm"></p>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+
+  <script>
+    let franjas = [];
+    let franjaSeleccionada = null;
+    const tipoCodigo = 'prueba_manejo';
+    const modalidad = 'prueba';
+
+    async function init() {
+      const tipos = await cargarTiposTramite();
+      const tipo = tipos.find(t => t.codigo === tipoCodigo);
+      if (!tipo) {
+        showAlert('No se encontró el tipo de trámite "Prueba de manejo".', 'error');
+        return;
+      }
+      franjas = await cargarFranjas({ tipoTramiteId: tipo.id, modalidad });
+      pintarFranjas();
+    }
+
+    function pintarFranjas() {
+      const cont = document.getElementById('franjas-container');
+      cont.innerHTML = renderFranjas(franjas, franjaSeleccionada);
+      cont.querySelectorAll('.franja-btn').forEach(b => {
+        b.addEventListener('click', () => seleccionar(parseInt(b.dataset.franjaId, 10)));
+      });
+    }
+
+    function seleccionar(id) {
+      franjaSeleccionada = id;
+      pintarFranjas();
+      const f = franjas.find(x => x.id === id);
+      document.getElementById('reserva-form').classList.remove('hidden');
+      document.getElementById('franja-resumen').textContent =
+        `Turno seleccionado: ${fmtFecha(f.fecha)} · ${f.hora_inicio.slice(0,5)}`;
+      document.getElementById('reserva-form').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      init().catch(() => showAlert('No se pudo contactar al servidor.', 'error'));
+
+      document.getElementById('reserva-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!franjaSeleccionada) return;
+        clearAlert();
+        try {
+          const r = await enviarReserva(e.target, franjaSeleccionada);
+          document.getElementById('reserva-form').classList.add('hidden');
+          document.getElementById('franjas-container').innerHTML = '';
+          document.getElementById('codigo-reserva').textContent = r.codigo_reserva;
+          document.getElementById('datos-reserva').textContent =
+            `${fmtFechaHora(r.franja.fecha, r.franja.hora_inicio)} · ${r.franja.tipo_tramite.nombre}`;
+          document.getElementById('confirmacion').classList.remove('hidden');
+          document.getElementById('confirmacion').scrollIntoView({ behavior: 'smooth' });
+        } catch (err) {
+          const msg = err.data?.errors
+            ? Object.values(err.data.errors).flat().join(' · ')
+            : (err.data?.message || err.message);
+          showAlert(msg, 'error');
+          // Refrescar cupos si fue por capacidad
+          franjas = await cargarFranjas({ modalidad });
+          pintarFranjas();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

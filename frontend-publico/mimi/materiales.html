@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es-UY">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Materiales de Estudio · IMSJ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/common.js" defer></script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+  <div id="navbar" data-active="materiales"></div>
+
+  <main class="flex-1 max-w-5xl mx-auto w-full px-4 py-8">
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold text-slate-800">Materiales de Estudio</h1>
+      <p class="text-slate-600">Recursos para aspirantes a la libreta de conducir.</p>
+    </header>
+
+    <div id="alert-container" class="mb-4"></div>
+
+    <section id="materiales-list" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <p class="text-slate-500 col-span-full">Cargando materiales…</p>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script>
+    function escapeHtml(s){
+      return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    async function cargar() {
+      try {
+        const items = await API.get('/materiales/publicados');
+        const cont = document.getElementById('materiales-list');
+        if (!items.length) {
+          cont.innerHTML = '<p class="text-slate-500 col-span-full">No hay materiales publicados en este momento.</p>';
+          return;
+        }
+        cont.innerHTML = items.map(m => `
+          <article class="bg-white rounded-lg shadow p-4 flex flex-col">
+            <h2 class="font-bold text-lg mb-2">${escapeHtml(m.titulo)}</h2>
+            <p class="text-slate-700 text-sm flex-1">${escapeHtml(m.descripcion || '')}</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              ${m.archivo_url ? `<a href="${m.archivo_url}" target="_blank" rel="noopener"
+                class="bg-blue-700 hover:bg-blue-800 text-white px-3 py-1.5 rounded text-sm">Descargar</a>` : ''}
+              ${m.enlace ? `<a href="${m.enlace}" target="_blank" rel="noopener"
+                class="border border-blue-700 text-blue-700 hover:bg-blue-50 px-3 py-1.5 rounded text-sm">Ver enlace</a>` : ''}
+            </div>
+          </article>
+        `).join('');
+      } catch {
+        showAlert('No se pudieron cargar los materiales.', 'error');
+      }
+    }
+    document.addEventListener('DOMContentLoaded', cargar);
+  </script>
+</body>
+</html>

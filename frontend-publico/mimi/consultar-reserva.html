@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es-UY">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consultar Reserva · IMSJ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/common.js" defer></script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+  <div id="navbar" data-active="consulta"></div>
+
+  <main class="flex-1 max-w-2xl mx-auto w-full px-4 py-8">
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold text-slate-800">Consultar mi Reserva</h1>
+      <p class="text-slate-600">Ingresá el documento y el código que recibiste al reservar.</p>
+    </header>
+
+    <div id="alert-container" class="mb-4"></div>
+
+    <form id="consulta-form" class="bg-white rounded-lg shadow p-6 space-y-4">
+      <label class="block">
+        <span class="text-sm font-semibold">Documento *</span>
+        <input name="documento" required maxlength="20" pattern="[0-9.\-Kk]+"
+               class="mt-1 w-full border-slate-300 border rounded px-3 py-2">
+      </label>
+      <label class="block">
+        <span class="text-sm font-semibold">Código de reserva *</span>
+        <input name="codigo" required maxlength="16"
+               class="mt-1 w-full border-slate-300 border rounded px-3 py-2 uppercase font-mono">
+      </label>
+      <button class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded font-semibold">Consultar</button>
+    </form>
+
+    <section id="resultado" class="hidden bg-white rounded-lg shadow p-6 mt-6">
+      <h2 class="font-bold text-lg mb-3">Detalle de la reserva</h2>
+      <dl id="detalle" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm"></dl>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('consulta-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        clearAlert();
+        const fd = new FormData(e.target);
+        const qs = new URLSearchParams({
+          documento: fd.get('documento'),
+          codigo_reserva: fd.get('codigo').toUpperCase(),
+        });
+        try {
+          const a = await API.get('/agendas/my?' + qs.toString());
+          const filas = [
+            ['Código', a.codigo_reserva],
+            ['Estado', a.estado],
+            ['Trámite', a.tipo_tramite.nombre],
+            ['Modalidad', a.modalidad],
+            ['Fecha', fmtFecha(a.franja.fecha)],
+            ['Horario', `${a.franja.hora_inicio.slice(0,5)} – ${a.franja.hora_fin.slice(0,5)}`],
+            ['Costo especial', a.costo_especial ? fmtMoneda(a.costo_especial) : '—'],
+          ];
+          document.getElementById('detalle').innerHTML = filas.map(([k,v]) =>
+            `<div><dt class="text-slate-500">${k}</dt><dd class="font-semibold">${v}</dd></div>`).join('');
+          document.getElementById('resultado').classList.remove('hidden');
+        } catch (err) {
+          showAlert(err.status === 404 ? 'No se encontró una reserva con esos datos.' : 'Error de consulta.', 'error');
+          document.getElementById('resultado').classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

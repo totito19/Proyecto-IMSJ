@@ -1,0 +1,17 @@
+/* Estilos personalizados además de Tailwind CDN */
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.prose-cuerpo {
+  white-space: pre-wrap;
+  line-height: 1.7;
+}
+.skeleton {
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton 1.2s ease-in-out infinite;
+}
+@keyframes skeleton {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
