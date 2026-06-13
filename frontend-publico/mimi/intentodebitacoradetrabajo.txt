@@ -1,0 +1,76 @@
+Bitácora de Proyecto - Día 1
+Integrante: Verónica Romero
+Curso: 3.º Año de Informática
+
+
+Rol dentro del proyecto: Diseñadora y encargada del maquetado de la interfaz web.
+
+Actividades realizadas
+
+Durante la primera jornada de trabajo se realizó una etapa de investigación y análisis orientada a la planificación del diseño de la interfaz del proyecto. El sistema a desarrollar está destinado a la Intendencia de San José de Mayo, específicamente para el área de Tránsito.
+
+Como primera actividad, se llevó a cabo un estudio de las páginas web institucionales de la Intendencia con el objetivo de identificar los elementos visuales característicos de su identidad digital. Para ello se analizaron aspectos tales como las paletas de colores utilizadas, la distribución de los componentes dentro de las páginas, la iconografía empleada y los criterios generales de diseño y navegación.
+
+A partir de la información recopilada, se elaboró un esquema conceptual preliminar que permitió definir la estructura visual que se desea transmitir a los futuros usuarios del sistema. Este proceso tuvo como finalidad garantizar que la propuesta mantuviera coherencia con la imagen institucional de la Intendencia, al mismo tiempo que ofreciera una experiencia de usuario clara, intuitiva y accesible.
+
+Resultados obtenidos
+
+Identificación de la identidad visual institucional de la Intendencia de San José de Mayo. Análisis de la organización y jerarquización de contenidos presentes en los sitios web de referencia. Definición de una propuesta conceptual inicial para la futura interfaz del sistema. Establecimiento de criterios de diseño enfocados en la usabilidad y la experiencia del usuario.
+
+
+
+Bitácora de Proyecto - Día 2
+
+Integrante: Verónica Romero
+Curso: 3.º Año de Informática
+Rol dentro del proyecto: Diseñadora y encargada del maquetado de la interfaz web.
+
+Actividades realizadas
+
+Durante la segunda jornada de trabajo se profundizó en el análisis de la plataforma actual de la Intendencia de San José de Mayo, específicamente en la sección correspondiente al área de Tránsito. El objetivo de esta etapa fue identificar oportunidades de mejora en términos de organización de la información, accesibilidad y experiencia de usuario.
+
+
+Tras una evaluación detallada de la interfaz existente, se detectaron diversas problemáticas relacionadas con la arquitectura de la información. Entre las principales observaciones se destacó la falta de una estructura clara para la presentación de contenidos, lo que puede generar confusión en los usuarios al momento de buscar información específica. Asimismo, se identificaron dificultades en la navegación, especialmente para personas que no poseen experiencia previa interactuando con portales institucionales.
+
+También se observó que la distribución de los elementos visuales y la organización general de los contenidos no favorecen una experiencia de navegación intuitiva, lo que incrementa el tiempo necesario para localizar información relevante. Adicionalmente, se detectaron inconsistencias en la temática visual y en algunos aspectos de la identidad gráfica, reduciendo la cohesión con la imagen institucional que se espera transmitir.
+
+Una vez documentadas las observaciones y posibles mejoras, se mantuvo una instancia de intercambio con el líder del grupo de trabajo, durante la cual se presentaron los hallazgos obtenidos y las propuestas preliminares de solución. Esta actividad permitió recibir retroalimentación, contrastar diferentes enfoques de diseño y enriquecer la planificación del proyecto mediante la incorporación de nuevas ideas y perspectivas.
+
+
+Como resultado de este proceso de análisis y colaboración, se definieron criterios más claros para el desarrollo de la interfaz y se dio inicio a la etapa de diseño de la página web, estableciendo las bases visuales y funcionales que servirán para la construcción del prototipo.
+
+Resultados obtenidos
+
+Identificación de problemas de usabilidad y organización de la información en la plataforma actual.
+Detección de oportunidades de mejora en la experiencia de usuario y accesibilidad.
+Presentación y discusión de propuestas de mejora con el líder del equipo.
+Obtención de retroalimentación para fortalecer el planteamiento del diseño.
+Inicio de la fase de diseño y planificación visual de la nueva interfaz web.
+
+Bitácora de Proyecto - Día 3
+
+Integrante: Verónica Romero
+Curso: 3.º Año de Informática
+Rol dentro del proyecto: Diseñadora y encargada del maquetado de la interfaz web.
+
+Objetivo de la jornada
+
+Desarrollar el maquetado inicial del sitio web y definir la estructura visual y conceptual de la interfaz del proyecto.
+Actividades realizadas
+
+Durante la tercera jornada de trabajo se dio inicio al proceso de diseño del maquetado utilizando la herramienta Figma. En esta etapa se comenzó a construir el mapa conceptual de la interfaz, estableciendo la organización visual de los elementos y la estructura general que se desea transmitir en el sitio web del proyecto.
+
+El trabajo se centró en definir la disposición de secciones, la jerarquía de contenidos y los primeros lineamientos gráficos del diseño. Sin embargo, durante el desarrollo surgieron inconvenientes técnicos relacionados con el funcionamiento de Figma, lo que dificultó la continuidad normal de las tareas de diseño.
+
+Ante esta situación, se informó al equipo de trabajo sobre los problemas detectados y se propuso continuar el maquetado mediante la herramienta Canva, con el fin de mantener el avance del proyecto sin afectar los tiempos de desarrollo. La propuesta fue presentada al líder del grupo, quien aprobó el cambio de herramienta de diseño.
+
+Una vez realizada la transición, se continuó con normalidad el proceso de maquetado y se lograron completar las primeras cuatro plantillas correspondientes a la interfaz del sitio web.
+
+
+Resultados obtenidos
+
+Inicio del diseño del maquetado y del mapa conceptual de la interfaz web.
+Definición preliminar de la estructura visual y organización de contenidos del sitio.
+Detección y comunicación de problemas técnicos relacionados con el uso de Figma.
+Coordinación con el equipo y aprobación del cambio de herramienta de diseño a Canva.
+Finalización de las primeras cuatro plantillas de maquetado correspondientes a la interfaz del proyecto.
