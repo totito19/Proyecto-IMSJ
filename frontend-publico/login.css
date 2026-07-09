@@ -1,0 +1,139 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+}
+
+
+.navbar{
+    width:100%;
+    height:70px;
+    background:#2410B8;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 22px;
+}
+
+.logo img{
+    height:55px;
+}
+
+.menu-btn{
+    border:none;
+    background:none;
+    color:white;
+    font-size:42px;
+    cursor:pointer;
+}
+
+
+.container{
+    display:grid;
+    grid-template-columns:55% 45%;
+    height:calc(100vh - 70px);
+}
+
+
+.login{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f5f5f5;
+}
+
+.card{
+
+    width:390px;
+
+    background:white;
+
+    padding:28px;
+
+    border-radius:18px;
+
+    box-shadow:0 15px 30px rgba(0,0,0,.18);
+
+}
+
+.card label{
+
+    display:block;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    margin-bottom:10px;
+
+    margin-top:18px;
+
+}
+
+.card input{
+
+    width:100%;
+
+    height:62px;
+
+    border:2px solid #B9A9FF;
+
+    border-radius:14px;
+
+    outline:none;
+
+    padding:15px;
+
+    font-size:18px;
+
+    margin-bottom:18px;
+
+}
+
+.card input:focus{
+
+    border-color:#6846ff;
+
+}
+
+.card button{
+
+    width:140px;
+
+    height:56px;
+
+    background:#0D4CD6;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.card button:hover{
+
+    background:#093cb1;
+
+}
+
+.imagen{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-size:cover;
+}
