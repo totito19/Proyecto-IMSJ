@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agenda de trámites | IMSJ</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="app-page">
+  <header>
+    <p><strong>Intendencia de San José | Tránsito Seguro</strong></p>
+    <h1>Agenda de trámites</h1>
+    <form role="search"><label for="buscar">Buscar:</label> <input id="buscar" type="search" name="buscar"></form>
+    <p>M. Vázquez · Administrador</p>
+  </header>
+
+  <nav aria-label="Secciones principales">
+    <a href="agenda.html" aria-current="page">Agenda</a> |
+    <a href="noticias.html">Noticias</a> |
+    <a href="franjas.html">Franjas</a> |
+    <a href="materiales.html">Materiales</a> |
+    <a href="preguntas-frecuentes.html">Preguntas frecuentes</a> |
+    <a href="index.html">Cerrar sesión</a>
+  </nav>
+
+  <main>
+    <section class="summary" aria-label="Resumen de reservas">
+      <h2>Resumen</h2>
+      <p><strong>8</strong> Total reservas</p>
+      <p><strong>2</strong> Pendientes</p>
+      <p><strong>3</strong> Confirmadas</p>
+      <p><strong>2</strong> Urgentes</p>
+    </section>
+
+    <section>
+      <h2>Reservas</h2>
+      <p>
+        Vista: <button type="button">Día</button> <button type="button">Semana</button> <button type="button">Mes</button>
+      </p>
+      <p><button type="button">Anterior</button> <strong>16 Junio 2025</strong> <button type="button">Siguiente</button></p>
+      <form>
+        <label for="tipo">Tipo:</label>
+        <select id="tipo"><option>Todos los tipos</option><option>Renovación Normal</option><option>Renovación Urgente</option><option>Prueba de Manejo</option></select>
+        <label for="estado">Estado:</label>
+        <select id="estado"><option>Todos los estados</option><option>Confirmada</option><option>Pendiente</option><option>Urgente</option><option>Cancelada</option></select>
+      </form>
+
+      <table border="1">
+        <thead><tr><th>Fecha</th><th>Hora</th><th>Ciudadano</th><th>Documento</th><th>Tipo</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody>
+          <tr><td>16/06/2025</td><td>08:00</td><td>Ana García López</td><td>1.234.567-8</td><td>Renovación Normal</td><td>Confirmada</td><td><button>Ver</button> <button>Confirmar</button> <button>Cancelar</button></td></tr>
+          <tr><td>16/06/2025</td><td>09:30</td><td>Carlos Mendoza</td><td>2.345.678-9</td><td>Prueba de Manejo</td><td>Pendiente</td><td><button>Ver</button> <button>Confirmar</button> <button>Cancelar</button></td></tr>
+          <tr><td>16/06/2025</td><td>10:00</td><td>Laura Fernández</td><td>3.456.789-0</td><td>Renovación Urgente</td><td>Urgente</td><td><button>Ver</button> <button>Confirmar</button> <button>Cancelar</button></td></tr>
+          <tr><td>16/06/2025</td><td>11:00</td><td>Roberto Silva</td><td>4.567.890-1</td><td>Renovación Normal</td><td>Confirmada</td><td><button>Ver</button> <button>Confirmar</button> <button>Cancelar</button></td></tr>
+          <tr><td>16/06/2025</td><td>13:00</td><td>María Torres</td><td>5.678.901-2</td><td>Prueba de Manejo</td><td>Pendiente</td><td><button>Ver</button> <button>Confirmar</button> <button>Cancelar</button></td></tr>
+          <tr><td>16/06/2025</td><td>14:30</td><td>Diego Ramos</td><td>6.789.012-3</td><td>Renovación Normal</td><td>Cancelada</td><td><button>Ver</button> <button>Confirmar</button> <button>Cancelar</button></td></tr>
+          <tr><td>17/06/2025</td><td>08:30</td><td>Sofía Herrera</td><td>7.890.123-4</td><td>Renovación Urgente</td><td>Urgente</td><td><button>Ver</button> <button>Confirmar</button> <button>Cancelar</button></td></tr>
+          <tr><td>17/06/2025</td><td>09:00</td><td>Pablo Castillo</td><td>8.901.234-5</td><td>Prueba de Manejo</td><td>Confirmada</td><td><button>Ver</button> <button>Confirmar</button> <button>Cancelar</button></td></tr>
+        </tbody>
+      </table>
+      <p>Mostrando 8 de 8 reservas</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Franjas de disponibilidad | IMSJ</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="app-page">
+  <header>
+    <p><strong>Intendencia de San José | Tránsito Seguro</strong></p>
+    <h1>Franjas de disponibilidad</h1>
+    <form role="search"><label for="buscar">Buscar:</label> <input id="buscar" type="search" name="buscar"></form>
+    <p>M. Vázquez · Administrador</p>
+  </header>
+
+  <nav aria-label="Secciones principales">
+    <a href="agenda.html">Agenda</a> |
+    <a href="noticias.html">Noticias</a> |
+    <a href="franjas.html" aria-current="page">Franjas</a> |
+    <a href="materiales.html">Materiales</a> |
+    <a href="preguntas-frecuentes.html">Preguntas frecuentes</a> |
+    <a href="index.html">Cerrar sesión</a>
+  </nav>
+
+  <main>
+    <section>
+      <h2>Franjas de disponibilidad</h2>
+      <p>6 franjas activas</p>
+      <form>
+        <label for="tipo">Filtrar por tipo:</label>
+        <select id="tipo"><option>Todos los tipos</option><option>Renovación Normal</option><option>Renovación Urgente</option><option>Prueba de manejo</option></select>
+        <button type="button">Nueva franja</button>
+      </form>
+
+      <table border="1">
+        <thead><tr><th>Fecha</th><th>Horario</th><th>Tipo</th><th>Cupos</th><th>Reservas</th><th>Disponibles</th><th>Acciones</th></tr></thead>
+        <tbody>
+          <tr><td>16/06/2025</td><td>08:00 – 09:00</td><td>Renovación Normal</td><td>6</td><td>4</td><td>2</td><td><button>Editar</button> <button>Eliminar</button></td></tr>
+          <tr><td>16/06/2025</td><td>09:00 – 10:00</td><td>Prueba de manejo</td><td>4</td><td>4</td><td>0</td><td><button>Editar</button> <button>Eliminar</button></td></tr>
+          <tr><td>16/06/2025</td><td>10:00 – 11:00</td><td>Renovación Urgente</td><td>3</td><td>2</td><td>1</td><td><button>Editar</button> <button>Eliminar</button></td></tr>
+          <tr><td>16/06/2025</td><td>13:00 – 14:00</td><td>Renovación Normal</td><td>6</td><td>1</td><td>5</td><td><button>Editar</button> <button>Eliminar</button></td></tr>
+          <tr><td>17/06/2025</td><td>08:00 – 09:00</td><td>Prueba de manejo</td><td>4</td><td>0</td><td>4</td><td><button>Editar</button> <button>Eliminar</button></td></tr>
+          <tr><td>17/06/2025</td><td>09:00 – 10:00</td><td>Renovación Urgente</td><td>3</td><td>3</td><td>0</td><td><button>Editar</button> <button>Eliminar</button></td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>
