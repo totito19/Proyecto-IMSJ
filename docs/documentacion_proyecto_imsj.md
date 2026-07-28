@@ -92,8 +92,7 @@ que impedían estimar correctamente el trabajo:
 | Rol | Participante | Responsabilidad |
 |---|---|---|
 | Cliente / referente institucional | Inspector de tránsito de la IMSJ | Explica el proceso real y define prioridades |
-| Dirección | Dirección de la Sección Tránsito | Aprueba las publicaciones antes de hacerse visibles |
-| Equipo de desarrollo | Equipo de estudiantes | Releva necesidades y las transforma en requerimientos |
+|Equipo de desarrollo | Equipo de estudiantes | Releva necesidades y las transforma en requerimientos |
 
 ---
 
