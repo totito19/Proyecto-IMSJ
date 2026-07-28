@@ -74,3 +74,71 @@ Definición preliminar de la estructura visual y organización de contenidos del
 Detección y comunicación de problemas técnicos relacionados con el uso de Figma.
 Coordinación con el equipo y aprobación del cambio de herramienta de diseño a Canva.
 Finalización de las primeras cuatro plantillas de maquetado correspondientes a la interfaz del proyecto.
+
+
+Bitácora de Proyecto - Día 4
+Integrante: Verónica Romero
+Curso: 3.º Año de Informática
+
+Rol dentro del proyecto: Diseñadora y encargada del maquetado de la interfaz web.
+
+Objetivo de la jornada
+
+Avanzar en el desarrollo de la interfaz del sistema, iniciando el diseño de la sección de noticias públicas y colaborando en la resolución de incidencias detectadas durante el desarrollo.
+
+Actividades realizadas
+
+Durante la cuarta jornada de trabajo se dio inicio al desarrollo de la landing page correspondiente al panel de noticias públicas, definiendo la estructura visual y la distribución inicial de los componentes que conformarán esta sección del sitio web.
+
+Paralelamente, durante las pruebas de integración del proyecto se identificaron inconvenientes en el funcionamiento del módulo de inicio de sesión, desarrollado por otro integrante del equipo. Con el objetivo de mantener la continuidad del desarrollo y asegurar la correcta integración de los distintos módulos, se realizó la revisión y corrección de los errores detectados. Una vez finalizadas las modificaciones, se informó al líder del equipo sobre las tareas realizadas y las soluciones implementadas.
+
+Posteriormente, se retomó el desarrollo de la sección de noticias públicas, concentrando los esfuerzos en la construcción de su estructura y organización visual.
+
+Durante esta etapa también se presentó una dificultad técnica relacionada con el funcionamiento del menú de navegación tipo hamburguesa, el cual no respondía de la forma esperada. Tras comunicar la incidencia al líder del equipo, se acordó dejar este aspecto como una tarea pendiente para ser abordada de forma conjunta en una jornada posterior, permitiendo continuar con el resto de las actividades planificadas sin afectar el avance general del proyecto.
+
+Resultados obtenidos
+
+Inicio del desarrollo de la landing page correspondiente al panel de noticias públicas.
+Corrección de incidencias detectadas durante la integración del módulo de inicio de sesión.
+Comunicación de las tareas realizadas al líder del equipo para su seguimiento y validación.
+Identificación de un inconveniente en el funcionamiento del menú de navegación responsivo.
+Definición de la resolución del menú hamburguesa como tarea pendiente, con apoyo del líder del equipo.
+Continuidad del desarrollo del proyecto sin afectar la planificación general.
+
+Próximos pasos a seguir 
+
+Continuar con el desarrollo de las secciones restantes del sitio web, resolver el funcionamiento del menú de navegación responsivo y avanzar en la integración de los distintos componentes de la interfaz.
+
+
+
+
+Bitácora de Proyecto - Día 5
+Integrante: Verónica Romero
+Curso: 3.º Año de Informática
+
+Rol dentro del proyecto: Diseñadora y encargada del maquetado de la interfaz web.
+
+Objetivo de la jornada
+Presentar el avance del proyecto para recibir retroalimentación técnica y definir las mejoras necesarias para la siguiente etapa de desarrollo.
+
+Actividades realizadas
+Durante la quinta jornada se llevó a cabo una instancia de presentación del proyecto ante el docente Matías Santos, con el propósito de exponer los avances alcanzados y obtener observaciones que permitieran orientar las siguientes etapas del desarrollo.
+
+En esta oportunidad se presentó la funcionalidad correspondiente a la sección privada del sistema, destinada al uso interno por parte de los funcionarios del área de Tránsito de la Intendencia. Debido al estado de avance del proyecto, la sección pública del sitio web aún no fue incluida en la demostración.
+
+Una vez finalizada la presentación, el docente realizó una evaluación general del trabajo desarrollado y proporcionó una serie de recomendaciones orientadas a mejorar la calidad técnica y la experiencia de uso del sistema. Entre las principales observaciones se destacó la necesidad de unificar la convención de nombres utilizada en archivos y carpetas del proyecto, optimizar diversos aspectos relacionados con la experiencia e interfaz de usuario (UX/UI), revisar la implementación de la iconografía y garantizar el correcto funcionamiento de los botones e interacciones de la interfaz.
+
+Las observaciones recibidas fueron registradas por el equipo y definidas como objetivos prioritarios para la siguiente fase de desarrollo.
+
+Resultados obtenidos
+Presentación del avance del proyecto ante el docente Matías Santos.
+Validación del desarrollo realizado hasta el momento en la sección privada del sistema.
+Recepción de observaciones y sugerencias para mejorar la calidad del proyecto.
+Definición de las siguientes tareas prioritarias:
+Estandarizar la convención de nombres de archivos y carpetas.
+Mejorar la experiencia de usuario (UX) y la interfaz de usuario (UI).
+Revisar y optimizar la iconografía utilizada en el sistema.
+Implementar y verificar el correcto funcionamiento de los botones e interacciones de la interfaz.
+Próximos pasos
+
+Dar inicio a la implementación de las mejoras sugeridas durante la revisión docente, priorizando la organización del proyecto, la optimización de la interfaz y la funcionalidad de los componentes interactivos, con el objetivo de presentar una versión más completa y refinada en la próxima demostración.
