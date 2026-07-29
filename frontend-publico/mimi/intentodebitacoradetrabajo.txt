@@ -134,11 +134,12 @@ Resultados obtenidos
 Presentación del avance del proyecto ante el docente Matías Santos.
 Validación del desarrollo realizado hasta el momento en la sección privada del sistema.
 Recepción de observaciones y sugerencias para mejorar la calidad del proyecto.
-Definición de las siguientes tareas prioritarias:
-Estandarizar la convención de nombres de archivos y carpetas.
-Mejorar la experiencia de usuario (UX) y la interfaz de usuario (UI).
-Revisar y optimizar la iconografía utilizada en el sistema.
-Implementar y verificar el correcto funcionamiento de los botones e interacciones de la interfaz.
-Próximos pasos
 
+Definición de las siguientes tareas prioritarias:
+-Estandarizar la convención de nombres de archivos y carpetas.
+-Mejorar la experiencia de usuario (UX) y la interfaz de usuario (UI).
+-Revisar y optimizar la iconografía utilizada en el sistema.
+-Implementar y verificar el correcto funcionamiento de los botones e interacciones de la interfaz.
+
+Próximos pasos
 Dar inicio a la implementación de las mejoras sugeridas durante la revisión docente, priorizando la organización del proyecto, la optimización de la interfaz y la funcionalidad de los componentes interactivos, con el objetivo de presentar una versión más completa y refinada en la próxima demostración.
