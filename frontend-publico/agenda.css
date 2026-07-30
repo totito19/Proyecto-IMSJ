@@ -68,9 +68,7 @@ body{
 main{ 
     width:95%;
     margin:30px auto;
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:25px;
+   
 }
 
 main h1, main>p{
@@ -110,30 +108,25 @@ main section p{
     color: #555;
 }
 
-.primerafranja {
-    display: contents;
-    text-align: center;
-    align-content: space-between;
+.dia{
+    margin-bottom: 40px;
 
 }
-
-.segundafranja{
-    display: contents;
-    text-align: center;
+.dia h2{
+    margin-bottom: 15px;
 }
 
-.tercerafranja{
-    display: contents;
-    text-align: center;
+.horarios{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px
+    
 }
-
-.uno, .dos, .tres, .cuatro, .cinco, .seis{
-    border-radius: 10px;
-    width: 450px;
-    height: 250px;
-    align-content: center;
-    align-items: center;
-    text-decoration: #222;
-    font-size: 30px;
-    cursor: pointer;
+.horario{
+    flex: 1 1 180px;
+    background: rgba(245, 245, 245, 0.829);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba (0,0,0,.4);
 }
