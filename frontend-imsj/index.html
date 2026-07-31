@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ingreso | IMSJ Educación Vial</title>
+  <meta name="description" content="Panel administrativo de Educación Vial de la Intendencia de San José. Acceso exclusivo para personal autorizado.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="img/escudo-san-jose.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <main class="login">
+    <div class="login__wrap">
+      <div class="login__card">
+
+        <div class="login__head">
+          <img class="login__logo" src="img/escudo-san-jose.png" alt="Escudo de la Intendencia de San José" width="62" height="56">
+          <div class="login__title">IMSJ Educación Vial</div>
+          <div class="login__subtitle">Panel administrativo</div>
+        </div>
+
+        <form class="login__form" id="login-form" novalidate>
+          <div class="field">
+            <label for="correo">Correo electrónico</label>
+            <input class="input" id="correo" name="correo" type="email"
+                   placeholder="usuario@imsj.gub.uy" autocomplete="username" required>
+          </div>
+
+          <div class="field">
+            <label for="contrasena">Contraseña</label>
+            <input class="input" id="contrasena" name="contrasena" type="password"
+                   placeholder="••••••••" autocomplete="current-password" required>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--block" id="login-submit">Ingresar</button>
+
+          <p class="login__note">Acceso exclusivo para personal autorizado</p>
+        </form>
+
+      </div>
+
+      <p class="login__footer">Intendencia Municipal de San José · Sistema interno</p>
+    </div>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Materiales de estudio | IMSJ</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="img/escudo-san-jose.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="sidebar__backdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__brand">
+      <img class="sidebar__logo" src="img/escudo-san-jose.png" alt="Escudo de la Intendencia de San José" width="35" height="32">
+      <div>
+        <div class="sidebar__title">IMSJ</div>
+        <div class="sidebar__subtitle">Educación Vial</div>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Secciones principales">
+      <a class="sidebar__link" href="agenda.html"><span data-icon="calendar"></span>Agenda</a>
+      <a class="sidebar__link" href="noticias.html"><span data-icon="newspaper"></span>Noticias</a>
+      <a class="sidebar__link" href="franjas.html"><span data-icon="clock"></span>Franjas</a>
+      <a class="sidebar__link is-active" href="materiales.html" aria-current="page"><span data-icon="book-open"></span>Materiales</a>
+      <a class="sidebar__link" href="preguntas-frecuentes.html"><span data-icon="help-circle"></span>Preguntas frecuentes</a>
+    </nav>
+
+    <div class="sidebar__footer">
+      <a class="sidebar__link" href="index.html" data-logout><span data-icon="log-out"></span>Cerrar sesión</a>
+    </div>
+  </aside>
+
+  <div class="content">
+    <header class="topbar">
+      <div class="topbar__left">
+        <button type="button" class="topbar__burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar">
+          <span data-icon="menu" data-size="18"></span>
+        </button>
+        <h1 class="topbar__title">Materiales de estudio</h1>
+      </div>
+
+      <div class="topbar__right">
+        <div class="search">
+          <span data-icon="search" data-size="14"></span>
+          <label class="sr-only" for="topbar-search">Buscar</label>
+          <input id="topbar-search" type="search" placeholder="Buscar...">
+        </div>
+        <button type="button" class="bell" aria-label="Notificaciones">
+          <span data-icon="bell"></span>
+          <span class="bell__dot"></span>
+        </button>
+        <div class="user">
+          <div class="user__avatar">MV</div>
+          <div>
+            <div class="user__name">M. Vázquez</div>
+            <div class="user__role">Administrador</div>
+          </div>
+          <span class="user__chevron" data-icon="chevron-down" data-size="12"></span>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="card">
+        <div class="card__head">
+          <div>
+            <div class="card__title">Biblioteca de materiales</div>
+            <div class="card__meta"><span id="contador-materiales">0</span> materiales registrados</div>
+          </div>
+          <button type="button" class="btn btn--primary" id="btn-nuevo-material">
+            <span data-icon="plus" data-size="14"></span> Nuevo material
+          </button>
+        </div>
+
+        <div class="materials" id="lista-materiales"></div>
+        <div class="empty" id="empty-materiales" hidden>No hay materiales cargados.</div>
+      </section>
+
+      <div class="modal" id="modal-material" role="dialog" aria-modal="true" aria-labelledby="modal-material-title">
+        <div class="modal__backdrop"></div>
+        <div class="modal__panel">
+          <div class="modal__head">
+            <h3 class="modal__title" id="modal-material-title">Nuevo material</h3>
+            <button type="button" class="modal__close" data-modal-close aria-label="Cerrar"><span data-icon="x"></span></button>
+          </div>
+          <div class="modal__body">
+            <form class="form-body" id="form-material" novalidate>
+              <input type="hidden" id="m-id">
+              <div class="field">
+                <label for="m-nombre">Nombre del material</label>
+                <input class="input" id="m-nombre" placeholder="Ej: Reglamento de Tránsito 2025" required>
+              </div>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="m-tipo">Tipo</label>
+                  <select class="input" id="m-tipo">
+                    <option value="documento">Documento</option>
+                    <option value="video">Video</option>
+                    <option value="enlace">Enlace externo</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="m-estado">Estado</label>
+                  <select class="input" id="m-estado">
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field" id="campo-archivo">
+                <label for="m-archivo">Archivo</label>
+                <input type="file" id="m-archivo" accept=".pdf,.doc,.docx" hidden>
+                <button type="button" class="uploader" data-file="m-archivo">
+                  <span data-icon="upload" data-size="14"></span>
+                  <span data-file-label>Seleccionar archivo PDF o Word...</span>
+                </button>
+              </div>
+
+              <div class="field" id="campo-url" hidden>
+                <label for="m-url">URL</label>
+                <input class="input" id="m-url" type="url" placeholder="https://...">
+              </div>
+
+              <div class="form-foot">
+                <button type="button" class="btn btn--ghost" data-modal-close>Cancelar</button>
+                <button type="submit" class="btn btn--primary">Guardar material</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="js/icons.js"></script>
+<script src="js/data.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/materiales.js"></script>
+</body>
+</html>

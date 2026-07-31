@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Noticias | IMSJ</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="img/escudo-san-jose.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="sidebar__backdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__brand">
+      <img class="sidebar__logo" src="img/escudo-san-jose.png" alt="Escudo de la Intendencia de San José" width="35" height="32">
+      <div>
+        <div class="sidebar__title">IMSJ</div>
+        <div class="sidebar__subtitle">Educación Vial</div>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Secciones principales">
+      <a class="sidebar__link" href="agenda.html"><span data-icon="calendar"></span>Agenda</a>
+      <a class="sidebar__link is-active" href="noticias.html" aria-current="page"><span data-icon="newspaper"></span>Noticias</a>
+      <a class="sidebar__link" href="franjas.html"><span data-icon="clock"></span>Franjas</a>
+      <a class="sidebar__link" href="materiales.html"><span data-icon="book-open"></span>Materiales</a>
+      <a class="sidebar__link" href="preguntas-frecuentes.html"><span data-icon="help-circle"></span>Preguntas frecuentes</a>
+    </nav>
+
+    <div class="sidebar__footer">
+      <a class="sidebar__link" href="index.html" data-logout><span data-icon="log-out"></span>Cerrar sesión</a>
+    </div>
+  </aside>
+
+  <div class="content">
+    <header class="topbar">
+      <div class="topbar__left">
+        <button type="button" class="topbar__burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar">
+          <span data-icon="menu" data-size="18"></span>
+        </button>
+        <h1 class="topbar__title">Noticias</h1>
+      </div>
+
+      <div class="topbar__right">
+        <div class="search">
+          <span data-icon="search" data-size="14"></span>
+          <label class="sr-only" for="topbar-search">Buscar</label>
+          <input id="topbar-search" type="search" placeholder="Buscar...">
+        </div>
+        <button type="button" class="bell" aria-label="Notificaciones">
+          <span data-icon="bell"></span>
+          <span class="bell__dot"></span>
+        </button>
+        <div class="user">
+          <div class="user__avatar">MV</div>
+          <div>
+            <div class="user__name">M. Vázquez</div>
+            <div class="user__role">Administrador</div>
+          </div>
+          <span class="user__chevron" data-icon="chevron-down" data-size="12"></span>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="card">
+        <div class="card__head">
+          <div>
+            <div class="card__title">Noticias administrativas</div>
+            <div class="card__meta"><span id="contador-noticias">0</span> noticias en el sistema</div>
+          </div>
+          <button type="button" class="btn btn--primary" id="btn-nueva-noticia">
+            <span data-icon="plus" data-size="14"></span> Nueva noticia
+          </button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Título</th><th>Estado</th><th>Vigencia</th><th>Publicación</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="tbody-noticias"></tbody>
+          </table>
+          <div class="empty" id="empty-noticias" hidden>No hay noticias cargadas.</div>
+        </div>
+      </section>
+
+      <div class="modal" id="modal-noticia" role="dialog" aria-modal="true" aria-labelledby="modal-noticia-title">
+        <div class="modal__backdrop"></div>
+        <div class="modal__panel">
+          <div class="modal__head">
+            <h3 class="modal__title" id="modal-noticia-title">Nueva noticia</h3>
+            <button type="button" class="modal__close" data-modal-close aria-label="Cerrar"><span data-icon="x"></span></button>
+          </div>
+          <div class="modal__body">
+            <form class="form-body" id="form-noticia" novalidate>
+              <div class="field">
+                <label for="n-titulo">Título</label>
+                <input class="input" id="n-titulo" name="titulo" placeholder="Título de la noticia" required>
+              </div>
+              <div class="field">
+                <label for="n-resumen">Resumen</label>
+                <input class="input" id="n-resumen" name="resumen" placeholder="Resumen breve">
+              </div>
+              <div class="field">
+                <label for="n-cuerpo">Cuerpo</label>
+                <textarea class="input h-24" id="n-cuerpo" name="cuerpo" placeholder="Contenido completo de la noticia..."></textarea>
+              </div>
+              <div class="field">
+                <label for="n-portada">Portada</label>
+                <input type="file" id="n-portada" accept="image/*" hidden>
+                <button type="button" class="uploader" data-file="n-portada">
+                  <span data-icon="upload" data-size="14"></span>
+                  <span data-file-label>Seleccionar imagen...</span>
+                </button>
+              </div>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="n-estado">Estado</label>
+                  <select class="input" id="n-estado" name="estado">
+                    <option value="borrador">Borrador</option>
+                    <option value="publicada">Publicada</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="n-vigencia">Vigencia hasta</label>
+                  <input type="date" class="input" id="n-vigencia" name="vigencia">
+                </div>
+              </div>
+              <div class="form-foot">
+                <button type="button" class="btn btn--ghost" data-modal-close>Cancelar</button>
+                <button type="submit" class="btn btn--primary" id="btn-guardar-noticia">Guardar noticia</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="js/icons.js"></script>
+<script src="js/data.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/noticias.js"></script>
+</body>
+</html>
