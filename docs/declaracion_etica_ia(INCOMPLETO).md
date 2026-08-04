@@ -1,7 +1,7 @@
-# Declaración de Ética en el Uso de IA (PLANTILLA — A COMPLETAR)
+# Declaración de Ética en el Uso de IA
 
 **Proyecto:** Plataforma Web Educación Vial IMSJ
-**Equipo:** [COMPLETAR — nombres de todos los integrantes]
+**Equipo:** [Tomás Cabrera, Juan Robaina, Gabriela Romero, Juan Corrales, Veronica Romero.]
 **Fecha de la declaración:** [DD/MM/AAAA]
 
 ---
