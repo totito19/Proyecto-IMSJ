@@ -5,35 +5,32 @@
 ---
 
 ## Objetivo del proyecto
-Desarrollar una aplicación web que centralice la comunicación pública de la sección tránsito de la IMSJ, permitiendo que ciudadanos consulten noticias, accedan a materiales de estudio y preguntas frecuentes, mientras que el personal administrativo gestiona toda la información desde un dashboard con funciones equivalentes.
+Desarrollar una aplicación web que centralice la comunicación pública de la sección tránsito de la IMSJ, permitiendo que ciudadanos consulten noticias, accedan a materiales de estudio, preguntas frecuentes y agenden trámites de obtención y renovación de libreta de conducir, mientras que el personal administrativo gestiona toda la información desde un dashboard con funciones equivalentes.
 
 ---
 
 ## Justificación del proyecto
-Actualmente la información sobre noticias, materiales de estudio y preguntas frecuentes está dispersa o depende de canales no integrados. Esto genera:
-- Dificultad para que ciudadanos accedan a información centralizada
-- Información desactualizada o sin control de vigencia
+Actualmente la información sobre noticias, agendas de trámites y materiales de estudio está dispersa o depende de canales no integrados. Esto genera:
+- Dificultad para que ciudadanos accedan a información
+- Procesos administrativos manuales e ineficientes
+- Riesgo de dobles agendamientos
+- Falta de historial centralizado
 
 Una plataforma integrada mejorará la experiencia del ciudadano y la eficiencia operativa de la IMSJ.
 
 ---
 
 ## Alcance inicial
-- Interfaz pública (noticias, materiales de estudio, preguntas frecuentes)
-- Dashboard administrativo (crear/editar noticias, gestionar materiales, mantener preguntas frecuentes)
+- Interfaz pública (noticias, agenda, materiales de estudio, preguntas frecuentes)
+- Dashboard administrativo (crear/editar noticias, cargar franjas, gestionar materiales, mantener preguntas frecuentes)
 - Control de acceso con roles (público general vs personal IMSJ)
 - Historial de acciones administrativas
 - Responsividad móvil y accesibilidad básica
 
 ---
 
-## Alcance excluido
-- interfaz publica para agendarse a tramites relacionados a la libreta de conducir.
-- interfaz administrativa para definir franjas de disponibilidad para tramites.
-- Prevención de doble reserva de agenda
-- Confirmación visual de agenda para el ciudadano
-
-
+## alcance excluido
+- Aclaración: (Se excluyen las agendas en la entrega al cliente por petición del mismo, sin embargo se incluira en la entrega de proyecto de egreso para respetar el nivel de complejidad tecnica que exige el curso.) 
 ---
 
 ## Stakeholders principales
@@ -51,9 +48,11 @@ Una plataforma integrada mejorará la experiencia del ciudadano y la eficiencia 
 
 ## Criterios de éxito
 - El sistema registra y almacena correctamente todos los datos 
-- Ciudadano puede consultar noticias, materiales y preguntas frecuentes sin errores
-- Personal IMSJ puede crear, editar y publicar noticias, preguntas frecuentes y materiales de estudio correctamente
-- Interfaz es responsive y accesible desde dispositivos móviles
+- Ciudadano puede agendar una prueba de manejo completamente por la web
+- Personal IMSJ puede consultar la agenda semanal sin errores
+- Interfaz es responsive
+- Todo el código está ordenado correctamente en Github
 - Documentación completa 
+- Demo funciona sin fallos durante la defensa
 
 ---
