@@ -16,7 +16,8 @@ body{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:0 22px;
+    padding:12px 30px;
+    color: white;
 }
 
 .logo{
@@ -108,25 +109,41 @@ main section p{
     color: #555;
 }
 
-.dia{
-    margin-bottom: 40px;
-
+.container{
+     display: flex;
+     flex-wrap: wrap;
+     gap: 20px;
 }
-.dia h2{
-    margin-bottom: 15px;
-}
-
-.horarios{
+.primera, .segunda, .tercera, .cuarta, .cinco, .sexta{
+    width:95%;
+    margin:30px auto;
     display: flex;
     flex-wrap: wrap;
     gap: 20px
     
 }
-.horario{
-    flex: 1 1 180px;
+.primera, .segunda, .tercera, .cuarta, .cinco, .sexta{
+    flex: 1 1 170px;
     background: rgba(245, 245, 245, 0.829);
     border-radius: 15px;
     padding: 25px;
     text-align: center;
     box-shadow: 0 10px 20px rgba (0,0,0,.4);
+}
+.ver-enlace{
+    align-self: flex-start;
+    border: 1.5px solid #1b1470;
+    border-radius: 8px;
+    color: #efeeff;
+    background-color: #2410B8;
+    padding: 8px 22px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9 rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    
+}
+.ver-enlace:hover{
+    background-color: #1b1470;
+    color: #efeeff;
 }
