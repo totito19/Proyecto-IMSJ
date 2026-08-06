@@ -75,7 +75,7 @@
 | ID | Historia de Usuario | Trazabilidad | Prioridad | Estado |
 |----|---------------------|--------------|-----------|--------|
 | US25 | Como personal de IMSJ, quiero un historial completo de las acciones administrativas. | RNF3 | Media | Pendiente |
-| US26 | Como sistema, quiero proteger los datos personales registrados. | RNF4 | Alta | Pendiente |
+| US26 | Como usuario, quiero que los datos personales registrados esten protegidos. | RNF4 | Alta | Pendiente |
 | US27 | Como ciudadano, quiero usar el sistema cómodamente desde el móvil (mobile first). | RNF5 | Alta | Pendiente |
 | US28 | Como público general, quiero contar con accesibilidad básica al usar el sistema. | RNF6 | Media | Pendiente |
 
