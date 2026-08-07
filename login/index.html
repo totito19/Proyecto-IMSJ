@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión — Educación Vial IMSJ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="login-shell">
+    <div class="login-card">
+
+        <div class="login-head">
+            <img src="../frontend-publico/mimi/img Referencia/eSanjo.png" alt="Escudo de la Intendencia de San José">
+            <strong>Intendencia de San José</strong>
+            <span>Educación Vial</span>
+        </div>
+
+        <div class="role-tabs">
+            <button type="button" class="role-tab active" data-role="ciudadano">Ciudadano</button>
+            <button type="button" class="role-tab" data-role="admin">Personal IMSJ</button>
+        </div>
+
+        <!-- El alto de este contenedor se anima por JS al cambiar de rol,
+             para que el panel no "salte" de tamaño de golpe. -->
+        <div class="panels-wrap" id="panels-wrap">
+
+        <!-- ---------- Panel: Ciudadano ---------- -->
+        <div class="role-panel active" data-role="ciudadano">
+
+            <div class="mode-switch">
+                <button type="button" class="mode-btn active" data-mode="login">Iniciar sesión</button>
+                <button type="button" class="mode-btn" data-mode="registro">Registrarme</button>
+            </div>
+
+            <!-- El alto de este contenedor se anima por JS al cambiar de modo. -->
+            <div class="forms-wrap" id="forms-wrap">
+
+            <!-- Iniciar sesión como ciudadano: cédula + contraseña -->
+            <form class="mode-form active" data-mode="login" id="form-ciudadano-login" novalidate>
+                <div class="field">
+                    <label for="ciu-cedula">Cédula</label>
+                    <input class="input" id="ciu-cedula" name="cedula" type="text"
+                           placeholder="X.XXX.XXX-X" autocomplete="username" required>
+                </div>
+                <div class="field">
+                    <label for="ciu-password">Contraseña</label>
+                    <input class="input" id="ciu-password" name="password" type="password"
+                           placeholder="••••••••" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" id="btn-ciudadano-login">Ingresar</button>
+            </form>
+
+            <!-- Registro de ciudadano: autogestionado, sin intervención de IMSJ -->
+            <form class="mode-form" data-mode="registro" id="form-ciudadano-registro" novalidate>
+                <div class="field">
+                    <label for="reg-nombre">Nombre completo</label>
+                    <input class="input" id="reg-nombre" name="nombre" type="text"
+                           placeholder="Nombre y apellido" autocomplete="name" required>
+                </div>
+                <div class="field">
+                    <label for="reg-cedula">Cédula</label>
+                    <input class="input" id="reg-cedula" name="cedula" type="text"
+                           placeholder="X.XXX.XXX-X" autocomplete="username" required>
+                </div>
+                <div class="field">
+                    <label for="reg-correo">Correo electrónico</label>
+                    <input class="input" id="reg-correo" name="correo" type="email"
+                           placeholder="nombre@correo.com" autocomplete="email" required>
+                </div>
+                <div class="field">
+                    <label for="reg-password">Contraseña</label>
+                    <input class="input" id="reg-password" name="password" type="password"
+                           placeholder="••••••••" autocomplete="new-password" minlength="6" required>
+                </div>
+                <div class="field">
+                    <label for="reg-password-confirm">Confirmar contraseña</label>
+                    <input class="input" id="reg-password-confirm" name="password_confirm" type="password"
+                           placeholder="••••••••" autocomplete="new-password" minlength="6" required>
+                    <p class="field-error">Las contraseñas no coinciden.</p>
+                </div>
+                <button type="submit" class="btn btn-accent" id="btn-ciudadano-registro">Crear cuenta</button>
+            </form>
+
+            </div>
+
+        </div>
+
+        <!-- ---------- Panel: Personal IMSJ ---------- -->
+        <div class="role-panel" data-role="admin">
+
+            <!-- Solo inicio de sesión: no hay autorregistro administrativo -->
+            <form id="form-admin-login" novalidate>
+                <div class="field">
+                    <label for="adm-correo">Correo electrónico</label>
+                    <input class="input" id="adm-correo" name="correo" type="email"
+                           placeholder="usuario@imsj.gub.uy" autocomplete="username" required>
+                </div>
+                <div class="field">
+                    <label for="adm-password">Contraseña</label>
+                    <input class="input" id="adm-password" name="password" type="password"
+                           placeholder="••••••••" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" id="btn-admin-login">Ingresar</button>
+            </form>
+
+            <p class="admin-note">
+                <strong>Acceso exclusivo para personal autorizado.</strong>
+                Los usuarios administrativos no se autorregistran: las cuentas nuevas son creadas
+                desde el panel por un integrante del personal de IMSJ ya registrado en el sistema.
+            </p>
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <p class="login-footer">Intendencia Municipal de San José · Sección Tránsito</p>
+</div>
+
+<script src="../frontend-imsj/js/data.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>
