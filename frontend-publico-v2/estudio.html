@@ -18,8 +18,12 @@
             </span>
         </a>
         <div class="header-actions">
-            <a href="../login/index.html" class="btn-logout">Cerrar sesión</a>
-            <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+            <a href="../login/index.html" class="btn-logout" aria-label="Cerrar sesión" title="Cerrar sesión">
+                <i data-lucide="log-out" aria-hidden="true"></i>
+            </a>
+            <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+                <i data-lucide="menu" aria-hidden="true"></i>
+            </button>
         </div>
         <nav class="main-nav">
             <ul>
@@ -48,7 +52,7 @@
 
             <article class="card card-plain">
                 <div class="card-body">
-                    <h3>📘 Manual del conductor</h3>
+                    <h3 class="title-with-icon"><i data-lucide="book-open" aria-hidden="true"></i><span>Manual del conductor</span></h3>
                     <p>Manual oficial con normas, señalización y conducción defensiva.</p>
                     <a href="#" class="card-link">Leer más →</a>
                 </div>
@@ -56,7 +60,7 @@
 
             <article class="card card-plain">
                 <div class="card-body">
-                    <h3>🚦 Señales de tránsito principales</h3>
+                    <h3 class="title-with-icon"><i data-lucide="signpost" aria-hidden="true"></i><span>Señales de tránsito principales</span></h3>
                     <p>Repaso de las señales reglamentarias, preventivas e informativas.</p>
                     <a href="#" class="card-link">Leer más →</a>
                 </div>
@@ -64,7 +68,7 @@
 
             <article class="card card-plain">
                 <div class="card-body">
-                    <h3>🛡️ Conducción defensiva</h3>
+                    <h3 class="title-with-icon"><i data-lucide="shield-check" aria-hidden="true"></i><span>Conducción defensiva</span></h3>
                     <p>Buenas prácticas para anticipar riesgos y conducir con precaución.</p>
                     <a href="#" class="card-link">Leer más →</a>
                 </div>
@@ -77,9 +81,12 @@
 <footer class="site-footer">
     <div class="container">
         <div class="footer-grid">
-            <div>
-                <h4>Intendencia de San José — Sección Tránsito</h4>
-                <p>Plataforma de educación vial para la ciudadanía del departamento de San José.</p>
+            <div class="footer-brand">
+                <img class="footer-logo" src="../frontend-publico/mimi/img Referencia/eSanjo.png" alt="Logo de la Intendencia de San José">
+                <div>
+                    <h4>Intendencia de San José — Sección Tránsito</h4>
+                    <p>Plataforma de educación vial para la ciudadanía del departamento de San José.</p>
+                </div>
             </div>
             <div>
                 <h4>Navegación</h4>
@@ -102,6 +109,7 @@
     </div>
 </footer>
 
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

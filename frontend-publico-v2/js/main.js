@@ -1,5 +1,9 @@
 // Menú móvil + resaltado del enlace activo — frontend público (rediseño)
 document.addEventListener("DOMContentLoaded", () => {
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
+
     const toggle = document.querySelector(".menu-toggle");
     const nav = document.querySelector(".main-nav");
 

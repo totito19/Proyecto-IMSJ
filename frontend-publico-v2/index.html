@@ -18,8 +18,12 @@
             </span>
         </a>
         <div class="header-actions">
-            <a href="../login/index.html" class="btn-logout">Cerrar sesión</a>
-            <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+            <a href="../login/index.html" class="btn-logout" aria-label="Cerrar sesión" title="Cerrar sesión">
+                <i data-lucide="log-out" aria-hidden="true"></i>
+            </a>
+            <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+                <i data-lucide="menu" aria-hidden="true"></i>
+            </button>
         </div>
         <nav class="main-nav">
             <ul>
@@ -62,42 +66,42 @@
         <div class="card-grid">
             <div class="card card-plain">
                 <div class="card-body">
-                    <h3>📰 Noticias</h3>
+                    <h3 class="title-with-icon"><i data-lucide="newspaper" aria-hidden="true"></i><span>Noticias</span></h3>
                     <p>Anuncios y novedades vigentes de la Sección Tránsito.</p>
                     <a href="noticias.html" class="card-link">Ver noticias →</a>
                 </div>
             </div>
             <div class="card card-plain">
                 <div class="card-body">
-                    <h3>📚 Materiales de estudio</h3>
+                    <h3 class="title-with-icon"><i data-lucide="book-open" aria-hidden="true"></i><span>Materiales de estudio</span></h3>
                     <p>Manuales, señalización y conducción defensiva para aspirantes.</p>
                     <a href="estudio.html" class="card-link">Ver materiales →</a>
                 </div>
             </div>
             <div class="card card-plain">
                 <div class="card-body">
-                    <h3>❓ Preguntas frecuentes</h3>
+                    <h3 class="title-with-icon"><i data-lucide="circle-help" aria-hidden="true"></i><span>Preguntas frecuentes</span></h3>
                     <p>Dudas comunes sobre la prueba de manejo y la licencia.</p>
                     <a href="preguntas.html" class="card-link">Ver preguntas →</a>
                 </div>
             </div>
             <div class="card card-plain">
                 <div class="card-body">
-                    <h3>🗓️ Agenda</h3>
+                    <h3 class="title-with-icon"><i data-lucide="calendar-days" aria-hidden="true"></i><span>Agenda</span></h3>
                     <p>Elegí un horario disponible para dar la prueba de manejo.</p>
                     <a href="agenda.html" class="card-link">Ver agenda →</a>
                 </div>
             </div>
             <div class="card card-plain">
                 <div class="card-body">
-                    <h3>🔄 Renovación de licencia</h3>
+                    <h3 class="title-with-icon"><i data-lucide="refresh-cw" aria-hidden="true"></i><span>Renovación de licencia</span></h3>
                     <p>Modalidades normal y de emergencia, con horarios disponibles.</p>
                     <a href="renovagenda.html" class="card-link">Renovar licencia →</a>
                 </div>
             </div>
             <div class="card card-plain">
                 <div class="card-body">
-                    <h3>🔎 Consultar mi reserva</h3>
+                    <h3 class="title-with-icon"><i data-lucide="search" aria-hidden="true"></i><span>Consultar mi reserva</span></h3>
                     <p>Revisá el estado de tu reserva con tu documento y código.</p>
                     <a href="consulta.html" class="card-link">Consultar →</a>
                 </div>
@@ -109,9 +113,12 @@
 <footer class="site-footer">
     <div class="container">
         <div class="footer-grid">
-            <div>
-                <h4>Intendencia de San José — Sección Tránsito</h4>
-                <p>Plataforma de educación vial para la ciudadanía del departamento de San José.</p>
+            <div class="footer-brand">
+                <img class="footer-logo" src="../frontend-publico/mimi/img Referencia/eSanjo.png" alt="Logo de la Intendencia de San José">
+                <div>
+                    <h4>Intendencia de San José — Sección Tránsito</h4>
+                    <p>Plataforma de educación vial para la ciudadanía del departamento de San José.</p>
+                </div>
             </div>
             <div>
                 <h4>Navegación</h4>
@@ -134,6 +141,7 @@
     </div>
 </footer>
 
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
