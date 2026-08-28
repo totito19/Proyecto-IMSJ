@@ -1,0 +1,13 @@
+.git
+.ai
+.env
+AGENTS.md
+boost.json
+CLAUDE.md
+database/database.sqlite
+node_modules
+phpunit.xml
+README.md
+storage/logs/*
+tests
+vendor

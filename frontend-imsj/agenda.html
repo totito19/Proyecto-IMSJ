@@ -79,15 +79,15 @@
         <article class="kpi">
           <div class="kpi__icon kpi__icon--amber"><span data-icon="calendar-check" data-size="20"></span></div>
           <div>
-            <div class="kpi__value" id="kpi-pendientes">0</div>
-            <div class="kpi__label">Pendientes</div>
+            <div class="kpi__value" id="kpi-pruebas">0</div>
+            <div class="kpi__label">Pruebas de manejo</div>
           </div>
         </article>
         <article class="kpi">
           <div class="kpi__icon kpi__icon--emerald"><span data-icon="check" data-size="20"></span></div>
           <div>
-            <div class="kpi__value" id="kpi-confirmadas">0</div>
-            <div class="kpi__label">Confirmadas</div>
+            <div class="kpi__value" id="kpi-normales">0</div>
+            <div class="kpi__label">Renovaciones normales</div>
           </div>
         </article>
         <article class="kpi">
@@ -119,17 +119,9 @@
             <label class="sr-only" for="filtro-tipo">Filtrar por tipo</label>
             <select class="select" id="filtro-tipo">
               <option value="todos">Todos los tipos</option>
-              <option value="prueba">Prueba de manejo</option>
-              <option value="normal">Renovación normal</option>
-              <option value="urgente">Renovación urgente</option>
-            </select>
-            <label class="sr-only" for="filtro-estado">Filtrar por estado</label>
-            <select class="select" id="filtro-estado">
-              <option value="todos">Todos los estados</option>
-              <option value="confirmada">Confirmada</option>
-              <option value="pendiente">Pendiente</option>
-              <option value="cancelada">Cancelada</option>
-              <option value="urgente">Urgente</option>
+              <option value="PRUEBA_MANEJO">Prueba de manejo</option>
+              <option value="RENOVACION_NORMAL">Renovación normal</option>
+              <option value="RENOVACION_URGENTE">Renovación urgente</option>
             </select>
           </div>
         </div>
@@ -138,8 +130,8 @@
           <table class="data">
             <thead>
               <tr>
-                <th>Fecha</th><th>Hora</th><th>Ciudadano</th><th>Documento</th>
-                <th>Tipo</th><th>Estado</th><th>Acciones</th>
+                <th>Fecha</th><th>Horario</th><th>Cédula</th><th>Tipo</th>
+                <th>Reserva</th><th>Detalle</th>
               </tr>
             </thead>
             <tbody id="tbody-reservas"></tbody>
@@ -149,12 +141,6 @@
 
         <div class="card__foot">
           <span id="contador-reservas">Mostrando 0 de 0 reservas</span>
-          <div class="pager">
-            <button type="button" aria-label="Página anterior"><span data-icon="chevron-left" data-size="12"></span></button>
-            <button type="button" class="is-active">1</button>
-            <button type="button" class="is-num">2</button>
-            <button type="button" aria-label="Página siguiente"><span data-icon="chevron-right" data-size="12"></span></button>
-          </div>
         </div>
       </section>
 
@@ -175,7 +161,7 @@
 </div>
 
 <script src="js/icons.js"></script>
-<script src="js/data.js"></script>
+<script src="../shared/js/api.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/agenda.js"></script>
 </body>

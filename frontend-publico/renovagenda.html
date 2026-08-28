@@ -1,80 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="renovagenda.css">
-    
-    <title>Renovación de Licencia de Conducir</title>
+    <title>Renovación de licencia — Educación Vial IMSJ</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    
-<header class="navbar">
-    <div class="logo">
-        <img src="/frontend-publico/mimi/img Referencia/eSanjo.png" alt="">
-
-    <p id="p1"> Intendencia <br> de  San José </p>
-    <p id="p2"> Transito <br> Seguro</p>
-    </div>
-
-    <button class="menu-btn">
-        ☰
-    </button>
-
-</header>
- <nav class="navegacion">
-    <ul>
-        <a href="noticias.html"> Noticias </a>
-        <a href="estudio.html"> Materiales de estudio </a>
-        <a href="preguntas.html"> Preguntas frecuentes </a>
-        <a href="agenda.html"> Agenda</a>
-    </ul>
-</nav> 
-
-<body>
-    <main>
-        <h1> Renovación de Licencia de Conducir </h1>
-        <p> Aquí encontrarás la información necesaria para renovar tu licencia de conducir. </p>
-
-        <section class="container">
-            <h2> Puedes elegir entre estas modalidades de renovación</h2>
-            <div class="opciones">
-                <label class="opcion">
-                    <input type="radio" name="modalidad" checked>
-                    <div> 
-                        <h3>Renovacion normal </h3>
-                        <p> Esta renovación es la estandar, por lo tanto el costo es acorde a los estatus</p>
-                    </div>
-                </label>
-
-                <label class="opcion">
-                    <input type="radio" name="modalidad">
-                    <div> 
-                        <h3> Renovacción de emergencia </h3>
-                        <p> Esta renovación es para situaciones de emergencia, con un proceso aelerado</p>
-                        <span> Costo de urgencia: $2.500 pesos </span>
-                    </div>
-                </label>
-            </div>
-
-        </section>
-
-        <section class="horarios">
-            <h2> Estos son los horarios disponibles </h2>
-            <p class="fecha"> 08/06/2026 </p>
-            <div class="listahorario">
-                <button> 08:00 am </button>
-                <button> 09:00 am </button>
-                <button> 10:00 am </button>
-                <button> 11:00 am </button>
-                <button> 12:00 pm </button>
-                <button> 01:00 pm </button>
-            </div>
-
-
-
-        </section>
-
-
-    </main>
+<header class="site-header"><div class="container">
+    <a href="index.html" class="brand"><img src="mimi/img Referencia/eSanjo.png" alt="Escudo de la Intendencia de San José"><span class="brand-text"><strong>Intendencia de San José</strong><span>Tránsito Seguro</span></span></a>
+    <div class="header-actions"><a href="../login/index.html" class="btn-logout" aria-label="Cerrar sesión" title="Cerrar sesión"><i data-lucide="log-out"></i></a><button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false"><i data-lucide="menu"></i></button></div>
+    <nav class="main-nav"><ul><li><a href="index.html">Inicio</a></li><li><a href="noticias.html">Noticias</a></li><li><a href="estudio.html">Materiales de estudio</a></li><li><a href="preguntas.html">Preguntas frecuentes</a></li><li><a href="agenda.html">Agenda</a></li></ul></nav>
+</div></header>
+<section class="hero hero-compact"><div class="container"><span class="hero-eyebrow">Trámite</span><h1>Renovación de licencia</h1><p>Elegí la modalidad y una franja disponible.</p></div></section>
+<section class="section"><div class="container">
+    <div class="panel"><h3>Modalidad</h3><div class="options">
+        <label class="option"><input type="radio" name="modalidad" value="RENOVACION_NORMAL" checked><div><h4>Renovación normal</h4><p>Trámite estándar.</p></div></label>
+        <label class="option"><input type="radio" name="modalidad" value="RENOVACION_URGENTE"><div><h4>Renovación urgente</h4><p>Para situaciones de urgencia.</p></div></label>
+    </div></div>
+    <p id="turnos-status" class="content-status">Cargando franjas disponibles...</p>
+    <div data-turnos="RENOVACION_NORMAL"></div>
+</div></section>
+<footer class="site-footer"><div class="container"><div class="footer-brand"><img class="footer-logo" src="mimi/img Referencia/eSanjo.png" alt="Logo de la Intendencia de San José"><div><h4>Intendencia de San José — Sección Tránsito</h4><p>Plataforma de educación vial para la ciudadanía.</p></div></div><div class="footer-bottom">© 2026 Intendencia Municipal de San José — Sección Tránsito.</div></div></footer>
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../shared/js/api.js"></script>
+<script src="js/main.js"></script>
+<script src="js/turnos.js"></script>
 </body>
+</html>

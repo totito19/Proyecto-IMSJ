@@ -77,10 +77,12 @@
           </button>
         </div>
 
+        <p id="noticias-status" role="status" hidden></p>
+
         <div class="table-wrap">
           <table class="data">
             <thead>
-              <tr><th>Título</th><th>Estado</th><th>Vigencia</th><th>Publicación</th><th>Acciones</th></tr>
+              <tr><th>Título</th><th>Estado</th><th>Vigencia</th><th>Desde</th><th>Acciones</th></tr>
             </thead>
             <tbody id="tbody-noticias"></tbody>
           </table>
@@ -102,12 +104,8 @@
                 <input class="input" id="n-titulo" name="titulo" placeholder="Título de la noticia" required>
               </div>
               <div class="field">
-                <label for="n-resumen">Resumen</label>
-                <input class="input" id="n-resumen" name="resumen" placeholder="Resumen breve">
-              </div>
-              <div class="field">
                 <label for="n-cuerpo">Cuerpo</label>
-                <textarea class="input h-24" id="n-cuerpo" name="cuerpo" placeholder="Contenido completo de la noticia..."></textarea>
+                <textarea class="input h-24" id="n-cuerpo" name="cuerpo" placeholder="Contenido completo de la noticia..." required></textarea>
               </div>
               <div class="field">
                 <label for="n-portada">Portada</label>
@@ -143,7 +141,7 @@
 </div>
 
 <script src="js/icons.js"></script>
-<script src="js/data.js"></script>
+<script src="../shared/js/api.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/noticias.js"></script>
 </body>

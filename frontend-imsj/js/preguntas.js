@@ -1,102 +1,97 @@
-/* ═══════════════════════════════════════════════════════════════════════════
-   preguntas.js — mantenimiento de la sección "Preguntas frecuentes".
-   ═══════════════════════════════════════════════════════════════════════════ */
-
+let preguntas = [];
 let queryPreguntas = '';
 
 function preguntasFiltradas() {
-  const data = Store.get('preguntas');
-  if (!queryPreguntas) return data;
-  return data.filter((p) =>
-    [p.pregunta, p.respuesta].join(' ').toLowerCase().includes(queryPreguntas));
+  if (!queryPreguntas) return preguntas;
+  return preguntas.filter((item) =>
+    [item.pregunta, item.respuesta].join(' ').toLowerCase().includes(queryPreguntas));
 }
 
 function renderPreguntas() {
-  const data  = preguntasFiltradas();
-  const tbody = $('#tbody-preguntas');
-
-  tbody.innerHTML = data.map((p, i) => `
+  const data = preguntasFiltradas();
+  $('#tbody-preguntas').innerHTML = data.map((item, index) => `
     <tr>
-      <td class="col-num">${String(i + 1).padStart(2, '0')}</td>
-      <td><div class="cell-question">${esc(p.pregunta)}</div></td>
-      <td><div class="cell-answer">${esc(p.respuesta)}</div></td>
-      <td>${badge(p.visible ? 'visible' : 'oculta')}</td>
-      <td>
-        <div class="actions">
-          ${actionBtn('pencil', 'Editar', { data: { accion: 'editar', id: p.id } })}
-          ${actionBtn(p.visible ? 'eye-off' : 'eye', p.visible ? 'Ocultar' : 'Mostrar',
-                      { data: { accion: 'toggle', id: p.id } })}
-          ${actionBtn('trash-2', 'Eliminar', { danger: true, data: { accion: 'eliminar', id: p.id } })}
-        </div>
-      </td>
+      <td class="col-num">${String(index + 1).padStart(2, '0')}</td>
+      <td><div class="cell-question">${esc(item.pregunta)}</div></td>
+      <td><div class="cell-answer">${esc(item.respuesta)}</div></td>
+      <td>${badge(item.estado === 'PUBLICADO' ? 'visible' : 'oculta')}</td>
+      <td><div class="actions">
+        ${actionBtn('pencil', 'Editar', { data: { accion: 'editar', id: item.id } })}
+        ${actionBtn(item.estado === 'PUBLICADO' ? 'eye-off' : 'eye',
+                    item.estado === 'PUBLICADO' ? 'Ocultar' : 'Mostrar',
+                    { data: { accion: 'toggle', id: item.id } })}
+        ${actionBtn('trash-2', 'Eliminar', { danger: true, data: { accion: 'eliminar', id: item.id } })}
+      </div></td>
     </tr>`).join('');
-
   $('#empty-preguntas').hidden = data.length > 0;
-  $('#contador-preguntas').textContent = Store.get('preguntas').length;
+  $('#contador-preguntas').textContent = preguntas.length;
+  hydrateIcons($('#tbody-preguntas'));
 }
 
-/* ── Formulario ──────────────────────────────────────────────────────────── */
-
-function abrirFormularioPregunta(pregunta) {
-  $('#modal-pregunta-title').textContent = pregunta ? 'Editar pregunta frecuente' : 'Nueva pregunta frecuente';
-  $('#p-id').value        = pregunta ? pregunta.id : '';
-  $('#p-pregunta').value  = pregunta ? pregunta.pregunta : '';
-  $('#p-respuesta').value = pregunta ? pregunta.respuesta : '';
+function abrirFormularioPregunta(item) {
+  $('#form-pregunta').reset();
+  $('#modal-pregunta-title').textContent = item ? 'Editar pregunta frecuente' : 'Nueva pregunta frecuente';
+  $('#p-id').value = item ? item.id : '';
+  $('#p-pregunta').value = item ? item.pregunta : '';
+  $('#p-respuesta').value = item ? item.respuesta : '';
   Modal.open('modal-pregunta');
 }
 
-function guardarPregunta(e) {
-  e.preventDefault();
-  const form = $('#form-pregunta');
-  if (!form.reportValidity()) return;
-
-  const id = $('#p-id').value ? Number($('#p-id').value) : null;
-  const campos = {
-    pregunta:  $('#p-pregunta').value.trim(),
-    respuesta: $('#p-respuesta').value.trim(),
-  };
-
-  let data = Store.get('preguntas');
-  data = id
-    ? data.map((p) => (p.id === id ? { ...p, ...campos } : p))
-    : [...data, { id: Date.now(), ...campos, visible: true }];
-
-  Store.set('preguntas', data);
-  Modal.close('modal-pregunta');
-  form.reset();
-  renderPreguntas();
+async function cargarPreguntas() {
+  try {
+    const payload = await ImsjApi.request('/preguntas');
+    preguntas = Array.isArray(payload.preguntas) ? payload.preguntas : [];
+    renderPreguntas();
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
-/* ── Eventos ─────────────────────────────────────────────────────────────── */
+async function guardarPregunta(event) {
+  event.preventDefault();
+  if (!event.currentTarget.reportValidity()) return;
+  const id = $('#p-id').value;
+  try {
+    await ImsjApi.request(id ? `/preguntas/${id}` : '/preguntas', {
+      method: id ? 'PUT' : 'POST',
+      body: {
+        pregunta: $('#p-pregunta').value.trim(),
+        respuesta: $('#p-respuesta').value.trim(),
+      },
+    });
+    Modal.close('modal-pregunta');
+    await cargarPreguntas();
+  } catch (error) {
+    alert(error.message);
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
+  const usuario = ImsjApi.currentUser();
+  if (!usuario || usuario.rol !== 'PERSONAL_IMSJ') {
+    window.location.assign(`/login/index.html?return=${encodeURIComponent(window.location.pathname)}`);
+    return;
+  }
   $('#btn-nueva-pregunta').addEventListener('click', () => abrirFormularioPregunta(null));
   $('#form-pregunta').addEventListener('submit', guardarPregunta);
-
-  $('#tbody-preguntas').addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-accion]');
-    if (!btn) return;
-    const id = Number(btn.dataset.id);
-    const data = Store.get('preguntas');
-
-    if (btn.dataset.accion === 'editar') {
-      abrirFormularioPregunta(data.find((p) => p.id === id));
+  $('#tbody-preguntas').addEventListener('click', async (event) => {
+    const button = event.target.closest('[data-accion]');
+    if (!button) return;
+    const item = preguntas.find((pregunta) => pregunta.id === Number(button.dataset.id));
+    if (!item) return;
+    if (button.dataset.accion === 'editar') abrirFormularioPregunta(item);
+    if (button.dataset.accion === 'toggle') {
+      await ImsjApi.request(`/preguntas/${item.id}/estado`, {
+        method: 'PATCH',
+        body: { estado: item.estado === 'PUBLICADO' ? 'NO_PUBLICADO' : 'PUBLICADO' },
+      });
+      await cargarPreguntas();
     }
-
-    if (btn.dataset.accion === 'toggle') {
-      Store.set('preguntas', data.map((p) => (p.id === id ? { ...p, visible: !p.visible } : p)));
-      renderPreguntas();
-    }
-
-    if (btn.dataset.accion === 'eliminar') {
-      if (confirm('¿Eliminar esta pregunta frecuente?')) {
-        Store.set('preguntas', data.filter((p) => p.id !== id));
-        renderPreguntas();
-      }
+    if (button.dataset.accion === 'eliminar' && confirm('¿Eliminar esta pregunta frecuente?')) {
+      await ImsjApi.request(`/preguntas/${item.id}`, { method: 'DELETE' });
+      await cargarPreguntas();
     }
   });
-
-  initSearch((q) => { queryPreguntas = q; renderPreguntas(); });
-
-  renderPreguntas();
+  initSearch((query) => { queryPreguntas = query; renderPreguntas(); });
+  cargarPreguntas();
 });

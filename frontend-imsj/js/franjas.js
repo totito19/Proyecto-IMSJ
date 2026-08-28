@@ -1,124 +1,120 @@
-/* ═══════════════════════════════════════════════════════════════════════════
-   franjas.js — franjas de disponibilidad (normal, urgente y prueba de manejo).
-   ═══════════════════════════════════════════════════════════════════════════ */
+const TIPO_BADGE = {
+  PRUEBA_MANEJO: 'prueba',
+  RENOVACION_NORMAL: 'renovacion-normal',
+  RENOVACION_URGENTE: 'renovacion-urgente',
+};
 
+let franjas = [];
 let queryFranjas = '';
 
 function franjasFiltradas() {
   const tipo = $('#filtro-tipo').value;
-  return Store.get('franjas').filter((f) => {
-    const okTipo = tipo === 'todos' || f.tipo === tipo;
-    const okQuery = !queryFranjas ||
-      [f.fecha, f.horaInicio, f.horaFin, f.tipo]
+  return franjas.filter((franja) => {
+    const coincideTipo = tipo === 'todos' || franja.tipo === tipo;
+    const coincideTexto = !queryFranjas ||
+      [franja.fecha, franja.hora_inicio, franja.hora_fin, franja.tipo]
         .join(' ').toLowerCase().includes(queryFranjas);
-    return okTipo && okQuery;
+    return coincideTipo && coincideTexto;
   });
 }
 
 function renderFranjas() {
-  const data  = franjasFiltradas();
-  const tbody = $('#tbody-franjas');
-
-  tbody.innerHTML = data.map((f) => {
-    const disponibles = f.cupos - f.reservas;
-    const cls = disponibles === 0 ? 'avail--none' : disponibles <= 1 ? 'avail--low' : 'avail--ok';
+  const data = franjasFiltradas();
+  $('#tbody-franjas').innerHTML = data.map((franja) => {
+    const disponibles = Number(franja.cupos_disponibles);
+    const clase = disponibles === 0 ? 'avail--none' : disponibles <= 1 ? 'avail--low' : 'avail--ok';
     return `
-    <tr>
-      <td class="strong">${esc(f.fecha)}</td>
-      <td class="code">${esc(f.horaInicio)} – ${esc(f.horaFin)}</td>
-      <td>${badge(f.tipo)}</td>
-      <td class="muted">${f.cupos}</td>
-      <td class="muted">${f.reservas}</td>
-      <td><span class="avail ${cls}">${disponibles}</span></td>
-      <td>
-        <div class="actions">
-          ${actionBtn('pencil', 'Editar', { data: { accion: 'editar', id: f.id } })}
-          ${actionBtn('trash-2', 'Eliminar', { danger: true, data: { accion: 'eliminar', id: f.id } })}
-        </div>
-      </td>
-    </tr>`;
+      <tr>
+        <td class="strong">${formatDate(franja.fecha)}</td>
+        <td class="code">${esc(franja.hora_inicio)} – ${esc(franja.hora_fin)}</td>
+        <td>${badge(TIPO_BADGE[franja.tipo])}</td>
+        <td class="muted">${franja.cupos_totales}</td>
+        <td class="muted">${franja.reservas_count}</td>
+        <td><span class="avail ${clase}">${disponibles}</span></td>
+        <td><div class="actions">
+          ${actionBtn('pencil', 'Editar', { data: { accion: 'editar', id: franja.id } })}
+          ${actionBtn('trash-2', 'Eliminar', { danger: true, data: { accion: 'eliminar', id: franja.id } })}
+        </div></td>
+      </tr>`;
   }).join('');
-
   $('#empty-franjas').hidden = data.length > 0;
-  $('#contador-franjas').textContent = data.length;
-}
-
-/* ── Formulario ──────────────────────────────────────────────────────────── */
-
-/** dd/mm/aaaa → aaaa-mm-dd (para el <input type="date">). */
-function toISO(uy) {
-  const [d, m, y] = String(uy).split('/');
-  return d && m && y ? `${y}-${m}-${d}` : '';
+  $('#contador-franjas').textContent = franjas.length;
+  hydrateIcons($('#tbody-franjas'));
 }
 
 function abrirFormularioFranja(franja) {
+  $('#form-franja').reset();
   $('#modal-franja-title').textContent = franja ? 'Editar franja' : 'Nueva franja';
-  $('#f-id').value     = franja ? franja.id : '';
-  $('#f-fecha').value  = franja ? toISO(franja.fecha) : '';
-  $('#f-inicio').value = franja ? franja.horaInicio : '';
-  $('#f-fin').value    = franja ? franja.horaFin : '';
-  $('#f-tipo').value   = franja ? franja.tipo : 'renovacion-normal';
-  $('#f-cupos').value  = franja ? franja.cupos : 6;
+  $('#f-id').value = franja ? franja.id : '';
+  $('#f-fecha').value = franja ? franja.fecha : '';
+  $('#f-inicio').value = franja ? franja.hora_inicio : '';
+  $('#f-fin').value = franja ? franja.hora_fin : '';
+  $('#f-tipo').value = franja ? franja.tipo : 'RENOVACION_NORMAL';
+  $('#f-cupos').value = franja ? franja.cupos_totales : 6;
   Modal.open('modal-franja');
 }
 
-function guardarFranja(e) {
-  e.preventDefault();
-  const form = $('#form-franja');
-  if (!form.reportValidity()) return;
+async function cargarFranjas() {
+  try {
+    const payload = await ImsjApi.request('/franjas');
+    franjas = Array.isArray(payload.franjas) ? payload.franjas : [];
+    renderFranjas();
+  } catch (error) {
+    alert(error.message);
+  }
+}
 
+async function guardarFranja(event) {
+  event.preventDefault();
+  if (!event.currentTarget.reportValidity()) return;
   if ($('#f-fin').value <= $('#f-inicio').value) {
     alert('La hora de fin debe ser posterior a la hora de inicio.');
     return;
   }
-
-  const id = $('#f-id').value ? Number($('#f-id').value) : null;
-  const campos = {
-    fecha:      formatDate($('#f-fecha').value),
-    horaInicio: $('#f-inicio').value,
-    horaFin:    $('#f-fin').value,
-    tipo:       $('#f-tipo').value,
-    cupos:      Number($('#f-cupos').value) || 1,
-  };
-
-  let data = Store.get('franjas');
-  data = id
-    ? data.map((f) => (f.id === id ? { ...f, ...campos } : f))
-    : [...data, { id: Date.now(), ...campos, reservas: 0 }];
-
-  Store.set('franjas', data);
-  Modal.close('modal-franja');
-  form.reset();
-  renderFranjas();
+  const id = $('#f-id').value;
+  try {
+    await ImsjApi.request(id ? `/franjas/${id}` : '/franjas', {
+      method: id ? 'PUT' : 'POST',
+      body: {
+        fecha: $('#f-fecha').value,
+        hora_inicio: $('#f-inicio').value,
+        hora_fin: $('#f-fin').value,
+        tipo: $('#f-tipo').value,
+        cupos_totales: Number($('#f-cupos').value),
+      },
+    });
+    Modal.close('modal-franja');
+    await cargarFranjas();
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
-/* ── Eventos ─────────────────────────────────────────────────────────────── */
-
 document.addEventListener('DOMContentLoaded', () => {
+  const usuario = ImsjApi.currentUser();
+  if (!usuario || usuario.rol !== 'PERSONAL_IMSJ') {
+    window.location.assign(`/login/index.html?return=${encodeURIComponent(window.location.pathname)}`);
+    return;
+  }
+  $('#f-fecha').min = new Date().toISOString().slice(0, 10);
   $('#btn-nueva-franja').addEventListener('click', () => abrirFormularioFranja(null));
   $('#form-franja').addEventListener('submit', guardarFranja);
   $('#filtro-tipo').addEventListener('change', renderFranjas);
-
-  $('#tbody-franjas').addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-accion]');
-    if (!btn) return;
-    const id = Number(btn.dataset.id);
-    const data = Store.get('franjas');
-
-    if (btn.dataset.accion === 'editar') {
-      abrirFormularioFranja(data.find((f) => f.id === id));
-    }
-
-    if (btn.dataset.accion === 'eliminar') {
-      const f = data.find((x) => x.id === id);
-      if (f.reservas > 0 && !confirm(`Esta franja tiene ${f.reservas} reserva(s). ¿Eliminar igual?`)) return;
-      if (f.reservas === 0 && !confirm('¿Eliminar esta franja?')) return;
-      Store.set('franjas', data.filter((x) => x.id !== id));
-      renderFranjas();
+  $('#tbody-franjas').addEventListener('click', async (event) => {
+    const button = event.target.closest('[data-accion]');
+    if (!button) return;
+    const franja = franjas.find((item) => item.id === Number(button.dataset.id));
+    if (!franja) return;
+    if (button.dataset.accion === 'editar') abrirFormularioFranja(franja);
+    if (button.dataset.accion === 'eliminar' && confirm('¿Eliminar esta franja?')) {
+      try {
+        await ImsjApi.request(`/franjas/${franja.id}`, { method: 'DELETE' });
+        await cargarFranjas();
+      } catch (error) {
+        alert(error.message);
+      }
     }
   });
-
-  initSearch((q) => { queryFranjas = q; renderFranjas(); });
-
-  renderFranjas();
+  initSearch((query) => { queryFranjas = query; renderFranjas(); });
+  cargarFranjas();
 });

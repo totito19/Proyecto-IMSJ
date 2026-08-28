@@ -51,24 +51,15 @@
                            placeholder="••••••••" autocomplete="current-password" required>
                 </div>
                 <button type="submit" class="btn btn-primary" id="btn-ciudadano-login">Ingresar</button>
+                <p class="field-error" id="citizen-login-error" role="alert"></p>
             </form>
 
             <!-- Registro de ciudadano: autogestionado, sin intervención de IMSJ -->
             <form class="mode-form" data-mode="registro" id="form-ciudadano-registro" novalidate>
                 <div class="field">
-                    <label for="reg-nombre">Nombre completo</label>
-                    <input class="input" id="reg-nombre" name="nombre" type="text"
-                           placeholder="Nombre y apellido" autocomplete="name" required>
-                </div>
-                <div class="field">
                     <label for="reg-cedula">Cédula</label>
                     <input class="input" id="reg-cedula" name="cedula" type="text"
                            placeholder="X.XXX.XXX-X" autocomplete="username" required>
-                </div>
-                <div class="field">
-                    <label for="reg-correo">Correo electrónico</label>
-                    <input class="input" id="reg-correo" name="correo" type="email"
-                           placeholder="nombre@correo.com" autocomplete="email" required>
                 </div>
                 <div class="field">
                     <label for="reg-password">Contraseña</label>
@@ -79,9 +70,9 @@
                     <label for="reg-password-confirm">Confirmar contraseña</label>
                     <input class="input" id="reg-password-confirm" name="password_confirm" type="password"
                            placeholder="••••••••" autocomplete="new-password" minlength="6" required>
-                    <p class="field-error">Las contraseñas no coinciden.</p>
                 </div>
                 <button type="submit" class="btn btn-accent" id="btn-ciudadano-registro">Crear cuenta</button>
+                <p class="field-error" id="citizen-register-error" role="alert"></p>
             </form>
 
             </div>
@@ -94,9 +85,9 @@
             <!-- Solo inicio de sesión: no hay autorregistro administrativo -->
             <form id="form-admin-login" novalidate>
                 <div class="field">
-                    <label for="adm-correo">Correo electrónico</label>
-                    <input class="input" id="adm-correo" name="correo" type="email"
-                           placeholder="usuario@imsj.gub.uy" autocomplete="username" required>
+                    <label for="adm-cedula">Cédula</label>
+                    <input class="input" id="adm-cedula" name="cedula" type="text"
+                           placeholder="X.XXX.XXX-X" autocomplete="username" required>
                 </div>
                 <div class="field">
                     <label for="adm-password">Contraseña</label>
@@ -104,6 +95,7 @@
                            placeholder="••••••••" autocomplete="current-password" required>
                 </div>
                 <button type="submit" class="btn btn-primary" id="btn-admin-login">Ingresar</button>
+                <p class="field-error" id="admin-login-error" role="alert"></p>
             </form>
 
             <p class="admin-note">
@@ -121,7 +113,7 @@
     <p class="login-footer">Intendencia Municipal de San José · Sección Tránsito</p>
 </div>
 
-<script src="../frontend-imsj/js/data.js"></script>
+<script src="../shared/js/api.js"></script>
 <script src="js/login.js"></script>
 </body>
 </html>

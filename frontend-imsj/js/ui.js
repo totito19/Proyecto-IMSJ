@@ -128,7 +128,18 @@ function initSidebar() {
 
 function initLogout() {
   const link = $('[data-logout]');
-  if (link) link.addEventListener('click', () => Store.reset());
+  if (!link) return;
+
+  link.addEventListener('click', (event) => {
+    if (!window.ImsjApi) {
+      if (typeof Store !== 'undefined') Store.reset();
+      return;
+    }
+
+    event.preventDefault();
+    ImsjApi.logout();
+    window.location.assign(link.href);
+  });
 }
 
 /* ── Buscador de la barra superior ───────────────────────────────────────── */

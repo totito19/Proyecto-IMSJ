@@ -99,26 +99,26 @@
                 <div class="field">
                   <label for="m-tipo">Tipo</label>
                   <select class="input" id="m-tipo">
-                    <option value="documento">Documento</option>
-                    <option value="video">Video</option>
-                    <option value="enlace">Enlace externo</option>
+                    <option value="PDF">Documento PDF</option>
+                    <option value="IMAGEN">Imagen</option>
+                    <option value="VIDEO">Video por URL</option>
                   </select>
                 </div>
                 <div class="field">
                   <label for="m-estado">Estado</label>
                   <select class="input" id="m-estado">
-                    <option value="activo">Activo</option>
-                    <option value="inactivo">Inactivo</option>
+                    <option value="NO_PUBLICADO">No publicado</option>
+                    <option value="PUBLICADO">Publicado</option>
                   </select>
                 </div>
               </div>
 
               <div class="field" id="campo-archivo">
                 <label for="m-archivo">Archivo</label>
-                <input type="file" id="m-archivo" accept=".pdf,.doc,.docx" hidden>
+                <input type="file" id="m-archivo" accept=".pdf,.jpg,.jpeg,.png,.webp" hidden>
                 <button type="button" class="uploader" data-file="m-archivo">
                   <span data-icon="upload" data-size="14"></span>
-                  <span data-file-label>Seleccionar archivo PDF o Word...</span>
+                  <span data-file-label>Seleccionar archivo...</span>
                 </button>
               </div>
 
@@ -140,7 +140,7 @@
 </div>
 
 <script src="js/icons.js"></script>
-<script src="js/data.js"></script>
+<script src="../shared/js/api.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/materiales.js"></script>
 </body>

@@ -1,99 +1,183 @@
-/* ═══════════════════════════════════════════════════════════════════════════
-   noticias.js — alta, publicación/despublicación y baja de noticias.
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* Noticias administrativas conectadas a la API Laravel. */
 
+let noticias = [];
 let queryNoticias = '';
+let noticiaEnEdicion = null;
+
+function estadoVista(estado) {
+  return estado === 'PUBLICADO' ? 'publicada' : 'borrador';
+}
+
+function resumen(texto) {
+  return texto.length > 110 ? `${texto.slice(0, 110)}…` : texto;
+}
+
+function mostrarEstado(message = '', isError = false) {
+  const status = $('#noticias-status');
+  status.textContent = message;
+  status.hidden = !message;
+  status.style.color = isError ? '#b91c1c' : '';
+}
 
 function noticiasFiltradas() {
-  const data = Store.get('noticias');
-  if (!queryNoticias) return data;
-  return data.filter((n) =>
-    [n.titulo, n.resumen, n.estado, n.vigencia, n.fecha]
+  if (!queryNoticias) return noticias;
+  return noticias.filter((noticia) =>
+    [noticia.titulo, noticia.texto, noticia.estado]
       .join(' ').toLowerCase().includes(queryNoticias));
 }
 
 function renderNoticias() {
-  const data  = noticiasFiltradas();
   const tbody = $('#tbody-noticias');
+  const data = noticiasFiltradas();
 
-  tbody.innerHTML = data.map((n) => `
-    <tr>
-      <td>
-        <div class="cell-title">${esc(n.titulo)}</div>
-        <div class="cell-sub">${esc(n.resumen)}</div>
-      </td>
-      <td>${badge(n.estado)}</td>
-      <td class="muted">${esc(n.vigencia)}</td>
-      <td class="dim">${esc(n.fecha)}</td>
-      <td>
-        <div class="actions">
-          ${actionBtn('pencil', 'Editar', { data: { accion: 'editar', id: n.id } })}
-          ${actionBtn(n.estado === 'publicada' ? 'eye-off' : 'eye',
-                      n.estado === 'publicada' ? 'Despublicar' : 'Publicar',
-                      { data: { accion: 'toggle', id: n.id } })}
-          ${actionBtn('trash-2', 'Eliminar', { danger: true, data: { accion: 'eliminar', id: n.id } })}
-        </div>
-      </td>
-    </tr>`).join('');
+  tbody.innerHTML = data.map((noticia) => {
+    const estado = estadoVista(noticia.estado);
+    return `
+      <tr>
+        <td>
+          <div class="cell-title">${esc(noticia.titulo)}</div>
+          <div class="cell-sub">${esc(resumen(noticia.texto))}</div>
+        </td>
+        <td>${badge(estado)}</td>
+        <td class="muted">${esc(formatDate(noticia.fecha_fin_vigencia))}</td>
+        <td class="dim">${esc(formatDate(noticia.fecha_inicio_vigencia))}</td>
+        <td>
+          <div class="actions">
+            ${actionBtn('pencil', 'Editar', { data: { accion: 'editar', id: noticia.id } })}
+            ${actionBtn(estado === 'publicada' ? 'eye-off' : 'eye',
+                        estado === 'publicada' ? 'Despublicar' : 'Publicar',
+                        { data: { accion: 'toggle', id: noticia.id } })}
+            ${actionBtn('trash-2', 'Eliminar', { danger: true, data: { accion: 'eliminar', id: noticia.id } })}
+          </div>
+        </td>
+      </tr>`;
+  }).join('');
 
   $('#empty-noticias').hidden = data.length > 0;
-  $('#contador-noticias').textContent = Store.get('noticias').length;
+  $('#contador-noticias').textContent = noticias.length;
 }
 
-/* ── Formulario ──────────────────────────────────────────────────────────── */
+async function cargarNoticias() {
+  mostrarEstado('Cargando noticias...');
 
-let noticiaEnEdicion = null;
+  try {
+    const payload = await ImsjApi.request('/noticias');
+    noticias = payload.noticias || [];
+    mostrarEstado();
+    renderNoticias();
+  } catch (error) {
+    if (error.status === 401) {
+      window.location.href = '../login/index.html#admin';
+      return;
+    }
+    mostrarEstado(error.message, true);
+  }
+}
 
-function abrirFormulario(noticia) {
-  noticiaEnEdicion = noticia || null;
+function abrirFormulario(noticia = null) {
+  noticiaEnEdicion = noticia;
   $('#modal-noticia-title').textContent = noticia ? 'Editar noticia' : 'Nueva noticia';
   $('#btn-guardar-noticia').textContent = noticia ? 'Guardar cambios' : 'Guardar noticia';
-
-  $('#n-titulo').value   = noticia ? noticia.titulo : '';
-  $('#n-resumen').value  = noticia ? noticia.resumen : '';
-  $('#n-cuerpo').value   = noticia ? (noticia.cuerpo || '') : '';
-  $('#n-estado').value   = noticia ? noticia.estado : 'borrador';
-  $('#n-vigencia').value = '';
+  $('#n-titulo').value = noticia ? noticia.titulo : '';
+  $('#n-cuerpo').value = noticia ? noticia.texto : '';
+  $('#n-estado').value = noticia ? estadoVista(noticia.estado) : 'borrador';
+  $('#n-vigencia').value = noticia ? noticia.fecha_fin_vigencia : '';
+  $('#n-portada').value = '';
   $('[data-file-label]', $('#modal-noticia')).textContent = 'Seleccionar imagen...';
-
   Modal.open('modal-noticia');
 }
 
-function guardarNoticia(e) {
-  e.preventDefault();
+async function guardarNoticia(event) {
+  event.preventDefault();
   const form = $('#form-noticia');
   if (!form.reportValidity()) return;
 
-  const vigenciaISO = $('#n-vigencia').value;
-  const campos = {
-    titulo:   $('#n-titulo').value.trim(),
-    resumen:  $('#n-resumen').value.trim(),
-    cuerpo:   $('#n-cuerpo').value.trim(),
-    estado:   $('#n-estado').value,
-    vigencia: vigenciaISO ? formatDate(vigenciaISO) : (noticiaEnEdicion ? noticiaEnEdicion.vigencia : '—'),
-  };
+  const button = $('#btn-guardar-noticia');
+  const data = new FormData();
+  const cover = $('#n-portada').files[0];
 
-  let data = Store.get('noticias');
-  if (noticiaEnEdicion) {
-    data = data.map((n) => (n.id === noticiaEnEdicion.id ? { ...n, ...campos } : n));
-  } else {
-    data = [{ id: Date.now(), ...campos, fecha: today() }, ...data];
+  data.append('titulo', $('#n-titulo').value.trim());
+  data.append('texto', $('#n-cuerpo').value.trim());
+  data.append('fecha_inicio_vigencia', noticiaEnEdicion?.fecha_inicio_vigencia || new Date().toISOString().slice(0, 10));
+  data.append('fecha_fin_vigencia', $('#n-vigencia').value);
+  if (cover) data.append('imagen_portada', cover);
+
+  button.disabled = true;
+  mostrarEstado('Guardando noticia...');
+
+  try {
+    let payload;
+    if (noticiaEnEdicion) {
+      data.append('_method', 'PUT');
+      payload = await ImsjApi.request(`/noticias/${noticiaEnEdicion.id}`, {
+        method: 'POST',
+        body: data,
+      });
+    } else {
+      payload = await ImsjApi.request('/noticias', { method: 'POST', body: data });
+    }
+
+    const estadoDeseado = $('#n-estado').value === 'publicada' ? 'PUBLICADO' : 'NO_PUBLICADO';
+    if (payload.noticia.estado !== estadoDeseado) {
+      await ImsjApi.request(`/noticias/${payload.noticia.id}/estado`, {
+        method: 'PATCH',
+        body: JSON.stringify({ estado: estadoDeseado }),
+      });
+    }
+
+    Modal.close('modal-noticia');
+    form.reset();
+    noticiaEnEdicion = null;
+    await cargarNoticias();
+  } catch (error) {
+    mostrarEstado(error.message, true);
+  } finally {
+    button.disabled = false;
   }
-
-  Store.set('noticias', data);
-  Modal.close('modal-noticia');
-  form.reset();
-  noticiaEnEdicion = null;
-  renderNoticias();
 }
 
-/* ── Eventos ─────────────────────────────────────────────────────────────── */
+async function manejarAccion(event) {
+  const button = event.target.closest('[data-accion]');
+  if (!button) return;
 
-document.addEventListener('DOMContentLoaded', () => {
-  $('#btn-nueva-noticia').addEventListener('click', () => abrirFormulario(null));
+  const noticia = noticias.find((item) => item.id === Number(button.dataset.id));
+  if (!noticia) return;
+
+  if (button.dataset.accion === 'editar') {
+    abrirFormulario(noticia);
+    return;
+  }
+
+  try {
+    if (button.dataset.accion === 'toggle') {
+      const estado = noticia.estado === 'PUBLICADO' ? 'NO_PUBLICADO' : 'PUBLICADO';
+      await ImsjApi.request(`/noticias/${noticia.id}/estado`, {
+        method: 'PATCH',
+        body: JSON.stringify({ estado }),
+      });
+    }
+
+    if (button.dataset.accion === 'eliminar') {
+      if (!confirm(`¿Eliminar la noticia "${noticia.titulo}"?`)) return;
+      await ImsjApi.request(`/noticias/${noticia.id}`, { method: 'DELETE' });
+    }
+
+    await cargarNoticias();
+  } catch (error) {
+    mostrarEstado(error.message, true);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  if (ImsjApi.currentUser()?.rol !== 'PERSONAL_IMSJ') {
+    window.location.href = '../login/index.html#admin';
+    return;
+  }
+
+  $('#btn-nueva-noticia').addEventListener('click', () => abrirFormulario());
   $('#form-noticia').addEventListener('submit', guardarNoticia);
+  $('#tbody-noticias').addEventListener('click', manejarAccion);
 
-  // Selector de archivo simulado (sin backend no se sube nada).
   $('[data-file]', $('#modal-noticia')).addEventListener('click', function () {
     const input = document.getElementById(this.dataset.file);
     input.click();
@@ -103,32 +187,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   });
 
-  $('#tbody-noticias').addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-accion]');
-    if (!btn) return;
-    const id = Number(btn.dataset.id);
-    const data = Store.get('noticias');
-
-    if (btn.dataset.accion === 'editar') {
-      abrirFormulario(data.find((n) => n.id === id));
-    }
-
-    if (btn.dataset.accion === 'toggle') {
-      Store.set('noticias', data.map((n) =>
-        n.id === id ? { ...n, estado: n.estado === 'publicada' ? 'borrador' : 'publicada' } : n));
-      renderNoticias();
-    }
-
-    if (btn.dataset.accion === 'eliminar') {
-      const n = data.find((x) => x.id === id);
-      if (confirm(`¿Eliminar la noticia "${n.titulo}"?`)) {
-        Store.set('noticias', data.filter((x) => x.id !== id));
-        renderNoticias();
-      }
-    }
+  initSearch((query) => {
+    queryNoticias = query;
+    renderNoticias();
   });
 
-  initSearch((q) => { queryNoticias = q; renderNoticias(); });
-
-  renderNoticias();
+  await cargarNoticias();
 });
