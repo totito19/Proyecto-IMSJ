@@ -15,7 +15,7 @@ class EnsurePersonalImsj
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()?->rol !== 'PERSONAL_IMSJ') {
+        if ($request->user()?->rol !== 'PERSONAL_IMSJ' || ! $request->user()?->activo) {
             return response()->json([
                 'message' => 'No tiene permiso para realizar esta acción.',
             ], Response::HTTP_FORBIDDEN);

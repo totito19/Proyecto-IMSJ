@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             NoticiaSeeder::class,
             MaterialEstudioSeeder::class,
             PreguntaFrecuenteSeeder::class,
+            PreguntaPruebaSeeder::class,
             FranjaDisponibilidadSeeder::class,
         ]);
     }

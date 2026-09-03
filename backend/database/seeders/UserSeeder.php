@@ -15,12 +15,12 @@ class UserSeeder extends Seeder
 
         User::query()->updateOrCreate(
             ['cedula' => '11111111'],
-            ['password' => 'imsj1234', 'rol' => 'PUBLICO_GENERAL'],
+            ['nombre' => null, 'password' => 'imsj1234', 'rol' => 'PUBLICO_GENERAL', 'activo' => true],
         );
 
         User::query()->updateOrCreate(
             ['cedula' => '22222222'],
-            ['password' => 'imsj1234', 'rol' => 'PERSONAL_IMSJ'],
+            ['nombre' => 'María Vázquez', 'password' => 'imsj1234', 'rol' => 'PERSONAL_IMSJ', 'activo' => true],
         );
     }
 }

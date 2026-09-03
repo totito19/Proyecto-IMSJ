@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         $user = User::query()->where('cedula', $credentials['cedula'])->first();
 
-        if (! $user || ! Hash::check($credentials['password'], $user->password)) {
+        if (! $user || ! $user->activo || ! Hash::check($credentials['password'], $user->password)) {
             throw ValidationException::withMessages([
                 'cedula' => ['Las credenciales no son correctas.'],
             ]);
@@ -57,7 +57,7 @@ class AuthController extends Controller
     public function me(Request $request): JsonResponse
     {
         return response()->json([
-            'usuario' => $request->user()->only(['id', 'cedula', 'rol']),
+            'usuario' => $request->user()->only(['id', 'nombre', 'cedula', 'rol']),
         ]);
     }
 
@@ -77,7 +77,7 @@ class AuthController extends Controller
         return response()->json([
             'token' => $token->plainTextToken,
             'expira_en' => $expiresAt->toIso8601String(),
-            'usuario' => $user->only(['id', 'cedula', 'rol']),
+            'usuario' => $user->only(['id', 'nombre', 'cedula', 'rol']),
         ], $status);
     }
 }

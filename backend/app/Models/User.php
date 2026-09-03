@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['cedula', 'password', 'rol'])]
+#[Fillable(['nombre', 'cedula', 'password', 'rol', 'activo'])]
 #[Hidden(['password'])]
 class User extends Authenticatable
 {
@@ -26,6 +26,11 @@ class User extends Authenticatable
         return $this->hasMany(Reserva::class, 'usuario_id');
     }
 
+    public function historialAcciones(): HasMany
+    {
+        return $this->hasMany(HistorialAccion::class, 'usuario_id');
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -34,6 +39,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'activo' => 'boolean',
             'password' => 'hashed',
         ];
     }

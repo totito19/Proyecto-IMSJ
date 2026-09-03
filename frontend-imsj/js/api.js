@@ -27,7 +27,7 @@
       if (typeof body !== 'string') body = JSON.stringify(body);
     }
 
-    const response = await fetch(`${API_URL}${path}`, { ...options, headers, body });
+    const response = await fetch(`${API_URL}${path}`, { ...options, cache: 'no-store', headers, body });
     if (response.status === 204) return null;
 
     const payload = await response.json().catch(() => ({}));

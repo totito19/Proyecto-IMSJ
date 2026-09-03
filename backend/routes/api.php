@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FranjaDisponibilidadController;
+use App\Http\Controllers\HistorialAccionController;
 use App\Http\Controllers\MaterialEstudioController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\PreguntaFrecuenteController;
+use App\Http\Controllers\PreguntaPruebaController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\UsuarioAdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', fn () => response()->json([
@@ -20,6 +23,8 @@ Route::post('/register', [AuthController::class, 'register'])
 Route::get('/portal/noticias', [NoticiaController::class, 'publicIndex']);
 Route::get('/portal/materiales', [MaterialEstudioController::class, 'publicIndex']);
 Route::get('/portal/preguntas', [PreguntaFrecuenteController::class, 'publicIndex']);
+Route::get('/portal/prueba', [PreguntaPruebaController::class, 'publicIndex']);
+Route::post('/portal/prueba/corregir', [PreguntaPruebaController::class, 'corregir']);
 Route::get('/franjas/disponibles', [FranjaDisponibilidadController::class, 'publicIndex']);
 
 Route::middleware('auth:sanctum')->group(function (): void {
@@ -33,6 +38,17 @@ Route::middleware(['auth:sanctum', 'publico.general'])->group(function (): void 
 });
 
 Route::middleware(['auth:sanctum', 'personal.imsj'])->group(function (): void {
+    Route::get('/historial', [HistorialAccionController::class, 'index']);
+
+    Route::get('/usuarios-admin', [UsuarioAdminController::class, 'index']);
+    Route::post('/usuarios-admin', [UsuarioAdminController::class, 'store']);
+    Route::delete('/usuarios-admin/{usuario}', [UsuarioAdminController::class, 'destroy']);
+
+    Route::get('/preguntas-prueba', [PreguntaPruebaController::class, 'index']);
+    Route::post('/preguntas-prueba', [PreguntaPruebaController::class, 'store']);
+    Route::put('/preguntas-prueba/{pregunta}', [PreguntaPruebaController::class, 'update']);
+    Route::delete('/preguntas-prueba/{pregunta}', [PreguntaPruebaController::class, 'destroy']);
+
     Route::get('/noticias', [NoticiaController::class, 'index']);
     Route::post('/noticias', [NoticiaController::class, 'store']);
     Route::get('/noticias/{noticia}', [NoticiaController::class, 'show']);

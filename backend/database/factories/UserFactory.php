@@ -24,15 +24,18 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'nombre' => null,
             'cedula' => fake()->unique()->numerify('########'),
             'password' => static::$password ??= Hash::make('password'),
             'rol' => 'PUBLICO_GENERAL',
+            'activo' => true,
         ];
     }
 
     public function personalImsj(): static
     {
         return $this->state(fn (array $attributes) => [
+            'nombre' => fake()->name(),
             'rol' => 'PERSONAL_IMSJ',
         ]);
     }

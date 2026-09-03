@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS personal_access_tokens;
 DROP TABLE IF EXISTS historial_acciones;
 DROP TABLE IF EXISTS reservas;
 DROP TABLE IF EXISTS franjas_disponibilidad;
+DROP TABLE IF EXISTS preguntas_prueba;
 DROP TABLE IF EXISTS preguntas_frecuentes;
 DROP TABLE IF EXISTS materiales_estudio;
 DROP TABLE IF EXISTS noticia_enlaces;
@@ -14,9 +15,11 @@ DROP TABLE IF EXISTS usuarios;
 
 CREATE TABLE usuarios (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(120) NULL,
     cedula VARCHAR(20) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     rol ENUM('PUBLICO_GENERAL', 'PERSONAL_IMSJ') NOT NULL DEFAULT 'PUBLICO_GENERAL',
+    activo BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -68,6 +71,18 @@ CREATE TABLE preguntas_frecuentes (
     pregunta VARCHAR(255) NOT NULL,
     respuesta TEXT NOT NULL,
     estado ENUM('PUBLICADO', 'NO_PUBLICADO') NOT NULL DEFAULT 'NO_PUBLICADO',
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE preguntas_prueba (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    pregunta VARCHAR(500) NOT NULL,
+    opcion_a VARCHAR(255) NOT NULL,
+    opcion_b VARCHAR(255) NOT NULL,
+    opcion_c VARCHAR(255) NOT NULL,
+    opcion_d VARCHAR(255) NOT NULL,
+    respuesta_correcta ENUM('A', 'B', 'C', 'D') NOT NULL,
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -4,6 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
         window.lucide.createIcons();
     }
 
+    const navList = document.querySelector('.main-nav ul');
+    if (navList && !navList.querySelector('[href="prueba.html"]')) {
+        const item = document.createElement('li');
+        item.innerHTML = '<a href="prueba.html">Simulador</a>';
+        const agendaItem = navList.querySelector('[href="agenda.html"]')?.closest('li');
+        navList.insertBefore(item, agendaItem || null);
+    }
+
     const toggle = document.querySelector(".menu-toggle");
     const nav = document.querySelector(".main-nav");
 

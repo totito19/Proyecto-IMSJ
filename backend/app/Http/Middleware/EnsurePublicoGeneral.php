@@ -13,7 +13,7 @@ class EnsurePublicoGeneral
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()?->rol !== 'PUBLICO_GENERAL') {
+        if ($request->user()?->rol !== 'PUBLICO_GENERAL' || ! $request->user()?->activo) {
             return response()->json([
                 'message' => 'Solo un ciudadano puede realizar esta acción.',
             ], Response::HTTP_FORBIDDEN);
