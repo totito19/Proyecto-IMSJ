@@ -43,11 +43,7 @@
   }
 
   async function login(cedula, password) {
-    const payload = await request('/login', {
-      method: 'POST',
-      body: JSON.stringify({ cedula, password }),
-    });
-
+    const payload = await request('/login', { method: 'POST', body: { cedula, password } });
     sessionStorage.setItem(TOKEN_KEY, payload.token);
     sessionStorage.setItem(USER_KEY, JSON.stringify(payload.usuario));
     return payload.usuario;
@@ -56,13 +52,8 @@
   async function register(cedula, password, passwordConfirmation) {
     const payload = await request('/register', {
       method: 'POST',
-      body: {
-        cedula,
-        password,
-        password_confirmation: passwordConfirmation,
-      },
+      body: { cedula, password, password_confirmation: passwordConfirmation },
     });
-
     sessionStorage.setItem(TOKEN_KEY, payload.token);
     sessionStorage.setItem(USER_KEY, JSON.stringify(payload.usuario));
     return payload.usuario;
@@ -71,7 +62,6 @@
   async function logout() {
     const logoutRequest = request('/logout', { method: 'POST', keepalive: true });
     clearSession();
-
     try {
       await logoutRequest;
     } catch (_) {}

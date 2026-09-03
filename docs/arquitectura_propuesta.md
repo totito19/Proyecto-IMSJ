@@ -1,6 +1,6 @@
 # Arquitectura Propuesta
 
-**Asignatura:** Administración de Sistemas Operativos (Adm. SSOO) — 1ª entrega
+**Asignatura:** Administración de Sistemas Operativos (Adm. SSOO) — actualizada para la 2ª entrega
 **Proyecto:** Plataforma Web Educación Vial IMSJ
 
 
@@ -31,21 +31,23 @@ comprometida con la IMSJ.
 |---|---|---|
 | Frontend público | Aplicación web basada en HTML5, CSS3 y JavaScript. No se documenta el uso de un framework. | Permitir a la ciudadanía consultar noticias, materiales de estudio y preguntas frecuentes. En la versión académica también permitirá solicitar turnos; esta función queda fuera de la entrega al cliente. |
 | Frontend IMSJ (dashboard) | HTML5, CSS3 y JavaScript, de acuerdo con los archivos actuales de `frontend-imsj`. | Permitir al personal iniciar sesión y administrar noticias, materiales, preguntas frecuentes y su visibilidad. En la versión académica también incluye la gestión de franjas y la consulta de la agenda. |
-| Backend / API | API REST. El lenguaje y el framework de implementación todavía no están definidos en la documentación. | Centralizar la lógica de negocio, autenticar y autorizar usuarios, validar solicitudes, prevenir operaciones inválidas y controlar todo acceso a datos y archivos. |
-| Base de datos | Motor de base de datos todavía no definido. | Persistir usuarios, noticias, materiales, preguntas frecuentes, estados de publicación e historial de acciones. Para la versión académica también almacenará franjas y reservas. |
-| Archivos de contenido | Mecanismo de almacenamiento todavía no definido; su acceso será gestionado por el backend. | Conservar y servir las imágenes asociadas a noticias y los materiales de estudio en PDF, imagen o video definidos por el proyecto. |
+| Backend / API | PHP 8.5 y Laravel 13 como API REST. | Centralizar la lógica de negocio, autenticar y autorizar usuarios, validar solicitudes, prevenir operaciones inválidas y controlar todo acceso a datos y archivos. |
+| Base de datos | MySQL 8.4. | Persistir usuarios, noticias, materiales, preguntas frecuentes, estados de publicación e historial de acciones. Para la versión académica también almacenará franjas y reservas. |
+| Archivos de contenido | Filesystem administrado por Laravel. | Conservar y servir las imágenes asociadas a noticias y los materiales de estudio en PDF, imagen o video definidos por el proyecto. |
 
 ## 4. Infraestructura propuesta
 
 | Aspecto | Definición | Estado |
 |---|---|---|
-| Entorno de despliegue | La documentación actual no define si se utilizará un servidor propio, hosting externo o contenedores. Este punto debe resolverse antes de implementar el despliegue. | Pendiente de definición y relevamiento con la IMSJ. |
-| Sistema operativo del servidor | No definido. Su elección dependerá del entorno de despliegue y de la tecnología que el equipo seleccione para el backend. | Pendiente. |
+| Entorno de despliegue | Dos contenedores Docker: uno para Laravel con Apache y otro para MySQL. | Definido en `backend/compose.yaml`. |
+| Sistema operativo del servidor | Linux, provisto por la imagen oficial `php:8.5-apache`. | Definido en `backend/Dockerfile`. |
 | Dispositivos del personal IMSJ | El sistema será accesible mediante navegador web. No se relevaron modelos, sistemas operativos ni características concretas de los equipos utilizados por el personal. | Requisito de acceso web definido; hardware pendiente de relevamiento. |
-| Requisitos de red / acceso | El frontend público deberá estar disponible para la ciudadanía y el dashboard se reservará al personal autorizado. La comunicación con la API deberá realizarse mediante HTTPS. | Definición general establecida; configuración concreta pendiente del despliegue. |
+| Requisitos de red / acceso | El frontend público queda disponible para la ciudadanía y el dashboard se reserva al personal autorizado. En desarrollo la API usa el puerto 8000; en producción deberá publicarse mediante HTTPS. | Desarrollo definido; dominio y certificado quedan pendientes del despliegue real. |
 
-> La justificación tecnológica detallada y la documentación de infraestructura (scripts, docker
-> files, etc.) corresponden a la 2ª entrega según `Lineamientos/requerimientos_por_asignatura.md`.
+La infraestructura reproducible está definida en `backend/Dockerfile`,
+`backend/compose.yaml` y `backend/.env.example`. La elección de Laravel respeta la
+tecnología indicada para el proyecto IMSJ; MySQL, Docker y la separación de los
+dos frontends respetan los requerimientos por asignatura.
 
 ## 5. Consideraciones de seguridad de la arquitectura
 
@@ -72,7 +74,7 @@ cupo debe ejecutarse como una operación atómica para impedir dobles reservas (
 
 | Riesgo | Impacto | Mitigación propuesta |
 |---|---|---|
-| Definición tardía del backend, la base de datos y el despliegue | Puede retrasar la integración de los frontends y obligar a rehacer partes del sistema. | Seleccionar y documentar estas tecnologías antes de la segunda entrega, comprobando que cubran autenticación, archivos, auditoría y transacciones. |
+| Diferencias entre el entorno de desarrollo y el de entrega | Pueden provocar que el sistema funcione en una computadora y falle en otra. | Usar los mismos archivos Docker y variables de entorno documentadas para reconstruir Laravel y MySQL. |
 | Acceso directo o no autorizado a funciones administrativas | Una persona ajena podría crear, modificar, publicar o eliminar información. | Centralizar la autorización en el backend y verificar una sesión válida y el rol correspondiente en cada endpoint administrativo. |
 | Caída del backend o de la base de datos | Ambos frontends perderían acceso a la información y a las operaciones del sistema. | Definir monitoreo, manejo controlado de errores, copias de respaldo y un procedimiento probado de restauración. |
 | Pérdida o corrupción de datos y archivos | Podrían desaparecer noticias, materiales, preguntas frecuentes, reservas o registros de auditoría. | Aplicar validaciones, transacciones cuando correspondan, respaldos periódicos y restricciones de acceso a la persistencia. |

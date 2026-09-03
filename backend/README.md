@@ -1,62 +1,42 @@
 # Backend IMSJ
 
-API REST del sistema de Educación Vial del Instituto Municipal de Seguridad y Justicia.
+API REST en Laravel 13 y MySQL para el sistema de Educación Vial IMSJ.
 
-## Estado actual
+## Qué contiene
 
-La fase 1 contiene solamente:
+- `app/Models`: clases que representan usuarios, noticias, materiales,
+  preguntas, franjas y reservas.
+- `app/Http/Controllers`: recibe las peticiones y ejecuta cada operación.
+- `routes/api.php`: lista las direcciones disponibles de la API.
+- `database/migrations`: recetas de Laravel para crear las tablas.
+- `database/schema.sql`: las mismas tablas expresadas en SQL para la entrega.
+- `tests`: comprobaciones automáticas del comportamiento principal.
 
-- Laravel 13 configurado como API.
-- `GET /api/health` para comprobar que el backend responde.
-- Un contenedor para PHP 8.5 con Apache.
-- Un contenedor para MySQL 8.4.
-- Una prueba automática del endpoint de salud.
+El resto de los archivos de esta carpeta pertenece a la estructura mínima que
+Laravel necesita para arrancar, conectarse a MySQL y responder por HTTP.
 
-La base de datos del dominio, la autenticación y los módulos funcionales se implementarán en las fases siguientes.
+## Iniciar con Docker
 
-## Primera configuración con Docker
-
-Desde la carpeta `backend`:
+La primera vez, desde `backend`:
 
 ```powershell
 Copy-Item .env.example .env
 docker compose build
 docker compose run --rm app php artisan key:generate
+docker compose run --rm app php artisan migrate --seed
 docker compose up -d
 ```
 
-La copia de `.env` y `php artisan key:generate` se hacen solamente la primera vez. Para iniciar el proyecto después, alcanza con:
+Las veces siguientes:
 
 ```powershell
 docker compose up -d
 ```
 
-Comprobar la API:
+La API queda disponible en `http://localhost:8000/api`. El endpoint
+`GET /api/health` permite comprobar que responde.
 
-```powershell
-Invoke-RestMethod http://localhost:8000/api/health
-```
+## Qué no se entrega
 
-Respuesta esperada:
-
-```json
-{
-  "status": "ok"
-}
-```
-
-Detener los contenedores:
-
-```powershell
-docker compose down
-```
-
-Los datos de MySQL permanecen en el volumen `db_data`. Para evitar pérdidas accidentales, el comando anterior no elimina ese volumen.
-
-## Archivos principales
-
-- `routes/api.php`: rutas públicas de la API.
-- `bootstrap/app.php`: carga las rutas y configura los errores JSON.
-- `Dockerfile`: construye el contenedor de Laravel.
-- `compose.yaml`: inicia Laravel y MySQL.
-- `tests/Feature/HealthEndpointTest.php`: verifica `/api/health`.
+`vendor` se genera al instalar las dependencias. Está excluida de Git y no debe
+copiarse como parte del código del grupo.

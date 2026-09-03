@@ -22,7 +22,7 @@
       setStatus('Iniciá sesión como ciudadano para consultar tus reservas.');
       const link = document.createElement('a');
       link.className = 'btn btn-primary';
-      link.href = `/login/index.html?return=${encodeURIComponent(window.location.pathname)}`;
+      link.href = `/frontend-publico/Login.html?return=${encodeURIComponent(window.location.pathname)}`;
       link.textContent = 'Iniciar sesión';
       root.replaceChildren(link);
       return;

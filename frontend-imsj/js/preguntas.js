@@ -69,7 +69,7 @@ async function guardarPregunta(event) {
 document.addEventListener('DOMContentLoaded', () => {
   const usuario = ImsjApi.currentUser();
   if (!usuario || usuario.rol !== 'PERSONAL_IMSJ') {
-    window.location.assign(`/login/index.html?return=${encodeURIComponent(window.location.pathname)}`);
+    window.location.assign(`/frontend-publico/Login.html?return=${encodeURIComponent(window.location.pathname)}`);
     return;
   }
   $('#btn-nueva-pregunta').addEventListener('click', () => abrirFormularioPregunta(null));

@@ -1,46 +1,28 @@
-# Educacion Vial IMSJ
+# Educación Vial IMSJ
 
-Plataforma web del Instituto Municipal de Seguridad y Justicia (IMSJ) para
-la gestion y difusion de contenidos de educacion vial.
+Plataforma web para la Sección Tránsito de la Intendencia de San José.
 
-## Descripcion
+## Estructura
 
-El proyecto comprende tres componentes principales:
-
-- **backend**: API REST que centraliza la logica de negocio y el acceso a la
-  base de datos.
-- **frontend-publico**: sitio publico orientado a la ciudadania, con
-  informacion sobre tramites, materiales de estudio y novedades.
-- **frontend-imsj**: panel administrativo destinado al personal del IMSJ
-  para la carga y mantenimiento de contenidos.
-
-## Estructura del repositorio
-
-```
-educacion-vial-imsj/
-├── backend/
-│   ├── app/
-│   ├── routes/
-│   ├── database/
-│   └── README.md
-├── frontend-publico/
-│   ├── index.html
-│   ├── css/
-│   ├── js/
-│   └── manifest.json
-├── frontend-imsj/
-│   ├── index.html
-│   ├── css/
-│   ├── js/
-│   └── manifest.json
-├── docs/
-│   ├── 01-requerimientos.md
-│   ├── 02-modelado.md
-│   ├── 03-api.md
-│   ├── 04-seguridad.md
-│   ├── 05-planificacion.md
-│   └── 06-testing.md
+```text
+Proyecto-IMSJ/
+├── backend/            API REST en PHP/Laravel y base de datos MySQL
+├── frontend-publico/   sitio para la ciudadanía y pantalla de ingreso
+├── frontend-imsj/      panel para el personal de la IMSJ
+├── docs/               documentación académica hasta la segunda entrega
 ├── .gitignore
 ├── LICENSE
 └── README.md
 ```
+
+Las cuatro carpetas tienen responsabilidades distintas y corresponden a la
+arquitectura indicada para el proyecto. No se necesitan carpetas paralelas de
+versiones, login o archivos compartidos.
+
+## Archivos generados
+
+`backend/vendor` contiene las librerías que descarga Composer para ejecutar
+Laravel. No es código del grupo y Git no lo sube. Si no existe, se reconstruye
+automáticamente al preparar el backend.
+
+Las instrucciones para iniciar la API están en `backend/README.md`.

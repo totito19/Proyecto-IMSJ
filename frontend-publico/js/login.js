@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+function initLogin() {
     function animateHeight(wrap, mutate) {
         if (!wrap) { mutate(); return; }
         const startHeight = wrap.getBoundingClientRect().height;
@@ -55,8 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         errorElement.classList.remove('show');
         try {
             const user = await action();
-            if (!user) return;
-            window.location.assign(redirectTo);
+            if (user) window.location.assign(redirectTo);
         } catch (error) {
             errorElement.textContent = error.message;
             errorElement.classList.add('show');
@@ -83,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 return user;
             },
-            destination('/frontend-publico/', '../frontend-publico/index.html'),
+            destination('/frontend-publico/', 'index.html'),
         );
     });
 
@@ -99,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('reg-password').value,
                 document.getElementById('reg-password-confirm').value,
             ),
-            destination('/frontend-publico/', '../frontend-publico/index.html'),
+            destination('/frontend-publico/', 'index.html'),
         );
     });
 
@@ -124,4 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
             destination('/frontend-imsj/', '../frontend-imsj/noticias.html'),
         );
     });
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLogin);
+} else {
+    initLogin();
+}

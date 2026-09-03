@@ -85,7 +85,7 @@
     const user = ImsjApi.currentUser();
     if (!user || user.rol !== 'PUBLICO_GENERAL') {
       const returnTo = `${window.location.pathname}${window.location.search}`;
-      window.location.assign(`/login/index.html?return=${encodeURIComponent(returnTo)}`);
+      window.location.assign(`/frontend-publico/Login.html?return=${encodeURIComponent(returnTo)}`);
       return;
     }
     button.disabled = true;

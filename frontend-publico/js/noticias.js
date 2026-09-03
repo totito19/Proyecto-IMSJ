@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const grid = document.getElementById('noticias-grid');
     const status = document.getElementById('noticias-status');
-    const fallbackImage = 'mimi/img Referencia/notis.png';
+    const fallbackImage = 'img/notis.png';
 
     function formatDate(value) {
         if (!value) return '';
