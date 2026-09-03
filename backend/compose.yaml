@@ -1,4 +1,12 @@
 services:
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    volumes:
+      - ../frontend-publico:/usr/share/nginx/html/frontend-publico:ro
+      - ../frontend-imsj:/usr/share/nginx/html/frontend-imsj:ro
+
   app:
     build: .
     ports:

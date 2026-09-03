@@ -69,7 +69,7 @@ async function guardarUsuario(event) {
 document.addEventListener('DOMContentLoaded', () => {
   const usuario = ImsjApi.currentUser();
   if (!usuario || usuario.rol !== 'PERSONAL_IMSJ') {
-    window.location.assign(`/frontend-publico/Login.html?return=${encodeURIComponent(window.location.pathname)}`);
+    window.location.assign(`/frontend-publico/login.html?return=${encodeURIComponent(window.location.pathname)}`);
     return;
   }
 

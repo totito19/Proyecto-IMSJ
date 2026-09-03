@@ -67,7 +67,7 @@ async function cargarNoticias() {
     renderNoticias();
   } catch (error) {
     if (error.status === 401) {
-      window.location.href = '../frontend-publico/Login.html#admin';
+      window.location.href = '../frontend-publico/login.html#admin';
       return;
     }
     mostrarEstado(error.message, true);
@@ -170,7 +170,7 @@ async function manejarAccion(event) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   if (ImsjApi.currentUser()?.rol !== 'PERSONAL_IMSJ') {
-    window.location.href = '../frontend-publico/Login.html#admin';
+    window.location.href = '../frontend-publico/login.html#admin';
     return;
   }
 
