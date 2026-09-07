@@ -77,3 +77,57 @@
 ### Desarrollo / discusión
 
 [Analizamos las historias de usuario en base a las epicas y requerimientos]
+
+---
+
+## Acta N° [4]
+
+**Fecha:** [11/8/26]
+**Hora de inicio / fin:** [4:10] – [5:00]
+**Modalidad:** [virtual] — [whatsapp]
+**Tipo de reunión:** [Reunion interna]
+
+**Participantes:**
+
+| Nombre | Presente |
+|---|---|
+| [Tomás Cabrera] | [Sí] |
+| [Juan Robaina] | [Sí] |
+| [Gabriela Romero] | [Sí] |
+| [Veronica Romero] | [Sí] |
+| [Juan Corrales] | [Sí] |
+
+### Temas tratados
+
+1. [analisis de clases, atributos y metodos]
+### Desarrollo / discusión
+
+[Analizamos la documentacion que ya teniamos para distinguir las clases, atributos y metodos, luego ordenamos todo en un documento usando IA]
+
+---
+
+## Acta N° [5]
+
+**Fecha:** [3/9/26]
+**Hora de inicio / fin:** [4:10] – [5:00]
+**Modalidad:** [Presencial] — [UTU]
+**Tipo de reunión:** [Reunion con el cliente]
+
+**Participantes:**
+
+| Nombre | Presente |
+|---|---|
+| [Tomás Cabrera] | [Sí] |
+| [Juan Robaina] | [Sí] |
+| [Gabriela Romero] | [Sí] |
+| [Veronica Romero] | [Sí] |
+| [Juan Corrales] | [Sí] |
+| [Directora de transito] | [Sí] |
+| [Inspector de transito] | [Sí] |
+
+### Temas tratados
+
+1. [Demo funcional del sistema]
+### Desarrollo / discusión
+
+[Le mostramos el sistema al cliente para comprobar que hayamos podido comprender y acatar en su totalidad lo propuesto en la primer entrevista. Ademas le hicimos algunas consultas que derivaron en pequeños cambios y añadidos al sistema actual]
