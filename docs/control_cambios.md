@@ -12,7 +12,7 @@ Este documento registra los cambios comunicados por el equipo, sus fechas y las 
 | CC-01 | 14/08/2026 | Incorporar simulacros de pruebas teóricas. | Profesores, para mantener el nivel del curso. | Registrado |
 | CC-02 | 03/09/2026 | Incorporar un formulario de consultas en el pie de página y su lectura en el panel IMSJ. | Auditoría / demo con el cliente. | Registrado |
 | CC-03 | 03/09/2026 | Incorporar la validación de contenidos por la Directora y separar la aprobación de la publicación. | Auditoría / demo con el cliente. | Registrado |
-| CC-04 | 03/09/2026 | Permitir adjuntar material gráfico a las preguntas de los test. | Solicitante e instancia no especificados. | Registrado |
+| CC-04 | 03/09/2026 | Permitir adjuntar material gráfico a las preguntas de los test. | Auditoría / demo con el cliente. | Registrado |
 
 ## 2. Detalle de los cambios
 
