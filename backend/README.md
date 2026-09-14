@@ -36,6 +36,15 @@ docker compose up -d
 La API queda disponible en `http://localhost:8000/api`. El endpoint
 `GET /api/health` permite comprobar que responde.
 
+## Documentación de SSOO
+
+Los entregables de Administración de Sistemas Operativos para la segunda
+entrega están reunidos en [`../docs/ssoo/`](../docs/ssoo/README.md):
+
+- justificación tecnológica;
+- documentación de infraestructura;
+- procedimiento de reconstrucción paso a paso.
+
 ## Qué no se entrega
 
 `vendor` se genera al instalar las dependencias. Está excluida de Git y no debe

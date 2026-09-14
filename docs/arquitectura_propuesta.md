@@ -39,7 +39,7 @@ comprometida con la IMSJ.
 
 | Aspecto | Definición | Estado |
 |---|---|---|
-| Entorno de despliegue | Dos contenedores Docker: uno para Laravel con Apache y otro para MySQL. | Definido en `backend/compose.yaml`. |
+| Entorno de despliegue | Tres contenedores Docker: Nginx para los dos frontends estáticos, Laravel con Apache para la API y MySQL para los datos. | Definidos en `backend/compose.yaml`. |
 | Sistema operativo del servidor | Linux, provisto por la imagen oficial `php:8.5-apache`. | Definido en `backend/Dockerfile`. |
 | Dispositivos del personal IMSJ | El sistema será accesible mediante navegador web. No se relevaron modelos, sistemas operativos ni características concretas de los equipos utilizados por el personal. | Requisito de acceso web definido; hardware pendiente de relevamiento. |
 | Requisitos de red / acceso | El frontend público queda disponible para la ciudadanía y el dashboard se reserva al personal autorizado. En desarrollo la API usa el puerto 8000; en producción deberá publicarse mediante HTTPS. | Desarrollo definido; dominio y certificado quedan pendientes del despliegue real. |

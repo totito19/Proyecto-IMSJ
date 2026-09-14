@@ -26,3 +26,9 @@ Laravel. No es código del grupo y Git no lo sube. Si no existe, se reconstruye
 automáticamente al preparar el backend.
 
 Las instrucciones para iniciar la API están en `backend/README.md`.
+
+## Administración de Sistemas Operativos
+
+La [documentación de SSOO para la segunda entrega](docs/ssoo/README.md) incluye
+la justificación tecnológica, el inventario de infraestructura y el
+procedimiento completo de reconstrucción.

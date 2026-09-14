@@ -3,20 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PreguntaPruebaResource;
-use App\Models\HistorialAccion;
 use App\Models\PreguntaPrueba;
 use App\Models\User;
+use App\Services\PreguntaPruebaService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
+/**
+ * Atiende las peticiones HTTP de la prueba teórica.
+ */
 class PreguntaPruebaController extends Controller
 {
+    /** Servicio que coordina los casos de uso de la prueba. */
+    private readonly PreguntaPruebaService $preguntaService;
+
+    /**
+     * Crea el controlador con su servicio de aplicación.
+     */
+    public function __construct(PreguntaPruebaService $preguntaService)
+    {
+        $this->preguntaService = $preguntaService;
+    }
+
+    /**
+     * Devuelve una selección de preguntas sin revelar las respuestas correctas.
+     */
     public function publicIndex(): JsonResponse
     {
-        $preguntas = PreguntaPrueba::query()->inRandomOrder()->limit(10)->get();
+        $preguntas = $this->preguntaService->obtenerPrueba();
 
         return response()->json([
             'preguntas' => $preguntas->map(fn (PreguntaPrueba $pregunta): array => [
@@ -32,6 +48,9 @@ class PreguntaPruebaController extends Controller
         ]);
     }
 
+    /**
+     * Corrige las respuestas de una prueba pública.
+     */
     public function corregir(Request $request): JsonResponse
     {
         $validated = $request->validate([
@@ -40,20 +59,7 @@ class PreguntaPruebaController extends Controller
             'respuestas.*.opcion' => ['required', Rule::in(['A', 'B', 'C', 'D'])],
         ]);
 
-        $preguntas = PreguntaPrueba::query()
-            ->whereKey(collect($validated['respuestas'])->pluck('pregunta_id'))
-            ->get()
-            ->keyBy('id');
-
-        $resultados = collect($validated['respuestas'])->map(function (array $respuesta) use ($preguntas): array {
-            $pregunta = $preguntas->get($respuesta['pregunta_id']);
-
-            return [
-                'pregunta_id' => $respuesta['pregunta_id'],
-                'correcta' => $pregunta->respuesta_correcta === $respuesta['opcion'],
-                'respuesta_correcta' => $pregunta->respuesta_correcta,
-            ];
-        });
+        $resultados = $this->preguntaService->corregir($validated['respuestas']);
 
         return response()->json([
             'total' => $resultados->count(),
@@ -62,56 +68,59 @@ class PreguntaPruebaController extends Controller
         ]);
     }
 
+    /**
+     * Devuelve todas las preguntas para la administración.
+     */
     public function index(): JsonResponse
     {
         return response()->json([
             'preguntas' => PreguntaPruebaResource::collection(
-                PreguntaPrueba::query()->latest()->get(),
+                $this->preguntaService->obtenerTodas(),
             ),
         ]);
     }
 
+    /**
+     * Valida y crea una pregunta de prueba.
+     */
     public function store(Request $request): JsonResponse
     {
         $validated = $this->validatePregunta($request);
 
-        $pregunta = DB::transaction(function () use ($request, $validated): PreguntaPrueba {
-            $pregunta = PreguntaPrueba::query()->create($validated);
-            HistorialAccion::registrar($this->user($request), 'CREAR', $pregunta);
-
-            return $pregunta;
-        });
+        $pregunta = $this->preguntaService->crear($validated, $this->user($request));
 
         return response()->json([
             'pregunta' => new PreguntaPruebaResource($pregunta),
         ], Response::HTTP_CREATED);
     }
 
+    /**
+     * Valida y actualiza una pregunta de prueba.
+     */
     public function update(Request $request, PreguntaPrueba $pregunta): JsonResponse
     {
         $validated = $this->validatePregunta($request);
 
-        DB::transaction(function () use ($request, $pregunta, $validated): void {
-            $pregunta->update($validated);
-            HistorialAccion::registrar($this->user($request), 'ACTUALIZAR', $pregunta);
-        });
+        $pregunta = $this->preguntaService->actualizar($pregunta, $validated, $this->user($request));
 
         return response()->json([
             'pregunta' => new PreguntaPruebaResource($pregunta),
         ]);
     }
 
+    /**
+     * Elimina una pregunta de prueba.
+     */
     public function destroy(Request $request, PreguntaPrueba $pregunta): Response
     {
-        DB::transaction(function () use ($request, $pregunta): void {
-            HistorialAccion::registrar($this->user($request), 'ELIMINAR', $pregunta);
-            $pregunta->delete();
-        });
+        $this->preguntaService->eliminar($pregunta, $this->user($request));
 
         return response()->noContent();
     }
 
     /**
+     * Valida los datos de una pregunta de prueba.
+     *
      * @return array<string, mixed>
      */
     private function validatePregunta(Request $request): array
@@ -126,6 +135,9 @@ class PreguntaPruebaController extends Controller
         ]);
     }
 
+    /**
+     * Obtiene el usuario autenticado que realiza la operación.
+     */
     private function user(Request $request): User
     {
         $user = $request->user();

@@ -4,104 +4,98 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\FranjaDisponibilidadResource;
 use App\Models\FranjaDisponibilidad;
-use App\Models\HistorialAccion;
 use App\Models\User;
+use App\Services\FranjaDisponibilidadService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 
+/**
+ * Atiende las peticiones HTTP de franjas de disponibilidad.
+ */
 class FranjaDisponibilidadController extends Controller
 {
+    /** Servicio que coordina los casos de uso de franjas. */
+    private readonly FranjaDisponibilidadService $franjaService;
+
+    /**
+     * Crea el controlador con su servicio de aplicación.
+     */
+    public function __construct(FranjaDisponibilidadService $franjaService)
+    {
+        $this->franjaService = $franjaService;
+    }
+
+    /**
+     * Devuelve las franjas futuras que tienen cupos disponibles.
+     */
     public function publicIndex(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'tipo' => ['sometimes', Rule::in($this->types())],
         ]);
 
-        $franjas = FranjaDisponibilidad::query()
-            ->when(isset($validated['tipo']), fn ($query) => $query->where('tipo', $validated['tipo']))
-            ->whereDate('fecha', '>=', today())
-            ->withCount('reservas')
-            ->orderBy('fecha')
-            ->orderBy('hora_inicio')
-            ->get()
-            ->filter(fn (FranjaDisponibilidad $franja): bool => $franja->reservas_count < $franja->cupos_totales)
-            ->values();
+        $franjas = $this->franjaService->obtenerDisponibles($validated['tipo'] ?? null);
 
         return response()->json([
             'franjas' => FranjaDisponibilidadResource::collection($franjas),
         ]);
     }
 
+    /**
+     * Devuelve todas las franjas para la administración.
+     */
     public function index(): JsonResponse
     {
         return response()->json([
             'franjas' => FranjaDisponibilidadResource::collection(
-                FranjaDisponibilidad::query()
-                    ->withCount('reservas')
-                    ->orderBy('fecha')
-                    ->orderBy('hora_inicio')
-                    ->get(),
+                $this->franjaService->obtenerTodas(),
             ),
         ]);
     }
 
+    /**
+     * Valida y crea una franja de disponibilidad.
+     */
     public function store(Request $request): JsonResponse
     {
         $validated = $this->validateFranja($request);
 
-        $franja = DB::transaction(function () use ($request, $validated): FranjaDisponibilidad {
-            $franja = FranjaDisponibilidad::query()->create($validated);
-            HistorialAccion::registrar($this->user($request), 'CREAR', $franja);
-
-            return $franja;
-        });
+        $franja = $this->franjaService->crear($validated, $this->user($request));
 
         return response()->json([
-            'franja' => new FranjaDisponibilidadResource($franja->loadCount('reservas')),
+            'franja' => new FranjaDisponibilidadResource($franja),
         ], Response::HTTP_CREATED);
     }
 
+    /**
+     * Valida y actualiza una franja de disponibilidad.
+     */
     public function update(Request $request, FranjaDisponibilidad $franja): JsonResponse
     {
         $validated = $this->validateFranja($request, $franja);
 
-        if ($validated['cupos_totales'] < $franja->reservas()->count()) {
-            throw ValidationException::withMessages([
-                'cupos_totales' => ['Los cupos no pueden ser menores que las reservas existentes.'],
-            ]);
-        }
-
-        DB::transaction(function () use ($franja, $request, $validated): void {
-            $franja->update($validated);
-            HistorialAccion::registrar($this->user($request), 'ACTUALIZAR', $franja);
-        });
+        $franja = $this->franjaService->actualizar($franja, $validated, $this->user($request));
 
         return response()->json([
-            'franja' => new FranjaDisponibilidadResource($franja->loadCount('reservas')),
+            'franja' => new FranjaDisponibilidadResource($franja),
         ]);
     }
 
+    /**
+     * Elimina una franja de disponibilidad sin reservas.
+     */
     public function destroy(Request $request, FranjaDisponibilidad $franja): Response
     {
-        if ($franja->reservas()->exists()) {
-            throw ValidationException::withMessages([
-                'franja' => ['No se puede eliminar una franja que tiene reservas.'],
-            ]);
-        }
-
-        DB::transaction(function () use ($franja, $request): void {
-            HistorialAccion::registrar($this->user($request), 'ELIMINAR', $franja);
-            $franja->delete();
-        });
+        $this->franjaService->eliminar($franja, $this->user($request));
 
         return response()->noContent();
     }
 
     /**
+     * Valida los datos de una franja de disponibilidad.
+     *
      * @return array<string, mixed>
      */
     private function validateFranja(Request $request, ?FranjaDisponibilidad $franja = null): array
@@ -125,6 +119,8 @@ class FranjaDisponibilidadController extends Controller
     }
 
     /**
+     * Devuelve los tipos de trámite aceptados por la API.
+     *
      * @return array<int, string>
      */
     private function types(): array
@@ -132,6 +128,9 @@ class FranjaDisponibilidadController extends Controller
         return ['PRUEBA_MANEJO', 'RENOVACION_NORMAL', 'RENOVACION_URGENTE'];
     }
 
+    /**
+     * Obtiene el usuario autenticado que realiza la operación.
+     */
     private function user(Request $request): User
     {
         $user = $request->user();

@@ -3,15 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 
+/**
+ * Atiende las peticiones HTTP de autenticación de usuarios.
+ */
 class AuthController extends Controller
 {
+    /** Servicio que coordina el registro y la autenticación. */
+    private readonly AuthService $authService;
+
+    /**
+     * Crea el controlador con su servicio de aplicación.
+     */
+    public function __construct(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
+
+    /**
+     * Valida las credenciales y devuelve un token de acceso.
+     */
     public function login(Request $request): JsonResponse
     {
         $request->merge([
@@ -23,17 +39,14 @@ class AuthController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        $user = User::query()->where('cedula', $credentials['cedula'])->first();
+        $usuario = $this->authService->autenticar($credentials['cedula'], $credentials['password']);
 
-        if (! $user || ! $user->activo || ! Hash::check($credentials['password'], $user->password)) {
-            throw ValidationException::withMessages([
-                'cedula' => ['Las credenciales no son correctas.'],
-            ]);
-        }
-
-        return $this->authenticatedResponse($user);
+        return response()->json($this->authService->emitirCredenciales($usuario));
     }
 
+    /**
+     * Valida y registra una nueva cuenta ciudadana.
+     */
     public function register(Request $request): JsonResponse
     {
         $request->merge([
@@ -45,39 +58,45 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
 
-        $user = User::query()->create([
-            'cedula' => $validated['cedula'],
-            'password' => $validated['password'],
-            'rol' => 'PUBLICO_GENERAL',
-        ]);
+        $usuario = $this->authService->registrarCiudadano(
+            $validated['cedula'],
+            $validated['password'],
+        );
 
-        return $this->authenticatedResponse($user, Response::HTTP_CREATED);
+        return response()->json(
+            $this->authService->emitirCredenciales($usuario),
+            Response::HTTP_CREATED,
+        );
     }
 
+    /**
+     * Devuelve el perfil del usuario autenticado.
+     */
     public function me(Request $request): JsonResponse
     {
         return response()->json([
-            'usuario' => $request->user()->only(['id', 'nombre', 'cedula', 'rol']),
+            'usuario' => $this->authService->obtenerPerfil($this->user($request)),
         ]);
     }
 
+    /**
+     * Revoca el token utilizado en la petición actual.
+     */
     public function logout(Request $request): Response
     {
-        $request->user()->currentAccessToken()?->delete();
+        $this->authService->cerrarSesion($this->user($request));
 
         return response()->noContent();
     }
 
-    private function authenticatedResponse(User $user, int $status = Response::HTTP_OK): JsonResponse
+    /**
+     * Obtiene el usuario autenticado que realiza la operación.
+     */
+    private function user(Request $request): User
     {
-        $user->tokens()->delete();
-        $expiresAt = now()->addHours(8);
-        $token = $user->createToken('web', ['*'], $expiresAt);
+        $user = $request->user();
+        abort_unless($user instanceof User, Response::HTTP_UNAUTHORIZED);
 
-        return response()->json([
-            'token' => $token->plainTextToken,
-            'expira_en' => $expiresAt->toIso8601String(),
-            'usuario' => $user->only(['id', 'nombre', 'cedula', 'rol']),
-        ], $status);
+        return $user;
     }
 }

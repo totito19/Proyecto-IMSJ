@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FranjaDisponibilidadController;
+use App\Http\Controllers\HealthController;
 use App\Http\Controllers\HistorialAccionController;
 use App\Http\Controllers\MaterialEstudioController;
 use App\Http\Controllers\NoticiaController;
@@ -11,9 +12,7 @@ use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\UsuarioAdminController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/health', fn () => response()->json([
-    'status' => 'ok',
-]));
+Route::get('/health', [HealthController::class, 'index']);
 
 Route::post('/login', [AuthController::class, 'login'])
     ->middleware('throttle:5,1');

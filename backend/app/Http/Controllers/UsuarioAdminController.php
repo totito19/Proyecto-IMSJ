@@ -2,29 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HistorialAccion;
 use App\Models\User;
+use App\Services\UsuarioAdminService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
 
+/**
+ * Atiende las peticiones HTTP de administración del personal IMSJ.
+ */
 class UsuarioAdminController extends Controller
 {
-    private const string INITIAL_PASSWORD = 'imsj1234';
+    /** Servicio que coordina la administración del personal. */
+    private readonly UsuarioAdminService $usuarioService;
 
+    /**
+     * Crea el controlador con su servicio de aplicación.
+     */
+    public function __construct(UsuarioAdminService $usuarioService)
+    {
+        $this->usuarioService = $usuarioService;
+    }
+
+    /**
+     * Devuelve los integrantes activos del personal IMSJ.
+     */
     public function index(): JsonResponse
     {
         return response()->json([
-            'usuarios' => User::query()
-                ->where('rol', 'PERSONAL_IMSJ')
-                ->where('activo', true)
-                ->orderBy('nombre')
-                ->get(['id', 'nombre', 'cedula', 'created_at']),
+            'usuarios' => $this->usuarioService->obtenerPersonalActivo(),
         ]);
     }
 
+    /**
+     * Valida y crea o reactiva un integrante del personal.
+     */
     public function store(Request $request): JsonResponse
     {
         $request->merge([
@@ -37,79 +49,27 @@ class UsuarioAdminController extends Controller
             'cedula' => ['required', 'digits_between:7,8'],
         ]);
 
-        $actor = $this->user($request);
-
-        $usuario = DB::transaction(function () use ($actor, $validated): User {
-            $usuario = User::query()->where('cedula', $validated['cedula'])->first();
-
-            if ($usuario?->rol === 'PUBLICO_GENERAL') {
-                throw ValidationException::withMessages([
-                    'cedula' => ['La cédula ya pertenece a una cuenta ciudadana.'],
-                ]);
-            }
-
-            if ($usuario?->activo) {
-                throw ValidationException::withMessages([
-                    'cedula' => ['Ya existe un integrante activo con esa cédula.'],
-                ]);
-            }
-
-            $accion = $usuario ? 'REACTIVAR' : 'CREAR';
-
-            if ($usuario) {
-                $usuario->update([
-                    'nombre' => $validated['nombre'],
-                    'password' => self::INITIAL_PASSWORD,
-                    'activo' => true,
-                ]);
-            } else {
-                $usuario = User::query()->create([
-                    'nombre' => $validated['nombre'],
-                    'cedula' => $validated['cedula'],
-                    'password' => self::INITIAL_PASSWORD,
-                    'rol' => 'PERSONAL_IMSJ',
-                    'activo' => true,
-                ]);
-            }
-
-            HistorialAccion::registrar($actor, $accion, $usuario);
-
-            return $usuario;
-        });
+        $usuario = $this->usuarioService->crearOReactivar($validated, $this->user($request));
 
         return response()->json([
             'usuario' => $usuario->only(['id', 'nombre', 'cedula']),
-            'clave_inicial' => self::INITIAL_PASSWORD,
+            'clave_inicial' => UsuarioAdminService::INITIAL_PASSWORD,
         ], Response::HTTP_CREATED);
     }
 
+    /**
+     * Desactiva el acceso de un integrante del personal.
+     */
     public function destroy(Request $request, User $usuario): Response
     {
-        abort_unless($usuario->rol === 'PERSONAL_IMSJ' && $usuario->activo, Response::HTTP_NOT_FOUND);
-
-        $actor = $this->user($request);
-
-        if ($actor->is($usuario)) {
-            throw ValidationException::withMessages([
-                'usuario' => ['No puede quitar su propio acceso.'],
-            ]);
-        }
-
-        if (User::query()->where('rol', 'PERSONAL_IMSJ')->where('activo', true)->count() <= 1) {
-            throw ValidationException::withMessages([
-                'usuario' => ['Debe quedar al menos un integrante del personal IMSJ.'],
-            ]);
-        }
-
-        DB::transaction(function () use ($actor, $usuario): void {
-            $usuario->tokens()->delete();
-            $usuario->update(['activo' => false]);
-            HistorialAccion::registrar($actor, 'DESACTIVAR', $usuario);
-        });
+        $this->usuarioService->desactivar($usuario, $this->user($request));
 
         return response()->noContent();
     }
 
+    /**
+     * Obtiene el usuario autenticado que realiza la operación.
+     */
     private function user(Request $request): User
     {
         $user = $request->user();
