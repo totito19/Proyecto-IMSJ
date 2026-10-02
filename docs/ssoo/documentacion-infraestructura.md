@@ -1,9 +1,13 @@
 # Documentación de infraestructura
 
+> **CC-05 — Decisión del grupo, 02/10/2026:** destino PHP sin Laravel, por capas y con PDO, basado en `api-completa`. El código y los archivos de infraestructura aún utilizan Laravel. El contenido previo se conserva como referencia de esa versión; la migración y sus pruebas están pendientes. Ver [transición documentada](transicion_backend_vanilla.md).
+
 **Proyecto:** Plataforma Web Educación Vial IMSJ  
 **Asignatura:** Administración de Sistemas Operativos  
 **Entrega:** segunda entrega  
 **Fecha:** 2 de septiembre de 2026
+
+> **Revisión de IA — 02/10/2026:** se conserva la fecha declarada y el inventario. La inspección de archivos no sustituye ejecución de contenedores. El resultado declarado de Compose en la sección 11 no incluye salida adjunta ni responsable.
 
 ## 1. Alcance
 
@@ -235,4 +239,14 @@ El 2 de septiembre de 2026 se validó `compose.yaml` con
 - volúmenes: `db_data` y `app_uploads`.
 
 La reconstrucción funcional completa se verifica mediante la guía
-`03-reconstruccion-infraestructura.md`.
+`reconstruccion-infraestructura.md`.
+
+**IA — Aclaración:** la guía contiene pasos y casillas pendientes; no es un informe de reconstrucción ya completada. Falta versión/commit utilizado, equipo/entorno, fecha efectiva, responsable y evidencia del arranque, migraciones, persistencia y restauración. `/api/health` responde desde HealthService sin consultar MySQL.
+
+Cambiar `APP_PORT` no actualiza `frontend-publico/js/api.js` ni `frontend-imsj/js/api.js`, que contienen `http://localhost:8000/api`. La configuración de otro puerto o acceso remoto necesita revisión del equipo; este documento no la aplica al código.
+
+## Adenda tecnológica CC-05 — 02/10/2026
+
+La decisión del grupo sustituye Laravel por PHP sin framework, con capas y PDO/MySQL según la API completa indicada. Los manifiestos, scripts y comandos Artisan de este documento describen la versión Laravel todavía presente; no son procedimientos finales del destino. Su sustitución se documentará con los archivos y comandos realmente implementados.
+
+Se conserva como base la topología Nginx/Apache-PHP/MySQL, PHP 8.5, MySQL 8.4, puertos 8000/8080 y volúmenes persistentes. El cambio no define nuevo alojamiento ni nuevas medidas de rendimiento. La [transición de infraestructura](transicion_backend_vanilla.md) contiene correspondencia de variables, trabajo de imagen/scripts, instalación/actualización SQL, almacenamiento y criterios de reconstrucción/restauración pendientes. La letra indica Laravel; la aceptación académica del cambio aún debe registrarse.

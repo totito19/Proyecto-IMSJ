@@ -1,5 +1,7 @@
 # Sprint Review — IMSJ
 
+> **Revisión asistida por IA — 02/10/2026:** se conserva la reconstrucción del 08/09. Estos balances no sustituyen actas de reuniones efectivas con el cliente. Los campos y vínculos añadidos son observaciones documentales; aceptación humana pendiente.
+
 **Reconstrucción retrospectiva para revisión del equipo · 08/09/2026.**
 
 Balance de los cuatro períodos propuestos en [Sprint Planning](sprint_planning.md), basado en los archivos incorporados por los commits. Las fechas delimitan el análisis, no acreditan reuniones realizadas. La presencia de código o pruebas no certifica su ejecución ni la aceptación del cliente.
@@ -53,3 +55,22 @@ Los puntos terminados requieren verificar el cumplimiento y las pruebas de cada 
 - Los frontends incorporaron llamadas a la API para trabajar con contenidos y agenda.
 - Se añadieron el simulacro, el banco de preguntas, la administración de personal y la consulta del historial.
 - Se agregaron archivos para iniciar y detener el sistema local con Docker.
+
+**Pendiente de documentar al cierre:** qué versión se mostró, qué US cumplieron criterios, resultados de pruebas y feedback/aceptación. La existencia de API y Docker no acredita que se ejecutaran exitosamente durante una demo.
+
+**Evidencia documental actual:** [API](api.md), [verificación](verificacion.md), `backend/routes/api.php`, migraciones y archivos Feature; los documentos originales citan commits de períodos anteriores y esta vista actual corresponde a `df581ab`, no necesariamente al cierre del 03/09.
+
+La [acta R-05](actas_reuniones.md#r-05--03092026) registra una demo el 03/09 con Directora e Inspector, sin detalle de versión ni resultado. CC-02–CC-04 registran pedidos de esa fecha; no se los presenta como aprobados o resueltos. CC-01 tiene evidencia de código, sin aceptación registrada.
+
+## Campos de Review que siguen pendientes
+
+| Período reconstruido | Fecha efectiva de Review / participantes | Incremento demostrado / versión | Feedback, resultado y puntos terminados | Impacto de backlog |
+|---|---|---|---|---|
+| 1 | No registrados. | El balance de commits no prueba una demo. | No registrados. | No registrado por US. |
+| 2 | No registrados. | El balance de commits no prueba una demo. | No registrados. | No registrado por US. |
+| 3 | No registrados. | El balance de commits no prueba una demo. | No registrados. | CC-01 registrado; ubicación histórica de la decisión pendiente. |
+| 4 | R-05 registra demo, sin confirmar que fuera Review del sprint. | No registrado en detalle. | No registrados; total terminado «Por verificar». | CC-02–CC-04; US30/US32/US33 son borradores derivados. |
+
+**IA — Sugerencia:** completar cada Review con fuente, fecha, asistentes, funcionalidades mostradas, comentarios fieles del cliente, resultado y efectos en backlog/control de cambios. No usar citas del ejemplo ni reconstruir aprobaciones a partir de commits.
+
+Fuentes: [Review del curso](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/05_sprint_review.md) y [eventos de Scrum](https://github.com/portalutu/ing_software-3ro-bt/blob/ae1c0f118a959c5bba7fd6c8badf60de1b7ea23a/Teoricos/scrum-events.md).

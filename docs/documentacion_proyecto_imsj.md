@@ -1,5 +1,7 @@
 # Proyecto Educación Vial IMSJ — Concepción del proyecto
 
+> **Revisión asistida por IA — 02/10/2026:** la síntesis conserva el relevamiento inicial. La numeración se alinea con [Requerimientos](Requerimientos.md) y [backlog](backlog.md). Las interpretaciones sin evidencia se señalan; no se certifican decisiones ni aceptación del cliente.
+
 ---
 
 ## Índice
@@ -35,7 +37,7 @@
 
 **Organismo:** Intendencia Municipal de San José (IMSJ)
 **Área:** Sección Tránsito
-**Referente entrevistado:** Inspector de tránsito Ignacio Franco
+**Referente institucional:** Inspector de Tránsito de la Intendencia, conocido como Nacho. El grupo no confirma un apellido; se usa principalmente el cargo.
 **Público alcanzado:** ciudadanía del departamento de San José, con foco especial en adolescentes
 **Nivel tecnológico actual:** bajo en cuanto a canales digitales propios
 **Registro actual:** información dispersa en canales no integrados; el trámite de licencia se gestiona
@@ -63,9 +65,7 @@ La solución propuesta en la letra se compone de **dos interfaces diferenciadas 
 | **Frontend IMSJ (dashboard)** | Personal administrativo de Tránsito | Publicar y administrar los contenidos |
 | **Backend (API REST)** | Ambos frontends | Centraliza la lógica de negocio, la autenticación y el acceso a datos |
 
-La separación en dos interfaces no es una decisión técnica arbitraria: responde a que son **dos públicos
-con permisos radicalmente distintos**. El ciudadano solo lee; el personal escribe y publica. Unificarlas
-sería un riesgo de seguridad y una complicación de usabilidad.
+La separación en dos interfaces está indicada por la letra del proyecto. El público consulta contenidos; en la versión académica también registra reservas. El personal administra contenidos. La autorización efectiva se realiza en la API, no mediante la separación visual.
 
 ---
 
@@ -87,16 +87,16 @@ que impedían estimar correctamente el trabajo:
 
 # Parte 2: Entrevista con el cliente
 
-## 1. Participantes de la entrevista
+## 4. Participantes de la entrevista
 
 | Rol | Participante | Responsabilidad |
 |---|---|---|
-| Cliente / referente institucional | Inspector de tránsito de la IMSJ | Explica el proceso real y define prioridades |
+| Cliente / referente institucional | Inspector de Tránsito de la Intendencia | Explica el proceso real. El grupo confirmó además su autoridad para aceptar entregas y aprobar cambios, con registro en actas. |
 |Equipo de desarrollo | Equipo de estudiantes | Releva necesidades y las transforma en requerimientos |
 
 ---
 
-## 2. Desarrollo de la entrevista
+## 5. Desarrollo de la entrevista
 
 ### Sobre usuarios administrativos
 
@@ -174,13 +174,14 @@ Por el momento no se identifican nuevos requerimientos.
 | Organización de contenidos | Preguntas frecuentes clasificadas por categorías; noticias con vigencia variable. |
 | Enfoque comunicacional | Lenguaje sencillo orientado a adolescentes. |
 
-### Qué aportó la entrevista
+### Interpretación del relevamiento
+
+> **IA — Observación:** este resumen interpreta el informe existente. No se localizó validación del entrevistado ni fecha completa. Los permisos iguales corresponden a esta instancia; CC-03 registra una solicitud posterior de diferenciación.
 
 Tres resultados concretos, que conviene poder explicar en la defensa:
 
 1. **Confirmó la exclusión de la agenda con el cliente.** No fue una decisión del equipo: el
-   referente indicó que el trámite sigue siendo telefónico en esta etapa. Eso convierte el alcance excluido
-   en un acuerdo documentado.
+   referente indicó que el trámite sigue siendo telefónico en esta etapa. La exclusión consta en el informe y el charter, aunque falta evidencia de validación institucional del registro.
 
 2. **Simplificó un requerimiento sobredimensionado.** El equipo asumía roles administrativos diferenciados;
    el cliente aclaró que todos los administrativos tienen los mismos privilegios. Menos complejidad real de
@@ -189,10 +190,11 @@ Tres resultados concretos, que conviene poder explicar en la defensa:
 3. **Descubrió tres requerimientos no previstos:** categorización de preguntas frecuentes, soporte de video
    en materiales, y aprobación de la Dirección antes de publicar.
 
-El tercer punto es el que justifica haber hecho la entrevista. Si el cliente solo confirma lo que el equipo
-ya suponía, la entrevista no aportó información. Acá aportó.
+Las precisiones se incorporan como RF19–RF21. Confirmar lo ya supuesto también permite reducir incertidumbre; no se mide el valor de la entrevista por la cantidad de requisitos nuevos.
 
-### Temas que la entrevista no cubrió
+### Temas sin respuesta documentada
+
+> **IA — Sugerencia:** las preguntas siguientes son pendientes para el equipo, no pedidos confirmados por el cliente.
 
 Comparando con el estándar del caso de referencia, quedaron sin relevar tres temas que TamboTrace sí
 consulta y que conviene preguntar en la próxima instancia con el cliente:
@@ -237,15 +239,22 @@ que aumenten el costo o retrasen la entrega.
 10. Consulta pública de preguntas frecuentes.
 11. Historial de acciones administrativas (auditoría de modificaciones).
 12. Interfaz responsive con accesibilidad básica.
+**Solo para la versión académica, según charter y relevamiento:**
+
 13. Interfaz pública para agendarse a trámites de libreta de conducir.
 14. Interfaz administrativa de franjas de disponibilidad.
 15. Prevención de doble reserva de agenda.
 16. Confirmación visual de agenda para el ciudadano.
 
+Las solicitudes CC-01–CC-04 se consultan en [control de cambios](control_cambios.md). El grupo las confirmó como pendientes para la entrega real, sin fecha fijada ni prioridad distinta entre ellas; no se presentan como alcance inicial ni como funciones terminadas. La agenda es el único módulo señalado como exclusivamente académico hasta ahora.
+
+**Aclaración del grupo — 02/10/2026:** la coordinación y el seguimiento se realizan en reuniones. Juan Robaina revisa y aprueba la documentación internamente; la aceptación del cliente corresponde al Inspector de Tránsito y se registra en las actas a cargo del equipo. La Intendencia administrará y mantendrá el sistema por ahora. Roles y campos pendientes: [aclaraciones y pendientes](aclaraciones_y_pendientes.md).
+
 ---
 
 ## 10. Alcance excluido
--Todo alcance referente a las agendas queda excluido respecto a la entrega al cliente por petición del mismo, sin embargo para poder cumplir con la complejidad del curso lo incluiremos en en la entrega a los profesores.
+- La agenda queda excluida de la entrega al cliente según el relevamiento; se conserva en la entrega académica para cumplir la letra.
+- No está documentado cómo se separarán técnicamente las versiones ni quién aceptó la entrega definitiva.
 
 
 # Parte 4: Requerimientos del sistema
@@ -253,47 +262,40 @@ que aumenten el costo o retrasen la entrega.
 
 ## 11. Requerimientos funcionales
 
-| Código | Requerimiento funcional |
-|---|---|
-| RF1 | El sistema debe permitir iniciar sesión con cédula y contraseña. |
-| RF2 | El sistema debe permitir que los ciudadanos consulten anuncios y noticias de la Sección Tránsito. |
-| RF3 | El sistema debe permitir que los ciudadanos accedan a materiales de estudio para aspirantes. |
-| RF4 | El sistema debe permitir que los ciudadanos consulten preguntas frecuentes. |
-| RF5 | El sistema debe permitir publicar y administrar noticias visibles para el público por parte del personal de IMSJ. |
-| RF6 | El sistema debe permitir definir período de vigencia de cada noticia. |
-| RF7 | El sistema debe permitir cargar imagen de portada, galería de imágenes, texto y enlaces útiles en las noticias. |
-| RF8 | El sistema debe permitir gestionar el estado de una noticia (publicada / no publicada). |
-| RF9 | El sistema debe permitir administrar materiales de estudio. |
-| RF10 | El sistema debe permitir gestionar la sección de preguntas frecuentes. |
-| RF11 | El sistema debe permitir clasificar las preguntas frecuentes por categorías. |
-| RF12 | El sistema debe permitir almacenar materiales de estudio en formato PDF, imagen y video. |
-| RF13 | El sistema debe requerir aprobación de la Dirección antes de que una noticia se haga visible al público. |
+La referencia de códigos es [Requerimientos.md](Requerimientos.md): RF1–RF18 se conservan, y RF19–RF24 identifican precisiones del relevamiento y solicitudes posteriores. Para evitar dos catálogos distintos, esta síntesis remite a ese documento.
 
+### Equivalencia de los códigos anteriores de esta síntesis
+
+Esta tabla conserva trazabilidad con versiones anteriores; no renumera el catálogo original ni las historias US.
+
+| Código anterior en esta síntesis | Código en Requerimientos.md | Función |
+|---|---|---|
+| RF1 | RF1 | Inicio de sesión. |
+| RF2 | RF2 | Consulta de noticias. |
+| RF3 | RF5 | Consulta de materiales. |
+| RF4 | RF6 | Consulta de preguntas frecuentes. |
+| RF5 | RF7 | Administración de noticias. |
+| RF6 | RF8 | Vigencia de noticias. |
+| RF7 | RF9 | Imágenes, texto y enlaces de noticias. |
+| RF8 | RF10 | Estado de noticias. |
+| RF9 | RF17 | Administración de materiales. |
+| RF10 | RF18 | Administración de preguntas frecuentes. |
+| RF11 | RF19 | Categorías de preguntas frecuentes. |
+| RF12 | RF20 | Formatos de materiales. |
+| RF13 | RF21 | Aprobación de noticias por Dirección. |
 
 ## 12. Requerimientos no funcionales
 
-| Código | Requerimiento no funcional |
-|---|---|
-| RNF1 | Control de roles (diferenciación entre público general y personal IMSJ) |
-| RNF2 | Validación de entradas |
-| RNF3 | Historial completo de acciones administrativas |
-| RNF4 | Protección de datos personales |
-| RNF5 | Usabilidad móvil (mobile first) |
-| RNF6 | Accesibilidad básica para público general |
-| RNF7 | Manejo de vigencia automática de noticias |
-| RNF8 | Separación clara entre contenidos publicados y no publicados |
+Consultar RNF1–RNF10 en [Requerimientos.md](Requerimientos.md). En la versión anterior de esta síntesis, RNF1–RNF7 coincidían; **RNF8 significaba separación de publicaciones y corresponde a RNF10**. RNF8 del catálogo de referencia significa prevención de doble reserva y RNF9, confirmación visual.
 
----
+## 13. Definición de épicas
 
-# Parte 5: Épicas del proyecto
+Se mantienen EP1–EP7 de [backlog](backlog.md). La versión anterior de esta síntesis llamó EP3 a materiales (ahora EP5), EP4 a preguntas frecuentes (ahora EP6) y EP5 a calidad (ahora EP7). EP1 y EP2 coinciden. Agenda y gestión de agenda conservan EP3 y EP4 en el backlog académico.
 
-## 13. Epicas
-### Épicas del proyecto
+Las necesidades posteriores se muestran separadas y como borradores trazados a sus fuentes en el backlog. No se transforma una propuesta de IA en compromiso del equipo.
 
-| Código | Épica |
-|---|---|---|
-| EP1 | Acceso y control de roles | Inicio de sesión y separación de permisos entre público general y personal de IMSJ. |
-| EP2 | Comunicación pública (Noticias) | Publicación y consulta de noticias, con contenido, vigencia, estado y aprobación. |
-| EP3 | Materiales de estudio | Acceso del aspirante y administración de materiales en PDF, imagen y video. |
-| EP4 | Preguntas frecuentes | Consulta y mantenimiento de preguntas frecuentes clasificadas por categorías. |
-| EP5 | Calidad y requisitos transversales | Validaciones, historial de acciones, protección de datos, usabilidad móvil y accesibilidad. |
+## 14. Actualización tecnológica — CC-05, 02/10/2026
+
+Por decisión explícita del grupo, el destino del backend es PHP sin Laravel, por capas y con PDO/MySQL a partir de `api-completa` de RodrigoCazard. La [migración](migracion_backend_vanilla.md), la [comparación de referencia](referencia_api_completa.md) y el [control de cambios](control_cambios.md) describen esta actualización posterior al relevamiento; no se la atribuye a la entrevista inicial.
+
+La implementación presente todavía utiliza Laravel. Se conserva el dominio, el contrato de los frontends y los destinos acordados: agenda académica y CC-01–CC-04 pendientes para entrega real. La letra académica indica Laravel, por lo que el registro de aceptación de la diferencia con docentes sigue pendiente. Las propuestas de cookie JWT, formatos/rutas del ejemplo o cambios de datos no quedan aprobadas automáticamente.

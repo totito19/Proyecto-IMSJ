@@ -1,8 +1,10 @@
 # Justificación de clases, atributos y métodos
 
+> **Revisión asistida por IA — 02/10/2026:** las secciones 1–3 conservan la derivación conceptual inicial, no un inventario de clases PHP. La sección 4 aclara exclusiones del modelo inicial y la sección 5 relaciona ese modelo con la implementación actual y necesidades posteriores. El acta R-04 declara asistencia de IA en su organización; no se identifica la herramienta o revisor original.
+
 ## 1. Criterio de derivación
 
-El modelo se deriva exclusivamente de los siguientes documentos académicos:
+El modelo conceptual inicial se deriva de los siguientes documentos académicos:
 
 * `docs/Requerimientos.md`: RF1–RF18 y RNF1–RNF10.
 * `docs/backlog.md`: US1–US28 y EP1–EP7.
@@ -49,7 +51,7 @@ Se aplica el mismo criterio de `Practicos/ada-tambotrace.md`:
 | `iniciarSesion(cedula, password)` | Deriva directamente del verbo “iniciar sesión” de RF1 y US1. Compara la contraseña ingresada con el hash almacenado.                                                                                                           |
 | `tieneAccesoA(recurso)`           | Implementa el control de roles de RNF1 y US2. El público puede consultar contenidos y realizar reservas, mientras que el personal puede acceder a las operaciones administrativas.                                             |
 
-No se agregan roles administrativos adicionales porque la versión académica solamente exige diferenciar al público general del personal de la IMSJ.
+El modelo inicial diferencia público y personal IMSJ. La entrevista y CC-03 registran aprobación por Dirección y posterior diferenciación de permisos; no se descarta esa necesidad por estar ausente del catálogo inicial.
 
 ---
 
@@ -134,7 +136,7 @@ Esta enumeración puede ser utilizada por `Noticia`, `MaterialEstudio` y `Pregun
 | `publicar()`                | Cambia el estado a `PUBLICADO` para hacer visible la pregunta.                                                                          |
 | `despublicar()`             | Cambia el estado a `NO_PUBLICADO` sin eliminar la pregunta.                                                                             |
 
-No se agrega una clase de categorías porque la versión académica de `Requerimientos.md` no exige clasificar las preguntas frecuentes.
+El modelo inicial no agregó categorías. El informe de entrevista sí las solicita (RF19); la ausencia en el modelo y en el código es una brecha pendiente, no una exclusión aprobada del cliente.
 
 ---
 
@@ -233,19 +235,63 @@ No se crea una tabla para `PortalPublico` porque no almacena información propia
 
 ---
 
-# 4. Elementos deliberadamente no incorporados
+# 4. Elementos no incorporados en el modelo inicial
 
 | Elemento posible                                        | Motivo                                                                                         |
 | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| Roles distintos de público y personal IMSJ              | RNF1 solo exige esa diferenciación.                                                            |
-| Aprobación de noticias por Dirección                    | No forma parte de los requerimientos de la versión académica seleccionada.                     |
-| Categorías de preguntas frecuentes                      | RF6 y RF18 no exigen clasificación por categorías.                                             |
-| Estados adicionales para noticias                       | RF10 únicamente define publicada y no publicada.                                               |
-| Costo de la renovación urgente                          | RF4 y RF12 distinguen el trámite urgente, pero no determinan su precio ni forma de cálculo.    |
+| Roles distintos de público y personal IMSJ              | No presentes en código actual; CC-03 requiere diferenciación posterior. |
+| Aprobación de noticias por Dirección                    | Relevada en entrevista y ampliada por CC-03/RF21; pendiente, no excluida. |
+| Categorías de preguntas frecuentes                      | Relevadas en entrevista/RF19; pendientes, no excluidas. |
+| Estados adicionales para noticias                       | Ausentes en código; flujo de cuatro estados registrado en CC-03. |
+| Costo de la renovación urgente                          | Letra académica exige registrar costo especial; valor/cálculo pendientes. No se incorpora por suposición. |
 | Duración fija para todas las franjas                    | No se especifica; por eso se utilizan `horaInicio` y `horaFin`.                                |
 | Datos personales concretos adicionales a la cédula      | No se especifica cuáles son obligatorios.                                                      |
 | Estado confirmada, pendiente o cancelada para `Reserva` | La versión académica exige confirmación visual, pero no define un ciclo de estados de reserva. |
-| Métodos para cancelar o reprogramar reservas            | No aparecen en RF3, RF4 ni en las historias de usuario correspondientes.                       |
+| Métodos para cancelar o reprogramar reservas            | No están en catálogo inicial; la letra sí incluye endpoint de cancelación. Alcance/equivalencia pendientes de decisión. |
 | Modificación o eliminación del historial                | Contradiría el objetivo de auditoría de RNF3.                                                  |
 
 ---
+
+# 5. Correspondencia con la implementación y el relevamiento posterior
+
+**IA — Observación basada en `backend/app/` y esquema de `df581ab`:** las operaciones conceptuales no son necesariamente métodos de modelos Eloquent. No se crean clases nuevas para hacer coincidir el código con un dibujo.
+
+| Concepto inicial | Clases/operaciones actuales | Trazabilidad y límite |
+|---|---|---|
+| Usuario / iniciar sesión | User; AuthController/AuthService; UserRepositoryInterface/EloquentUserRepository. | RF1/RNF1/RNF4. `password` tiene cast hashed; `nombre` y `activo` están presentes. |
+| Noticia / CRUD / publicar | Noticia y scopes/relaciones; NoticiaController/NoticiaService; repositorio de noticias. | RF2/RF7–RF10. PUBLICADO/NO_PUBLICADO; CC-03 pendiente. |
+| Galería y enlaces de Noticia | NoticiaImagen y NoticiaEnlace, cada uno con FK a noticia. | RF9. Persistencia diferenciada de colecciones del modelo conceptual. |
+| MaterialEstudio | Modelo, controlador, servicio y repositorio del módulo. | RF5/RF17/RF20. PDF/imagen como archivo; VIDEO como URL. |
+| PreguntaFrecuente | Modelo, controlador, servicio y repositorio del módulo. | RF6/RF18. Sin categorías RF19 ni colección específica de enlaces. |
+| FranjaDisponibilidad | Modelo, controlador, servicio y repositorio del módulo. | RF11–RF13/RNF8. Tipo y cupos; sin costo urgente. |
+| Reserva / ConsultaAgenda | ReservaController/ReservaService; ReservaRepositoryInterface/EloquentReservaRepository; Reserva y FranjaDisponibilidad. | RF3/RF4/RF14–RF16. `crear`, `obtenerDelUsuario` y `obtenerAgenda`; transacción y bloqueo en repositorio. `ConsultaAgenda` no existe como clase PHP. |
+| HistorialAccion | Modelo con método estático `registrar`; consulta mediante controlador/servicio/repositorio. | RNF3. Registra actor/acción/elemento/fecha; no conserva valores anterior/nuevo. No se atribuye esa capacidad por copiar el ejemplo. |
+| PortalPublico | Métodos `publicIndex`, servicios, repositorios y scopes. | RF2/RF5/RF6. No existe clase PHP con este nombre ni tabla propia. |
+| RolUsuario / EstadoPublicacion / TipoMaterial / TipoTramite | Valores string validados y enumeraciones del esquema. | Conceptos del diseño; no enums PHP declarados. |
+| PreguntaPrueba, ausente de la derivación inicial | Modelo con pregunta, opcion_a/b/c/d y respuesta_correcta; PreguntaPruebaController/Service y repositorio. | RF22/CC-01, US31. Servicio obtiene prueba y corrige; CRUD auditado. CC-04 no implementado. |
+| Tokens de acceso | Sanctum y tabla personal_access_tokens; emisión/revocación en AuthService. | RF1/RNF4. Ocho horas observadas; fuera de las diez entidades del dibujo MER. |
+
+## Reglas y supuestos que requieren revisión
+
+- La duración/cupos de las franjas y el costo urgente no se inventan: el equipo debe completar su origen y criterio.
+- La aprobación por Directora, categorías y gráficos requieren modelado cuando se cierren las reglas; no se dibujan como implementados.
+- El campo `tipo_elemento`/`elemento_id` del historial identifica el objeto auditado sin FK para cada tipo. Su integridad y cobertura deben revisarse; no se declara historial de valores anterior/nuevo.
+- La justificación de una asociación no prueba un resultado de ejecución. [Verificación](verificacion.md) separa archivos de prueba y evidencia.
+
+Los [diagramas y sus aclaraciones](Diagramas/README.md) distinguen vista simplificada, esquema físico y responsabilidades actuales. Fuente: [modelado TamboTrace](https://github.com/portalutu/ing_software-3ro-bt/blob/ae1c0f118a959c5bba7fd6c8badf60de1b7ea23a/Practicos/ada-tambotrace.md), adaptando únicamente la estructura y no sus datos o decisiones.
+
+# 6. Responsabilidades de destino — CC-05
+
+**Grupo, 02/10/2026:** reemplazar Laravel por PHP sin framework y PDO, siguiendo las capas de `api-completa`. La sección 5 conserva correspondencia con el código Laravel presente; no describe clases PHP ya migradas.
+
+**IA — Correspondencia técnica para revisión:** se mantienen entidades y reglas IMSJ. Los modelos de destino representan datos del dominio; los repositorios PDO realizan SQL; los servicios conservan negocio/transacciones; controladores, validadores y DTO atienden entradas HTTP. No se agrega Product ni Venta al modelo por usar ese ejemplo.
+
+| Responsabilidad previa | Destino a implementar |
+|---|---|
+| Modelos Eloquent, relaciones y scopes | Objetos PHP y consultas explícitas para relaciones, publicación y vigencia; conservar tipos/null/arrays del JSON. |
+| Repositorios Eloquent | Repositorios PDO con parámetros, búsquedas por id/cédula, FK/índices y transacciones. |
+| Controladores/validación Laravel | Adaptadores HTTP, validadores y DTO por operación, sin entrada libre de campos sensibles. |
+| Servicios y model binding | Reglas preservadas, búsqueda explícita y control de inexistencia/propiedad. |
+| Sanctum y recursos/filesystem | Reemplazo de autenticación, serialización y archivos compatible; diseño de token y transición de sesiones pendientes. |
+
+`personal_access_tokens` es una tabla técnica actual: no se borra ni se conserva como dependencia de Sanctum por decisión automática; su transición requiere diseño/evidencia. CC-03 Directora y CC-04 gráficos siguen pendientes y no se dibujan como implementados. Ver [diagramas](Diagramas/README.md), [migración](migracion_backend_vanilla.md) y [API](api.md).

@@ -1,9 +1,13 @@
 # Reconstrucción de la infraestructura
 
+> **CC-05 — Decisión del grupo, 02/10/2026:** destino PHP sin Laravel, por capas y con PDO, basado en `api-completa`. El código y los archivos de infraestructura aún utilizan Laravel. El contenido previo se conserva como referencia de esa versión; la migración y sus pruebas están pendientes. Ver [transición documentada](transicion_backend_vanilla.md).
+
 **Proyecto:** Plataforma Web Educación Vial IMSJ  
 **Asignatura:** Administración de Sistemas Operativos  
 **Entrega:** segunda entrega  
 **Fecha:** 2 de septiembre de 2026
+
+> **Revisión de IA — 02/10/2026:** procedimiento para instalación nueva de desarrollo. Casillas sin marcar y respuestas esperadas no son resultados ejecutados. La corrección documental no cambia los scripts ni opera bases de datos.
 
 ## 1. Propósito
 
@@ -62,6 +66,8 @@ Proyecto-IMSJ/
 
 ## 4. Crear la configuración local
 
+Estos pasos son para una instalación nueva. Si `.env` ya existe, conservarlo y revisarlo; no sobrescribirlo con la plantilla. La clave de Laravel también debe conservarse al retomar una instalación existente.
+
 En PowerShell:
 
 ```powershell
@@ -97,6 +103,8 @@ valores únicos y robustos. No subir `.env` a Git. `DB_HOST` debe permanecer com
 
 Si 8000 u 8080 están ocupados, modificar `APP_PORT`, `FRONTEND_PORT` y, si
 corresponde, `APP_URL` antes de iniciar.
+
+**IA — Observación:** ambos `js/api.js` fijan `http://localhost:8000/api`. Si la API cambia de puerto, las interfaces no se adaptan por cambiar `.env`. Elegir la configuración y su modificación en código requiere una tarea posterior autorizada. Para completar esta guía sin modificar el software, usar los puertos locales predeterminados cuando estén disponibles.
 
 ## 5. Método automático para Windows
 
@@ -135,6 +143,8 @@ docker compose exec -T app php artisan key:generate --force
 ```
 
 El comando escribe `APP_KEY` en el `.env` del anfitrión.
+
+Generarla únicamente al preparar la nueva instalación sin clave. No regenerar una clave existente como parte de un reinicio habitual.
 
 ### Paso 4: crear el esquema
 
@@ -317,3 +327,22 @@ docker compose up -d --build app
 - [ ] el dashboard IMSJ abre.
 - [ ] las migraciones aparecen ejecutadas.
 - [ ] detener y volver a iniciar conserva base y archivos.
+
+## 12. Evidencia pendiente
+
+| Campo | Registro |
+|---|---|
+| Versión / commit reconstruido | No registrado. |
+| Responsable y fecha efectiva | No registrados. |
+| Sistema anfitrión / versiones de Docker | No registrados. |
+| Salida de Compose, arranque y migraciones | No adjunta. |
+| Comprobación de base y archivos persistentes | No adjunta. |
+| Restauración desde respaldo | Pendiente de entrega final; la persistencia de volúmenes no la prueba. |
+
+La verificación de salud por sí sola no prueba conexión a MySQL ni carga de datos. Registrar el resultado de cada paso y vincularlo a [verificación](../verificacion.md).
+
+## Adenda tecnológica CC-05 — 02/10/2026
+
+La decisión del grupo sustituye Laravel por PHP sin framework, con capas y PDO/MySQL según la API completa indicada. Los manifiestos, scripts y comandos Artisan de este documento describen la versión Laravel todavía presente; no son procedimientos finales del destino. Su sustitución se documentará con los archivos y comandos realmente implementados.
+
+Se conserva como base la topología Nginx/Apache-PHP/MySQL, PHP 8.5, MySQL 8.4, puertos 8000/8080 y volúmenes persistentes. El cambio no define nuevo alojamiento ni nuevas medidas de rendimiento. La [transición de infraestructura](transicion_backend_vanilla.md) contiene correspondencia de variables, trabajo de imagen/scripts, instalación/actualización SQL, almacenamiento y criterios de reconstrucción/restauración pendientes. La letra indica Laravel; la aceptación académica del cambio aún debe registrarse.

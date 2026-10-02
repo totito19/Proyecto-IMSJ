@@ -1,5 +1,7 @@
 # Declaración de Ética en el Uso de Inteligencia Artificial
 
+> **Nota de revisión de IA — 02/10/2026:** las secciones 1–10 conservan la declaración histórica del equipo fechada 05/08/2026, sin firmas completas. Sus afirmaciones de autoría y validación no certifican las modificaciones actuales. La adenda 11 registra el apoyo de IA y los pendientes de revisión del equipo, sin crédito individual al asistente.
+
 **Proyecto:** Plataforma Web Educación Vial IMSJ
 **Equipo:** Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero, Juan Corrales
 **Fecha:** 05/08/2026
@@ -138,3 +140,62 @@ Con esta declaración el equipo deja constancia del alcance real del uso de IA d
 | Gabriela Romero | (firma) |
 | Verónica Romero | (firma) |
 | Juan Corrales   | (firma) |
+
+# 11. Adenda de trazabilidad de IA — 02/10/2026
+
+**Equipo responsable y destinatario del crédito:** Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales. **Preparación:** con apoyo externo de IA. **Estado:** pendiente de revisión del equipo. No es una declaración firmada por los integrantes ni modifica sus testimonios históricos.
+
+## 11.1 Asistencia histórica con evidencia
+
+| Fuente | Uso declarado | Datos que faltan |
+|---|---|---|
+| Secciones 3–4 de esta declaración | Claude/Claude Code para borradores, organización y plantillas. | Integrante, fecha por actividad, versión y revisor. |
+| Acta R-04 del 11/08 | Ordenar con IA la justificación de clases/atributos/métodos. | Herramienta, redactor, cambios aceptados y revisión. Es posterior a la fecha de esta declaración. |
+| Sprint Planning / Review | Review declara reconstrucción; no hay registro de herramienta/autores. | No se atribuye a IA sin evidencia. Reconstrucción no equivale a reuniones realizadas. |
+
+**IA — Observación:** «sin asistencia de IA» y «todo revisado» en la declaración histórica son afirmaciones del equipo, no verificaciones de esta auditoría. R-04 requiere actualizar el detalle histórico con sus responsables; no demuestra que el código fuera generado con IA.
+
+## 11.2 Intervención actual
+
+| Apoyo utilizado | Etapa / archivos | Tipo de asistencia | Equipo responsable | Revisión humana |
+|---|---|---|---|---|
+| Apoyo externo de IA | Revisión documental, índice y comparación de repositorios. | Lectura, contraste y generación de observaciones identificadas como IA. | Integrantes del grupo. | Revisión/aprobación interna: Juan Robaina; realización, fecha y evidencia pendientes. |
+| Apoyo externo de IA | Requisitos, síntesis, actas, cambios, backlog, planning y Review. | Corrección de estructura/códigos/enlaces y propuestas de criterios; preservación de hechos históricos. | Integrantes del grupo. | Pendiente. Ninguna propuesta se declara acuerdo del equipo. |
+| Apoyo externo de IA | Arquitectura, modelo/diagramas, API, SSOO y verificación. | Correspondencia con código y sugerencias documentales. | Integrantes del grupo. | Pendiente. Sin ejecución certificada de sistema o pruebas. |
+| Apoyo externo de IA | Cuatro PDF del proyecto. | Hoja de revisión y comentarios de «Revisión documental»; contenido original conservado. | Integrantes del grupo. | Pendiente; no acredita validación jurídica ni firma declaraciones. |
+
+El crédito del proyecto y su documentación corresponde a los integrantes del grupo. Las sugerencias, interpretaciones y criterios preparados con apoyo de IA se mantienen identificados para su discusión, elaboración y comprensión por el equipo antes de presentarlos como contenido definitivo. El crédito editorial del grupo no implica que los aportes ya hayan sido validados ni que todo el texto se haya redactado sin asistencia.
+
+## 11.3 Convenciones para identificar aportes
+
+- **IA — Observación:** afirmación basada en una fuente identificada.
+- **IA — Sugerencia:** comentario o criterio propuesto, pendiente de decisión humana.
+- **IA — Suposición no confirmada:** interpretación sin acuerdo acreditado; no debe ejecutarse como regla.
+- **No registrado:** falta evidencia en el repositorio; no implica que la actividad no ocurrió.
+
+No se identifica IA por tono, prolijidad o vocabulario. No se eliminan aportes por ser de IA; se hace visible su origen y qué validación falta.
+
+## 11.4 Registro de validación pendiente
+
+| Documento / aporte | Integrante que lo revisa | Correcciones o decisión | Evidencia / fecha |
+|---|---|---|---|
+| Revisión documental y aclaraciones del 02/10 | Juan Robaina, función confirmada por el grupo | Pendiente de revisión/aprobación interna | No registrada |
+| Criterios sugeridos e historias derivadas | Juan Robaina para revisión documental interna; aceptación del cliente por el Inspector de Tránsito | Pendiente | No registrada |
+| Comentarios de PDF y datos institucionales | Juan Robaina para revisión documental interna; datos/validación institucional a confirmar con la Intendencia | Pendiente; contacto se completará después | No registrada |
+
+Las aclaraciones aportadas por el grupo, sus roles, el estado pendiente de CC-01–CC-04 y los campos por completar están en [aclaraciones y pendientes](aclaraciones_y_pendientes.md). Las hojas añadidas a los PDF conservan la identidad visual de los originales, incluyendo el logo RC5 de esta declaración. La revisión interna de Juan Robaina no sustituye la firma individual ni la aceptación del Inspector de Tránsito.
+
+Las firmas de la sección 10 pertenecen a la declaración histórica y no se rellenan en esta intervención. Las pautas del [curso sobre ética de IA](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/08_etica_uso_de_ia.md) exigen autoría, elaboración y comprensión del equipo; esta revisión se entrega como asistencia identificada, para su trabajo posterior.
+
+## 11.5 Documentación de la migración CC-05 — 02/10/2026
+
+La decisión de retirar Laravel y usar PHP sin framework basado en `api-completa` fue proporcionada directamente por el grupo. La asistencia externa de IA consistió en leer la referencia completa, contrastarla con IMSJ, redactar guías de transición, actualizar documentos/diagramas y preparar criterios de compatibilidad, pruebas y comentarios de PDF.
+
+| Aporte | Procedencia / límite | Revisión humana |
+|---|---|---|
+| Cambio de tecnología CC-05 | Instrucción del grupo, no recomendación ni decisión de IA. | Decisión recibida; no equivale a implementación o aprobación académica. |
+| Análisis de API base y contrato IMSJ | Lectura fijada a `d6f61c9` y código IMSJ `df581ab`; diferencias identificadas como observaciones. | Juan Robaina, revisión documental pendiente. |
+| Tareas, criterios y diagramas de destino | Aportes documentales asistidos por IA; no constituyen una planificación acordada ni clases ya implementadas. | Equipo para diseño/asignación; Juan Robaina para revisión interna. |
+| PDF y aclaraciones | Hojas/comentarios actualizados; páginas, cláusulas y firmas históricas preservadas. | Pendiente; sin validación jurídica o aceptación institucional acreditada. |
+
+El crédito del proyecto y la documentación sigue correspondiendo a los cinco integrantes del grupo, sin crédito individual al asistente. No se atribuye al grupo una revisión ya realizada ni se oculta el carácter de propuesta de las alternativas cookie/JSON/rutas de la referencia. Las actas quedan a cargo del equipo.

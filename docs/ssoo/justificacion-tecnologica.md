@@ -1,9 +1,13 @@
 # Justificación tecnológica
 
+> **CC-05 — Decisión del grupo, 02/10/2026:** destino PHP sin Laravel, por capas y con PDO, basado en `api-completa`. El código y los archivos de infraestructura aún utilizan Laravel. El contenido previo se conserva como referencia de esa versión; la migración y sus pruebas están pendientes. Ver [transición documentada](transicion_backend_vanilla.md).
+
 **Proyecto:** Plataforma Web Educación Vial IMSJ  
 **Asignatura:** Administración de Sistemas Operativos  
 **Entrega:** segunda entrega  
 **Fecha:** 2 de septiembre de 2026
+
+> **Revisión de IA — 02/10/2026:** se conserva la justificación y sus estimaciones. Las versiones indicadas describen Dockerfile/Compose y manifiestos actuales; no certifican imágenes instaladas o rendimiento medido. Los límites de producción siguen pendientes.
 
 ## 1. Objetivo
 
@@ -32,7 +36,7 @@ instalarlas y administrarlas de manera reproducible.
 - **Seguridad básica:** no publicar MySQL, excluir la configuración local de Git
   y montar los frontends como solo lectura.
 
-## 3. Solución seleccionada
+## 3. Solución seleccionada anteriormente — versión Laravel
 
 ```text
 Navegador
@@ -130,6 +134,8 @@ dimensionamiento definitivo de producción.
 Un despliegue real requerirá medir usuarios simultáneos, archivos almacenados,
 crecimiento de la base y disponibilidad exigida por la IMSJ.
 
+**IA — Observación:** no se localizaron mediciones que respalden CPU/RAM/disco de la tabla. Son estimaciones originales a validar, no mínimos institucionales aprobados. El backend guarda PDF/imágenes; los videos se enlazan mediante URL, lo que afecta el dimensionamiento.
+
 ## 6. Correspondencia con los requisitos
 
 | Necesidad | Decisión de infraestructura |
@@ -167,3 +173,9 @@ no constituye un despliegue productivo completo. Antes de publicarla se deberá:
 - [Imagen oficial de Nginx](https://hub.docker.com/_/nginx)
 - [MySQL 8.4: versiones LTS e Innovation](https://dev.mysql.com/doc/refman/8.4/en/mysql-releases.html)
 - [Configuración por ambiente en Laravel](https://laravel.com/docs/13.x/configuration#environment-configuration)
+
+## Adenda tecnológica CC-05 — 02/10/2026
+
+La decisión del grupo sustituye Laravel por PHP sin framework, con capas y PDO/MySQL según la API completa indicada. Los manifiestos, scripts y comandos Artisan de este documento describen la versión Laravel todavía presente; no son procedimientos finales del destino. Su sustitución se documentará con los archivos y comandos realmente implementados.
+
+Se conserva como base la topología Nginx/Apache-PHP/MySQL, PHP 8.5, MySQL 8.4, puertos 8000/8080 y volúmenes persistentes. El cambio no define nuevo alojamiento ni nuevas medidas de rendimiento. La [transición de infraestructura](transicion_backend_vanilla.md) contiene correspondencia de variables, trabajo de imagen/scripts, instalación/actualización SQL, almacenamiento y criterios de reconstrucción/restauración pendientes. La letra indica Laravel; la aceptación académica del cambio aún debe registrarse.

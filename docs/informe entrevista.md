@@ -1,5 +1,7 @@
 # Reporte de Entrevista de Relevamiento de Requisitos
 
+> **Nota de revisión de IA — 02/10/2026:** se conserva este relevamiento como registro histórico. Fecha, entrevistadores, evidencia original y validación del entrevistado no están completos. No se atribuye esta entrevista a la demo del 03/09. El grupo aclaró posteriormente que el referente debe identificarse principalmente como Inspector de Tránsito de la Intendencia, conocido como Nacho, sin apellido confirmado. Esa aclaración no completa fecha, participantes ni validación de esta entrevista histórica; ver [aclaraciones y pendientes](aclaraciones_y_pendientes.md).
+
 **Fecha:** ____________________
 **Entrevistador:** ____________________
 **Entrevistado:** ____________________
@@ -130,3 +132,19 @@ De la entrevista se desprenden los siguientes aspectos relevantes para el desarr
 * Las noticias deberán contar con fechas de inicio y fin de vigencia.
 * La administración de noticias será realizada por el equipo, pero requerirá la aprobación de la Dirección antes de su publicación.
 * No surgieron nuevos requerimientos adicionales durante la entrevista.
+
+## Aclaraciones para utilizar el relevamiento
+
+**IA — Observación:** la frase final significa que el entrevistado no agregó otros pedidos a los discutidos. Categorías, formatos y aprobación de noticias sí aportan precisiones respecto del catálogo inicial: se identifican ahora como RF19, RF20 y RF21 en [Requerimientos](Requerimientos.md).
+
+Los permisos iguales describen esta instancia inicial. La solicitud posterior CC-03 incorpora validación por Directora; debe consultarse en [control de cambios](control_cambios.md), sin corregir retrospectivamente las respuestas de esta entrevista.
+
+| Pendiente | Información que debe aportar el equipo |
+|---|---|
+| Procedencia | Fecha, lugar/modalidad, entrevistadores, entrevistado y enlace a notas/grabación si existen. |
+| Validación | Quién revisó el resumen y qué evidencia respalda las respuestas. |
+| Agenda | Duración, cupos, datos del ciudadano y costo urgente para la versión académica; preguntas originales en [Entrevista](Entrevista.md). |
+| Materiales | Si video se carga o se enlaza; el código actual usa enlaces para VIDEO. |
+| Publicación | Quién aprueba, quién publica, qué pasa al editar o rechazar y qué contenidos abarca CC-03. |
+
+**IA — Sugerencia:** conservar separadas las respuestas del cliente y las interpretaciones del equipo, con una referencia a su fuente y responsable de validación.

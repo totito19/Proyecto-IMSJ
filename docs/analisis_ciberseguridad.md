@@ -3,6 +3,8 @@
 **Asignatura:** Electiva Ciberseguridad — 1ª entrega (Análisis y Diseño Seguro)
 **Proyecto:** Plataforma Web Educación Vial IMSJ
 
+> **Revisión asistida por IA — 02/10/2026:** se conserva el análisis de diseño de primera entrega. La adenda final separa controles presentes en código de resultados de auditoría y decisiones pendientes. El PDF incluye una matriz adicional con valoración pendiente de justificar.
+
 ---
 
 ## 1. Amenazas digitales identificadas
@@ -25,7 +27,22 @@
 | Consulta pública (`frontend-publico`) | XSS almacenado; exposición de contenido no publicado | Ejecución de código en el navegador y visualización de contenidos que todavía no deberían ser públicos. | Los visitantes podrían ser redirigidos, ver contenido manipulado o acceder antes de tiempo a publicaciones internas o no aprobadas. |
 | Base de datos | Inyección SQL; acceso no autorizado | Lectura, alteración o eliminación de usuarios administrativos, contenidos y registros del historial de acciones. | Podrían exponerse cédulas u otros datos vinculados a los usuarios administrativos, perderse información pública o dejar de estar disponible el servicio. |
 
-> **Diagrama del mapa de riesgos:** será elaborado e incorporado por el equipo.
+**IA — Esquema de relaciones basado en la tabla anterior; no representa probabilidades medidas:**
+
+```mermaid
+flowchart LR
+    Login[Login y cuentas] --> Credenciales[Suplantación / fuerza bruta]
+    Login --> SQL[Inyección SQL si se concatenan entradas]
+    Contenido[Carga de contenidos] --> XSS[XSS almacenado]
+    Contenido --> Archivos[Archivos inseguros]
+    API[Rutas administrativas] --> Permisos[Acceso no autorizado]
+    Portal[Consulta pública] --> XSS
+    Portal --> Exposicion[Contenido interno expuesto]
+    BD[Base de datos] --> SQL
+    BD --> Permisos
+```
+
+El PDF anterior contiene una matriz probabilidad/impacto que no aparece en el Markdown. No se documentan escala, justificación, fuente ni quién asignó los valores. Se marca como valoración a validar, sin certificarla como medición del equipo.
 
 ## 3. Buenas prácticas de seguridad aplicables
 
@@ -59,3 +76,41 @@
 - [OWASP — File Upload Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html)
 
 ---
+
+## 5. Estado observado y evidencia pendiente — 02/10/2026
+
+**IA — Observación de código, no auditoría ejecutada:**
+
+| Control | Evidencia observada | Límite / verificación pendiente |
+|---|---|---|
+| Hash de contraseña | Cast hashed en User y uso de mecanismos Laravel en autenticación. | No se certifican todas las credenciales existentes ni seguridad de datos iniciales. |
+| Autenticación y autorización | Sanctum; middleware público/personal; login/registro limitados con `throttle:5,1`. | Directora y aprobación de CC-03 no implementadas. Resultados de pruebas no adjuntos. |
+| Tokens | AuthService emite por ocho horas y revoca anteriores; JS usa sessionStorage. | Comprobar expiración, logout y riesgo de XSS en entorno de entrega. |
+| Validación y archivos | Reglas en controladores; imágenes de noticias y PDF/imágenes de estudio gestionados por servicios/filesystem. | Límites actuales son implementación, no acuerdo. VIDEO es enlace; CC-04 pendiente. |
+| Auditoría | HistorialAccion registra usuario/acción/fecha/elemento; rutas de consulta reservadas a personal. | No hay valores anterior/nuevo. Cobertura completa y retención no definidas. |
+| Infraestructura | MySQL sin puerto publicado, frontends de solo lectura y entorno descrito en SSOO. | HTTPS, hardening completo, secretos de producción, respaldo/restauración y monitoreo pendientes. |
+| Cupos de agenda académica | Transacción y bloqueo de fila en ReservaService/repositorio. | Pruebas de capacidad SQLite no demuestran concurrencia real MySQL. |
+
+No se debe asumir sanitización/codificación de salida completa por usar Laravel: los frontends construyen contenido con `innerHTML` en varios módulos. Se requiere revisión contextual y evidencia SAST/DAST; no se declara aquí una vulnerabilidad explotada ni una corrección de código.
+
+Los archivos y resultados pendientes están en [verificación](verificacion.md). Los términos y la política conservan datos por completar; los comentarios de PDF no sustituyen decisiones institucionales ni revisión jurídica.
+
+## 6. Transición de controles a PHP sin Laravel — CC-05
+
+**Decisión del grupo, 02/10/2026:** retirar Laravel y utilizar las capas/PDO de la API completa. La sección 5 describe el código anterior todavía presente; no se acredita una auditoría de la versión PHP. La [migración](migracion_backend_vanilla.md) y el [análisis de referencia](referencia_api_completa.md) detallan la sustitución.
+
+| Control que debe conservarse | Responsabilidad explícita en PHP | Evidencia pendiente |
+|---|---|---|
+| Contraseñas y login | `password_hash`/`password_verify`, compatibilidad de hashes existentes y rechazo de credenciales inválidas. | Usuarios actuales y cuentas nuevas sin exponer hashes ni claves. |
+| Sesión y roles | Validación de Bearer, expiración/revocación, usuario activo, rol y propiedad según la operación. | Logout invalida token, renovación revoca anteriores, cuenta desactivada/rol incorrecto rechazados. |
+| SQL y negocio | Repositorios PDO con parámetros; transacciones y restricciones del dominio. | Entradas inválidas sin persistencia parcial; reservas concurrentes en MySQL. |
+| Entradas y JSON | Validadores/DTO y respuestas compatibles; errores controlados sin detalles internos. | JSON/formularios/id/fechas y archivos inválidos; errores entendidos por frontends. |
+| Archivos y raíz pública | MIME/tamaño/nombres/permisos y URLs preservadas; secretos/código fuera del acceso web. | Carga y descarga de PDF/imágenes; ejecución y acceso a `.env`/SQL/caché denegados. |
+| Auditoría y publicación | Registrar cambios con identidad/fecha/elemento; filtrar estado y vigencia en repositorios. | Historial y portal consistentes tras cada operación; sin publicar contenido interno. |
+| CORS e intentos | Origen/métodos/cabeceras usados por ambos frontends y política de intentos existente. | OPTIONS/Bearer/PUT/multipart; exceso de intentos de login/registro. |
+
+**IA — Límites de la referencia:** cookie JWT de una hora y logout que solo elimina la cookie no equivalen a las sesiones de ocho horas con revocación de IMSJ. Sus claims no reconsultan estado/rol en cada petición; su límite global 60/min no equivale al límite de login actual. Estas diferencias requieren adaptación o decisión expresa, sin tratarlas como controles ya implementados.
+
+Si el grupo propone cambiar Bearer por cookie, debe aprobar y documentar conjuntamente transporte, CORS y protección de las operaciones frente a CSRF. Esa alternativa permanece sin adopción; no se modifica el frontend en esta revisión.
+
+El hashing y las consultas preparadas siguen los mecanismos de [verificación de contraseñas PHP](https://www.php.net/manual/en/function.password-verify.php) y [PDO](https://www.php.net/manual/en/pdo.prepared-statements.php). No se promete seguridad completa por usar esas funciones. La valoración de la matriz histórica, HTTPS, SAST/DAST y restauración siguen pendientes. Ver V-CC05 en [verificación](verificacion.md).
