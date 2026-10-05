@@ -3,7 +3,7 @@
 # Aclaraciones y datos pendientes del proyecto
 
 **Proyecto:** Educación Vial IMSJ  
-**Fecha de actualización:** 02/10/2026  
+**Fecha de actualización:** 05/10/2026<br>
 **Equipo:** Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales.  
 **Revisión y aprobación interna de documentación:** Juan Robaina; esta versión aún requiere su revisión.
 
@@ -50,7 +50,7 @@ El rol **Directora** pertenece al sistema y a la solicitud CC-03. No debe confun
 
 ### Decisión tecnológica CC-05
 
-**Confirmada por el grupo el 02/10/2026:** retirar Laravel y basar el backend en la API completa de RodrigoCazard, con PHP sin framework, capas y PDO/MySQL. Se preparó la documentación del destino; el código, configuración y pruebas siguen siendo Laravel. No hay migración ni aceptación acreditadas.
+**Confirmada por el grupo el 02/10/2026:** retirar Laravel y basar el backend en la API completa de RodrigoCazard, con PHP sin framework, capas y PDO/MySQL. El 05/10/2026 el grupo pidió api-simple y reescritura desde cero. Código/configuración nativos y pruebas HTTP/MySQL preparados; revisión y aceptación pendientes. No se acredita despliegue Docker ni actualización de datos reales.
 
 Se conserva como condición de transición el contrato de los frontends y el dominio IMSJ. Cookie JWT, rutas/JSON del ejemplo, roles/productos, puertos y datos de demostración no se adoptan por deducción. La [guía CC-05](migracion_backend_vanilla.md) y el [análisis de referencia](referencia_api_completa.md) describen las diferencias y las decisiones adicionales. CC-01–CC-04 mantienen su estado y destino anteriores.
 
@@ -101,9 +101,9 @@ La elaboración de [actas de reunión](actas_reuniones.md) y [Sprint Review](act
 | ID | Información por completar | Base documentada | Dato confirmado / evidencia |
 |---|---|---|---|
 | P-17 | Resultado de registrar con docentes la sustitución de Laravel exigido en la letra. | Decisión del grupo confirmada; aceptación académica no registrada. | [COMPLETAR POR EL EQUIPO] |
-| P-18 | Mecanismo PHP de autenticación, almacenamiento/revocación y transición de sesiones/tokens existentes. | Preservar contrato Bearer y garantías observadas; cookie JWT no aprobada automáticamente. | [COMPLETAR DISEÑO / DECISIÓN] |
-| P-19 | Conjunto final de bibliotecas/lock, árbol de archivos y configuración implementados. | Capas de la referencia; PHP 8.5/MySQL 8.4 actuales como base, sin cambio de versión solicitado. | [COMPLETAR POR EL EQUIPO] |
-| P-20 | Procedimientos exactos para instalar desde cero y actualizar datos/archivos existentes, incluyendo recuperación. | [Transición SSOO](ssoo/transicion_backend_vanilla.md); no usar DROP/importación de demo como actualización. | [COMPLETAR PROCEDIMIENTO / EVIDENCIA] |
+| P-18 | Mecanismo PHP de autenticación, almacenamiento/revocación y transición de sesiones/tokens existentes. | Preservar contrato Bearer y garantías observadas; cookie JWT no aprobada automáticamente. | Implementado: Bearer opaco revocable, hash SHA-256, ocho horas; nuevo login tras transición. Revisar evidencia/aceptación. |
+| P-19 | Revisión del árbol y configuración implementados. | PHP 8.5, PDO, sin paquetes externos; siete módulos del ejemplo simple, con manifiesto de extensiones. | Implementado; revisión del equipo pendiente. |
+| P-20 | Ensayo de instalación Docker y actualización/restauración con copia de datos y adjuntos. | Procedimientos documentados en [SSOO](ssoo/transicion_backend_vanilla.md); SQL sin DROP ni demo. | [COMPLETAR EVIDENCIA DE EJECUCIÓN] |
 | P-21 | Asignación/estimación de TM-01–TM-07, versión migrada, pruebas V-CC05 y revisión documental. | Roles generales confirmados; compromisos en reuniones/actas del equipo. | [COMPLETAR POR EL EQUIPO] |
 
 Las alternativas que cambien autenticación visible, formato JSON, rutas, puertos o reglas del producto requieren decisión previa del grupo. La migración de framework ya fue solicitada; no se pide aprobar de nuevo esa decisión.
@@ -118,3 +118,10 @@ Las alternativas que cambien autenticación visible, formato JSON, rutas, puerto
 Las responsabilidades de registrar actas, recoger feedback del cliente y obtener aceptación final se contrastaron con las [actas del curso](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/09_actas_de_reuniones.md), la [guía de cierre](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/07_cierre_de_proyecto.md) y la [guía de ética](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/08_etica_uso_de_ia.md). La elección de Juan Robaina para revisión y aprobación interna es una definición del grupo, no una asignación impuesta por esos ejemplos.
 
 El [índice documental](README.md) mantiene el orden de lectura. Los PDF conservan sus páginas históricas y añaden una hoja de aclaraciones y comentarios; las cláusulas y firmas originales no se convierten automáticamente en una versión final aprobada.
+
+
+## Evidencia nueva y datos que todavía faltan - 05/10/2026
+
+Las pruebas HTTP/MySQL de la versión nativa están en [verificación](verificacion.md); P-12 no parte ahora de ausencia total de resultados. Faltan revisión y firma interna de Juan Robaina, recorrido visual completo de los frontends, ejecución Docker/Apache y ensayo de actualización/restauración. Continúan pendientes P-01 a P-17 y las definiciones funcionales de CC-01 a CC-04. El [flujo de endpoints](flujo_endpoints_backend.md) distingue comportamiento implementado de ejemplos ilustrativos y aceptación pendiente.
+
+La estructura y autenticación PHP ya están implementadas; los campos P-18/P-19 requieren revisión/evidencia final, no volver a elegir arbitrariamente el contrato. Las actas se completan por el equipo en reuniones y no se modificaron aquí.

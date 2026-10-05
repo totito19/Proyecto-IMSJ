@@ -1,141 +1,85 @@
-# Contrato de API IMSJ y transición a PHP sin Laravel
+# Contrato API IMSJ - PHP nativo
 
-> **Documentación asistida por IA — 02/10/2026:** inventario leído en `backend/routes/api.php` del commit `df581ab`. Describe el código disponible, no una API probada ni un cambio de contrato aprobado. La letra de referencia y las diferencias están al final.
+**Versión de trabajo - 05/10/2026; CC-05.** Contrato leído en los consumidores existentes, reimplementado en `backend/public/index.php` y comprobado mediante HTTP/MySQL. La documentación fue preparada con apoyo externo de IA; revisión de Juan Robaina pendiente. [Flujo individual de los 42 endpoints](flujo_endpoints_backend.md).
 
-**CC-05, decisión del grupo:** el destino es PHP por capas con PDO, basado en `api-completa`; el código aún es Laravel. Las rutas siguientes constituyen la base de compatibilidad de la migración. La referencia tiene otro contrato; [sus diferencias](referencia_api_completa.md) se adaptarán, sin renombrar rutas o cambiar autenticación/JSON automáticamente.
+Base local: `http://localhost:8000/api`. JSON de entrada/salida; archivos mediante multipart. En rutas protegidas: `Authorization: Bearer <token>` y `Accept: application/json`. El token se entrega en la raíz junto a `usuario` y `expira_en`; el frontend lo guarda en `sessionStorage`. Los valores concretos de ejemplos son ilustrativos.
 
-## Acceso
+## Acceso y respuestas
 
-Base local: `http://localhost:8000/api`. Las respuestas son JSON salvo eliminaciones/cierre de sesión que pueden responder sin contenido. En rutas autenticadas se envía `Authorization: Bearer <token>` y `Accept: application/json`.
+Roles conservados: `PUBLICO_GENERAL` y `PERSONAL_IMSJ`. `Auth` valida hash del token, vigencia de ocho horas, cuenta activa y rol almacenado en MySQL; iniciar sesión revoca sesiones anteriores. Logout y desactivación revocan tokens. Las sesiones anteriores a la reescritura requieren nuevo login.
 
-Los dos frontends fijan esa dirección en `js/api.js`. Cambiar `APP_PORT` no modifica el JavaScript. El entorno actual es local; `localhost` desde otra computadora refiere a esa computadora.
+200: consulta/edición/corrección; 201: alta/registro/reserva; 204: eliminación/desactivación/logout, sin cuerpo; 400: JSON mal formado; 401: falta de sesión, token inválido/expirado o cuenta inactiva; 403: rol insuficiente; 404: ruta/recurso inexistente; 413: cuerpo multipart por encima del límite PHP; 422: validación o conflicto de unicidad; 429: más de cinco intentos/minuto para login o registro; 500: fallo interno, sin SQL ni secretos en la respuesta. Ruta y método sin coincidencia en el switch devuelven 404.
 
-**Roles actuales:** `PUBLICO_GENERAL` y `PERSONAL_IMSJ`. No existe rol `DIRECTORA` ni autorización de aprobación separada. El middleware del backend decide el acceso, aunque el HTML del dashboard pueda abrirse públicamente.
+Errores de campo: `{"message":"Los datos no son válidos.","errors":{"campo":["detalle"]}}`. Un conflicto SQL concurrente puede devolver 422 con `message` sin `errors`. Los clientes aceptan ambas formas. No hay envoltorio `data` o `datos`.
 
-## Rutas públicas
+## Inventario
 
-| Método | Ruta relativa a `/api` | Operación |
-|---|---|---|
-| GET | `/health` | Estado del servicio; no consulta MySQL. |
-| POST | `/login` | Cédula y contraseña; límite `throttle:5,1`. |
-| POST | `/register` | Alta ciudadana con cédula, contraseña y confirmación; mismo límite. |
-| GET | `/portal/noticias` | Noticias publicadas y vigentes. |
-| GET | `/portal/materiales` | Materiales publicados. |
-| GET | `/portal/preguntas` | Preguntas frecuentes publicadas. |
-| GET | `/portal/prueba` | Selección de preguntas sin respuesta correcta. El servicio usa hasta 10 preguntas por defecto. |
-| POST | `/portal/prueba/corregir` | Corrección de una lista `respuestas` con `pregunta_id` y `opcion` A/B/C/D; valida entre 1 y 20 elementos. |
-| GET | `/franjas/disponibles` | Disponibilidad de franjas de agenda académica. |
-
-La cantidad 10 y el máximo 20 son **valores observados de implementación**, no configuración aceptada por el cliente/docentes.
-
-## Rutas autenticadas
-
-| Acceso | Método | Ruta | Operación |
+| Método | Ruta relativa a `/api` | Acceso | Controlador/método |
 |---|---|---|---|
-| Cualquier usuario autenticado | GET | `/me` | Perfil. |
-| Cualquier usuario autenticado | POST | `/logout` | Revocar token actual. |
-| Público general autenticado | POST | `/reservas` | Crear reserva académica mediante `franja_disponibilidad_id`. |
-| Público general autenticado | GET | `/reservas/mias` | Reservas de la cuenta autenticada. |
+| GET | `/health` | publico | Response directa |
+| POST | `/login` | publico | `AuthController::login` |
+| POST | `/register` | publico | `AuthController::register` |
+| GET | `/portal/noticias` | publico | `NoticiaController::publicIndex` |
+| GET | `/portal/materiales` | publico | `MaterialController::publicIndex` |
+| GET | `/portal/preguntas` | publico | `PreguntaController::publicIndex` |
+| GET | `/portal/prueba` | publico | `PruebaController::publicIndex` |
+| POST | `/portal/prueba/corregir` | publico | `PruebaController::corregir` |
+| GET | `/franjas/disponibles` | publico | `ReservaController::disponibles` |
+| GET | `/me` | autenticado | `AuthController::me` |
+| POST | `/logout` | autenticado | `AuthController::logout` |
+| POST | `/reservas` | ciudadano | `ReservaController::store` |
+| GET | `/reservas/mias` | ciudadano | `ReservaController::mine` |
+| GET | `/historial` | personal | `UsuarioController::historial` |
+| GET | `/usuarios-admin` | personal | `UsuarioController::index` |
+| POST | `/usuarios-admin` | personal | `UsuarioController::store` |
+| DELETE | `/usuarios-admin/{id}` | personal | `UsuarioController::destroy` |
+| GET | `/preguntas-prueba` | personal | `PruebaController::index` |
+| POST | `/preguntas-prueba` | personal | `PruebaController::store` |
+| PUT | `/preguntas-prueba/{id}` | personal | `PruebaController::update` |
+| DELETE | `/preguntas-prueba/{id}` | personal | `PruebaController::destroy` |
+| GET | `/noticias` | personal | `NoticiaController::index` |
+| POST | `/noticias` | personal | `NoticiaController::store` |
+| GET | `/noticias/{id}` | personal | `NoticiaController::show` |
+| PUT | `/noticias/{id}` | personal | `NoticiaController::update` |
+| PATCH | `/noticias/{id}/estado` | personal | `NoticiaController::updateEstado` |
+| DELETE | `/noticias/{id}` | personal | `NoticiaController::destroy` |
+| GET | `/materiales` | personal | `MaterialController::index` |
+| POST | `/materiales` | personal | `MaterialController::store` |
+| PUT | `/materiales/{id}` | personal | `MaterialController::update` |
+| PATCH | `/materiales/{id}/estado` | personal | `MaterialController::updateEstado` |
+| DELETE | `/materiales/{id}` | personal | `MaterialController::destroy` |
+| GET | `/preguntas` | personal | `PreguntaController::index` |
+| POST | `/preguntas` | personal | `PreguntaController::store` |
+| PUT | `/preguntas/{id}` | personal | `PreguntaController::update` |
+| PATCH | `/preguntas/{id}/estado` | personal | `PreguntaController::updateEstado` |
+| DELETE | `/preguntas/{id}` | personal | `PreguntaController::destroy` |
+| GET | `/franjas` | personal | `ReservaController::franjas` |
+| POST | `/franjas` | personal | `ReservaController::crearFranja` |
+| PUT | `/franjas/{id}` | personal | `ReservaController::actualizarFranja` |
+| DELETE | `/franjas/{id}` | personal | `ReservaController::eliminarFranja` |
+| GET | `/agenda` | personal | `ReservaController::agenda` |
 
-## Rutas del personal IMSJ
+`{id}` es un entero positivo. La suma es nueve rutas públicas, dos para cualquier cuenta autenticada, dos ciudadanas y 29 del personal. Consultar [flujos](flujo_endpoints_backend.md) para entradas, tablas, validaciones y salida por ruta.
 
-| Método(s) | Ruta | Operación |
-|---|---|---|
-| GET | `/historial` | Consultar historial. |
-| GET / POST | `/usuarios-admin` | Listar / dar de alta personal. |
-| DELETE | `/usuarios-admin/{usuario}` | Desactivar personal; no borrar su historial. |
-| GET / POST | `/preguntas-prueba` | Listar / crear preguntas del simulacro. |
-| PUT / DELETE | `/preguntas-prueba/{pregunta}` | Actualizar / eliminar pregunta. |
-| GET / POST | `/noticias` | Listar / crear noticia. |
-| GET / PUT / DELETE | `/noticias/{noticia}` | Consultar detalle / actualizar / eliminar. |
-| PATCH | `/noticias/{noticia}/estado` | Cambiar PUBLICADO/NO_PUBLICADO. |
-| GET / POST | `/materiales` | Listar / crear material. |
-| PUT / DELETE | `/materiales/{material}` | Actualizar / eliminar. |
-| PATCH | `/materiales/{material}/estado` | Cambiar estado. |
-| GET / POST | `/preguntas` | Listar / crear FAQ. |
-| PUT / DELETE | `/preguntas/{pregunta}` | Actualizar / eliminar FAQ. |
-| PATCH | `/preguntas/{pregunta}/estado` | Cambiar estado. |
-| GET / POST | `/franjas` | Listar / crear franja académica. |
-| PUT / DELETE | `/franjas/{franja}` | Actualizar / eliminar franja. |
-| GET | `/agenda` | Vista `dia`, `semana` o `mes`, con parámetro `fecha`; por defecto día actual. |
+## Entradas y límites conservados
 
-## Datos y comportamiento relevantes
+- Cuenta: cédula de siete u ocho dígitos, normalizada; registro con `password` y `password_confirmation`, mínimo seis caracteres. El secreto conserva espacios y admite hasta 72 bytes por bcrypt. Alta de personal: `nombre` hasta 120 y cédula; devuelve `usuario` y `clave_inicial` con el mecanismo previo `imsj1234`. Su política definitiva sigue pendiente.
+- Noticias: `titulo` hasta 255, `texto`, `fecha_inicio_vigencia`, `fecha_fin_vigencia` (fin igual/posterior); `imagen_portada` opcional y `galeria[]` hasta cinco JPG/PNG/WEBP de 2048 KB cada una; `enlaces[]` hasta cinco URL HTTP/HTTPS. El portal filtra `PUBLICADO` y vigencia inclusiva.
+- Materiales: `nombre` hasta 255 y `tipo` PDF/IMAGEN/VIDEO. PDF hasta 10240 KB, imagen hasta 5120 KB, video con URL HTTP/HTTPS hasta 2048 caracteres y sin archivo. Alta/cambio de tipo requieren el recurso correspondiente. Edición del mismo tipo permite conservarlo.
+- FAQ: `pregunta` hasta 255 y `respuesta`; estado mediante operación separada. Prueba: `pregunta` hasta 500, `opcion_a` a `opcion_d` hasta 255, `respuesta_correcta` A/B/C/D. La consulta pública selecciona hasta diez preguntas sin la respuesta; corrección recibe `respuestas` de uno a 20 elementos distintos con `pregunta_id` y `opcion`.
+- Franjas: `fecha` desde hoy, horas HH:MM con fin posterior, `tipo` PRUEBA_MANEJO/RENOVACION_NORMAL/RENOVACION_URGENTE y `cupos_totales` entre uno y 20; horario/tipo único. Reserva: solo `franja_disponibilidad_id`; el usuario se toma del token. No se puede borrar una franja con reservas.
+- Agenda: `vista` dia/semana/mes y `fecha` AAAA-MM-DD; por defecto hoy/día. Semana lunes a domingo; mes completo. Historial: `limite` de uno a 50, por defecto 20.
 
-- El login devuelve token, vencimiento y usuario. `AuthService` emite tokens de ocho horas y revoca los anteriores al emitir uno nuevo. Los frontends guardan token y usuario en `sessionStorage`.
-- Noticias: título, texto y fechas de inicio/fin; portada opcional JPG/JPEG/PNG/WEBP hasta 2048 KB, galería hasta cinco imágenes y hasta cinco enlaces HTTP/HTTPS. Son límites del código, sujetos a validación del equipo.
-- Materiales: PDF hasta 10240 KB, imagen hasta 5120 KB; VIDEO usa `ubicacion_recurso` como URL HTTP/HTTPS y prohíbe archivo. Se usan formularios multipart para subir archivos.
-- FAQ: pregunta, respuesta y estado; sin campo de categoría ni colección propia de enlaces útiles.
-- Preguntas del simulacro: enunciado, cuatro opciones y respuesta correcta; sin campo de material gráfico. La corrección incluye totales y resultados por pregunta.
-- Reservas: `ReservaService` utiliza transacción y el repositorio bloquea la franja; comprueba fecha, duplicación y cupos. La garantía bajo concurrencia en MySQL aún necesita evidencia de ejecución.
-- Los errores de validación siguen el formato de Laravel con `message` y `errors`; autorización/autenticación se verifican en los middleware. No se certifican códigos de respuesta de todos los casos sin ejecutar pruebas.
+Textos destinados a columnas TEXT se rechazan si superan 65535 bytes; no se truncan. Fechas civiles: Uruguay; timestamps SQL: UTC. Las cantidades del test son comportamiento conservado, sin afirmar aprobación de criterios de CC-01.
 
-Las clases de respuesta se encuentran en `backend/app/Http/Resources/`. La lógica se distribuye entre controladores, servicios y repositorios. [Verificación](verificacion.md) identifica los archivos de prueba disponibles.
+## Formularios, archivos y CORS
 
-## Diferencias con la referencia y solicitudes pendientes
+Además de PUT JSON y multipart nativo, se conserva **POST multipart con `_method=PUT`**, usado por ambos formularios del panel para editar noticias/materiales. Son variantes de transporte de los endpoints PUT, no nuevas rutas.
 
-| Referencia | Implementación observada | Pendiente de decisión/documentación |
-|---|---|---|
-| `/auth/login`, `/auth/logout`, `/auth/me` | `/login`, `/logout`, `/me` | Confirmar equivalencia de contrato con docentes; no se renombran rutas. |
-| `/noticias/publicadas`, `/materiales/publicados`, `/preguntas-frecuentes/publicadas` | `/portal/noticias`, `/portal/materiales`, `/portal/preguntas` | Registrar equivalencias en la entrega API. |
-| PATCH para editar entidades | PUT en rutas de actualización; PATCH para estados | Confirmar aceptación de la diferencia. |
-| Endpoints multimedia separados | Carga integrada al formulario de noticias | Confirmar cobertura esperada de operaciones multimedia. |
-| `/agendas`, `/agendas/my` | `/reservas`, `/reservas/mias`; consulta IMSJ en `/agenda` | Equivalencia de reserva y vista; no asumir que agenda y reserva son entidades nuevas. |
-| Cancelar / confirmar agendas | No hay esas rutas | Validar alcance académico; no inventar estados. |
-| Costo urgente y datos de contacto en la letra | Sin costo, teléfono o correo en reservas | Confirmar datos mínimos y forma de registrar costo; no se crean campos. |
-| Enlaces útiles de FAQ y categorías relevadas | Sin estructura específica | RF19 y detalle de RF18 pendientes. |
-| CC-02 / CC-03 / CC-04 | Sin circuito de consultas, aprobación diferenciada o gráfico del test | Solicitudes registradas, sin implementación localizada. |
+`/storage/<ruta>` sirve PDF/imágenes validados fuera de `public/`; los nombres son aleatorios. Las URL de archivos se construyen con `APP_URL`. Solo esos tipos se sirven; se comprueba que la ruta resuelta siga dentro del almacenamiento. El formulario global admite 24 MB. OPTIONS responde 204 para los orígenes configurados; un preflight de origen ajeno devuelve 403. CORS no reemplaza autenticación.
 
-Fuente: [letra IMSJ fijada a la revisión consultada](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md). Las diferencias necesitan resolución del equipo; este documento no las elimina del alcance por su cuenta.
+## Diferencias y pendientes
 
-## Contrato de compatibilidad para CC-05
+No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`. Conservados los estados PUBLICADO/NO_PUBLICADO y los dos roles existentes. Consultas, Directora, aprobación diferenciada, categorías y gráficos del test siguen pendientes. Cancelación, confirmación de agenda, costo urgente y nuevos campos de contacto no se incorporan por esta reescritura. Agenda y reservas son académicas.
 
-**IA — Especificación derivada del código y de sus consumidores:** ejemplos documentales, no respuestas capturadas de una ejecución. Se debe verificar cada escenario en la versión PHP. El inventario comprende 42 declaraciones de rutas; agrupar métodos en tablas no reduce esa cantidad.
-
-### Cuenta y errores
-
-Login: POST `/api/login`, JSON con `cedula` y `password`. Registro: POST `/api/register`, con `cedula`, `password` y `password_confirmation`. El servicio actual entrega las credenciales en la raíz; los números y datos siguientes son ilustrativos:
-
-```json
-{
-  "token": "<token Bearer emitido>",
-  "expira_en": "<fecha ISO 8601 de vencimiento>",
-  "usuario": {"id": 1, "nombre": "<nombre o null>", "cedula": "<cedula>", "rol": "PERSONAL_IMSJ"}
-}
-```
-
-El perfil `/me` devuelve un objeto raíz `usuario` que conserva las claves `id`, `nombre`, `cedula`, `rol`; no expone contraseña/hash ni datos técnicos de tokens. `PUBLICO_GENERAL` es el rol del registro ciudadano. Desactivar personal conserva cuenta/historial y debe impedir operaciones que exijan personal activo. La política completa de tokens PHP y el tratamiento de sesiones existentes quedan pendientes de diseño; no se reemplaza la revocación por borrar una cookie.
-
-Los frontends extraen el mensaje de error de `errors` o `message`:
-
-```json
-{
-  "message": "<mensaje de validacion>",
-  "errors": {"cedula": ["<detalle del campo>"]}
-}
-```
-
-Preservar los casos de validación, acceso, inexistencia y límite de intentos con sus códigos observados y documentar excepciones comprobadas. No devolver errores SQL/trazas o copiar el 400 de todos los validadores del ejemplo como reemplazo universal del comportamiento Laravel. Un 204 no lleva cuerpo JSON: los clientes actuales lo manejan como `null`.
-
-### Datos de salida por módulo
-
-| Módulo | Campos de recursos actuales a preservar |
-|---|---|
-| Noticia | `id`, `titulo`, `texto`, `fecha_inicio_vigencia`, `fecha_fin_vigencia`, `imagen_portada` nullable, `estado`, `imagenes` con id/url, `enlaces` con id/url. |
-| Material | `id`, `nombre`, `tipo`, `ubicacion_recurso` como URL, `estado`. |
-| FAQ | `id`, `pregunta`, `respuesta`, `estado`. |
-| Pregunta de prueba administrativa | `id`, `pregunta`, `opciones` A/B/C/D, `respuesta_correcta`. La consulta pública no debe revelar la respuesta correcta antes de corregir. |
-| Franja | `id`, `fecha`, `hora_inicio`, `hora_fin`, `tipo`, `cupos_totales`, `reservas_count`, `cupos_disponibles`. |
-| Reserva | `id`, alias `reserva_id`, `franja_disponibilidad_id`, fecha/horas, `tipo`, alias `tipo_tramite`, `creada_en`; `cedula` cuando se carga la relación correspondiente. |
-| Historial | `id`, `accion`, `tipo_elemento`, `elemento_id`, `fecha_hora`, `usuario` con id/nombre/cedula. |
-
-Mantener la envoltura `data` y metadatos/paginación donde los controladores actuales los producen. Conservar fechas de calendario como `YYYY-MM-DD`, horas como `HH:MM`, timestamps ISO 8601, valores null y arrays vacíos. Los recursos están en `backend/app/Http/Resources/`; el resto de las respuestas requiere lectura del controlador/servicio correspondiente y ejecución para confirmar su representación exacta.
-
-### Rutas, cuerpo y archivos
-
-- Adaptar el router al prefijo `/api`, placeholders de IMSJ y sufijos `/estado`; las rutas estáticas como `/reservas/mias` no deben confundirse con parámetros.
-- Conservar PUT para editar y PATCH para estados. Para noticias/materiales, los frontends usan POST multipart con `_method=PUT`; la API PHP debe reconocer ese mecanismo autorizado, además de las rutas de método directo que correspondan.
-- Procesar JSON y multipart según Content-Type, preservando las reglas de entrada actuales. Los nombres de campos de archivo se leen en los formularios/controladores: portada/galería de noticias y `archivo` de materiales. No convertir todos los cuerpos a JSON.
-- Mantener las URLs de archivos y el uso de `ubicacion_recurso` para VIDEO. No importar los campos precio/stock/categoría de productos.
-- Resolver preflight OPTIONS y CORS para el origen de los frontends; permitir Authorization, Accept, Content-Type y métodos usados. La configuración de cookies del ejemplo requiere adaptación si se preserva Bearer.
-
-La suite Laravel disponible identifica escenarios, no valida la API PHP sin adaptarse. Ver [criterios V-CC05](verificacion.md) y [plan de migración](migracion_backend_vanilla.md). El contrato documentado no completa funciones pendientes de la letra ni CC-01–CC-04.
+Las equivalencias frente a la [letra académica](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md) y la aceptación de PHP nativo corresponden al equipo/docentes. Las pruebas no acreditan aceptación institucional; [resultados y límites](verificacion.md).

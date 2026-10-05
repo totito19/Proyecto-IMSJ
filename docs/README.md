@@ -1,3 +1,11 @@
+## Documentación vigente del backend - 05/10/2026
+
+Backend reescrito en PHP nativo con api-simple. Para esta versión, leer [arranque y estructura](../backend/README.md), [referencia simple](referencia_api_simple.md), [flujos de los 42 endpoints](flujo_endpoints_backend.md) y su [PDF](flujo_endpoints_backend.pdf), [API](api.md), [arquitectura](arquitectura_propuesta.md), [transición](migracion_backend_vanilla.md), [SSOO](ssoo/README.md) y [evidencia](verificacion.md). [Control de cambios](control_cambios.md) y [pendientes para completar](aclaraciones_y_pendientes.md) distinguen implementación de revisión/aceptación.
+
+Los apartados fechados el 02/10 y el análisis de api-completa se conservan como antecedentes. Los cuatro PDF previos mantienen su contenido/identidad; el nuevo PDF documenta la implementación actual. Crédito del equipo, apoyo externo de IA declarado y revisión de Juan Robaina pendiente. Actas y PNG no se modifican.
+
+---
+
 # Documentación y guía de incorporación
 
 > **Revisión asistida por IA — 02/10/2026:** índice de archivos y aclaraciones a partir de `df581ab`. Las sugerencias requieren revisión del equipo; los campos «No registrado» no prueban ausencia de una actividad.
@@ -50,7 +58,7 @@ Se leyeron **20 Markdown, cuatro PDF (16 páginas originales), dos diagramas PNG
 | [Política de privacidad](Politica_de_Privacidad_IMSJ_Uruguay.pdf) | Cuatro páginas originales; borrador con datos y decisiones pendientes. |
 | [Términos y condiciones](Terminos_y_Condiciones_IMSJ_Uruguay.pdf) | Tres páginas originales; borrador con alcance y aceptación pendientes. |
 | [LICENSE](../LICENSE) | Titular/denominación a confirmar; sin modificación. |
-| [robots.txt](../backend/public/robots.txt) | Permite rastreo; no constituye autorización ni política de privacidad. |
+| robots.txt (archivo de la versión anterior) | Permite rastreo; no constituye autorización ni política de privacidad. |
 
 ## Roles y flujo aclarados por el grupo
 

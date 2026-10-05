@@ -25,7 +25,7 @@ yarn-error.log*
 *.sqlite3
 *.db
 *.sql
-!backend/database/schema.sql
+!backend/database.sql
 
 # Sistema operativo
 .DS_Store

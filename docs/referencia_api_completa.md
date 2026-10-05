@@ -1,3 +1,7 @@
+> **Antecedente del 02/10/2026:** el grupo cambió la referencia de implementación a api-simple el 05/10/2026. La [comparación vigente](referencia_api_simple.md) y los [flujos implementados](flujo_endpoints_backend.md) prevalecen. El contenido siguiente documenta el estudio anterior, no la estructura actual.
+
+---
+
 # Análisis de la API de referencia para CC-05
 
 **Fecha de consulta:** 02/10/2026  

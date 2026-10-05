@@ -1,3 +1,7 @@
+> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](migracion_backend_vanilla.md), [flujos](flujo_endpoints_backend.md) y [pruebas ejecutadas y límites](verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
+
+---
+
 # Project Charter - Proyecto Educación Vial IMSJ
 
 > **Documento inicial conservado. Adenda asistida por IA — 02/10/2026:** las aclaraciones del final distinguen cliente y evaluación académica; no reemplazan los acuerdos originales ni acreditan nuevas decisiones del equipo.

@@ -17,7 +17,7 @@ Este documento registra los cambios comunicados por el equipo, sus fechas y las 
 | CC-02 | 03/09/2026 | Incorporar un formulario de consultas en el pie de página y su lectura en el panel IMSJ. | Auditoría / demo con el cliente. | Pendiente; entrega real |
 | CC-03 | 03/09/2026 | Incorporar la validación de contenidos por la Directora y separar la aprobación de la publicación. | Auditoría / demo con el cliente. | Pendiente; entrega real |
 | CC-04 | 03/09/2026 | Permitir adjuntar material gráfico a las preguntas de los test. | Auditoría / demo con el cliente. | Pendiente; entrega real |
-| CC-05 | 02/10/2026 | Sustituir Laravel por un backend PHP sin framework, basado en `api-completa`. | Grupo, instrucción directa en esta actualización. | Decisión tecnológica confirmada; documentación preparada; implementación pendiente. |
+| CC-05 | 02/10/2026 | Sustituir Laravel por un backend PHP sin framework, basado en `api-completa`. | Grupo, instrucción directa en esta actualización. | Implementación PHP nativa en versión de trabajo, 05/10/2026; pruebas HTTP/MySQL registradas; revisión y aceptación pendientes. |
 
 ## 2. Detalle de los cambios
 
@@ -66,7 +66,7 @@ El flujo registrado en este documento es (sin evidencia de aprobación formal ad
 
 **Solicitud del grupo:** retirar Laravel y basar el backend en la [API completa de RodrigoCazard](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-completa). **Motivo registrado:** cambio de tecnología y referencia indicado por el grupo; no se deduce una mejora medida de rendimiento, costo o seguridad.
 
-**Decisión:** cambio de framework confirmado por instrucción directa del grupo el 02/10/2026. No se atribuye a una reunión pasada ni a una aprobación del Inspector o de docentes. **Estado del producto:** pendiente de implementación y pruebas. **Estado documental:** guías y documentos afectados actualizados; revisión de Juan Robaina pendiente.
+**Decisión:** cambio de framework confirmado por instrucción directa del grupo el 02/10/2026. No se atribuye a una reunión pasada ni a una aprobación del Inspector o de docentes. **Estado del producto al 05/10/2026:** backend nativo implementado y pruebas HTTP/MySQL ejecutadas; despliegue Docker, revisión interna y aceptación pendientes. **Estado documental:** guías y documentos afectados actualizados; revisión de Juan Robaina pendiente.
 
 **Impacto:** router/arranque, validación/DTO, servicios, PDO/modelos, autenticación y revocación, JSON, archivos, esquema/instalación, Composer, Docker/scripts y pruebas. Afecta ambos frontends por su API compartida; se conserva su contrato como condición de compatibilidad. Abarca módulos reales y agenda académica, sin cerrar CC-01–CC-04.
 
@@ -76,17 +76,17 @@ El flujo registrado en este documento es (sin evidencia de aprobación formal ad
 
 **Responsabilidades:** se mantienen los roles generales del equipo: Tomás Cabrera liderazgo/backend, Gabriela Romero base de datos, Verónica Romero y Juan Corrales frontend, Juan Robaina testing/documentación y revisión interna. Las tareas concretas y compromisos los asignará el equipo en reuniones; las actas quedan a su cargo.
 
-**Cierre esperado:** API PHP sin dependencias Laravel/Eloquent/Sanctum ni pasos Artisan; compatibilidad comprobada en los dos frontends; datos/archivos preservados y transición de sesiones registrada; pruebas de seguridad/negocio y concurrencia MySQL; reconstrucción/restauración documentadas; versión y revisión interna registradas. Aceptaciones académicas y del cliente se registrarán cuando ocurran. Ver V-CC05-01–V-CC05-09; no se acredita su cumplimiento actual.
+**Cierre esperado:** API PHP sin dependencias Laravel/Eloquent/Sanctum ni pasos Artisan; compatibilidad comprobada en los dos frontends; datos/archivos preservados y transición de sesiones registrada; pruebas de seguridad/negocio y concurrencia MySQL; reconstrucción/restauración documentadas; versión y revisión interna registradas. Aceptaciones académicas y del cliente se registrarán cuando ocurran. Ver V-CC05-01–V-CC05-09; la evidencia parcial actual está registrada en verificación; revisión y aceptación completas siguen pendientes.
 
 **IA — Observación de trazabilidad:** impactos técnicos/documentales derivados de la solicitud. Tiempo, costo y tareas por integrante no están estimados/asignados aquí. La ausencia de fecha y de prioridad distinta entre CC-01–CC-04 fue confirmada por el grupo; no se inventa un orden de implementación.
 
 | ID | Impacto en alcance / documentos | Backlog / requisitos | Decisión y responsable | Evidencia técnica | Tiempo, costo y aceptación |
 |---|---|---|---|---|---|
-| CC-01 | Simulacro, banco de preguntas y corrección; falta configuración acordada; destino confirmado: entrega real. | RF22, US31 (borrador). | Pendiente para entrega real, confirmado por el grupo; tarea/responsable concreto no registrado. Origen: profesores. | PreguntaPrueba, servicio/controlador, rutas y AdministrationAndQuizTest; sin resultado adjunto. | Sin fecha fijada; costo no estimado / aceptación no registrada. |
+| CC-01 | Simulacro, banco de preguntas y corrección; falta configuración acordada; destino confirmado: entrega real. | RF22, US31 (borrador). | Pendiente para entrega real, confirmado por el grupo; tarea/responsable concreto no registrado. Origen: profesores. | Banco/corrección base conservados y comprobados por HTTP el 05/10; reglas completas y aceptación de CC-01 pendientes. | Sin fecha fijada; costo no estimado / aceptación no registrada. |
 | CC-02 | Formulario de pie de portal, persistencia y lectura en panel; implica datos de consultas y permisos. | RF23, US32 (borrador). | Pendiente para entrega real, confirmado por el grupo; tarea/responsable concreto no registrado. Instancia: demo 03/09. | Sin circuito localizado. La consulta de reservas no cumple este cambio. | Sin fecha fijada; costo no estimado / aceptación no registrada. |
 | CC-03 | Estados, aprobación separada y rol Directora; afecta permisos, modelo, UI, API y auditoría. | RF21, US30 (borrador), US2/US7/US9. | Pendiente para entrega real, confirmado por el grupo; tarea/responsable concreto no registrado. Instancia: demo 03/09. | Actual: PUBLICADO/NO_PUBLICADO y PUBLICO_GENERAL/PERSONAL_IMSJ. No se localizó flujo solicitado. | Sin fecha fijada; costo no estimado / aceptación no registrada. |
 | CC-04 | Gráficos asociados a preguntas, almacenamiento y presentación; amplía CC-01. | RF24, US33 (borrador). | Pendiente para entrega real, confirmado por el grupo; tarea/responsable concreto y solicitante personal no registrados. | Preguntas de prueba no tienen adjunto ni validación de archivo. | Sin fecha fijada; costo no estimado / aceptación no registrada. |
-| CC-05 | Sustitución tecnológica transversal; guías de migración, API, arquitectura, seguridad, SSOO y pruebas. | Todos los módulos ya presentes; RNF1–RNF4/RNF7–RNF10 y tareas TM-01–TM-07. | Decisión tecnológica del grupo confirmada; tareas concretas por acordar; revisión documental de Juan Robaina pendiente. | Código/configuración aún Laravel en `df581ab`; referencia leída en `d6f61c9`; no hay migración ni resultados PHP. | Sin fecha/costo/estimación fijados; aprobación académica y aceptación del cliente no registradas. |
+| CC-05 | Sustitución tecnológica transversal; guías de migración, API, arquitectura, seguridad, SSOO y pruebas. | Todos los módulos ya presentes; RNF1–RNF4/RNF7–RNF10 y tareas TM-01–TM-07. | Decisión tecnológica del grupo confirmada; tareas concretas por acordar; revisión documental de Juan Robaina pendiente. | Backend nativo y evidencia HTTP/MySQL de 05/10/2026 en [verificación](verificacion.md); api-simple fijada a `d6f61c9`. | Sin fecha/costo/estimación fijados; aprobación académica y aceptación del cliente no registradas. |
 
 ### Definiciones necesarias para cerrar cada solicitud
 
@@ -114,3 +114,14 @@ Fuente de estructura: [control de cambios del curso](https://github.com/portalut
 ### DOC-CC05 — Documentación del cambio tecnológico
 
 **02/10/2026, actualización solicitada por el grupo:** documentación del backend PHP de destino y de su migración desde Laravel, con comparación completa de la API base y criterios de compatibilidad. Se actualizan índice, READMEs, arquitectura, API, modelo/diagramas, requisitos, backlog/planning, SSOO, seguridad, revisión, pendientes, registro de IA y hojas/comentarios de PDF. Código, configuración, esquema, pruebas, actas, diagramas PNG y licencia no se modifican en esta intervención. Documentar el cambio no equivale a migrarlo ni a darlo por aceptado. El crédito documental corresponde al grupo.
+
+
+### CC-05 - Reescritura y referencia simple, 05/10/2026
+
+**Instrucción directa del grupo:** reescribir desde cero por rastros de Laravel, usar el ejemplo api-simple, código comentado, estructura explícita de siete módulos y PDF de flujo de cada endpoint. Es un refinamiento de CC-05; no se inventa otra solicitud funcional ni una aprobación del Inspector/docentes.
+
+**Resultado preparado:** entrada public/index.php, config.php, Database/Response/Auth, siete controladores/servicios/repositorios, modelos nativos, database.sql, Composer, Docker/Compose, scripts operativos y suite HTTP/MySQL. Retirados componentes y pruebas del framework. Se conservaron contrato de 42 rutas, frontends, diez tablas de negocio, almacenamiento y nombres de servicios/volúmenes Docker. Sesiones anteriores requieren nuevo login; sesiones nativas revocables, ocho horas, secreto con hash. [Referencia vigente](referencia_api_simple.md), [flujos MD/PDF](flujo_endpoints_backend.md), [guía](migracion_backend_vanilla.md).
+
+**Evidencia:** sintaxis PHP y pruebas reales sobre MySQL aislado, incluido último cupo con dos procesos PHP y rollback de datos/archivo cuando falla auditoría. Los resultados detallados y hashes se registran en [verificación](verificacion.md). No se ejecutó Docker/Apache ni una actualización/restauración de datos institucionales, ni recorrido visual integral de ambos frontends. No se declara cierre total por pasar las pruebas.
+
+**Control de alcance:** sin cambios de frontend, actas, cuatro PDF previos, diagramas PNG, identidad o licencia; no se incorporan CC-01 a CC-04 ni nuevas reglas de agenda/costo. Se cambia la excepción SQL de .gitignore para incluir el nuevo database.sql. Crédito/responsabilidad editorial del grupo; IA como apoyo identificado. Juan Robaina revisará internamente; revisión y aceptaciones siguen pendientes y no se atribuyen a reuniones anteriores.

@@ -1,3 +1,51 @@
+# Verificación de la versión PHP nativa - 05/10/2026
+
+**Resultado:** 155 comprobaciones correctas de la suite HTTP/MySQL y cobertura efectiva de las **42 declaraciones de ruta** en public/index.php. Se probaron los archivos definitivos de backend, no una API de ejemplo. [Evidencia por hash](evidencia_backend_nativo.json); revisión interna de Juan Robaina pendiente. Preparado con apoyo externo de IA; crédito y responsabilidad del proyecto corresponden al equipo.
+
+## Entorno y procedimiento ejecutados
+
+PHP 8.5.11 portable, MySQL 8.4.11 portable, Windows; dos servidores PHP independientes en 127.0.0.1:18000/18001, contra la misma base aislada imsj_test_native, con datos sintéticos. El cliente MySQL y Python estándar ejecutaron [integracion.py](../backend/tests/integracion.py). La suite exige una base vacía cuyo nombre empiece por imsj_test_; no se conectó a datos del equipo/Intendencia. Fecha UTC de finalización: 2026-10-05T17:06:56.299299+00:00.
+
+- Sintaxis: 37 archivos PHP válidos mediante scripts/verificar.php.
+- Suite: 155 comprobaciones, 55 combinaciones distintas de método/ruta concreta (incluye soporte y casos inválidos); los id/query se normalizaron y cotejaron con las 42 rutas del switch.
+- Último cupo: dos peticiones desde procesos PHP distintos, estados 201 y 422; exactamente una reserva persistida en MySQL.
+- Rollback: un trigger de prueba hizo fallar la auditoría; se comprobó 500 sin filtrar SQL, ausencia del contenido y eliminación del archivo nuevo. El trigger fue retirado al completar el escenario.
+- Sesiones: revocación al cerrar/nuevo login/desactivar, expiración y rechazo de cuenta inactiva; permisos público/personal, registros duplicados y límite 429.
+- Archivos: PDF/PNG reales, contenido inseguro rechazado, descarga y reemplazo, PUT multipart y POST multipart con _method=PUT usados por el panel.
+- CLI primera cuenta: creación explícita en otra base aislada y rechazo del segundo intento cuando ya hay personal activo.
+
+La evidencia JSON conserva SHA-256 de cada PHP ejecutado para identificar la versión sin inventar un commit de entrega. No contiene tokens o contraseñas de producción. Los procesos de prueba se detienen al terminar; runtimes/base de prueba quedan fuera del repositorio.
+
+## Estado por criterio CC-05
+
+| Criterio | Comprobado en esta versión | Falta para cierre completo |
+|---|---|---|
+| V-CC05-01 | Arranque PHP, health, 42 rutas, sintaxis, JSON, 204 y errores. | Construcción/arranque Apache y Docker. |
+| V-CC05-02 | Login/registro/perfil, hashes, vencimiento, revocación, cuenta activa y rol. | Revisión institucional de política de cuentas y despliegue. |
+| V-CC05-03 | CRUD/estado, visibilidad y auditoría de contenidos. | Recorrido visual integral en los dos frontends. |
+| V-CC05-04 | Carga/descarga y rechazo por contenido, reemplazo, variantes multipart y rollback de archivo. | Recursos reales, límites de tamaño máximos y persistencia en contenedor. |
+| V-CC05-05 | Banco/corrección base; respuesta correcta oculta antes de corregir y rechazo de duplicación. | Definiciones de CC-01/CC-04, sin cierre implícito. |
+| V-CC05-06 | Franjas/agenda, propiedad, duplicación y último cupo con dos procesos/MySQL. | Revisión de criterios académicos y prueba visual. |
+| V-CC05-07 | Permisos, límite, preflight permitido/ajeno, rutas privadas y archivos inseguros. | Apache/proxy, navegador, SAST/DAST y controles de producción. |
+| V-CC05-08 | Esquema no destructivo en base nueva, CLI y preservación local de archivos. | Docker, actualización/restauración sobre una copia de datos/adjuntos reales. |
+| V-CC05-09 | Contrato HTTP consumido por el JS conservado; documentación actualizada y PDF revisado. | Integración visual, revisión de Juan Robaina, docentes y aceptación en actas cuando ocurra. |
+
+**Límites materiales:** no hay Docker instalado en este entorno; Dockerfile/Compose se inspeccionaron, no se ejecutaron. No se abrió una sesión visual completa en los frontends. No se restauró una base institucional, no se realizó una auditoría SAST/DAST ni se acredita aceptación del cliente/docentes. CC-01 a CC-04 siguen pendientes y agenda/reservas continúan académicas.
+
+## Documentación y alcance
+
+Nuevo PDF de 26 páginas con 42 fichas y versión MD del mismo inventario. Se renderizaron e inspeccionaron todas las páginas; tipografía/colores y logo RC5 corresponden a la identidad ya utilizada. El PDF y MD describen inputs, permisos, métodos, tablas, respuestas y errores; los ejemplos se marcan didácticos y la revisión queda pendiente.
+
+Se actualizan estructura, guías, API, modelo/diagramas Mermaid, SSOO, control de cambios y datos pendientes. Se conservan por hash ambos frontends, actas, cuatro PDF anteriores, diagramas PNG, logo y licencia. El backend anterior tiene un resguardo externo; no se conserva ejecutable dentro de backend. La excepción SQL de .gitignore apunta al nuevo database.sql.
+
+Se comprobaron los 31 Markdown, 263 enlaces locales/anclas y 130 tablas; RF1–RF24 y US1–US34 mantienen numeración. Los 54 archivos protegidos conservan su hash y los 37 PHP coinciden con la versión probada. La revisión del diff no registra errores de espacios.
+
+## Registro histórico documental
+
+Los apartados siguientes corresponden a las revisiones del 02/10/2026 y al código anterior, conservados como antecedente. Las pruebas Feature mencionadas ya no forman parte del backend actual; pueden consultarse en Git, commit 68d34fb. Sus estados «pendiente» describen esa fecha, no anulan los resultados actuales de esta sección.
+
+---
+
 # Verificación y evidencia de pruebas
 
 > **Revisión de IA — 02/10/2026:** se inspeccionan archivos, no se certifica una ejecución funcional. Existen siete archivos Feature y 22 métodos de prueba en `df581ab`. No se localizaron resultados versionados ni acta de aceptación vinculada.

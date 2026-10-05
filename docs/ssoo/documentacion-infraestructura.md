@@ -1,252 +1,37 @@
-# Documentación de infraestructura
+# Inventario de infraestructura
 
-> **CC-05 — Decisión del grupo, 02/10/2026:** destino PHP sin Laravel, por capas y con PDO, basado en `api-completa`. El código y los archivos de infraestructura aún utilizan Laravel. El contenido previo se conserva como referencia de esa versión; la migración y sus pruebas están pendientes. Ver [transición documentada](transicion_backend_vanilla.md).
+**05/10/2026 - versión PHP nativa.** Archivos definidos; ejecución Docker no acreditada. Crédito/responsabilidad del grupo; apoyo externo de IA y revisión interna pendiente.
 
-**Proyecto:** Plataforma Web Educación Vial IMSJ  
-**Asignatura:** Administración de Sistemas Operativos  
-**Entrega:** segunda entrega  
-**Fecha:** 2 de septiembre de 2026
-
-> **Revisión de IA — 02/10/2026:** se conserva la fecha declarada y el inventario. La inspección de archivos no sustituye ejecución de contenedores. El resultado declarado de Compose en la sección 11 no incluye salida adjunta ni responsable.
-
-## 1. Alcance
-
-Este documento registra la infraestructura implementada para ejecutar el
-proyecto con Docker. Describe servicios, red, puertos, volúmenes, construcción,
-configuración, scripts de operación y verificaciones disponibles.
-
-La infraestructura está orientada a desarrollo y demostración local. Las
-medidas necesarias para un despliegue público se identifican como trabajo
-posterior.
-
-## 2. Inventario de archivos
-
-Los caminos son relativos a la raíz `Proyecto-IMSJ/`.
-
-| Archivo o directorio | Función |
-|---|---|
-| `backend/compose.yaml` | Declara `frontend`, `app`, `db` y los volúmenes persistentes. |
-| `backend/Dockerfile` | Construye la API con PHP, Apache, extensiones y Composer. |
-| `backend/.dockerignore` | Excluye configuración local, dependencias y archivos innecesarios de la imagen. |
-| `backend/.env.example` | Plantilla para la configuración local `.env`. |
-| `backend/.gitignore` | Excluye `.env`, dependencias, registros y cachés. |
-| `backend/iniciar.bat` | Prepara e inicia el sistema en Windows. |
-| `backend/detener.bat` | Detiene contenedores sin borrar volúmenes. |
-| `backend/database/migrations/` | Reconstruye el esquema mediante Laravel. |
-| `backend/database/seeders/` | Carga datos iniciales en una base nueva. |
-| `frontend-publico/` | Sitio estático de la ciudadanía. |
-| `frontend-imsj/` | Panel estático del personal IMSJ. |
-
-## 3. Topología
-
-```text
-HOST
-│
-├── localhost:${FRONTEND_PORT:-8080}
-│      └── frontend (Nginx, puerto 80)
-│             ├── /frontend-publico/  [solo lectura]
-│             └── /frontend-imsj/     [solo lectura]
-│
-└── localhost:${APP_PORT:-8000}
-       └── app (Apache + PHP + Laravel, puerto 80)
-              ├── /var/www/html/.env
-              ├── volumen app_uploads
-              └── red privada de Compose
-                      └── db (MySQL, puerto interno 3306)
-                              └── volumen db_data
-```
-
-Compose crea una red privada predeterminada. La API encuentra MySQL mediante el
-nombre DNS interno `db`. El puerto 3306 no se publica en el host, por lo que la
-base no queda accesible directamente desde otros equipos.
-
-## 4. Servicios de `compose.yaml`
-
-### 4.1 `frontend`
-
-| Propiedad | Valor o comportamiento |
-|---|---|
-| Imagen | `nginx:alpine` |
-| Puerto interno | `80/tcp` |
-| Puerto del host | `FRONTEND_PORT`; valor predeterminado `8080` |
-| Montaje 1 | `../frontend-publico` en `/usr/share/nginx/html/frontend-publico`, solo lectura |
-| Montaje 2 | `../frontend-imsj` en `/usr/share/nginx/html/frontend-imsj`, solo lectura |
-
-Los montajes relativos parten de `backend/compose.yaml`. Para reconstruir el
-sistema se necesita el repositorio completo: `backend`, `frontend-publico` y
-`frontend-imsj` deben conservarse como carpetas hermanas.
-
-### 4.2 `app`
-
-| Propiedad | Valor o comportamiento |
-|---|---|
-| Imagen | Construida desde `backend/Dockerfile` |
-| Servidor | Apache con PHP 8.5 |
-| Aplicación | Laravel 13 |
-| Puerto interno | `80/tcp` |
-| Puerto del host | `APP_PORT`; valor predeterminado `8000` |
-| Configuración | `backend/.env` montado en `/var/www/html/.env` |
-| Archivos persistentes | `app_uploads` en `/var/www/html/storage/app/public` |
-| Dependencia | Espera que `db` pase la comprobación de salud |
-
-`GET /api/health` devuelve `{"status":"ok"}` y verifica que Apache, PHP,
-Laravel y el enrutamiento estén respondiendo.
-
-### 4.3 `db`
-
-| Propiedad | Valor o comportamiento |
-|---|---|
-| Imagen | `mysql:8.4` |
-| Puerto | `3306/tcp`, solo en la red Compose |
-| Base inicial | `DB_DATABASE` |
-| Usuario de aplicación | `DB_USERNAME` |
-| Contraseña de aplicación | `DB_PASSWORD` |
-| Contraseña administrativa | `DB_ROOT_PASSWORD` |
-| Persistencia | `db_data` en `/var/lib/mysql` |
-| Salud | `mysqladmin ping` cada 5 s, espera de 5 s y 10 reintentos |
-
-Las variables se leen desde `.env`. Laravel usa `DB_HOST=db`, no `localhost`.
-
-## 5. Persistencia
-
-| Volumen | Contenido | Comportamiento |
+| Servicio / volumen | Definición actual | Responsabilidad |
 |---|---|---|
-| `db_data` | Tablas, índices y archivos internos de MySQL | Se conserva al detener o recrear el contenedor. |
-| `app_uploads` | Imágenes y materiales cargados | Se conserva al detener o recrear el contenedor. |
+| frontend | nginx:alpine; puerto local 8080; carpetas estáticas montadas en lectura. | Portal y panel bajo /frontend-publico/ y /frontend-imsj/. |
+| app | Dockerfile php:8.5-apache; puerto local 8000; depende de db saludable. | API, Apache con DocumentRoot public y mod_rewrite. |
+| db | mysql:8.4; puerto 3306 interno, sin publicación al host. | Datos; schema se importa solo en volumen inicialmente vacío. |
+| db_data | Nombre conservado, /var/lib/mysql. | Persistencia de tablas. |
+| app_uploads | Nombre conservado, storage/app/public. | PDF/imágenes; fuera de public. |
+| cache | storage/cache, nuevo volumen técnico. | Contador de intentos compartido por procesos. |
 
-`docker compose stop` y `docker compose down` conservan los volúmenes. La
-opción `docker compose down -v` los elimina y **no debe usarse durante la
-operación habitual**. La persistencia no reemplaza un respaldo independiente.
+Usar el mismo directorio/proyecto Compose para reutilizar los volúmenes previos; crear otro nombre de proyecto produciría volúmenes distintos. No eliminar volúmenes para actualizar. Los puertos se vinculan a 127.0.0.1 en este entorno local. El JS sigue llamando a localhost:8000; cambiar APP_PORT no cambia el frontend.
 
-## 6. Construcción de la API
+## Archivos de operación
 
-El `Dockerfile` realiza estas operaciones:
+Dockerfile instala pdo_mysql y mbstring; fileinfo está disponible en PHP. Configura display_errors apagado, logs, upload_max_filesize=10M y post_max_size=24M. Solo public se publica. .dockerignore excluye .env, adjuntos locales, caché, tests y vendor de la imagen. Almacenamiento con permisos para www-data.
 
-1. parte de `php:8.5-apache`;
-2. instala `libonig-dev` y `unzip`;
-3. compila y habilita `mbstring` y `pdo_mysql`;
-4. habilita `mod_rewrite` y las reglas `.htaccess`;
-5. copia Composer 2.10 desde su imagen oficial;
-6. define `/var/www/html/public` como raíz de Apache;
-7. copia el backend a `/var/www/html`;
-8. instala dependencias de producción desde `composer.lock`;
-9. crea el enlace público de almacenamiento;
-10. asigna a `www-data` los permisos sobre `storage` y `bootstrap/cache`.
+Compose conserva frontend/app/db y transmite al proceso PHP configuración nativa; MySQL healthcheck habilita el inicio de app. `iniciar.bat` exige .env y levanta/reconstruye; `detener.bat` detiene sin borrar volúmenes. `scripts/crear_admin.php` solo CLI, primera cuenta sin personal activo; `scripts/verificar.php` revisa sintaxis sin SQL.
 
-`.dockerignore` mantiene fuera del contexto `.env`, `.git`, `vendor`,
-`node_modules`, pruebas, registros y cachés. Esto evita incorporar la
-configuración privada o archivos generados.
+## Variables
 
-## 7. Configuración por ambiente
+| Variable | Uso |
+|---|---|
+| APP_ENV, APP_URL | Ambiente informativo y base para las URL de adjuntos. |
+| FRONTEND_ORIGIN | Lista separada por comas de orígenes exactos para CORS; localhost:8080 por defecto de sitio. |
+| APP_PORT, FRONTEND_PORT | Publicación local 8000/8080; configurar con los consumidores. |
+| DB_HOST, DB_PORT | db:3306 en Compose; 127.0.0.1/puerto del servidor en ejecución local. |
+| DB_DATABASE, DB_USERNAME, DB_PASSWORD | Conexión PDO con credenciales específicas de la instalación. |
+| DB_ROOT_PASSWORD | Contraseña administrativa de MySQL, no utilizada por la API. |
+| INITIAL_ADMIN_* | Nombre/cédula/contraseña de primera cuenta, solo para acción CLI explícita. |
+| UPLOAD_ROOT, CACHE_ROOT | Overrides opcionales de rutas locales; defaults en storage. Compartir caché entre procesos. |
 
-`backend/.env` se crea desde `.env.example` y está excluido de Git.
+La configuración de proceso tiene precedencia sobre .env. No hay APP_KEY, SECRET_KEY, token JWT o pasos Artisan en el backend actual. No incluir secretos reales en Git. [Reconstrucción](reconstruccion-infraestructura.md), [transición](transicion_backend_vanilla.md), [verificación](../verificacion.md).
 
-| Variable | Uso | Referencia local |
-|---|---|---|
-| `APP_NAME` | Nombre de la aplicación | `IMSJ Backend` |
-| `APP_ENV` | Tipo de ambiente | `local` |
-| `APP_KEY` | Clave criptográfica de Laravel | Se genera por instalación |
-| `APP_DEBUG` | Detalle de errores | `true` solo en desarrollo |
-| `APP_URL` | URL base de la API | `http://localhost:8000` |
-| `APP_PORT` | Puerto de la API | `8000` |
-| `FRONTEND_PORT` | Puerto de los frontends | `8080` |
-| `DB_HOST` | Servidor MySQL interno | `db` |
-| `DB_PORT` | Puerto MySQL interno | `3306` |
-| `DB_DATABASE` | Nombre de la base | `imsj` |
-| `DB_USERNAME` | Usuario de la aplicación | Valor local modificable |
-| `DB_PASSWORD` | Contraseña del usuario | Cambiar fuera de desarrollo |
-| `DB_ROOT_PASSWORD` | Contraseña administrativa | Cambiar fuera de desarrollo |
-
-Los valores de `.env.example` son únicamente de arranque local y no deben
-reutilizarse en un servidor real.
-
-## 8. Scripts de operación
-
-### 8.1 `iniciar.bat`
-
-El script para Windows:
-
-1. ingresa a `backend/`;
-2. comprueba que Docker esté instalado;
-3. comprueba que el motor responda;
-4. intenta iniciar Docker Desktop si está detenido;
-5. crea `.env` desde `.env.example` si falta;
-6. construye e inicia los servicios;
-7. genera `APP_KEY` si está vacía;
-8. aplica las migraciones pendientes;
-9. carga datos iniciales solamente si detecta una base nueva;
-10. muestra las URLs y abre el frontend público.
-
-El script se detiene y muestra un error si falla una operación necesaria.
-
-### 8.2 `detener.bat`
-
-Comprueba Docker y ejecuta `docker compose down`. Retira contenedores y red,
-pero conserva `db_data` y `app_uploads`.
-
-## 9. Operación manual
-
-Ejecutar desde `Proyecto-IMSJ/backend`:
-
-```powershell
-# Estado
-docker compose ps
-
-# Registros
-docker compose logs --tail=100
-docker compose logs --tail=100 app
-docker compose logs --tail=100 db
-
-# Reinicio de la API
-docker compose restart app
-
-# Migraciones pendientes
-docker compose exec -T app php artisan migrate --force
-
-# Parada sin borrar datos
-docker compose down
-```
-
-Como el backend se copia durante la construcción, los cambios de código exigen
-reconstruir la imagen:
-
-```powershell
-docker compose up -d --build app
-```
-
-## 10. Controles actuales
-
-- MySQL no publica su puerto en el host.
-- El backend espera que MySQL esté saludable.
-- Los frontends se montan como solo lectura.
-- `.env` no se incluye en la imagen ni en Git.
-- Solo se instalan dependencias PHP de producción.
-- Apache publica `public/`, no la raíz de Laravel.
-- Los datos residen en volúmenes persistentes.
-- La API protege rutas administrativas con Sanctum y middleware de rol; el
-  login limita intentos mediante `throttle`.
-
-Para producción siguen pendientes HTTPS, secretos de producción, desactivar la
-depuración, respaldo, monitoreo, límites de recursos y actualización controlada
-de imágenes.
-
-## 11. Verificación realizada
-
-El 2 de septiembre de 2026 se validó `compose.yaml` con
-`docker compose config --quiet`. Compose reconoció:
-
-- servicios: `db`, `app` y `frontend`;
-- volúmenes: `db_data` y `app_uploads`.
-
-La reconstrucción funcional completa se verifica mediante la guía
-`reconstruccion-infraestructura.md`.
-
-**IA — Aclaración:** la guía contiene pasos y casillas pendientes; no es un informe de reconstrucción ya completada. Falta versión/commit utilizado, equipo/entorno, fecha efectiva, responsable y evidencia del arranque, migraciones, persistencia y restauración. `/api/health` responde desde HealthService sin consultar MySQL.
-
-Cambiar `APP_PORT` no actualiza `frontend-publico/js/api.js` ni `frontend-imsj/js/api.js`, que contienen `http://localhost:8000/api`. La configuración de otro puerto o acceso remoto necesita revisión del equipo; este documento no la aplica al código.
-
-## Adenda tecnológica CC-05 — 02/10/2026
-
-La decisión del grupo sustituye Laravel por PHP sin framework, con capas y PDO/MySQL según la API completa indicada. Los manifiestos, scripts y comandos Artisan de este documento describen la versión Laravel todavía presente; no son procedimientos finales del destino. Su sustitución se documentará con los archivos y comandos realmente implementados.
-
-Se conserva como base la topología Nginx/Apache-PHP/MySQL, PHP 8.5, MySQL 8.4, puertos 8000/8080 y volúmenes persistentes. El cambio no define nuevo alojamiento ni nuevas medidas de rendimiento. La [transición de infraestructura](transicion_backend_vanilla.md) contiene correspondencia de variables, trabajo de imagen/scripts, instalación/actualización SQL, almacenamiento y criterios de reconstrucción/restauración pendientes. La letra indica Laravel; la aceptación académica del cambio aún debe registrarse.
+Dominio/HTTPS, alojamiento, administrador operativo y plan institucional de respaldos siguen pendientes. Los procedimientos documentados no certifican disponibilidad, seguridad de producción o aceptación.

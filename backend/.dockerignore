@@ -1,10 +1,7 @@
-.git
-.ai
 .env
-database/database.sqlite
-node_modules
-phpunit.xml
-README.md
-storage/logs/*
-tests
 vendor
+storage/cache
+tests
+.git
+
+storage/app/public
