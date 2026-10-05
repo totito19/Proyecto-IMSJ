@@ -42,6 +42,16 @@ La evidencia JSON conserva SHA-256 de cada PHP ejecutado para identificar la ver
 
 ## Documentación y alcance
 
+### Apache único e inicio portable — actualización posterior del 05/10/2026
+
+**Solicitud del grupo:** retirar Nginx, hacer el inicio automático y abrir la página, sin configuración particular de un equipo. Se definen app/db, alias Apache de portal/panel, API del mismo origen y preparación de una instalación local nueva desde los BAT. Las guías actuales reemplazan el procedimiento anterior que exigía completar manualmente las claves al usar iniciar.bat. [Evidencia de esta actualización](evidencia_inicio_docker.json).
+
+**Comprobado:** la CLI real validó Compose y enumeró solamente db/app. PowerShell 5.1 pudo ejecutar los scripts; 38 archivos PHP pasaron sintaxis. Se aprobaron 22 escenarios externos con Docker simulado y un servidor HTTP sintético: claves nuevas sin mostrarlas, conservación de claves reales, protección de base previa, cambio de puerto ocupado y URL de adjuntos, rutas con espacios, instalación por PATH/usuario/todos los usuarios, apertura/espera de Desktop, fallos de configuración/motor/construcción/HTTP y detención. En estas pruebas se interceptó la apertura del navegador y se aisló la ruta de instalación global; no se acredita navegación real ni Apache. Los dos clientes JavaScript pasaron 12 comprobaciones de URL y cabecera Bearer, con tres orígenes distintos.
+
+**Prueba real y límite encontrado:** se ejecutó iniciar.bat, que encontró y abrió Docker Desktop, pero el motor no llegó a estar disponible. Su registro y `wsl --status` indican que WSL no está instalado en este equipo. Docker Desktop se cerró; no se construyeron imágenes, iniciaron contenedores ni abrió el portal. Tampoco se generó .env real ni se modificaron datos. Resolver la instalación de WSL requiere autorización del usuario porque cambia Windows y puede requerir reinicio; [instrucciones oficiales](https://learn.microsoft.com/en-us/windows/wsl/install). Los archivos preparados siguen siendo generales para Docker/Compose con motor Linux operativo. Revisión y aceptación del equipo pendientes; apoyo de IA identificado.
+
+### Antecedente de la reescritura, anterior a la retirada de Nginx
+
 Nuevo PDF de 26 páginas con 42 fichas y versión MD del mismo inventario. Se renderizaron e inspeccionaron todas las páginas; tipografía/colores y logo RC5 corresponden a la identidad ya utilizada. El PDF y MD describen inputs, permisos, métodos, tablas, respuestas y errores; los ejemplos se marcan didácticos y la revisión queda pendiente.
 
 Se actualizan estructura, guías, API, modelo/diagramas Mermaid, SSOO, control de cambios y datos pendientes. Se conservan por hash ambos frontends, actas, cuatro PDF anteriores, diagramas PNG, logo y licencia. El backend anterior tiene un resguardo externo; no se conserva ejecutable dentro de backend. La excepción SQL de .gitignore apunta al nuevo database.sql.

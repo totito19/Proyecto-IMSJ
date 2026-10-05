@@ -25,19 +25,17 @@ Carga explícita como api-simple, sin Router separado ni middleware de framework
 
 ```mermaid
 flowchart LR
-    Ciudadania[Navegador ciudadano] -->|8080| Frontend[Nginx: frontend]
-    Personal[Navegador personal] -->|8080| Frontend
-    Frontend --- Publico[frontend-publico: archivos estáticos]
-    Frontend --- Panel[frontend-imsj: archivos estáticos]
-    Ciudadania -->|API 8000| App[Apache / PHP nativo: app]
-    Personal -->|API 8000| App
+    Ciudadania[Navegador ciudadano] -->|APP_PORT: 8000 por defecto| App[Apache / PHP nativo: app]
+    Personal[Navegador personal] -->|mismo puerto| App
+    App --- Publico[Alias frontend-publico: archivos estáticos]
+    App --- Panel[Alias frontend-imsj: archivos estáticos]
     App -->|db:3306| DB[(MySQL 8.4: db)]
     DB --- Datos[db_data]
     App --- Archivos[app_uploads]
     App --- Cache[cache: contador de intentos]
 ```
 
-Se conservan frontend/app/db y los volúmenes previos de negocio y adjuntos. MySQL no publica puerto al host en Compose. Los puertos locales se vinculan a 127.0.0.1; las direcciones JavaScript siguen siendo localhost:8000 y el sitio localhost:8080. Cambiar puertos exige revisar esas direcciones con el equipo. No existe proxy de API en Nginx.
+Se retira Nginx por solicitud del grupo; quedan app/db y los volúmenes previos de negocio, adjuntos y caché. Apache sirve ambos frontends mediante alias de solo lectura y la API desde public; las demás carpetas del backend quedan fuera de la web. Se publica un único puerto en 127.0.0.1 y MySQL conserva su puerto interno. JavaScript toma el origen de la página para llamar a /api, sin fijar un puerto. El BAT prepara configuración local, resuelve un puerto ocupado, espera salud de Apache/esquema/portal y abre el navegador; [operación](../backend/README.md).
 
 ## Datos y seguridad
 

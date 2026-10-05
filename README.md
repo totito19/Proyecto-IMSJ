@@ -14,7 +14,7 @@ Proyecto-IMSJ/
 └── docs/               documentación del proyecto y flujo de endpoints
 ```
 
-Para iniciar, seguir el [README del backend](backend/README.md). Docker mantiene los servicios `frontend`, `app`, `db` y los volúmenes de datos/archivos; su ejecución todavía requiere comprobación del equipo. Los dos frontends conservan sus archivos y sus direcciones actuales.
+Para iniciar en Windows con Docker/Compose, abrir **[backend/iniciar.bat](backend/iniciar.bat)**. Prepara claves de una instalación local nueva, inicia Apache/PHP y MySQL, espera al sistema y abre el portal en el navegador. Apache sirve API, portal y panel en un único puerto configurable; se retiró Nginx. Se conservan los volúmenes de datos/archivos. Instrucciones y recuperación de configuración previa en el [README del backend](backend/README.md); evidencia y límites en [verificación](docs/verificacion.md).
 
 ## Documentación
 

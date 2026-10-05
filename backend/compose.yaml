@@ -1,20 +1,13 @@
-# Entorno de desarrollo. Crear .env con contraseñas antes de iniciar.
+# Entorno local: Apache sirve API y frontends; iniciar.bat prepara .env.
 services:
-  frontend:
-    image: nginx:alpine
-    ports:
-      - "127.0.0.1:${FRONTEND_PORT:-8080}:80"
-    volumes:
-      - ../frontend-publico:/usr/share/nginx/html/frontend-publico:ro
-      - ../frontend-imsj:/usr/share/nginx/html/frontend-imsj:ro
   app:
     build: .
     ports:
       - "127.0.0.1:${APP_PORT:-8000}:80"
     environment:
       APP_ENV: ${APP_ENV:-development}
-      APP_URL: ${APP_URL:-http://localhost:8000}
-      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:8080,http://localhost:8081}
+      APP_URL: ${APP_URL:-http://localhost:${APP_PORT:-8000}}
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:${APP_PORT:-8000}}
       DB_HOST: db
       DB_PORT: 3306
       DB_DATABASE: ${DB_DATABASE:-imsj}
@@ -23,9 +16,17 @@ services:
     volumes:
       - app_uploads:/var/www/html/storage/app/public
       - cache:/var/www/html/storage/cache
+      - ../frontend-publico:/var/www/frontend-publico:ro
+      - ../frontend-imsj:/var/www/frontend-imsj:ro
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "php", "scripts/salud.php"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
   db:
     image: mysql:8.4
     environment:

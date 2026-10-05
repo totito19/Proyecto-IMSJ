@@ -43,7 +43,7 @@ El router recibe método y ruta; ejecuta controles y controlador. Este valida y 
 | Actualización | PATCH de productos; respuesta de borrado JSON. | PUT de entidades, PATCH de estados; borrados/logout pueden devolver 204. |
 | Parámetros | Único marcador `{id}` reconocido por Router. | `{usuario}`, `{noticia}`, `{material}`, `{pregunta}`, `{franja}` y rutas con sufijo `/estado`. |
 | Archivos | CRUD de productos sin carga de materiales/noticias. | Multipart, validación, persistencia y URLs de imágenes/PDF; POST con `_method=PUT` en edición. |
-| CORS | Origen único configurable, cookies, cabecera Content-Type; GET/POST/PATCH/DELETE/OPTIONS. | Frontends en 8080 y API 8000; Bearer/Accept; también PUT y multipart. |
+| CORS | Origen único configurable, cookies, cabecera Content-Type; GET/POST/PATCH/DELETE/OPTIONS. | Apache sirve frontends y API en el mismo origen/puerto configurable; Bearer/Accept; también PUT y multipart. |
 | Límites HTTP | 60/min por IP para todas las rutas, excepto OPTIONS. | Login/registro con `throttle:5,1`; comportamiento a preservar durante sustitución. |
 
 **IA — Observación:** copiar la referencia sin adaptación rompería la integración de ambos frontends. La decisión de retirar Laravel permite trasladar su organización por capas; no aprueba automáticamente todas estas diferencias de contrato.

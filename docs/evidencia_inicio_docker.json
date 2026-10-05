@@ -1,0 +1,161 @@
+{
+  "escenarios_correctos": 22,
+  "docker_real": false,
+  "apache_real": false,
+  "pruebas": [
+    {
+      "escenario": "01-nuevo-env-y-claves",
+      "correcto": true,
+      "codigo": 0
+    },
+    {
+      "escenario": "02-reemplazar-marcadores-base-nueva",
+      "correcto": true,
+      "codigo": 0
+    },
+    {
+      "escenario": "03-conservar-claves-reales",
+      "correcto": true,
+      "codigo": 0
+    },
+    {
+      "escenario": "04-abrir-pagina-al-terminar",
+      "correcto": true,
+      "codigo": 0
+    },
+    {
+      "escenario": "05-puerto-ocupado-y-api-url",
+      "correcto": true,
+      "codigo": 0
+    },
+    {
+      "escenario": "06-docker-por-usuario-sin-path",
+      "correcto": true,
+      "codigo": 0
+    },
+    {
+      "escenario": "07-docker-global-sin-path",
+      "correcto": true,
+      "codigo": 0
+    },
+    {
+      "escenario": "08-iniciar-desktop",
+      "correcto": true,
+      "codigo": 0
+    },
+    {
+      "escenario": "09-docker-ausente",
+      "correcto": true,
+      "codigo": 1
+    },
+    {
+      "escenario": "10-compose-ausente",
+      "correcto": true,
+      "codigo": 1
+    },
+    {
+      "escenario": "11-motor-ausente",
+      "correcto": true,
+      "codigo": 1
+    },
+    {
+      "escenario": "12-motor-windows-rechazado",
+      "correcto": true,
+      "codigo": 1
+    },
+    {
+      "escenario": "13-configuracion-invalida",
+      "correcto": true,
+      "codigo": 1
+    },
+    {
+      "escenario": "14-base-previa-sin-claves",
+      "correcto": true,
+      "codigo": 1
+    },
+    {
+      "escenario": "15-base-previa-marcadores",
+      "correcto": true,
+      "codigo": 1
+    },
+    {
+      "escenario": "16-plantilla-ausente",
+      "correcto": true,
+      "codigo": 1
+    },
+    {
+      "escenario": "17-falla-construccion-salud",
+      "correcto": true,
+      "codigo": 1
+    },
+    {
+      "escenario": "18-no-abrir-si-http-falla",
+      "correcto": true,
+      "codigo": 1
+    },
+    {
+      "escenario": "19-detener-conservar-env",
+      "correcto": true,
+      "codigo": 0
+    },
+    {
+      "escenario": "20-detener-falla",
+      "correcto": true,
+      "codigo": 1
+    },
+    {
+      "escenario": "21-detener-sin-env",
+      "correcto": true,
+      "codigo": 1
+    },
+    {
+      "escenario": "22-detener-motor-ausente",
+      "correcto": true,
+      "codigo": 1
+    }
+  ],
+  "archivos_probados": {
+    "backend\\iniciar.bat": "4476a110aa9db02ca2bf100aeab4c3f34cdee4bf752b53bc346ffc7d33525241",
+    "backend\\detener.bat": "8200c80d44b7781f956ba40cffbec74bf0751dc16bc786df5a62218be05c04c3",
+    "backend\\scripts\\docker.ps1": "c02a4027fdd70195b9c5609bf46d8e758a455e3b2b2a81f067d04b6b957d4ca9"
+  },
+  "fecha_utc": "2026-10-05T18:45:35.896146+00:00",
+  "php_sintaxis": {
+    "archivos_correctos": 38
+  },
+  "clientes_api": {
+    "comprobaciones_correctas": 12,
+    "modulos": 2,
+    "origenes": 3
+  },
+  "compose_real": {
+    "configuracion_valida": true,
+    "servicios": [
+      "app",
+      "db"
+    ],
+    "contenedores_iniciados": false
+  },
+  "inicio_real": {
+    "bat_ejecutado": true,
+    "desktop_abierto": true,
+    "motor_disponible": false,
+    "limite": "WSL no instalado; requiere autorizacion para instalarlo en Windows",
+    "navegador_abierto": false
+  },
+  "metodo_simulacion": "Copias de scripts con Docker simulado y HTTP sintetico; apertura del navegador interceptada y ProgramFiles aislado. No equivale a construccion, Apache ni navegacion reales.",
+  "archivos_preparados_sha256": {
+    "backend/iniciar.bat": "4476a110aa9db02ca2bf100aeab4c3f34cdee4bf752b53bc346ffc7d33525241",
+    "backend/detener.bat": "8200c80d44b7781f956ba40cffbec74bf0751dc16bc786df5a62218be05c04c3",
+    "backend/scripts/docker.ps1": "c02a4027fdd70195b9c5609bf46d8e758a455e3b2b2a81f067d04b6b957d4ca9",
+    "backend/scripts/salud.php": "5cc9664aab252b790bfa23f3ed8cc65c0a7eadb0a0311b51ed39c22d0e769d28",
+    "backend/compose.yaml": "b07f447dfca6b4a506a514032340fbd0b8a0c766cbafffd855f9d1ee95bba2f2",
+    "backend/Dockerfile": "bda28610fda0d2f246ca1cd3d340827ce33f420d90be51c4e28439c990715acb",
+    "backend/apache.conf": "e01c607d22e85c1e1e0fddd50053a670586d3566f93028a9a3c381c61fb390be",
+    "backend/.env.example": "83519daa26765ca33175eb3c0712dcfcca8426b049705f07f74b78922d5a4502",
+    "frontend-publico/js/api.js": "5704f2dfc16217db9addbb5822105d22578cf6b77c09a5d1bbe42ee8a9e3cacd",
+    "frontend-imsj/js/api.js": "2d8a4ecc2502f301134df624e30dbc7e3427160135c46e169ebf6fcb453fb400"
+  },
+  "revision_equipo": "pendiente",
+  "apoyo_ia": true
+}

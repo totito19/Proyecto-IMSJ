@@ -7,9 +7,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends libonig-dev \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /var/www/html
 COPY . /var/www/html
-# Solamente public/ puede recibir solicitudes de Apache.
+# El backend privado queda fuera de DocumentRoot. Los frontends usan alias explicitos.
+COPY apache.conf /etc/apache2/conf-available/imsj.conf
 RUN sed -ri 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
-    && printf '<Directory /var/www/html/public>\nAllowOverride All\nRequire all granted\n</Directory>\n' > /etc/apache2/conf-available/imsj.conf \
     && a2enconf imsj \
     && mkdir -p storage/app/public storage/cache \
     && chown -R www-data:www-data storage

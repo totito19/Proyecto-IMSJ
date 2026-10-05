@@ -4,12 +4,12 @@
 
 ## Instalación nueva
 
-1. Disponer de Docker y Compose; desde la carpeta backend, crear .env a partir de .env.example si no existe.
-2. Completar DB_PASSWORD y DB_ROOT_PASSWORD; mantener DB_DATABASE y DB_USERNAME acordes a la base elegida. No reutilizar contraseñas de ejemplos. APP_PORT=8000 y FRONTEND_PORT=8080 son las direcciones de los frontends actuales.
-3. Ejecutar `docker compose up -d --build`, o `iniciar.bat`. El SQL raíz se importa automáticamente solo cuando db_data está vacío. No contiene usuarios o contenido de demostración.
+1. Disponer de Docker/Compose con contenedores Linux. En Windows abrir backend/iniciar.bat desde cualquier carpeta; no requiere runtimes PHP/MySQL en el host.
+2. El BAT abre/espera Docker Desktop cuando corresponde, prepara .env con claves aleatorias para una base nueva y conserva las existentes. Si detecta un volumen previo sin sus claves, exige recuperarlas y se detiene. APP_PORT es el puerto único; por defecto 8000, con búsqueda de uno libre si otro programa lo ocupa.
+3. Inicia Apache/PHP y MySQL con espera de salud y retira el Nginx anterior del mismo proyecto, sin borrar volúmenes. El SQL raíz se importa solo cuando db_data está vacío; no contiene usuarios o contenido de demostración. Para ejecución manual en otros sistemas: copiar .env.example, completar claves y ejecutar `docker compose up -d --build --remove-orphans --wait --wait-timeout 180`.
 4. Crear explícitamente la primera cuenta de personal con scripts/crear_admin.php, siguiendo el [README del backend](../../backend/README.md). Si ya hay personal activo, la herramienta rechaza la operación.
 5. Consultar /api/health y verificar login/listado con la nueva cuenta; health no consulta MySQL.
-6. Abrir localhost:8080/frontend-publico/ y localhost:8080/frontend-imsj/. Verificar portal, ingreso, contenidos/archivos, permisos y agenda académica; registrar versión, entorno, pasos y resultados.
+6. El BAT abre el portal en el navegador después de comprobar HTTP/base/páginas. Con el puerto por defecto: localhost:8000/frontend-publico/ y localhost:8000/frontend-imsj/; si cambia, usar el puerto mostrado. Verificar ingreso, contenidos/archivos, permisos y agenda académica; registrar versión, entorno, pasos y resultados.
 
 ```powershell
 docker compose ps

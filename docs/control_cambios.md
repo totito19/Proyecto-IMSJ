@@ -133,3 +133,13 @@ Fuente de estructura: [control de cambios del curso](https://github.com/portalut
 **Cambio preparado:** `iniciar.bat` y `detener.bat` detectan las instalaciones habituales de Docker, validan Compose y mantienen los errores visibles. Inicio crea únicamente la plantilla ausente, exige completar las claves y abre/espera Docker Desktop cuando corresponde. Detención conserva `compose stop`. Se actualizan la guía del backend y la [evidencia de verificación](verificacion.md). Sin cambios de API, esquema, servicios/volúmenes, frontend o actas; no se incorporan solicitudes funcionales adicionales.
 
 **Validación y estado:** Compose validado con la CLI real; 21 escenarios correctos de los BAT con Docker simulado. No se iniciaron contenedores reales ni se alteraron datos del equipo. Completar claves locales y comprobar construcción/arranque sigue pendiente; revisión interna y aceptación de CC-05 siguen pendientes. Corrección asistida por IA, con crédito y responsabilidad del proyecto a cargo del grupo.
+
+### CC-05 — Apache único e inicio automático portable, 05/10/2026
+
+**Instrucción directa del grupo:** quitar Nginx, hacer funcionar iniciar.bat y abrir la página, con configuración general para otras instalaciones Docker.
+
+**Cambio:** quedan app/db; Apache sirve API, portal y panel mediante alias de lectura en un puerto configurable. JavaScript toma la API del origen de la página. El inicio prepara .env y claves aleatorias solo para una base nueva, conserva las reales, resuelve un puerto ocupado, espera salud del sistema y abre el navegador predeterminado. Retira el contenedor Nginx anterior del mismo proyecto sin eliminar volúmenes. Los BAT usan rutas del proyecto y de la instalación de Docker, sin rutas particulares de un equipo. El alias de login corrige la diferencia de mayúsculas del archivo histórico al servirlo en Linux.
+
+**Documentación y alcance:** se actualizan README, arquitectura, SSOO y verificación. Sin cambios de negocio, roles, esquema, cuentas, actas o CC-01–CC-04. La primera cuenta sigue siendo una acción explícita. Evidencia y límites en [verificación](verificacion.md); revisión del equipo y aceptación de CC-05 pendientes. Apoyo de IA identificado, crédito y responsabilidad del grupo.
+
+**Verificación de esta actualización:** Compose real validado con solo app/db; 38 PHP con sintaxis válida; 22 escenarios de inicio/detención con Docker simulado y HTTP sintético; 12 comprobaciones de los clientes API con distintos orígenes. Inicio real intentado: Docker Desktop no pudo iniciar su motor por WSL ausente. Construcción, salud real y navegación quedan pendientes de resolver ese requisito de Windows con autorización; no se registran como aprobadas. [Evidencia](evidencia_inicio_docker.json).

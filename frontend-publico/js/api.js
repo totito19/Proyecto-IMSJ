@@ -1,7 +1,8 @@
 (function () {
   'use strict';
 
-  const API_URL = 'http://localhost:8000/api';
+  // Apache sirve pagina y API en el mismo origen; el puerto no queda fijo en el JS.
+  const API_URL = `${window.location.origin}/api`;
   const TOKEN_KEY = 'imsj:token';
   const USER_KEY = 'imsj:usuario';
 
