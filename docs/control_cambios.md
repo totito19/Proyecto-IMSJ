@@ -125,3 +125,11 @@ Fuente de estructura: [control de cambios del curso](https://github.com/portalut
 **Evidencia:** sintaxis PHP y pruebas reales sobre MySQL aislado, incluido último cupo con dos procesos PHP y rollback de datos/archivo cuando falla auditoría. Los resultados detallados y hashes se registran en [verificación](verificacion.md). No se ejecutó Docker/Apache ni una actualización/restauración de datos institucionales, ni recorrido visual integral de ambos frontends. No se declara cierre total por pasar las pruebas.
 
 **Control de alcance:** sin cambios de frontend, actas, cuatro PDF previos, diagramas PNG, identidad o licencia; no se incorporan CC-01 a CC-04 ni nuevas reglas de agenda/costo. Se cambia la excepción SQL de .gitignore para incluir el nuevo database.sql. Crédito/responsabilidad editorial del grupo; IA como apoyo identificado. Juan Robaina revisará internamente; revisión y aceptaciones siguen pendientes y no se atribuyen a reuniones anteriores.
+
+### CC-05 — Corrección de los BAT de Docker, 05/10/2026
+
+**Origen:** consulta del grupo sobre el fallo de los archivos de inicio. La reescritura había reducido los BAT y retirado la preparación de `.env`, el arranque/espera de Docker Desktop y la pausa final. El diagnóstico encontró Docker instalado por usuario fuera del PATH, motor sin conexión y configuración `.env` ausente; se corrige la afirmación documental previa sobre la ausencia de Docker.
+
+**Cambio preparado:** `iniciar.bat` y `detener.bat` detectan las instalaciones habituales de Docker, validan Compose y mantienen los errores visibles. Inicio crea únicamente la plantilla ausente, exige completar las claves y abre/espera Docker Desktop cuando corresponde. Detención conserva `compose stop`. Se actualizan la guía del backend y la [evidencia de verificación](verificacion.md). Sin cambios de API, esquema, servicios/volúmenes, frontend o actas; no se incorporan solicitudes funcionales adicionales.
+
+**Validación y estado:** Compose validado con la CLI real; 21 escenarios correctos de los BAT con Docker simulado. No se iniciaron contenedores reales ni se alteraron datos del equipo. Completar claves locales y comprobar construcción/arranque sigue pendiente; revisión interna y aceptación de CC-05 siguen pendientes. Corrección asistida por IA, con crédito y responsabilidad del proyecto a cargo del grupo.

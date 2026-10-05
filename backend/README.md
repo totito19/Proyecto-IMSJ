@@ -28,8 +28,10 @@ El [flujo de cada endpoint](../docs/flujo_endpoints_backend.md), su PDF y el [co
 
 ## Instalación nueva con Docker
 
-1. Desde esta carpeta, copiar `.env.example` a `.env` **solo si falta** y completar `DB_PASSWORD` y `DB_ROOT_PASSWORD` con valores propios. Mantener `APP_PORT=8000` y `FRONTEND_PORT=8080` mientras los frontends conserven sus direcciones actuales.
-2. Ejecutar `docker compose up -d --build` o `iniciar.bat`. MySQL importa `database.sql` únicamente cuando su volumen está vacío. El esquema no carga noticias, reservas ni usuarios de demostración.
+Requiere [Docker Desktop para Windows](https://docs.docker.com/desktop/setup/install/windows-install/) con Docker Compose y el motor de contenedores Linux funcionando. Los BAT buscan `docker.exe` en el PATH y en las instalaciones habituales por usuario y para todos los usuarios.
+
+1. Desde esta carpeta, copiar `.env.example` a `.env` **solo si falta** y completar `DB_PASSWORD` y `DB_ROOT_PASSWORD` con valores propios. `iniciar.bat` también crea esa plantilla cuando falta y se detiene para que el equipo complete las claves; rechaza los marcadores `CAMBIAR_CLAVE_*`. No reemplaza un `.env` existente. Mantener `APP_PORT=8000` y `FRONTEND_PORT=8080` mientras los frontends conserven sus direcciones actuales.
+2. Ejecutar `iniciar.bat`. Valida la configuración sin imprimir contraseñas, abre Docker Desktop si el motor no responde y espera hasta 60 comprobaciones separadas por dos segundos antes de iniciar los contenedores. Desde una terminal con Docker activo también puede usarse `docker compose up -d --build`. MySQL importa `database.sql` únicamente cuando su volumen está vacío. El esquema no carga noticias, reservas ni usuarios de demostración.
 3. Crear la primera cuenta de personal con la herramienta CLI. Definir estas variables en la terminal con datos elegidos por el equipo; la contraseña no se imprime:
 
 ```powershell
@@ -45,6 +47,17 @@ La herramienta se niega a crear la cuenta si ya hay personal activo. Las siguien
 4. Consultar `http://localhost:8000/api/health`, `http://localhost:8080/frontend-publico/` y `http://localhost:8080/frontend-imsj/`. La salud solo comprueba que PHP responde; comprobar `/login` y un listado para verificar también MySQL.
 
 Se conservan los servicios `frontend`, `app`, `db` y los volúmenes `db_data`, `app_uploads`; se añade `cache` para coordinar intentos entre procesos. Usar el mismo proyecto Compose al actualizar. `docker compose stop` detiene sin borrar datos. La configuración de estos contenedores es local; dominio y HTTPS institucional siguen pendientes.
+
+### Si los BAT no arrancan o se cierran
+
+Ambos dejan el resultado visible al abrirlos con doble clic. En una terminal se puede omitir la pausa con `iniciar.bat --sin-pausa` o `detener.bat --sin-pausa`. Devuelven código 0 si la operación termina correctamente y 1 si falta configuración o falla una comprobación.
+
+- **Falta `.env` o conserva claves de ejemplo:** completar `DB_PASSWORD` y `DB_ROOT_PASSWORD`, guardar y volver a iniciar. En una base existente, conservar sus claves originales.
+- **No se encuentra Docker:** comprobar su instalación. Los BAT admiten `%LOCALAPPDATA%\Programs\DockerDesktop` y `%ProgramFiles%\Docker\Docker`; si se instaló en otra ubicación, añadir su carpeta `resources\bin` al PATH y abrir una terminal nueva.
+- **El motor no responde:** abrir Docker Desktop y revisar su estado. El BAT de inicio intenta abrirlo, pero un error de WSL, virtualización o de instalación requiere resolver el mensaje que muestra Docker Desktop. `detener.bat` informa si no puede conectarse; no abre el motor para detenerlo.
+- **Falla la construcción o el inicio:** revisar el error que permanece en la ventana. Desde `backend`, `docker compose ps -a` muestra el estado y `docker compose logs --tail 80 app db` muestra los errores de los servicios. Si Docker no está en el PATH, usar la ruta completa de `docker.exe` entre comillas.
+
+Las comprobaciones usan [`docker compose config --quiet`](https://docs.docker.com/reference/cli/docker/compose/config/) para validar sin volcar los valores de `.env`. Los BAT no crean cuentas, no importan SQL sobre bases existentes y no borran volúmenes.
 
 ## Ejecución local sin Docker
 

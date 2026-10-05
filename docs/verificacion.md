@@ -30,7 +30,15 @@ La evidencia JSON conserva SHA-256 de cada PHP ejecutado para identificar la ver
 | V-CC05-08 | Esquema no destructivo en base nueva, CLI y preservación local de archivos. | Docker, actualización/restauración sobre una copia de datos/adjuntos reales. |
 | V-CC05-09 | Contrato HTTP consumido por el JS conservado; documentación actualizada y PDF revisado. | Integración visual, revisión de Juan Robaina, docentes y aceptación en actas cuando ocurra. |
 
-**Límites materiales:** no hay Docker instalado en este entorno; Dockerfile/Compose se inspeccionaron, no se ejecutaron. No se abrió una sesión visual completa en los frontends. No se restauró una base institucional, no se realizó una auditoría SAST/DAST ni se acredita aceptación del cliente/docentes. CC-01 a CC-04 siguen pendientes y agenda/reservas continúan académicas.
+**Límites materiales:** no se ejecutó la construcción ni el arranque de los contenedores Docker/Apache en esta verificación HTTP/MySQL. El diagnóstico de los BAT que figura abajo corrige la afirmación anterior sobre la ausencia de Docker. No se abrió una sesión visual completa en los frontends. No se restauró una base institucional, no se realizó una auditoría SAST/DAST ni se acredita aceptación del cliente/docentes. CC-01 a CC-04 siguen pendientes y agenda/reservas continúan académicas.
+
+## Diagnóstico y corrección de los BAT — 05/10/2026
+
+**Consulta del grupo:** los BAT no inician Docker. Se encontró Docker Desktop instalado por usuario en `%LOCALAPPDATA%\Programs\DockerDesktop`, fuera del PATH de esta sesión. La CLI responde con Docker 29.8.0 y Compose v5.5.1 al usar su ruta completa; el motor Linux no responde porque no está disponible su conexión `dockerDesktopLinuxEngine`. Falta `backend/.env`. La versión anterior de los BAT terminaba sin pausa y había perdido la preparación de configuración y el arranque/espera de Docker Desktop.
+
+**Corrección:** búsqueda de Docker por PATH o instalaciones habituales; creación de la plantilla `.env` solo si falta y detención hasta completar sus claves; validación silenciosa de Compose; apertura/espera de Docker Desktop desde el BAT de inicio; errores visibles y códigos de salida. `detener.bat` conserva `compose stop` sin borrar volúmenes y no abre Docker Desktop. Uso detallado en [README del backend](../backend/README.md). Intervención asistida por IA; revisión del equipo pendiente.
+
+**Comprobado:** la CLI real validó `compose.yaml` con `.env.example` mediante `config --quiet`, sin iniciar servicios ni imprimir claves. En Windows se ejecutaron 21 escenarios con copias de los BAT y un ejecutable Docker simulado, fuera del proyecto: detección por PATH/usuario/todos los usuarios, rutas con espacios, plantilla ausente/nueva, rechazo de claves de ejemplo, errores de Compose/configuración/motor/construcción/detención, apertura y espera de Desktop, preservación de `.env`, pausa y códigos de salida. Los 21 terminaron correctamente. Estas pruebas comprueban el flujo de los BAT; no acreditan construcción de imágenes ni disponibilidad de la aplicación en contenedores. Los servicios reales siguen pendientes de configurar las claves locales e iniciar el motor.
 
 ## Documentación y alcance
 
