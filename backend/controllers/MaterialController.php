@@ -19,7 +19,7 @@ final class MaterialController {
     public function updateEstado(int $id): never {
         $actor = Auth::requireUser('PERSONAL_IMSJ');
         $d = Solicitud::body();
-        $estado = Solicitud::option($d['estado'] ?? null, 'estado', ['PUBLICADO', 'NO_PUBLICADO']);
+        $estado = Solicitud::option($d['estado'] ?? null, 'estado', ['BORRADOR', 'PENDIENTE', 'APROBADO', 'PUBLICADO']);
         Response::json(['material' => $this->service->estado($id, $estado, $actor)->toArray()]);
     }
     /** Elimina el registro y, si corresponde, su archivo local. */

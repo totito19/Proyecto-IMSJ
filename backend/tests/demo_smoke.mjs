@@ -74,4 +74,32 @@ await request('PATCH', `/api/noticias/${newsId}/estado`, { token: staff, body: {
 const publicNews = await request('GET', '/api/portal/noticias');
 check(publicNews.noticias.some((item) => item.id === newsId), 'La noticia aprobada y publicada no aparece en el portal');
 
+const faq = await request('POST', '/api/preguntas', {
+  token: staff,
+  expected: 201,
+  body: { pregunta: '¿Dónde consulto?', respuesta: 'En la Sección Tránsito.' },
+});
+const faqId = faq.pregunta.id;
+await request('PATCH', `/api/preguntas/${faqId}/estado`, { token: staff, body: { estado: 'PENDIENTE' } });
+await request('PATCH', `/api/preguntas/${faqId}/estado`, { token: staff, body: { estado: 'APROBADO' }, expected: 403 });
+const approvedFaq = await request('PATCH', `/api/preguntas/${faqId}/estado`, { token: directora, body: { estado: 'APROBADO' } });
+check(approvedFaq.pregunta.estado === 'APROBADO', 'La Directora no pudo aprobar la pregunta frecuente');
+await request('PATCH', `/api/preguntas/${faqId}/estado`, { token: staff, body: { estado: 'PUBLICADO' } });
+const publicFaqs = await request('GET', '/api/portal/preguntas');
+check(publicFaqs.preguntas.some((item) => item.id === faqId), 'La pregunta aprobada no aparece en el portal');
+
+const material = await request('POST', '/api/materiales', {
+  token: staff,
+  expected: 201,
+  body: { nombre: 'Video de educación vial', tipo: 'VIDEO', ubicacion_recurso: 'https://example.org/video' },
+});
+const materialId = material.material.id;
+await request('PATCH', `/api/materiales/${materialId}/estado`, { token: staff, body: { estado: 'PENDIENTE' } });
+await request('PATCH', `/api/materiales/${materialId}/estado`, { token: staff, body: { estado: 'APROBADO' }, expected: 403 });
+const approvedMaterial = await request('PATCH', `/api/materiales/${materialId}/estado`, { token: directora, body: { estado: 'APROBADO' } });
+check(approvedMaterial.material.estado === 'APROBADO', 'La Directora no pudo aprobar el material');
+await request('PATCH', `/api/materiales/${materialId}/estado`, { token: staff, body: { estado: 'PUBLICADO' } });
+const publicMaterials = await request('GET', '/api/portal/materiales');
+check(publicMaterials.materiales.some((item) => item.id === materialId), 'El material aprobado no aparece en el portal');
+
 console.log(JSON.stringify({ resultado: 'OK', checks }, null, 2));

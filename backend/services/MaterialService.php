@@ -31,7 +31,8 @@ final class MaterialService {
             if ($changedType && !$files) Response::invalid('archivo','Seleccione el archivo del material.');
             if ($files) { $savedPath=Archivo::save($files[0],'materiales',$datos['tipo']==='PDF'?10240:5120,$datos['tipo']==='PDF'); $resource=$savedPath; }
         }
-        $datos['ubicacion_recurso']=$resource; $datos['estado']=$old?->row['estado']??'NO_PUBLICADO';
+        // Crear o editar contenido obliga a recorrer nuevamente la aprobación.
+        $datos['ubicacion_recurso']=$resource; $datos['estado']='BORRADOR';
         try {
             $material=Database::transaction(function() use($old,$id,$datos,$actor) {
                 $saved=$old?$this->repo->actualizar($id,$datos):$this->repo->crear($datos);
@@ -42,12 +43,27 @@ final class MaterialService {
         if ($old && $old->row['ubicacion_recurso']!==$resource) Archivo::delete($old->row['ubicacion_recurso']);
         return $material;
     }
-    /** Modifica la publicación como una operación administrativa auditada. */
+    /** Aplica Borrador -> Pendiente -> Aprobado -> Publicado. */
     public function estado(int $id,string $estado,Usuario $actor): Material {
         $old=$this->detalle($id); if ($old->row['estado']===$estado) return $old;
+        $actual=$old->row['estado'];
+        $transiciones=[
+            'BORRADOR'=>['PENDIENTE'],
+            'PENDIENTE'=>['BORRADOR','APROBADO'],
+            'APROBADO'=>['BORRADOR','PUBLICADO'],
+            'PUBLICADO'=>['BORRADOR'],
+        ];
+        if (!in_array($estado,$transiciones[$actual]??[],true)) Response::invalid('estado','La transición de estado no está permitida.');
+        if ($estado==='APROBADO' && $actor->rol()!=='DIRECTORA') throw new ApiException(403,'Solo la Directora puede aprobar materiales.');
         return Database::transaction(function() use($old,$id,$estado,$actor) {
             $data=$old->row; $data['estado']=$estado; $saved=$this->repo->actualizar($id,$data);
-            $this->audit->registrar($actor->id(),$estado==='PUBLICADO'?'PUBLICAR':'DESPUBLICAR','MaterialEstudio',$id); return $saved;
+            $accion=match($estado) {
+                'PENDIENTE'=>'ENVIAR_REVISION',
+                'APROBADO'=>'APROBAR',
+                'PUBLICADO'=>'PUBLICAR',
+                default=>'VOLVER_BORRADOR',
+            };
+            $this->audit->registrar($actor->id(),$accion,'MaterialEstudio',$id); return $saved;
         });
     }
     /** Elimina el registro indicado; la transacción la coordina el servicio. */

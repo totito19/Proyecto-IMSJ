@@ -68,8 +68,8 @@ Errores de campo: `{"message":"Los datos no son válidos.","errors":{"campo":["d
 
 - Cuenta: cédula de siete u ocho dígitos, normalizada; registro con `password` y `password_confirmation`, mínimo seis caracteres. El secreto conserva espacios y admite hasta 72 bytes por bcrypt. Alta de personal: `nombre` hasta 120 y cédula; devuelve `usuario` y `clave_inicial` con el mecanismo previo `imsj1234`. Su política definitiva sigue pendiente.
 - Noticias: `titulo` hasta 255, `texto`, `fecha_inicio_vigencia`, `fecha_fin_vigencia` (fin igual/posterior); `imagen_portada` opcional y `galeria[]` hasta cinco JPG/PNG/WEBP de 2048 KB cada una; `enlaces[]` hasta cinco URL HTTP/HTTPS. El portal filtra `PUBLICADO` y vigencia inclusiva.
-- Materiales: `nombre` hasta 255 y `tipo` PDF/IMAGEN/VIDEO. PDF hasta 10240 KB, imagen hasta 5120 KB, video con URL HTTP/HTTPS hasta 2048 caracteres y sin archivo. Alta/cambio de tipo requieren el recurso correspondiente. Edición del mismo tipo permite conservarlo.
-- FAQ: `pregunta` hasta 255 y `respuesta`; estado mediante operación separada. Prueba: `pregunta` hasta 500, `opcion_a` a `opcion_d` hasta 255, `respuesta_correcta` A/B/C/D. La consulta pública selecciona hasta diez preguntas sin la respuesta; corrección recibe `respuestas` de uno a 20 elementos distintos con `pregunta_id` y `opcion`.
+- Materiales: `nombre` hasta 255 y `tipo` PDF/IMAGEN/VIDEO. PDF hasta 10240 KB, imagen hasta 5120 KB, video con URL HTTP/HTTPS hasta 2048 caracteres y sin archivo. Alta/cambio de tipo requieren el recurso correspondiente. Edición del mismo tipo permite conservarlo; el estado se cambia mediante una operación separada.
+- FAQ: `pregunta` hasta 255 y `respuesta`; el estado se cambia mediante una operación separada. Prueba: `pregunta` hasta 500, `opcion_a` a `opcion_d` hasta 255, `respuesta_correcta` A/B/C/D. La consulta pública selecciona hasta diez preguntas sin la respuesta; corrección recibe `respuestas` de uno a 20 elementos distintos con `pregunta_id` y `opcion`.
 - Franjas: `fecha` desde hoy, horas HH:MM con fin posterior, `tipo` PRUEBA_MANEJO/RENOVACION_NORMAL/RENOVACION_URGENTE y `cupos_totales` entre uno y 20; horario/tipo único. Reserva: solo `franja_disponibilidad_id`; el usuario se toma del token. No se puede borrar una franja con reservas.
 - Agenda: `vista` dia/semana/mes y `fecha` AAAA-MM-DD; por defecto hoy/día. Semana lunes a domingo; mes completo. Historial: `limite` de uno a 50, por defecto 20.
 
@@ -83,7 +83,7 @@ Además de PUT JSON y multipart nativo, se conserva **POST multipart con `_metho
 
 ## Reglas de la demo y pendientes
 
-Las noticias siguen `BORRADOR → PENDIENTE → APROBADO → PUBLICADO`. Personal puede preparar, enviar a revisión y publicar una noticia aprobada; solo Directora puede aprobar. Editar una noticia la devuelve a borrador. El portal acepta consultas con nombre, correo y mensaje; el panel permite leerlas y marcarlas como leídas. Las preguntas del simulador admiten una imagen opcional que se muestra sin revelar la respuesta correcta.
+Noticias, materiales y preguntas frecuentes siguen `BORRADOR → PENDIENTE → APROBADO → PUBLICADO`. El personal puede preparar, enviar a revisión y publicar contenido aprobado; solo Directora puede aprobar. Editar el contenido lo devuelve a borrador. El portal acepta consultas con nombre, correo y mensaje; el panel permite leerlas y marcarlas como leídas. Las preguntas del simulador admiten una imagen opcional que se muestra sin revelar la respuesta correcta.
 
 No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`. Categorías, respuestas/notificaciones para consultas, cancelación, confirmación de agenda, costo urgente y nuevos campos de contacto no se incorporan. Agenda y reservas son académicas. La implementación de demo no acredita aceptación institucional.
 
