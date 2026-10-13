@@ -4,7 +4,7 @@ Plataforma web para la Sección Tránsito de la Intendencia de San José.
 
 ## Estado actual - 13/10/2026
 
-Backend en **PHP 8.5 nativo, PDO y MySQL 8.4**, con la estructura por controladores, servicios y repositorios solicitada por el grupo y el recorrido de [api-simple de RodrigoCazard](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-simple). La entrada sigue en `backend/public/index.php` y actualmente expone 45 endpoints. La demo incorpora CC-02, CC-03 y CC-04: consultas del portal, aprobación de noticias por Directora e imágenes opcionales en las preguntas del simulador.
+Backend en **PHP 8.5 nativo, PDO y MySQL 8.4**, con la estructura por controladores, servicios y repositorios solicitada por el grupo y el recorrido de [api-simple de RodrigoCazard](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-simple). La entrada sigue en `backend/public/index.php` y actualmente expone 45 endpoints. La demo incorpora CC-02, CC-03 y CC-04: consultas del portal, aprobación por Directora de noticias, materiales y preguntas frecuentes, e imágenes opcionales en las preguntas del simulador.
 
 ```text
 Proyecto-IMSJ/

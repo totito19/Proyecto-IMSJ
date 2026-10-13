@@ -20,7 +20,8 @@ final class PreguntaService {
     /** Coordina alta o edición y confirma la auditoría junto con el cambio. */
     public function guardar(array $datos,Usuario $actor,?int $id=null): Pregunta {
         $old=$id!==null?$this->detalle($id):null;
-        $datos['estado']=$old?->row['estado']??'NO_PUBLICADO';
+        // La respuesta modificada necesita una aprobación nueva.
+        $datos['estado']='BORRADOR';
         return Database::transaction(function() use($old,$id,$datos,$actor) {
             $saved=$old?$this->repo->actualizar($id,$datos):$this->repo->crear($datos);
             $this->audit->registrar($actor->id(),$old?'ACTUALIZAR':'CREAR','PreguntaFrecuente',(int)$saved->row['id']); return $saved;
@@ -31,12 +32,27 @@ final class PreguntaService {
         $this->detalle($id);
         Database::transaction(function() use($id,$actor) { $this->audit->registrar($actor->id(),'ELIMINAR','PreguntaFrecuente',$id); $this->repo->eliminar($id); });
     }
-    /** Modifica la publicación como una operación administrativa auditada. */
+    /** Aplica Borrador -> Pendiente -> Aprobado -> Publicado. */
     public function estado(int $id,string $estado,Usuario $actor): Pregunta {
         $old=$this->detalle($id); if ($old->row['estado']===$estado) return $old;
+        $actual=$old->row['estado'];
+        $transiciones=[
+            'BORRADOR'=>['PENDIENTE'],
+            'PENDIENTE'=>['BORRADOR','APROBADO'],
+            'APROBADO'=>['BORRADOR','PUBLICADO'],
+            'PUBLICADO'=>['BORRADOR'],
+        ];
+        if (!in_array($estado,$transiciones[$actual]??[],true)) Response::invalid('estado','La transición de estado no está permitida.');
+        if ($estado==='APROBADO' && $actor->rol()!=='DIRECTORA') throw new ApiException(403,'Solo la Directora puede aprobar preguntas frecuentes.');
         return Database::transaction(function() use($old,$id,$estado,$actor) {
             $data=$old->row; $data['estado']=$estado; $saved=$this->repo->actualizar($id,$data);
-            $this->audit->registrar($actor->id(),$estado==='PUBLICADO'?'PUBLICAR':'DESPUBLICAR','PreguntaFrecuente',$id); return $saved;
+            $accion=match($estado) {
+                'PENDIENTE'=>'ENVIAR_REVISION',
+                'APROBADO'=>'APROBAR',
+                'PUBLICADO'=>'PUBLICAR',
+                default=>'VOLVER_BORRADOR',
+            };
+            $this->audit->registrar($actor->id(),$accion,'PreguntaFrecuente',$id); return $saved;
         });
     }
 }

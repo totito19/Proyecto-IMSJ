@@ -62,7 +62,7 @@ El flujo registrado en este documento es (sin evidencia de aprobación formal ad
 
 ### Implementación de demo — 13/10/2026
 
-Se implementaron CC-02, CC-03 y CC-04 sobre el backend PHP nativo existente: formulario de pie y bandeja de lectura; rol Directora y flujo de cuatro estados aplicado a noticias; una imagen opcional por pregunta del simulador. Se añadió una migración idempotente para instalaciones Docker con volumen existente. La comprobación técnica incluyó arranque aislado con Docker, 25 verificaciones HTTP y revisión visual de portal/panel. Esto registra evidencia de implementación, no revisión interna ni aceptación del cliente.
+Se implementaron CC-02, CC-03 y CC-04 sobre el backend PHP nativo existente: formulario de pie y bandeja de lectura; rol Directora y flujo de cuatro estados aplicado a noticias, materiales y preguntas frecuentes; una imagen opcional por pregunta del simulador. Se añadió una migración idempotente para instalaciones Docker con volumen existente. La comprobación técnica incluyó arranque aislado con Docker, 41 verificaciones HTTP y revisión visual de portal/panel. Esto registra evidencia de implementación, no revisión interna ni aceptación del cliente.
 
 ## 3. Impacto, decisión y evidencia por cambio
 

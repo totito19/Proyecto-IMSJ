@@ -28,10 +28,10 @@ function noticiasFiltradas() {
 function accionFlujo(noticia) {
   const directora = ImsjApi.currentUser()?.rol === 'DIRECTORA';
   if (noticia.estado === 'BORRADOR') {
-    return actionBtn('send', directora ? 'Paso 1: enviar a revisión' : 'Enviar a revisión', { labeled: true, data: { accion: 'estado', estado: 'PENDIENTE', id: noticia.id } });
+    return actionBtn('send', 'Enviar a revisión', { labeled: true, data: { accion: 'estado', estado: 'PENDIENTE', id: noticia.id } });
   }
   if (noticia.estado === 'PENDIENTE' && directora) {
-    return actionBtn('check-circle', 'Paso 2: aprobar', { labeled: true, data: { accion: 'estado', estado: 'APROBADO', id: noticia.id } });
+    return actionBtn('check-circle', 'Aprobar', { labeled: true, data: { accion: 'estado', estado: 'APROBADO', id: noticia.id } });
   }
   if (noticia.estado === 'PENDIENTE') return '<span class="self-label">Pendiente de Directora</span>';
   if (noticia.estado === 'APROBADO') {

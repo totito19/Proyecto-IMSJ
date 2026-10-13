@@ -6,7 +6,7 @@
   <title>Preguntas frecuentes | IMSJ</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" href="img/escudo-san-jose.png">
-  <link rel="stylesheet" href="css/styles.css?v=2">
+  <link rel="stylesheet" href="css/styles.css?v=6">
 </head>
 <body>
 
@@ -71,6 +71,7 @@
           <div>
             <div class="card__title">Preguntas frecuentes</div>
             <div class="card__meta"><span id="contador-preguntas">0</span> preguntas registradas</div>
+            <div class="card__meta">Flujo: enviar a revisión → aprobar como Directora → publicar.</div>
           </div>
           <button type="button" class="btn btn--primary" id="btn-nueva-pregunta">
             <span data-icon="plus" data-size="14"></span> Nueva pregunta
@@ -80,7 +81,7 @@
         <div class="table-wrap">
           <table class="data">
             <thead>
-              <tr><th class="col-num">#</th><th>Pregunta</th><th>Respuesta</th><th>Visibilidad</th><th>Acciones</th></tr>
+              <tr><th class="col-num">#</th><th>Pregunta</th><th>Respuesta</th><th>Estado</th><th>Acciones</th></tr>
             </thead>
             <tbody id="tbody-preguntas"></tbody>
           </table>
@@ -107,6 +108,7 @@
                 <textarea class="input h-28" id="p-respuesta" placeholder="Respuesta completa y clara..." required></textarea>
               </div>
               <div class="form-foot">
+                <span class="card__meta">Se guardará como Borrador.</span>
                 <button type="button" class="btn btn--ghost" data-modal-close>Cancelar</button>
                 <button type="submit" class="btn btn--primary">Guardar pregunta</button>
               </div>
@@ -119,8 +121,8 @@
 </div>
 
 <script src="js/icons.js?v=2"></script>
-<script src="js/api.js?v=4"></script>
-<script src="js/ui.js?v=4"></script>
-<script src="js/preguntas.js?v=4"></script>
+<script src="js/api.js?v=6"></script>
+<script src="js/ui.js?v=6"></script>
+<script src="js/preguntas.js?v=6"></script>
 </body>
 </html>

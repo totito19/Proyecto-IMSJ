@@ -19,6 +19,28 @@ function materialesFiltrados() {
       .join(' ').toLowerCase().includes(queryMateriales));
 }
 
+function estadoMaterialVista(estado) {
+  return ({ BORRADOR: 'borrador', PENDIENTE: 'pendiente', APROBADO: 'aprobado', PUBLICADO: 'publicada' })[estado] || 'borrador';
+}
+
+function accionFlujoMaterial(material) {
+  const directora = ImsjApi.currentUser()?.rol === 'DIRECTORA';
+  if (material.estado === 'BORRADOR') {
+    return actionBtn('send', 'Enviar a revisión', { labeled: true, data: { accion: 'estado', estado: 'PENDIENTE', id: material.id } });
+  }
+  if (material.estado === 'PENDIENTE' && directora) {
+    return actionBtn('check-circle', 'Aprobar', { labeled: true, data: { accion: 'estado', estado: 'APROBADO', id: material.id } });
+  }
+  if (material.estado === 'PENDIENTE') return '<span class="self-label">Pendiente de Directora</span>';
+  if (material.estado === 'APROBADO') {
+    return actionBtn('eye', 'Publicar', { labeled: true, data: { accion: 'estado', estado: 'PUBLICADO', id: material.id } });
+  }
+  if (material.estado === 'PUBLICADO') {
+    return actionBtn('eye-off', 'Retirar', { labeled: true, data: { accion: 'estado', estado: 'BORRADOR', id: material.id } });
+  }
+  return '';
+}
+
 function renderMateriales() {
   const data = materialesFiltrados();
   $('#lista-materiales').innerHTML = data.map((material) => `
@@ -29,12 +51,10 @@ function renderMateriales() {
         <a class="material__link" href="${esc(material.ubicacion_recurso)}" target="_blank" rel="noopener noreferrer">Abrir recurso</a>
       </div>
       <div class="material__right">
-        ${badge(material.estado === 'PUBLICADO' ? 'publicada' : 'borrador')}
+        ${badge(estadoMaterialVista(material.estado))}
         <div class="actions">
           ${actionBtn('pencil', 'Editar', { data: { accion: 'editar', id: material.id } })}
-          ${actionBtn(material.estado === 'PUBLICADO' ? 'eye-off' : 'eye',
-                      material.estado === 'PUBLICADO' ? 'Despublicar' : 'Publicar',
-                      { data: { accion: 'toggle', id: material.id } })}
+          ${accionFlujoMaterial(material)}
           ${actionBtn('trash-2', 'Eliminar', { danger: true, data: { accion: 'eliminar', id: material.id } })}
         </div>
       </div>
@@ -60,7 +80,6 @@ function abrirFormularioMaterial(material) {
   $('#m-id').value = material ? material.id : '';
   $('#m-nombre').value = material ? material.nombre : '';
   $('#m-tipo').value = material ? material.tipo : 'PDF';
-  $('#m-estado').value = material ? material.estado : 'NO_PUBLICADO';
   $('#m-url').value = material && material.tipo === 'VIDEO' ? material.ubicacion_recurso : '';
   $('[data-file-label]', $('#modal-material')).textContent = material ? 'Conservar archivo actual' : 'Seleccionar archivo...';
   alternarCampoOrigen();
@@ -83,8 +102,6 @@ async function guardarMaterial(event) {
   if (!form.reportValidity()) return;
 
   const id = $('#m-id').value;
-  const estadoDeseado = $('#m-estado').value;
-  const actual = materiales.find((material) => String(material.id) === id);
   const data = new FormData();
   data.append('nombre', $('#m-nombre').value.trim());
   data.append('tipo', $('#m-tipo').value);
@@ -96,18 +113,10 @@ async function guardarMaterial(event) {
   if (id) data.append('_method', 'PUT');
 
   try {
-    const payload = await ImsjApi.request(id ? `/materiales/${id}` : '/materiales', {
+    await ImsjApi.request(id ? `/materiales/${id}` : '/materiales', {
       method: 'POST',
       body: data,
     });
-    const guardado = payload.material;
-    const estadoActual = actual ? actual.estado : guardado.estado;
-    if (estadoDeseado !== estadoActual) {
-      await ImsjApi.request(`/materiales/${guardado.id}/estado`, {
-        method: 'PATCH',
-        body: { estado: estadoDeseado },
-      });
-    }
     Modal.close('modal-material');
     await cargarMateriales();
   } catch (error) {
@@ -132,17 +141,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!button) return;
     const material = materiales.find((item) => item.id === Number(button.dataset.id));
     if (!material) return;
-    if (button.dataset.accion === 'editar') abrirFormularioMaterial(material);
-    if (button.dataset.accion === 'toggle') {
-      await ImsjApi.request(`/materiales/${material.id}/estado`, {
-        method: 'PATCH',
-        body: { estado: material.estado === 'PUBLICADO' ? 'NO_PUBLICADO' : 'PUBLICADO' },
-      });
-      await cargarMateriales();
+    if (button.dataset.accion === 'editar') {
+      abrirFormularioMaterial(material);
+      return;
     }
-    if (button.dataset.accion === 'eliminar' && confirm(`¿Eliminar "${material.nombre}"?`)) {
-      await ImsjApi.request(`/materiales/${material.id}`, { method: 'DELETE' });
+    try {
+      if (button.dataset.accion === 'estado') {
+        await ImsjApi.request(`/materiales/${material.id}/estado`, {
+          method: 'PATCH', body: { estado: button.dataset.estado },
+        });
+      }
+      if (button.dataset.accion === 'eliminar') {
+        if (!confirm(`¿Eliminar "${material.nombre}"?`)) return;
+        await ImsjApi.request(`/materiales/${material.id}`, { method: 'DELETE' });
+      }
       await cargarMateriales();
+    } catch (error) {
+      alert(error.message);
     }
   });
   initSearch((query) => { queryMateriales = query; renderMateriales(); });

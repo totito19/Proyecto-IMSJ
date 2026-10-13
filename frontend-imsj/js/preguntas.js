@@ -4,7 +4,29 @@ let queryPreguntas = '';
 function preguntasFiltradas() {
   if (!queryPreguntas) return preguntas;
   return preguntas.filter((item) =>
-    [item.pregunta, item.respuesta].join(' ').toLowerCase().includes(queryPreguntas));
+    [item.pregunta, item.respuesta, item.estado].join(' ').toLowerCase().includes(queryPreguntas));
+}
+
+function estadoPreguntaVista(estado) {
+  return ({ BORRADOR: 'borrador', PENDIENTE: 'pendiente', APROBADO: 'aprobado', PUBLICADO: 'publicada' })[estado] || 'borrador';
+}
+
+function accionFlujoPregunta(item) {
+  const directora = ImsjApi.currentUser()?.rol === 'DIRECTORA';
+  if (item.estado === 'BORRADOR') {
+    return actionBtn('send', 'Enviar a revisión', { labeled: true, data: { accion: 'estado', estado: 'PENDIENTE', id: item.id } });
+  }
+  if (item.estado === 'PENDIENTE' && directora) {
+    return actionBtn('check-circle', 'Aprobar', { labeled: true, data: { accion: 'estado', estado: 'APROBADO', id: item.id } });
+  }
+  if (item.estado === 'PENDIENTE') return '<span class="self-label">Pendiente de Directora</span>';
+  if (item.estado === 'APROBADO') {
+    return actionBtn('eye', 'Publicar', { labeled: true, data: { accion: 'estado', estado: 'PUBLICADO', id: item.id } });
+  }
+  if (item.estado === 'PUBLICADO') {
+    return actionBtn('eye-off', 'Retirar', { labeled: true, data: { accion: 'estado', estado: 'BORRADOR', id: item.id } });
+  }
+  return '';
 }
 
 function renderPreguntas() {
@@ -14,12 +36,10 @@ function renderPreguntas() {
       <td class="col-num">${String(index + 1).padStart(2, '0')}</td>
       <td><div class="cell-question">${esc(item.pregunta)}</div></td>
       <td><div class="cell-answer">${esc(item.respuesta)}</div></td>
-      <td>${badge(item.estado === 'PUBLICADO' ? 'visible' : 'oculta')}</td>
+      <td>${badge(estadoPreguntaVista(item.estado))}</td>
       <td><div class="actions">
         ${actionBtn('pencil', 'Editar', { data: { accion: 'editar', id: item.id } })}
-        ${actionBtn(item.estado === 'PUBLICADO' ? 'eye-off' : 'eye',
-                    item.estado === 'PUBLICADO' ? 'Ocultar' : 'Mostrar',
-                    { data: { accion: 'toggle', id: item.id } })}
+        ${accionFlujoPregunta(item)}
         ${actionBtn('trash-2', 'Eliminar', { danger: true, data: { accion: 'eliminar', id: item.id } })}
       </div></td>
     </tr>`).join('');
@@ -79,17 +99,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!button) return;
     const item = preguntas.find((pregunta) => pregunta.id === Number(button.dataset.id));
     if (!item) return;
-    if (button.dataset.accion === 'editar') abrirFormularioPregunta(item);
-    if (button.dataset.accion === 'toggle') {
-      await ImsjApi.request(`/preguntas/${item.id}/estado`, {
-        method: 'PATCH',
-        body: { estado: item.estado === 'PUBLICADO' ? 'NO_PUBLICADO' : 'PUBLICADO' },
-      });
-      await cargarPreguntas();
+    if (button.dataset.accion === 'editar') {
+      abrirFormularioPregunta(item);
+      return;
     }
-    if (button.dataset.accion === 'eliminar' && confirm('¿Eliminar esta pregunta frecuente?')) {
-      await ImsjApi.request(`/preguntas/${item.id}`, { method: 'DELETE' });
+    try {
+      if (button.dataset.accion === 'estado') {
+        await ImsjApi.request(`/preguntas/${item.id}/estado`, {
+          method: 'PATCH', body: { estado: button.dataset.estado },
+        });
+      }
+      if (button.dataset.accion === 'eliminar') {
+        if (!confirm('¿Eliminar esta pregunta frecuente?')) return;
+        await ImsjApi.request(`/preguntas/${item.id}`, { method: 'DELETE' });
+      }
       await cargarPreguntas();
+    } catch (error) {
+      alert(error.message);
     }
   });
   initSearch((query) => { queryPreguntas = query; renderPreguntas(); });

@@ -118,6 +118,9 @@ fid = call('POST', '/api/preguntas', faq, staff, 201, ['pregunta'])['pregunta'][
 call('GET', '/api/preguntas', token=staff, fields=['preguntas'])
 check(not call('GET', '/api/portal/preguntas')['preguntas'], 'FAQ oculta antes de publicación')
 call('PUT', f'/api/preguntas/{fid}', {**faq, 'respuesta': 'Cédula vigente.'}, staff, fields=['pregunta'])
+call('PATCH', f'/api/preguntas/{fid}/estado', {'estado': 'PENDIENTE'}, staff, fields=['pregunta'])
+call('PATCH', f'/api/preguntas/{fid}/estado', {'estado': 'APROBADO'}, staff, expect=403)
+call('PATCH', f'/api/preguntas/{fid}/estado', {'estado': 'APROBADO'}, director, fields=['pregunta'])
 call('PATCH', f'/api/preguntas/{fid}/estado', {'estado': 'PUBLICADO'}, staff, fields=['pregunta'])
 check(len(call('GET', '/api/portal/preguntas')['preguntas']) == 1, 'FAQ publicada visible')
 
@@ -155,6 +158,9 @@ video = {'nombre': 'Educación vial', 'tipo': 'VIDEO', 'ubicacion_recurso': 'htt
 mid = call('POST', '/api/materiales', video, staff, 201, ['material'])['material']['id']
 call('GET', '/api/materiales', token=staff, fields=['materiales'])
 call('PUT', f'/api/materiales/{mid}', {**video, 'nombre': 'Video actualizado'}, staff, fields=['material'])
+call('PATCH', f'/api/materiales/{mid}/estado', {'estado': 'PENDIENTE'}, staff, fields=['material'])
+call('PATCH', f'/api/materiales/{mid}/estado', {'estado': 'APROBADO'}, staff, expect=403)
+call('PATCH', f'/api/materiales/{mid}/estado', {'estado': 'APROBADO'}, director, fields=['material'])
 call('PATCH', f'/api/materiales/{mid}/estado', {'estado': 'PUBLICADO'}, staff, fields=['material'])
 check(len(call('GET', '/api/portal/materiales')['materiales']) == 1, 'Material publicado visible')
 call('POST', '/api/materiales', {'nombre': 'Sin archivo', 'tipo': 'PDF'}, staff, 422)

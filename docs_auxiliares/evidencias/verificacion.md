@@ -2,7 +2,7 @@
 
 ## Actualización de demo — 13/10/2026
 
-CC-02, CC-03 y CC-04 se comprobaron en un proyecto Docker aislado y descartable con base/volúmenes propios. `tests/demo_smoke.mjs` completó 25 verificaciones: salud y autenticación; rol Directora; envío, listado y lectura de consultas; alta y descarga del gráfico de una pregunta sin exponer la respuesta; borrador, envío a revisión, rechazo de aprobación por personal, aprobación por Directora, publicación y visibilidad pública. También se revisaron visualmente el formulario del portal, noticias, consultas y banco de preguntas, sin errores de consola observados. La instancia normal se reconstruyó preservando sus volúmenes. Estos resultados acreditan la implementación de demo, no aceptación del cliente ni revisión interna.
+CC-02, CC-03 y CC-04 se comprobaron en un proyecto Docker aislado y descartable con base/volúmenes propios. `tests/demo_smoke.mjs` completó 41 verificaciones: salud y autenticación; rol Directora; envío, listado y lectura de consultas; alta y descarga del gráfico de una pregunta sin exponer la respuesta; y el flujo completo de borrador, revisión, aprobación exclusiva por Directora, publicación y visibilidad pública para noticias, materiales y preguntas frecuentes. También se revisaron visualmente el formulario del portal y el panel, sin errores de consola observados. La instancia normal se reconstruyó preservando sus volúmenes. Estos resultados acreditan la implementación de demo, no aceptación del cliente ni revisión interna.
 
 Las secciones fechadas 05/10/2026 que siguen documentan la línea base de 42 rutas anterior a las tres rutas de consultas; se conservan como antecedente.
 

@@ -83,14 +83,14 @@ Este servidor es para desarrollo. Servir Apache con `DocumentRoot` en `public/` 
 
 No borrar volúmenes ni importar un esquema histórico que elimine tablas. Respaldar base y `storage/app/public`, conservar `.env`, comprobar nombres de volumen y ensayar la transición sobre una copia. `database.sql` crea tablas que falten y `scripts/migrar.php` aplica únicamente los cambios incrementales requeridos por esta demo. La migración no borra registros; una actualización de producción igualmente debe ensayarse sobre una copia y contar con respaldo.
 
-Los usuarios, hashes bcrypt, identificadores, relaciones, historial y rutas relativas de archivos se conservan. La tabla técnica de sesiones anterior puede quedar en esa base como antecedente, sin consultas desde el nuevo backend. Las sesiones anteriores a la reescritura dejan de ser válidas: volver a iniciar sesión. La migración automática actualiza solo el esquema y convierte el estado histórico `NO_PUBLICADO` de noticias a `BORRADOR`.
+Los usuarios, hashes bcrypt, identificadores, relaciones, historial y rutas relativas de archivos se conservan. La tabla técnica de sesiones anterior puede quedar en esa base como antecedente, sin consultas desde el nuevo backend. Las sesiones anteriores a la reescritura dejan de ser válidas: volver a iniciar sesión. La migración automática actualiza solo el esquema y convierte el estado histórico `NO_PUBLICADO` de noticias, materiales y preguntas frecuentes a `BORRADOR`.
 
 ## Contrato y seguridad implementada
 
 - Bearer opaco `id|secreto`, secreto aleatorio de 32 bytes, hash SHA-256 en MySQL, ocho horas de vigencia. Iniciar sesión revoca sesiones previas; cerrar sesión y desactivar personal revocan tokens. Cada petición comprueba cuenta activa y rol almacenados en la base.
 - Respuestas conservadas: `usuario`, `noticias`, `noticia`, `materiales`, `material`, `preguntas`, `pregunta`, `franjas`, `franja`, `reservas`, `reserva`, `acciones`, `usuarios`; consultas agrega `consultas` y `consulta`. Sin envoltorio `datos`. Validación: `message` y `errors`. Eliminaciones/logout: 204 sin cuerpo.
 - Cinco intentos por minuto por dirección IP y operación para login/registro, con bloqueo de archivo compartido. Las instancias deben compartir `CACHE_ROOT`; no se interpretan cabeceras de proxy como identidad del cliente.
-- Noticias: portada y hasta cinco imágenes JPG/PNG/WEBP, 2048 KB cada una; hasta cinco enlaces. El personal prepara y envía a revisión, solo Directora aprueba y la publicación es una acción posterior. Materiales: PDF 10240 KB, imagen 5120 KB o video por URL HTTP/HTTPS. Las preguntas del simulador admiten una imagen opcional JPG/PNG/WEBP de hasta 2048 KB. MIME y contenido se verifican; nombres aleatorios, fuera de `public/`.
+- Noticias: portada y hasta cinco imágenes JPG/PNG/WEBP, 2048 KB cada una; hasta cinco enlaces. Noticias, materiales y preguntas frecuentes usan el mismo flujo: el personal prepara y envía a revisión, solo Directora aprueba y la publicación es una acción posterior. Materiales: PDF 10240 KB, imagen 5120 KB o video por URL HTTP/HTTPS. Las preguntas del simulador admiten una imagen opcional JPG/PNG/WEBP de hasta 2048 KB. MIME y contenido se verifican; nombres aleatorios, fuera de `public/`.
 - Edición acepta PUT JSON/multipart y POST multipart con `_method=PUT`, como envía el panel actual. El límite global de formulario es 24 MB; con un archivo por material y hasta seis imágenes de noticia alcanza para los límites del contrato.
 - Reservas: transacción con bloqueo de franja, fecha válida, propiedad, duplicación y capacidad. Auditoría administrativa se confirma en la misma transacción que los datos; un fallo revierte la operación y limpia archivos nuevos.
 
@@ -100,4 +100,8 @@ La demo incorpora consultas, Directora y gráficos del test. No incorpora catego
 
 `php scripts/verificar.php` comprueba sintaxis. La suite `tests/integracion.py` requiere Python 3 estándar y cliente MySQL únicamente para pruebas. Necesita dos procesos PHP contra **la misma base vacía** cuyo nombre empiece por `imsj_test_`; se niega a trabajar sobre una base con tablas. Definir `DB_*`, `IMSJ_TEST_MYSQL`, `IMSJ_TEST_URL` y `IMSJ_TEST_URL_2`; iniciar los dos servidores con el entorno de prueba y ejecutar `python tests/integracion.py`. No apuntarla a datos del equipo. El resultado conserva datos de prueba para inspección.
 
+<<<<<<< HEAD
 La [evidencia](../docs_auxiliares/evidencias/verificacion.md) registra resultados HTTP/MySQL y límites. Para la demo del 13/10/2026 se comprobó un arranque Docker aislado, 25 verificaciones HTTP de los tres cambios y un recorrido visual del portal y del panel; la revisión del equipo y la aceptación institucional siguen pendientes.
+=======
+La [evidencia](../docs/verificacion.md) registra resultados HTTP/MySQL y límites. Para la demo del 13/10/2026 se comprobó un arranque Docker aislado, 41 verificaciones HTTP de los tres cambios y un recorrido visual del portal y del panel; la revisión del equipo y la aceptación institucional siguen pendientes.
+>>>>>>> 05c1012151497996a5829dc8edf6c69f40868916
