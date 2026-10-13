@@ -25,7 +25,7 @@ backend/
 
 `HTTP → public/index.php → controlador → servicio → repositorio → PDO/MySQL → modelo → Response`. Cada controlador exige el usuario/rol correspondiente. Franjas y agenda se agrupan en Reserva; historial en Usuario. Los comentarios del código explican validación, transacciones, tokens y limpieza de archivos.
 
-El [flujo de cada endpoint](../docs/flujo_endpoints_backend.md), su PDF y el [contrato de API](../docs/api.md) completan esta guía.
+El [contrato de API](../docs_auxiliares/backend/api.md) complementa esta guía. Las referencias y los informes técnicos se consultan en [documentación auxiliar](../docs_auxiliares/README.md).
 
 ## Instalación nueva con Docker
 
@@ -100,4 +100,4 @@ La demo incorpora consultas, Directora y gráficos del test. No incorpora catego
 
 `php scripts/verificar.php` comprueba sintaxis. La suite `tests/integracion.py` requiere Python 3 estándar y cliente MySQL únicamente para pruebas. Necesita dos procesos PHP contra **la misma base vacía** cuyo nombre empiece por `imsj_test_`; se niega a trabajar sobre una base con tablas. Definir `DB_*`, `IMSJ_TEST_MYSQL`, `IMSJ_TEST_URL` y `IMSJ_TEST_URL_2`; iniciar los dos servidores con el entorno de prueba y ejecutar `python tests/integracion.py`. No apuntarla a datos del equipo. El resultado conserva datos de prueba para inspección.
 
-La [evidencia](../docs/verificacion.md) registra resultados HTTP/MySQL y límites. Para la demo del 13/10/2026 se comprobó un arranque Docker aislado, 25 verificaciones HTTP de los tres cambios y un recorrido visual del portal y del panel; la revisión del equipo y la aceptación institucional siguen pendientes.
+La [evidencia](../docs_auxiliares/evidencias/verificacion.md) registra resultados HTTP/MySQL y límites. Para la demo del 13/10/2026 se comprobó un arranque Docker aislado, 25 verificaciones HTTP de los tres cambios y un recorrido visual del portal y del panel; la revisión del equipo y la aceptación institucional siguen pendientes.

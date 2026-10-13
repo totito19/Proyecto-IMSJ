@@ -16,7 +16,7 @@
 | No hay limitador en api-simple | Se conserva el límite IMSJ de cinco intentos/minuto, con archivo y `flock`. |
 | SQL de demostración | `database.sql` sin DROP ni datos de ejemplo; primera cuenta mediante CLI explícita. |
 
-**IA - Observación:** compartir el patrón del ejemplo no significa copiar su contrato o certificar su seguridad. Autenticación revocable, reservas, archivos y auditoría responden al comportamiento IMSJ existente. El recorrido de cada endpoint se documenta en [flujos](flujo_endpoints_backend.md).
+**IA - Observación:** compartir el patrón del ejemplo no significa copiar su contrato o certificar su seguridad. Autenticación revocable, reservas, archivos y auditoría responden al comportamiento IMSJ existente. El recorrido de cada endpoint se documenta en flujos (documento auxiliar retirado del árbol actual).
 
 La estructura solicitada incluye `public/`, tres clases `core/`, siete controladores, siete servicios, siete repositorios, `models/`, SQL raíz, Composer y Docker. Las franjas/agenda se agrupan en Reserva y el historial en Usuario para mantener esos siete módulos. No se incorporan las funciones pendientes de CC-01 a CC-04.
 

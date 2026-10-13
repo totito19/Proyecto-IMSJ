@@ -1,4 +1,4 @@
-> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](migracion_backend_vanilla.md), [flujos](flujo_endpoints_backend.md) y [pruebas ejecutadas y límites](verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
+> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas y límites](../docs_auxiliares/evidencias/verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
 
 ---
 
@@ -142,9 +142,9 @@ La administración de personal y el registro ciudadano existen en código, pero 
 | Campo | Estado |
 |---|---|
 | Puntos por US y total por épica | No estimados por el equipo en este documento. Los puntos por tarea del planning no se reparten retrospectivamente entre US. |
-| Responsable y revisor por US | Roles generales aclarados en [aclaraciones y pendientes](aclaraciones_y_pendientes.md); tareas concretas por US aún no registradas. |
+| Responsable y revisor por US | Roles generales aclarados en [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md); tareas concretas por US aún no registradas. |
 | Sprint seleccionado / capacidad | No registrados como compromiso; ver reconstrucción de [planning](sprint_planning.md). |
-| Evidencia de pruebas y aceptación | No registrada; completar [verificación](verificacion.md). |
+| Evidencia de pruebas y aceptación | No registrada; completar [verificación](../docs_auxiliares/evidencias/verificacion.md). |
 | Aprobación de criterios propuestos | Revisión/aprobación documental interna por Juan Robaina; aceptación de entregas y cambios por el Inspector de Tránsito, registrada en actas. No se acredita ninguna aprobación ya realizada. |
 
 Fuentes: [historias del curso](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/03_historias_de_usuario.md) y [criterios de historias](https://github.com/portalutu/ing_software-3ro-bt/blob/ae1c0f118a959c5bba7fd6c8badf60de1b7ea23a/Teoricos/user-stories.md).
@@ -153,7 +153,7 @@ Fuentes: [historias del curso](https://github.com/portalutu/proyecto-3ro-bt-2026
 
 **Decisión del grupo, 02/10/2026:** sustituir Laravel por PHP sin framework basado en `api-completa`, conservando contrato y dominio de IMSJ. El código todavía no migró. Se registra como trabajo técnico transversal; US1–US34 mantienen sus identificadores y estados, sin inventar una nueva historia funcional o prioridad.
 
-**IA — Desglose para revisión del equipo:** las tareas TM-01–TM-07 y sus dependencias se describen en la [guía de migración](migracion_backend_vanilla.md). No se asignan puntos, fechas, sprint ni responsables concretos por deducirlos del rol general.
+**IA — Desglose para revisión del equipo:** las tareas TM-01–TM-07 y sus dependencias se describen en la [guía de migración](../docs_auxiliares/backend/migracion_backend_vanilla.md). No se asignan puntos, fechas, sprint ni responsables concretos por deducirlos del rol general.
 
 | Tareas técnicas | Historias / necesidad afectada | Evidencia pendiente |
 |---|---|---|
@@ -163,4 +163,4 @@ Fuentes: [historias del curso](https://github.com/portalutu/proyecto-3ro-bt-2026
 | TM-05: agenda académica | US10–US20, RNF8/RNF9. | Cupos, propiedad y concurrencia MySQL. |
 | TM-06/TM-07: entorno y validación | Infraestructura/calidad y todos los módulos migrados. | Reconstrucción/restauración, pruebas adaptadas y frontends operativos. |
 
-La selección real y asignación se hará en reuniones y actas del equipo. CC-01–CC-04 siguen pendientes para entrega real, sin prioridad distinta entre ellos. El registro académico de CC-05 y la revisión de Juan Robaina aún se completarán; ver [control de cambios](control_cambios.md) y [V-CC05](verificacion.md).
+La selección real y asignación se hará en reuniones y actas del equipo. CC-01–CC-04 siguen pendientes para entrega real, sin prioridad distinta entre ellos. El registro académico de CC-05 y la revisión de Juan Robaina aún se completarán; ver [control de cambios](control_cambios.md) y [V-CC05](../docs_auxiliares/evidencias/verificacion.md).

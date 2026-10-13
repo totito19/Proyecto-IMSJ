@@ -1,4 +1,4 @@
-> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](migracion_backend_vanilla.md), [flujos](flujo_endpoints_backend.md) y [pruebas ejecutadas y límites](verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
+> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas y límites](../docs_auxiliares/evidencias/verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
 
 ---
 
@@ -97,11 +97,11 @@ El PDF anterior contiene una matriz probabilidad/impacto que no aparece en el Ma
 
 No se debe asumir sanitización/codificación de salida completa por usar Laravel: los frontends construyen contenido con `innerHTML` en varios módulos. Se requiere revisión contextual y evidencia SAST/DAST; no se declara aquí una vulnerabilidad explotada ni una corrección de código.
 
-Los archivos y resultados pendientes están en [verificación](verificacion.md). Los términos y la política conservan datos por completar; los comentarios de PDF no sustituyen decisiones institucionales ni revisión jurídica.
+Los archivos y resultados pendientes están en [verificación](../docs_auxiliares/evidencias/verificacion.md). Los términos y la política conservan datos por completar; los comentarios de PDF no sustituyen decisiones institucionales ni revisión jurídica.
 
 ## 6. Transición de controles a PHP sin Laravel — CC-05
 
-**Decisión del grupo, 02/10/2026:** retirar Laravel y utilizar las capas/PDO de la API completa. La sección 5 describe el código anterior todavía presente; no se acredita una auditoría de la versión PHP. La [migración](migracion_backend_vanilla.md) y el [análisis de referencia](referencia_api_completa.md) detallan la sustitución.
+**Decisión del grupo, 02/10/2026:** retirar Laravel y utilizar las capas/PDO de la API completa. La sección 5 describe el código anterior todavía presente; no se acredita una auditoría de la versión PHP. La [migración](../docs_auxiliares/backend/migracion_backend_vanilla.md) y el [análisis de referencia](../docs_auxiliares/backend/referencia_api_completa.md) detallan la sustitución.
 
 | Control que debe conservarse | Responsabilidad explícita en PHP | Evidencia pendiente |
 |---|---|---|
@@ -117,4 +117,4 @@ Los archivos y resultados pendientes están en [verificación](verificacion.md).
 
 Si el grupo propone cambiar Bearer por cookie, debe aprobar y documentar conjuntamente transporte, CORS y protección de las operaciones frente a CSRF. Esa alternativa permanece sin adopción; no se modifica el frontend en esta revisión.
 
-El hashing y las consultas preparadas siguen los mecanismos de [verificación de contraseñas PHP](https://www.php.net/manual/en/function.password-verify.php) y [PDO](https://www.php.net/manual/en/pdo.prepared-statements.php). No se promete seguridad completa por usar esas funciones. La valoración de la matriz histórica, HTTPS, SAST/DAST y restauración siguen pendientes. Ver V-CC05 en [verificación](verificacion.md).
+El hashing y las consultas preparadas siguen los mecanismos de [verificación de contraseñas PHP](https://www.php.net/manual/en/function.password-verify.php) y [PDO](https://www.php.net/manual/en/pdo.prepared-statements.php). No se promete seguridad completa por usar esas funciones. La valoración de la matriz histórica, HTTPS, SAST/DAST y restauración siguen pendientes. Ver V-CC05 en [verificación](../docs_auxiliares/evidencias/verificacion.md).

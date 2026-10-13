@@ -1,4 +1,4 @@
-> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](migracion_backend_vanilla.md), [flujos](flujo_endpoints_backend.md) y [pruebas ejecutadas y límites](verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
+> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas y límites](../docs_auxiliares/evidencias/verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
 
 ---
 
@@ -252,7 +252,7 @@ que aumenten el costo o retrasen la entrega.
 
 Las solicitudes CC-01–CC-04 se consultan en [control de cambios](control_cambios.md). El grupo las confirmó como pendientes para la entrega real, sin fecha fijada ni prioridad distinta entre ellas; no se presentan como alcance inicial ni como funciones terminadas. La agenda es el único módulo señalado como exclusivamente académico hasta ahora.
 
-**Aclaración del grupo — 02/10/2026:** la coordinación y el seguimiento se realizan en reuniones. Juan Robaina revisa y aprueba la documentación internamente; la aceptación del cliente corresponde al Inspector de Tránsito y se registra en las actas a cargo del equipo. La Intendencia administrará y mantendrá el sistema por ahora. Roles y campos pendientes: [aclaraciones y pendientes](aclaraciones_y_pendientes.md).
+**Aclaración del grupo — 02/10/2026:** la coordinación y el seguimiento se realizan en reuniones. Juan Robaina revisa y aprueba la documentación internamente; la aceptación del cliente corresponde al Inspector de Tránsito y se registra en las actas a cargo del equipo. La Intendencia administrará y mantendrá el sistema por ahora. Roles y campos pendientes: [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
 
 ---
 
@@ -300,6 +300,6 @@ Las necesidades posteriores se muestran separadas y como borradores trazados a s
 
 ## 14. Actualización tecnológica — CC-05, 02/10/2026
 
-Por decisión explícita del grupo, el destino del backend es PHP sin Laravel, por capas y con PDO/MySQL a partir de `api-completa` de RodrigoCazard. La [migración](migracion_backend_vanilla.md), la [comparación de referencia](referencia_api_completa.md) y el [control de cambios](control_cambios.md) describen esta actualización posterior al relevamiento; no se la atribuye a la entrevista inicial.
+Por decisión explícita del grupo, el destino del backend es PHP sin Laravel, por capas y con PDO/MySQL a partir de `api-completa` de RodrigoCazard. La [migración](../docs_auxiliares/backend/migracion_backend_vanilla.md), la [comparación de referencia](../docs_auxiliares/backend/referencia_api_completa.md) y el [control de cambios](control_cambios.md) describen esta actualización posterior al relevamiento; no se la atribuye a la entrevista inicial.
 
 La implementación presente todavía utiliza Laravel. Se conserva el dominio, el contrato de los frontends y los destinos acordados: agenda académica y CC-01–CC-04 pendientes para entrega real. La letra académica indica Laravel, por lo que el registro de aceptación de la diferencia con docentes sigue pendiente. Las propuestas de cookie JWT, formatos/rutas del ejemplo o cambios de datos no quedan aprobadas automáticamente.

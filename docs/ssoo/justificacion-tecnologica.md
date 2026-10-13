@@ -12,6 +12,6 @@
 | Composer | Manifiesto de PHP/extensiones y comando de sintaxis. | No hay paquetes externos; no se requiere vendor para responder. |
 | HTML/CSS/JavaScript | Frontends actuales, contrato conservado. | Recorrido visual completo no probado en esta intervención. |
 
-La referencia simple facilita seguir HTTP → entrada → controlador → servicio → repositorio → SQL → respuesta. No se incorporan Router/DTO/middleware separados ni dominio de productos. Sesiones opacas revocables conservan el comportamiento IMSJ sin dependencia JWT. [Comparación](../referencia_api_simple.md), [arquitectura](../arquitectura_propuesta.md).
+La referencia simple facilita seguir HTTP → entrada → controlador → servicio → repositorio → SQL → respuesta. No se incorporan Router/DTO/middleware separados ni dominio de productos. Sesiones opacas revocables conservan el comportamiento IMSJ sin dependencia JWT. [Comparación](../../docs_auxiliares/backend/referencia_api_simple.md), [arquitectura](../arquitectura_propuesta.md).
 
 Agenda y reservas son académicas; CC-01 a CC-04 siguen pendientes para entrega real. La Intendencia administrará y mantendrá por ahora; contacto y configuración institucional se completarán luego. No se selecciona proveedor, hardware o política de respaldo por deducción. Preparado con apoyo externo de IA, revisión del grupo pendiente.

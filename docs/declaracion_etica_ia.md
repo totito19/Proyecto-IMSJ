@@ -1,4 +1,4 @@
-> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](migracion_backend_vanilla.md), [flujos](flujo_endpoints_backend.md) y [pruebas ejecutadas y límites](verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
+> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas y límites](../docs_auxiliares/evidencias/verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
 
 ---
 
@@ -187,7 +187,7 @@ No se identifica IA por tono, prolijidad o vocabulario. No se eliminan aportes p
 | Criterios sugeridos e historias derivadas | Juan Robaina para revisión documental interna; aceptación del cliente por el Inspector de Tránsito | Pendiente | No registrada |
 | Comentarios de PDF y datos institucionales | Juan Robaina para revisión documental interna; datos/validación institucional a confirmar con la Intendencia | Pendiente; contacto se completará después | No registrada |
 
-Las aclaraciones aportadas por el grupo, sus roles, el estado pendiente de CC-01–CC-04 y los campos por completar están en [aclaraciones y pendientes](aclaraciones_y_pendientes.md). Las hojas añadidas a los PDF conservan la identidad visual de los originales, incluyendo el logo RC5 de esta declaración. La revisión interna de Juan Robaina no sustituye la firma individual ni la aceptación del Inspector de Tránsito.
+Las aclaraciones aportadas por el grupo, sus roles, el estado pendiente de CC-01–CC-04 y los campos por completar están en [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md). Las hojas añadidas a los PDF conservan la identidad visual de los originales, incluyendo el logo RC5 de esta declaración. La revisión interna de Juan Robaina no sustituye la firma individual ni la aceptación del Inspector de Tránsito.
 
 Las firmas de la sección 10 pertenecen a la declaración histórica y no se rellenan en esta intervención. Las pautas del [curso sobre ética de IA](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/08_etica_uso_de_ia.md) exigen autoría, elaboración y comprensión del equipo; esta revisión se entrega como asistencia identificada, para su trabajo posterior.
 

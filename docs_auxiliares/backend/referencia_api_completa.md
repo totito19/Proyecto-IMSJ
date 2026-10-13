@@ -1,4 +1,4 @@
-> **Antecedente del 02/10/2026:** el grupo cambió la referencia de implementación a api-simple el 05/10/2026. La [comparación vigente](referencia_api_simple.md) y los [flujos implementados](flujo_endpoints_backend.md) prevalecen. El contenido siguiente documenta el estudio anterior, no la estructura actual.
+> **Antecedente del 02/10/2026:** el grupo cambió la referencia de implementación a api-simple el 05/10/2026. La [comparación vigente](referencia_api_simple.md) y los flujos implementados (documento auxiliar retirado del árbol actual) prevalecen. El contenido siguiente documenta el estudio anterior, no la estructura actual.
 
 ---
 

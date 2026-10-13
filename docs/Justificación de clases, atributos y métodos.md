@@ -14,7 +14,7 @@
 | Reserva | ReservaController, ReservaService, ReservaRepository | Franja y Reserva; `franjas_disponibilidad`, `reservas`. |
 | Usuario | UsuarioController, UsuarioService, UsuarioRepository | Usuario; `usuarios` e `historial_acciones`. |
 
-Los controladores validan y exigen acceso, servicios deciden reglas/transacciones, repositorios usan PDO preparado. Modelos contienen datos y `toArray()` para conservar claves JSON; no acceden por su cuenta al navegador. [Método de controlador por endpoint](api.md) y [recorrido individual](flujo_endpoints_backend.md).
+Los controladores validan y exigen acceso, servicios deciden reglas/transacciones, repositorios usan PDO preparado. Modelos contienen datos y `toArray()` para conservar claves JSON; no acceden por su cuenta al navegador. [Método de controlador por endpoint](../docs_auxiliares/backend/api.md) y recorrido individual (documento auxiliar retirado del árbol actual).
 
 ## Atributos del dominio
 

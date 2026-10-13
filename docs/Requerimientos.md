@@ -1,11 +1,11 @@
-> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](migracion_backend_vanilla.md), [flujos](flujo_endpoints_backend.md) y [pruebas ejecutadas y límites](verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
+> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas y límites](../docs_auxiliares/evidencias/verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
 
 ---
 
 # Documento de Requisitos
 ## Sistema de Gestión de Educación Vial - IMSJ
 
-> **Revisión asistida por IA — 02/10/2026:** se conservan RF1–RF18 y RNF1–RNF10 porque son los códigos usados por el backlog y el modelo original. Los añadidos RF19–RF24 identifican necesidades ya presentes en entrevista/control de cambios; su numeración es documental, no una aprobación de alcance. Ver [revisión](revision_documental.md).
+> **Revisión asistida por IA — 02/10/2026:** se conservan RF1–RF18 y RNF1–RNF10 porque son los códigos usados por el backlog y el modelo original. Los añadidos RF19–RF24 identifican necesidades ya presentes en entrevista/control de cambios; su numeración es documental, no una aprobación de alcance. Ver [revisión](../docs_auxiliares/revision/revision_documental.md).
 ---
 
 **Descripción General:**
@@ -55,7 +55,7 @@ Sistema web para centralizar información de la sección Tránsito de la Intende
 
 ## Origen y destino de los requisitos
 
-**Aclaración del grupo — 02/10/2026:** las agendas son el único módulo exclusivamente académico señalado hasta ahora. CC-01–CC-04 corresponden a entrega real y están pendientes, sin fecha fijada ni prioridad distinta entre ellas. La autoridad del Inspector de Tránsito y los datos por completar están en [aclaraciones y pendientes](aclaraciones_y_pendientes.md).
+**Aclaración del grupo — 02/10/2026:** las agendas son el único módulo exclusivamente académico señalado hasta ahora. CC-01–CC-04 corresponden a entrega real y están pendientes, sin fecha fijada ni prioridad distinta entre ellas. La autoridad del Inspector de Tránsito y los datos por completar están en [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
 
 | Grupo | Fuente y destino |
 |---|---|
@@ -89,4 +89,4 @@ La [matriz del backlog](backlog.md) vincula requisitos con criterios sugeridos y
 
 **Grupo, 02/10/2026:** sustituir Laravel por PHP sin framework de aplicación, por capas y con PDO/MySQL, basado en `api-completa`. Cambia la implementación de la API, no las necesidades de RF1–RF24/RNF1–RNF10 ni el destino real/académico ya registrado. No se renumeran requisitos ni se añade una función del dominio de productos del ejemplo.
 
-La [guía de migración](migracion_backend_vanilla.md) conserva el contrato de los frontends y los controles de RNF1–RNF4/RNF7–RNF10 como condiciones de transición. El código todavía usa Laravel; CC-05 y CC-01–CC-04 no se declaran implementados. La letra académica indica PHP/Laravel; la aceptación de la sustitución por docentes se completará en el registro del equipo. Ver [control de cambios](control_cambios.md) y [verificación](verificacion.md).
+La [guía de migración](../docs_auxiliares/backend/migracion_backend_vanilla.md) conserva el contrato de los frontends y los controles de RNF1–RNF4/RNF7–RNF10 como condiciones de transición. El código todavía usa Laravel; CC-05 y CC-01–CC-04 no se declaran implementados. La letra académica indica PHP/Laravel; la aceptación de la sustitución por docentes se completará en el registro del equipo. Ver [control de cambios](control_cambios.md) y [verificación](../docs_auxiliares/evidencias/verificacion.md).

@@ -6,7 +6,7 @@
 
 Nginx para frontends, Apache/PHP para app, MySQL db y volúmenes db_data/app_uploads. Las diez tablas de dominio conservan nombres/relaciones; database.sql no tiene DROP ni cuentas de demo y añade auth_tokens. Credenciales bcrypt y rutas de adjuntos existentes siguen siendo compatibles. No cambian el JS o las 42 rutas de la API.
 
-La nueva autenticación no consulta la tabla técnica de tokens anterior. Volver a iniciar sesión después del cambio; no se convierte una sesión heredada ni se crea SECRET_KEY/JWT. La tabla técnica previa puede quedar sin uso en una base existente hasta que el equipo decida su tratamiento. [Transición general](../migracion_backend_vanilla.md).
+La nueva autenticación no consulta la tabla técnica de tokens anterior. Volver a iniciar sesión después del cambio; no se convierte una sesión heredada ni se crea SECRET_KEY/JWT. La tabla técnica previa puede quedar sin uso en una base existente hasta que el equipo decida su tratamiento. [Transición general](migracion_backend_vanilla.md).
 
 ## Preparar respaldo sobre una instalación revisada
 
@@ -56,6 +56,6 @@ Importar una copia no elimina archivos que sobren de un destino anterior; usar u
 
 ## Estado de ejecución y pendientes
 
-En esta intervención se preservaron archivos locales previos al reemplazar el backend y se creó una copia de resguardo del código anterior fuera del proyecto. No se usó una base institucional ni se borraron volúmenes. Las pruebas HTTP usaron PHP/MySQL portable y datos sintéticos. Docker, Apache, actualización real y restauración de respaldo requieren ejecución del equipo; [verificación](../verificacion.md).
+En esta intervención se preservaron archivos locales previos al reemplazar el backend y se creó una copia de resguardo del código anterior fuera del proyecto. No se usó una base institucional ni se borraron volúmenes. Las pruebas HTTP usaron PHP/MySQL portable y datos sintéticos. Docker, Apache, actualización real y restauración de respaldo requieren ejecución del equipo; [verificación](../evidencias/verificacion.md).
 
 Alojamiento, dominio/HTTPS, referente operativo, frecuencia y conservación de respaldos se completarán cuando la Intendencia/equipo los definan. Esta guía no incorpora servicios externos ni cambia la administración posterior confirmada.

@@ -1,4 +1,4 @@
-> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](migracion_backend_vanilla.md), [flujos](flujo_endpoints_backend.md) y [pruebas ejecutadas y límites](verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
+> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas y límites](../docs_auxiliares/evidencias/verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
 
 ---
 
@@ -85,7 +85,7 @@ El objetivo y los criterios anteriores conservan el alcance inicial de la letra.
 | Presupuesto | No registrado; no se traslada el importe del ejemplo TamboTrace. |
 | Aprobación del charter | No se localizó firma o evidencia de aprobación. |
 
-**Aclaraciones del grupo — 02/10/2026:** la coordinación y el seguimiento se realizan en reuniones; las actas quedan a cargo del equipo. Las asignaciones y la autoridad anteriores no certifican aprobaciones históricas. Los datos por completar están en [aclaraciones y pendientes](aclaraciones_y_pendientes.md).
+**Aclaraciones del grupo — 02/10/2026:** la coordinación y el seguimiento se realizan en reuniones; las actas quedan a cargo del equipo. Las asignaciones y la autoridad anteriores no certifican aprobaciones históricas. Los datos por completar están en [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
 
 **IA — Sugerencia:** reemplazar criterios generales como «documentación completa» o «sin errores» por verificaciones acordadas y evidencia. Los criterios propuestos en [backlog](backlog.md) permiten discutirlo; aún requieren validación humana.
 
@@ -93,6 +93,6 @@ Fuentes de estructura: [charter del curso](https://github.com/portalutu/proyecto
 
 ## Adenda tecnológica del grupo — CC-05, 02/10/2026
 
-Se decide reemplazar Laravel por un backend PHP sin framework, basado en la API completa indicada por el grupo, organizado por capas y conectado a MySQL con PDO. El [control de cambios](control_cambios.md) y la [guía de migración](migracion_backend_vanilla.md) registran alcance, compatibilidad, datos y cierre. La decisión no modifica el alcance funcional, los roles, la administración posterior por la Intendencia ni el estado pendiente de CC-01–CC-04; agenda solo académica.
+Se decide reemplazar Laravel por un backend PHP sin framework, basado en la API completa indicada por el grupo, organizado por capas y conectado a MySQL con PDO. El [control de cambios](control_cambios.md) y la [guía de migración](../docs_auxiliares/backend/migracion_backend_vanilla.md) registran alcance, compatibilidad, datos y cierre. La decisión no modifica el alcance funcional, los roles, la administración posterior por la Intendencia ni el estado pendiente de CC-01–CC-04; agenda solo académica.
 
 La documentación del destino está preparada y el código permanece Laravel hasta la migración. Falta revisión documental de Juan Robaina, implementación/pruebas y registro con docentes de la diferencia respecto de la consigna. No se fija fecha o presupuesto ni se acredita aceptación del Inspector; las actas quedan a cargo del equipo.

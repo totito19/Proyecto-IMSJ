@@ -32,8 +32,8 @@ php -d upload_max_filesize=10M -d post_max_size=24M -S 127.0.0.1:8000 -t public 
 php scripts/verificar.php
 ```
 
-El servidor integrado es de desarrollo. El entorno utilizado para las pruebas reales fue local portable, con dos procesos contra una base MySQL aislada; [evidencia](../verificacion.md).
+El servidor integrado es de desarrollo. El entorno utilizado para las pruebas reales fue local portable, con dos procesos contra una base MySQL aislada; [evidencia](../../docs_auxiliares/evidencias/verificacion.md).
 
 ## Instalación con datos existentes
 
-Este procedimiento nuevo no borra/restaura una instalación anterior. Seguir [transición y recuperación](transicion_backend_vanilla.md): respaldo, copia de prueba, comparación de esquema, SQL no destructivo, configuración/volúmenes conservados y nuevo login. No importar un SQL histórico con DROP ni volver a sembrar datos de demostración.
+Este procedimiento nuevo no borra/restaura una instalación anterior. Seguir [transición y recuperación](../../docs_auxiliares/backend/transicion_backend_vanilla.md): respaldo, copia de prueba, comparación de esquema, SQL no destructivo, configuración/volúmenes conservados y nuevo login. No importar un SQL histórico con DROP ni volver a sembrar datos de demostración.

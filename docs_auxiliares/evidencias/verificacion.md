@@ -10,7 +10,7 @@ Las secciones fechadas 05/10/2026 que siguen documentan la línea base de 42 rut
 
 ## Entorno y procedimiento ejecutados
 
-PHP 8.5.11 portable, MySQL 8.4.11 portable, Windows; dos servidores PHP independientes en 127.0.0.1:18000/18001, contra la misma base aislada imsj_test_native, con datos sintéticos. El cliente MySQL y Python estándar ejecutaron [integracion.py](../backend/tests/integracion.py). La suite exige una base vacía cuyo nombre empiece por imsj_test_; no se conectó a datos del equipo/Intendencia. Fecha UTC de finalización: 2026-10-05T17:06:56.299299+00:00.
+PHP 8.5.11 portable, MySQL 8.4.11 portable, Windows; dos servidores PHP independientes en 127.0.0.1:18000/18001, contra la misma base aislada imsj_test_native, con datos sintéticos. El cliente MySQL y Python estándar ejecutaron [integracion.py](../../backend/tests/integracion.py). La suite exige una base vacía cuyo nombre empiece por imsj_test_; no se conectó a datos del equipo/Intendencia. Fecha UTC de finalización: 2026-10-05T17:06:56.299299+00:00.
 
 - Sintaxis: 37 archivos PHP válidos mediante scripts/verificar.php.
 - Suite: 155 comprobaciones, 55 combinaciones distintas de método/ruta concreta (incluye soporte y casos inválidos); los id/query se normalizaron y cotejaron con las 42 rutas del switch.
@@ -42,7 +42,7 @@ La evidencia JSON conserva SHA-256 de cada PHP ejecutado para identificar la ver
 
 **Consulta del grupo:** los BAT no inician Docker. Se encontró Docker Desktop instalado por usuario en `%LOCALAPPDATA%\Programs\DockerDesktop`, fuera del PATH de esta sesión. La CLI responde con Docker 29.8.0 y Compose v5.5.1 al usar su ruta completa; el motor Linux no responde porque no está disponible su conexión `dockerDesktopLinuxEngine`. Falta `backend/.env`. La versión anterior de los BAT terminaba sin pausa y había perdido la preparación de configuración y el arranque/espera de Docker Desktop.
 
-**Corrección:** búsqueda de Docker por PATH o instalaciones habituales; creación de la plantilla `.env` solo si falta y detención hasta completar sus claves; validación silenciosa de Compose; apertura/espera de Docker Desktop desde el BAT de inicio; errores visibles y códigos de salida. `detener.bat` conserva `compose stop` sin borrar volúmenes y no abre Docker Desktop. Uso detallado en [README del backend](../backend/README.md). Intervención asistida por IA; revisión del equipo pendiente.
+**Corrección:** búsqueda de Docker por PATH o instalaciones habituales; creación de la plantilla `.env` solo si falta y detención hasta completar sus claves; validación silenciosa de Compose; apertura/espera de Docker Desktop desde el BAT de inicio; errores visibles y códigos de salida. `detener.bat` conserva `compose stop` sin borrar volúmenes y no abre Docker Desktop. Uso detallado en [README del backend](../../backend/README.md). Intervención asistida por IA; revisión del equipo pendiente.
 
 **Comprobado:** la CLI real validó `compose.yaml` con `.env.example` mediante `config --quiet`, sin iniciar servicios ni imprimir claves. En Windows se ejecutaron 21 escenarios con copias de los BAT y un ejecutable Docker simulado, fuera del proyecto: detección por PATH/usuario/todos los usuarios, rutas con espacios, plantilla ausente/nueva, rechazo de claves de ejemplo, errores de Compose/configuración/motor/construcción/detención, apertura y espera de Desktop, preservación de `.env`, pausa y códigos de salida. Los 21 terminaron correctamente. Estas pruebas comprueban el flujo de los BAT; no acreditan construcción de imágenes ni disponibilidad de la aplicación en contenedores. Los servicios reales siguen pendientes de configurar las claves locales e iniciar el motor.
 
@@ -127,7 +127,7 @@ Estos resultados comprueban los documentos, no el funcionamiento del producto. N
 
 ### Actualización de aclaraciones e identidad gráfica — 02/10/2026
 
-Se integraron las aclaraciones proporcionadas por el grupo y se agregó [aclaraciones y pendientes](aclaraciones_y_pendientes.md), con campos que el equipo puede completar. Juan Robaina figura como revisor/aprobador interno; esta actualización sigue pendiente de su revisión. CC-01–CC-04 permanecen pendientes para entrega real, sin fecha ni prioridad distinta, según lo informado por el grupo.
+Se integraron las aclaraciones proporcionadas por el grupo y se agregó [aclaraciones y pendientes](../revision/aclaraciones_y_pendientes.md), con campos que el equipo puede completar. Juan Robaina figura como revisor/aprobador interno; esta actualización sigue pendiente de su revisión. CC-01–CC-04 permanecen pendientes para entrega real, sin fecha ni prioridad distinta, según lo informado por el grupo.
 
 **IA — Comprobación documental realizada:**
 
@@ -157,7 +157,7 @@ Fuentes de estructura: [historias y criterios](https://github.com/portalutu/proy
 | V-CC05-08 | Instalación nueva y actualización con datos; persistencia/restauración de base/archivos; arranque sin Artisan. | Entorno aislado, respaldo comprobado, comandos implementados y comparación de cuentas/IDs/archivos/historial. | Pendiente. |
 | V-CC05-09 | Ambos frontends operan con el contrato PHP; documentos/diagramas/guía final coinciden con versión entregada. | Versión/commit, integración, revisión de Juan Robaina y registro con docentes; aceptación del cliente cuando ocurra en actas. | Pendiente. |
 
-Cada ejecución completará versión, entorno/datos, procedimiento, resultado, evidencia y responsable/fecha en el registro ya previsto. Las tareas TM-01–TM-07 del [plan](migracion_backend_vanilla.md) se vinculan a estos criterios. Las actas y selección de tareas quedan a cargo del equipo.
+Cada ejecución completará versión, entorno/datos, procedimiento, resultado, evidencia y responsable/fecha en el registro ya previsto. Las tareas TM-01–TM-07 del [plan](../backend/migracion_backend_vanilla.md) se vinculan a estos criterios. Las actas y selección de tareas quedan a cargo del equipo.
 
 ### Resultado documental de CC-05 — 02/10/2026
 

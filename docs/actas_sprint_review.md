@@ -58,7 +58,7 @@ Los puntos terminados requieren verificar el cumplimiento y las pruebas de cada 
 
 **Pendiente de documentar al cierre:** qué versión se mostró, qué US cumplieron criterios, resultados de pruebas y feedback/aceptación. La existencia de API y Docker no acredita que se ejecutaran exitosamente durante una demo.
 
-**Evidencia documental actual:** [API](api.md), [verificación](verificacion.md), `backend/routes/api.php`, migraciones y archivos Feature; los documentos originales citan commits de períodos anteriores y esta vista actual corresponde a `df581ab`, no necesariamente al cierre del 03/09.
+**Evidencia documental actual:** [API](../docs_auxiliares/backend/api.md), [verificación](../docs_auxiliares/evidencias/verificacion.md), `backend/routes/api.php`, migraciones y archivos Feature; los documentos originales citan commits de períodos anteriores y esta vista actual corresponde a `df581ab`, no necesariamente al cierre del 03/09.
 
 La [acta R-05](actas_reuniones.md#r-05--03092026) registra una demo el 03/09 con Directora e Inspector, sin detalle de versión ni resultado. CC-02–CC-04 registran pedidos de esa fecha; no se los presenta como aprobados o resueltos. CC-01 tiene evidencia de código, sin aceptación registrada.
 

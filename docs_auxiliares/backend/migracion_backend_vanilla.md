@@ -21,7 +21,7 @@ Se conservan rutas, claves JSON, roles, tipos y campos consumidos por los dos fr
 
 ## Datos, archivos y sesiones
 
-[database.sql](../backend/database.sql) crea diez tablas de dominio y `auth_tokens`; sin DROP, USE fijo ni cuentas/datos automáticos. Una importación no modifica tablas existentes incompatibles: comparar primero el esquema y ensayar sobre una copia. Los nombres/IDs/relaciones y hashes bcrypt de usuarios existentes siguen siendo compatibles. Las rutas relativas de adjuntos mantienen `storage/app/public` y `/storage/`.
+[database.sql](../../backend/database.sql) crea diez tablas de dominio y `auth_tokens`; sin DROP, USE fijo ni cuentas/datos automáticos. Una importación no modifica tablas existentes incompatibles: comparar primero el esquema y ensayar sobre una copia. Los nombres/IDs/relaciones y hashes bcrypt de usuarios existentes siguen siendo compatibles. Las rutas relativas de adjuntos mantienen `storage/app/public` y `/storage/`.
 
 Sesiones nativas: Bearer opaco `id|secreto`, 32 bytes aleatorios, solo SHA-256 en SQL, ocho horas. Emisión revoca tokens anteriores; cierre/desactivación revocan. La cuenta activa/rol se comprueban en cada petición. **Las sesiones anteriores dejan de ser válidas y requieren nuevo login.** No se convierte la tabla de sesiones antigua ni se consultan sus registros. Puede permanecer en una base previa sin uso hasta que el equipo decida su tratamiento.
 
@@ -29,7 +29,7 @@ No se operó sobre una base del equipo o de la Intendencia. La única base utili
 
 ## Instalación y actualización
 
-La [guía del backend](../backend/README.md) contiene el arranque nuevo/local y la primera cuenta. Para una base existente: respaldo de base y adjuntos, conservación de .env y nombres de volúmenes, comparación del esquema, ensayo sobre una copia, importación no destructiva y nuevo login. [SSOO](ssoo/transicion_backend_vanilla.md) detalla respaldo/restauración y sus límites. No usar reconstrucción con borrado de volúmenes como actualización.
+La [guía del backend](../../backend/README.md) contiene el arranque nuevo/local y la primera cuenta. Para una base existente: respaldo de base y adjuntos, conservación de .env y nombres de volúmenes, comparación del esquema, ensayo sobre una copia, importación no destructiva y nuevo login. [SSOO](transicion_backend_vanilla.md) detalla respaldo/restauración y sus límites. No usar reconstrucción con borrado de volúmenes como actualización.
 
 ## Estado de TM-01 a TM-07
 
@@ -49,4 +49,4 @@ Son estados de trabajo y evidencia técnica; no asignan fechas, puntos, costo ni
 
 CC-01 a CC-04 continúan pendientes para la entrega real, sin fecha ni prioridad distinta. Agenda/reservas son académicas. No se incorporan categorías, consultas, Directora, gráficos del test, cancelación/confirmación, costo o campos nuevos. La letra consultada exige Laravel; registrar con docentes la aceptación de PHP nativo sigue pendiente.
 
-El crédito corresponde al equipo, con apoyo externo de IA declarado. Los resultados y límites se registran en [verificación](verificacion.md); aprobación del cliente en actas a cargo del equipo.
+El crédito corresponde al equipo, con apoyo externo de IA declarado. Los resultados y límites se registran en [verificación](../evidencias/verificacion.md); aprobación del cliente en actas a cargo del equipo.

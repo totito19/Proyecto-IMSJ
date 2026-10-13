@@ -31,6 +31,6 @@ Compose define app/db y transmite al proceso PHP configuración nativa; MySQL he
 | INITIAL_ADMIN_* | Nombre/cédula/contraseña de primera cuenta, solo para acción CLI explícita. |
 | UPLOAD_ROOT, CACHE_ROOT | Overrides opcionales de rutas locales; defaults en storage. Compartir caché entre procesos. |
 
-La configuración de proceso tiene precedencia sobre .env. No hay APP_KEY, SECRET_KEY, token JWT o pasos Artisan en el backend actual. No incluir secretos reales en Git. [Reconstrucción](reconstruccion-infraestructura.md), [transición](transicion_backend_vanilla.md), [verificación](../verificacion.md).
+La configuración de proceso tiene precedencia sobre .env. No hay APP_KEY, SECRET_KEY, token JWT o pasos Artisan en el backend actual. No incluir secretos reales en Git. [Reconstrucción](reconstruccion-infraestructura.md), [transición](../../docs_auxiliares/backend/transicion_backend_vanilla.md), [verificación](../../docs_auxiliares/evidencias/verificacion.md).
 
 Dominio/HTTPS, alojamiento, administrador operativo y plan institucional de respaldos siguen pendientes. Los procedimientos documentados no certifican disponibilidad, seguridad de producción o aceptación.

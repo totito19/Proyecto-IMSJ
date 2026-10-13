@@ -1,4 +1,4 @@
-> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](migracion_backend_vanilla.md), [flujos](flujo_endpoints_backend.md) y [pruebas ejecutadas y límites](verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
+> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas y límites](../docs_auxiliares/evidencias/verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
 
 ---
 
@@ -91,7 +91,7 @@
 | Campo | Situación |
 |---|---|
 | Fecha, participantes y aprobación del planning | No registrados. |
-| Responsable, revisor y tareas por integrante | Roles generales confirmados; tareas concretas y selección histórica aún por registrar por el equipo. Ver [aclaraciones y pendientes](aclaraciones_y_pendientes.md). |
+| Responsable, revisor y tareas por integrante | Roles generales confirmados; tareas concretas y selección histórica aún por registrar por el equipo. Ver [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md). |
 | Capacidad por sprint y método de estimación | No registrados. |
 | Selección comprometida de US y criterios acordados | No registrada. |
 | Trabajo arrastrado entre sprints | No registrado por US. |
@@ -106,7 +106,7 @@
 
 **Decisión del grupo, 02/10/2026:** backend PHP sin Laravel a partir de la API completa. Los cuatro períodos anteriores se conservan como reconstrucción de la versión previa; no se reescribe el Sprint 4 como si hubiera utilizado PHP vanilla entonces.
 
-**IA — Secuencia técnica para revisar:** TM-01 fija contrato y referencia; TM-02 prepara base PHP; TM-03 migra cuenta/permisos; TM-04 y TM-05 migran contenidos y agenda; TM-06 adapta entorno y TM-07 valida integración y retiro de Laravel. Las dependencias y evidencias están en [migración](migracion_backend_vanilla.md). La secuencia no establece prioridad distinta para CC-01–CC-04, fechas, puntos, capacidad o un Sprint 5 ficticio.
+**IA — Secuencia técnica para revisar:** TM-01 fija contrato y referencia; TM-02 prepara base PHP; TM-03 migra cuenta/permisos; TM-04 y TM-05 migran contenidos y agenda; TM-06 adapta entorno y TM-07 valida integración y retiro de Laravel. Las dependencias y evidencias están en [migración](../docs_auxiliares/backend/migracion_backend_vanilla.md). La secuencia no establece prioridad distinta para CC-01–CC-04, fechas, puntos, capacidad o un Sprint 5 ficticio.
 
 | Dato de planificación de CC-05 | Estado |
 |---|---|
@@ -114,6 +114,6 @@
 | Capacidad, selección y estimación de tareas | Por acordar; no se trasladan los 44 puntos anteriores. |
 | Asignaciones concretas y revisión | Roles generales confirmados; tareas por acordar. Juan Robaina revisará la documentación. |
 | Decisión sobre tokens/sesiones y conjunto final de bibliotecas | Pendiente, conservando compatibilidad como base. |
-| Diferencia académica y evidencia de cierre | Por registrar con docentes y en [verificación](verificacion.md). |
+| Diferencia académica y evidencia de cierre | Por registrar con docentes y en [verificación](../docs_auxiliares/evidencias/verificacion.md). |
 
 Los acuerdos y las aprobaciones quedan en actas a cargo del equipo. La preparación documental no acredita inicio/cierre de un sprint ni implementación.

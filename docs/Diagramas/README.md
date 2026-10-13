@@ -47,4 +47,4 @@ classDiagram
     ReservaRepository --> Reserva
 ```
 
-Franjas y agenda pertenecen al módulo Reserva; historial al módulo Usuario. Siete controladores, siete servicios y siete repositorios. Esta vista muestra ejemplos representativos, no todas las clases o endpoints. [Modelo y justificación](../Justificación%20de%20clases,%20atributos%20y%20métodos.md), [arquitectura](../arquitectura_propuesta.md), [flujos](../flujo_endpoints_backend.md).
+Franjas y agenda pertenecen al módulo Reserva; historial al módulo Usuario. Siete controladores, siete servicios y siete repositorios. Esta vista muestra ejemplos representativos, no todas las clases o endpoints. [Modelo y justificación](../Justificación%20de%20clases,%20atributos%20y%20métodos.md), [arquitectura](../arquitectura_propuesta.md).

@@ -11,18 +11,18 @@ Proyecto-IMSJ/
 ├── backend/            API PHP nativa, comentarios, SQL, Docker y pruebas
 ├── frontend-publico/   portal ciudadano e ingreso
 ├── frontend-imsj/      panel administrativo
-└── docs/               documentación del proyecto y flujo de endpoints
+├── docs/               documentación de entrega
+└── docs_auxiliares/    informes, referencias y evidencias complementarias
 ```
 
-Para iniciar en Windows con Docker/Compose, abrir **[backend/iniciar.bat](backend/iniciar.bat)**. Prepara claves de una instalación local nueva, inicia Apache/PHP y MySQL, espera al sistema y abre el portal en el navegador. Apache sirve API, portal y panel en un único puerto configurable; se retiró Nginx. Se conservan los volúmenes de datos/archivos. Instrucciones y recuperación de configuración previa en el [README del backend](backend/README.md); evidencia y límites en [verificación](docs/verificacion.md).
+Para iniciar en Windows con Docker/Compose, abrir **[backend/iniciar.bat](backend/iniciar.bat)**. Prepara claves de una instalación local nueva, inicia Apache/PHP y MySQL, espera al sistema y abre el portal en el navegador. Apache sirve API, portal y panel en un único puerto configurable; se retiró Nginx. Se conservan los volúmenes de datos/archivos. Instrucciones y recuperación de configuración previa en el [README del backend](backend/README.md); evidencia y límites en [verificación](docs_auxiliares/evidencias/verificacion.md).
 
 ## Documentación
 
-- [Índice y orden de lectura](docs/README.md).
-- [Flujo base de los 42 endpoints](docs/flujo_endpoints_backend.md), con versión PDF en documentación; las tres rutas de consultas añadidas para la demo están en el [contrato API](docs/api.md).
-- [Contrato API](docs/api.md) y [guía de transición](docs/migracion_backend_vanilla.md).
-- [Control de cambios](docs/control_cambios.md), [arquitectura](docs/arquitectura_propuesta.md), [referencia simple](docs/referencia_api_simple.md) y [SSOO](docs/ssoo/README.md).
-- [Datos que faltan completar](docs/aclaraciones_y_pendientes.md).
+- [Índice de documentos de entrega](docs/README.md).
+- [Control de cambios](docs/control_cambios.md), [arquitectura](docs/arquitectura_propuesta.md) y [SSOO](docs/ssoo/README.md).
+- [Documentación auxiliar](docs_auxiliares/README.md): contrato de API, referencias, migración y evidencias.
+- [Revisión del 13/10/2026 y pendientes actuales](docs_auxiliares/revision/revision_2026-10-13.md).
 
 CC-02, CC-03 y CC-04 tienen una implementación de demo verificada el 13/10/2026; su revisión y aceptación por el cliente siguen pendientes. CC-01 conserva definiciones funcionales pendientes. Agenda y reservas corresponden al alcance académico. La aceptación académica de PHP nativo frente a la letra que exige Laravel sigue pendiente de registrar con docentes.
 

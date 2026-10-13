@@ -1,6 +1,6 @@
 # Contrato API IMSJ - PHP nativo
 
-**Versión de demo - 13/10/2026; CC-02, CC-03, CC-04 y CC-05.** Contrato implementado en `backend/public/index.php`. La documentación fue preparada con apoyo externo de IA; revisión de Juan Robaina y aceptación del cliente pendientes. El [flujo individual de los 42 endpoints](flujo_endpoints_backend.md) documenta la base previa; este inventario incluye las tres rutas de consultas añadidas.
+**Versión de demo - 13/10/2026; CC-02, CC-03, CC-04 y CC-05.** Contrato implementado en `backend/public/index.php`. La documentación fue preparada con apoyo externo de IA; revisión de Juan Robaina y aceptación del cliente pendientes. El flujo individual de los 42 endpoints (documento auxiliar retirado del árbol actual) documenta la base previa; este inventario incluye las tres rutas de consultas añadidas.
 
 Base local: `http://localhost:8000/api`. JSON de entrada/salida; archivos mediante multipart. En rutas protegidas: `Authorization: Bearer <token>` y `Accept: application/json`. El token se entrega en la raíz junto a `usuario` y `expira_en`; el frontend lo guarda en `sessionStorage`. Los valores concretos de ejemplos son ilustrativos.
 
@@ -62,7 +62,7 @@ Errores de campo: `{"message":"Los datos no son válidos.","errors":{"campo":["d
 | DELETE | `/franjas/{id}` | personal | `ReservaController::eliminarFranja` |
 | GET | `/agenda` | personal | `ReservaController::agenda` |
 
-`{id}` es un entero positivo. La suma es nueve rutas públicas, dos para cualquier cuenta autenticada, dos ciudadanas y 29 del personal. Consultar [flujos](flujo_endpoints_backend.md) para entradas, tablas, validaciones y salida por ruta.
+`{id}` es un entero positivo. La suma es nueve rutas públicas, dos para cualquier cuenta autenticada, dos ciudadanas y 29 del personal. Consultar flujos (documento auxiliar retirado del árbol actual) para entradas, tablas, validaciones y salida por ruta.
 
 ## Entradas y límites conservados
 
@@ -87,4 +87,4 @@ Las noticias siguen `BORRADOR → PENDIENTE → APROBADO → PUBLICADO`. Persona
 
 No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`. Categorías, respuestas/notificaciones para consultas, cancelación, confirmación de agenda, costo urgente y nuevos campos de contacto no se incorporan. Agenda y reservas son académicas. La implementación de demo no acredita aceptación institucional.
 
-Las equivalencias frente a la [letra académica](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md) y la aceptación de PHP nativo corresponden al equipo/docentes. Las pruebas no acreditan aceptación institucional; [resultados y límites](verificacion.md).
+Las equivalencias frente a la [letra académica](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md) y la aceptación de PHP nativo corresponden al equipo/docentes. Las pruebas no acreditan aceptación institucional; [resultados y límites](../evidencias/verificacion.md).

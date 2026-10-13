@@ -51,7 +51,7 @@
 
 **IA — Sugerencia para la siguiente instancia; no son respuestas del cliente:**
 
-- **Aclarado por el grupo el 02/10/2026:** Tomás Cabrera lidera el proyecto; el Inspector de Tránsito de la Intendencia puede aceptar entregas y aprobar cambios. Juan Robaina revisa y aprueba internamente la documentación. Las aprobaciones del cliente se registran en las actas a cargo del equipo; ver [aclaraciones y pendientes](aclaraciones_y_pendientes.md).
+- **Aclarado por el grupo el 02/10/2026:** Tomás Cabrera lidera el proyecto; el Inspector de Tránsito de la Intendencia puede aceptar entregas y aprobar cambios. Juan Robaina revisa y aprueba internamente la documentación. Las aprobaciones del cliente se registran en las actas a cargo del equipo; ver [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
 - ¿Qué categorías tendrán las preguntas frecuentes y quién las mantendrá?
 - ¿Los videos se suben o se enlazan? ¿Qué formatos/tamaños se autorizan?
 - ¿CC-03 aplica a noticias, materiales y preguntas frecuentes? ¿Quién publica después de aprobar? ¿Qué ocurre si se modifica o rechaza un contenido?

@@ -1,6 +1,6 @@
 # Reporte de Entrevista de Relevamiento de Requisitos
 
-> **Nota de revisión de IA — 02/10/2026:** se conserva este relevamiento como registro histórico. Fecha, entrevistadores, evidencia original y validación del entrevistado no están completos. No se atribuye esta entrevista a la demo del 03/09. El grupo aclaró posteriormente que el referente debe identificarse principalmente como Inspector de Tránsito de la Intendencia, conocido como Nacho, sin apellido confirmado. Esa aclaración no completa fecha, participantes ni validación de esta entrevista histórica; ver [aclaraciones y pendientes](aclaraciones_y_pendientes.md).
+> **Nota de revisión de IA — 02/10/2026:** se conserva este relevamiento como registro histórico. Fecha, entrevistadores, evidencia original y validación del entrevistado no están completos. No se atribuye esta entrevista a la demo del 03/09. El grupo aclaró posteriormente que el referente debe identificarse principalmente como Inspector de Tránsito de la Intendencia, conocido como Nacho, sin apellido confirmado. Esa aclaración no completa fecha, participantes ni validación de esta entrevista histórica; ver [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
 
 **Fecha:** ____________________
 **Entrevistador:** ____________________
