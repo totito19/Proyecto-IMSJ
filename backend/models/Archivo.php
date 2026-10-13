@@ -4,7 +4,11 @@ declare(strict_types=1);
 final class Archivo {
     private const IMAGES = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
     public static function save(array $file, string $folder, int $maxKb, bool $pdf = false): string {
-        $key = $folder === 'noticias' ? 'imagen_portada' : 'archivo';
+        $key = match ($folder) {
+            'noticias' => 'imagen_portada',
+            'pruebas' => 'imagen',
+            default => 'archivo',
+        };
         if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) Response::invalid($key, 'No se pudo recibir el archivo o supera el límite de subida.');
         if (!is_string($file['tmp_name'] ?? null) || !is_numeric($file['size'] ?? null)) Response::invalid($key, 'La estructura del archivo no es válida.');
         if (!is_uploaded_file($file['tmp_name']) || (int) $file['size'] > $maxKb * 1024) Response::invalid($key, "El archivo debe medir hasta $maxKb KB.");

@@ -15,12 +15,12 @@ final class PruebaRepository {
     }
     /** Inserta los campos validados y devuelve el registro creado. */
     public function crear(array $datos): Prueba {
-        Database::query('INSERT INTO preguntas_prueba (pregunta, opcion_a, opcion_b, opcion_c, opcion_d, respuesta_correcta, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(), UTC_TIMESTAMP())', [$datos['pregunta'], $datos['opcion_a'], $datos['opcion_b'], $datos['opcion_c'], $datos['opcion_d'], $datos['respuesta_correcta']]);
+        Database::query('INSERT INTO preguntas_prueba (pregunta, imagen, opcion_a, opcion_b, opcion_c, opcion_d, respuesta_correcta, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(), UTC_TIMESTAMP())', [$datos['pregunta'], $datos['imagen'], $datos['opcion_a'], $datos['opcion_b'], $datos['opcion_c'], $datos['opcion_d'], $datos['respuesta_correcta']]);
         return $this->buscar((int)Database::connection()->lastInsertId());
     }
     /** Actualiza los campos del registro identificado y devuelve su estado persistido. */
     public function actualizar(int $id, array $datos): Prueba {
-        Database::query('UPDATE preguntas_prueba SET pregunta = ?, opcion_a = ?, opcion_b = ?, opcion_c = ?, opcion_d = ?, respuesta_correcta = ?, updated_at = UTC_TIMESTAMP() WHERE id = ?', [$datos['pregunta'], $datos['opcion_a'], $datos['opcion_b'], $datos['opcion_c'], $datos['opcion_d'], $datos['respuesta_correcta'], $id]);
+        Database::query('UPDATE preguntas_prueba SET pregunta = ?, imagen = ?, opcion_a = ?, opcion_b = ?, opcion_c = ?, opcion_d = ?, respuesta_correcta = ?, updated_at = UTC_TIMESTAMP() WHERE id = ?', [$datos['pregunta'], $datos['imagen'], $datos['opcion_a'], $datos['opcion_b'], $datos['opcion_c'], $datos['opcion_d'], $datos['respuesta_correcta'], $id]);
         return $this->buscar($id);
     }
     /** Elimina el registro indicado; la transacción la coordina el servicio. */

@@ -11,6 +11,10 @@
     return value ? JSON.parse(value) : null;
   }
 
+  function isStaff(user = currentUser()) {
+    return Boolean(user && ['PERSONAL_IMSJ', 'DIRECTORA'].includes(user.rol));
+  }
+
   function clearSession() {
     sessionStorage.removeItem(TOKEN_KEY);
     sessionStorage.removeItem(USER_KEY);
@@ -68,5 +72,5 @@
     } catch (_) {}
   }
 
-  window.ImsjApi = { request, login, register, logout, clearSession, currentUser };
+  window.ImsjApi = { request, login, register, logout, clearSession, currentUser, isStaff };
 }());

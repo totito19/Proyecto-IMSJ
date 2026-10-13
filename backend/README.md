@@ -1,6 +1,6 @@
 # Backend IMSJ en PHP nativo
 
-Reescrito desde cero el 05/10/2026 por solicitud del grupo, con el recorrido explícito de [api-simple](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-simple). PHP 8.5, PDO y MySQL 8.4; sin paquetes externos. Los 42 endpoints conservan rutas, claves JSON y formularios de los frontends. El crédito y la responsabilidad del proyecto corresponden a Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales. Implementación y documentación preparadas con apoyo externo de IA; revisión interna de Juan Robaina pendiente.
+Reescrito desde cero el 05/10/2026 por solicitud del grupo, con el recorrido explícito de [api-simple](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-simple). PHP 8.5, PDO y MySQL 8.4; sin paquetes externos. La versión de demo del 13/10/2026 conserva las rutas existentes y suma tres rutas de consultas, para un total de 45 endpoints. El crédito y la responsabilidad del proyecto corresponden a Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales. Implementación y documentación preparadas con apoyo externo de IA; revisión interna de Juan Robaina pendiente.
 
 ## Organización y recorrido
 
@@ -9,8 +9,8 @@ backend/
 ├── public/             index.php y .htaccess: entrada HTTP y rutas
 ├── config.php          configuración mediante entorno o .env
 ├── core/               Database.php, Response.php y Auth.php
-├── controllers/        Auth, Noticia, Material, Pregunta, Prueba, Reserva, Usuario
-├── services/           un servicio por cada uno de esos siete módulos
+├── controllers/        Auth, Noticia, Material, Pregunta, Prueba, Reserva, Usuario, Consulta
+├── services/           un servicio por cada uno de esos ocho módulos
 ├── repositories/       un repositorio por módulo, con SQL parametrizado
 ├── models/             datos de dominio, entrada HTTP y archivos
 ├── database.sql        esquema no destructivo, sin cuentas automáticas
@@ -32,7 +32,7 @@ El [flujo de cada endpoint](../docs/flujo_endpoints_backend.md), su PDF y el [co
 Requiere Docker con Compose y contenedores Linux. En Windows se puede usar [Docker Desktop](https://docs.docker.com/desktop/setup/install/windows-install/); los BAT utilizan PowerShell incluido en Windows, sin instalar PHP, Composer, MySQL o Python en el equipo. Las rutas se deducen de la carpeta del proyecto y de la instalación de Docker, sin un nombre de usuario o disco particular.
 
 1. Abrir **`iniciar.bat`** con doble clic. Detecta Docker en el PATH o en sus instalaciones habituales y abre Docker Desktop si el motor está apagado, con espera limitada a tres minutos. Genera `.env` desde la plantilla y claves aleatorias locales cuando no hay una base previa; no requiere escribirlas ni las muestra en la consola. Conserva las claves reales de una configuración existente. Si falta configuración pero ya existe el volumen de base, exige recuperar sus claves originales.
-2. El inicio comprueba la configuración, utiliza `APP_PORT=8000` o busca uno libre entre los cien siguientes si está ocupado por otro programa, y guarda el puerto elegido. Construye e inicia **`app` (Apache/PHP) y `db` (MySQL)**; retira el antiguo contenedor Nginx del mismo proyecto sin borrar volúmenes. Espera al healthcheck de API/base/portal y comprueba acceso desde Windows antes de abrir el portal en el navegador predeterminado. MySQL importa `database.sql` solo cuando el volumen está vacío; no carga usuarios o contenido de demostración. La primera ejecución necesita conexión para descargar las imágenes.
+2. El inicio comprueba la configuración, utiliza `APP_PORT=8000` o busca uno libre entre los cien siguientes si está ocupado por otro programa, y guarda el puerto elegido. Construye e inicia **`app` (Apache/PHP) y `db` (MySQL)**; retira el antiguo contenedor Nginx del mismo proyecto sin borrar volúmenes. Antes de iniciar Apache ejecuta `scripts/migrar.php`, una migración idempotente que agrega a instalaciones existentes el rol Directora, los estados de aprobación, la bandeja de consultas y el campo de imagen del simulador sin borrar registros. Espera al healthcheck de API/base/portal y comprueba acceso desde Windows antes de abrir el portal en el navegador predeterminado. MySQL importa `database.sql` solo cuando el volumen está vacío; no carga usuarios o contenido de demostración. La primera ejecución necesita conexión para descargar las imágenes.
 3. Crear la primera cuenta de personal con la herramienta CLI. Definir estas variables en la terminal con datos elegidos por el equipo; la contraseña no se imprime:
 
 ```powershell
@@ -81,23 +81,23 @@ Este servidor es para desarrollo. Servir Apache con `DocumentRoot` en `public/` 
 
 ## Actualización de una instalación con datos
 
-No borrar volúmenes ni importar un esquema histórico que elimine tablas. Respaldar base y `storage/app/public`, conservar `.env`, comprobar nombres de volumen y ensayar la transición sobre una copia. `database.sql` crea tablas que falten; no corrige automáticamente un esquema divergente. La estructura de negocio mantiene las diez tablas originales y añade `auth_tokens` para sesiones nativas.
+No borrar volúmenes ni importar un esquema histórico que elimine tablas. Respaldar base y `storage/app/public`, conservar `.env`, comprobar nombres de volumen y ensayar la transición sobre una copia. `database.sql` crea tablas que falten y `scripts/migrar.php` aplica únicamente los cambios incrementales requeridos por esta demo. La migración no borra registros; una actualización de producción igualmente debe ensayarse sobre una copia y contar con respaldo.
 
-Importar el esquema en la base existente después de comprobar su compatibilidad; los usuarios, hashes bcrypt, identificadores, relaciones, historial y rutas relativas de archivos se conservan. La tabla técnica de sesiones anterior puede quedar en esa base como antecedente, sin consultas desde el nuevo backend. Las sesiones anteriores dejan de ser válidas: volver a iniciar sesión. No se ejecuta ninguna transformación automática sobre datos institucionales en esta intervención.
+Los usuarios, hashes bcrypt, identificadores, relaciones, historial y rutas relativas de archivos se conservan. La tabla técnica de sesiones anterior puede quedar en esa base como antecedente, sin consultas desde el nuevo backend. Las sesiones anteriores a la reescritura dejan de ser válidas: volver a iniciar sesión. La migración automática actualiza solo el esquema y convierte el estado histórico `NO_PUBLICADO` de noticias a `BORRADOR`.
 
 ## Contrato y seguridad implementada
 
 - Bearer opaco `id|secreto`, secreto aleatorio de 32 bytes, hash SHA-256 en MySQL, ocho horas de vigencia. Iniciar sesión revoca sesiones previas; cerrar sesión y desactivar personal revocan tokens. Cada petición comprueba cuenta activa y rol almacenados en la base.
-- Respuestas conservadas: `usuario`, `noticias`, `noticia`, `materiales`, `material`, `preguntas`, `pregunta`, `franjas`, `franja`, `reservas`, `reserva`, `acciones`, `usuarios`; sin envoltorio `datos`. Validación: `message` y `errors`. Eliminaciones/logout: 204 sin cuerpo.
+- Respuestas conservadas: `usuario`, `noticias`, `noticia`, `materiales`, `material`, `preguntas`, `pregunta`, `franjas`, `franja`, `reservas`, `reserva`, `acciones`, `usuarios`; consultas agrega `consultas` y `consulta`. Sin envoltorio `datos`. Validación: `message` y `errors`. Eliminaciones/logout: 204 sin cuerpo.
 - Cinco intentos por minuto por dirección IP y operación para login/registro, con bloqueo de archivo compartido. Las instancias deben compartir `CACHE_ROOT`; no se interpretan cabeceras de proxy como identidad del cliente.
-- Noticias: portada y hasta cinco imágenes JPG/PNG/WEBP, 2048 KB cada una; hasta cinco enlaces. Materiales: PDF 10240 KB, imagen 5120 KB o video por URL HTTP/HTTPS. MIME y contenido se verifican; nombres aleatorios, fuera de `public/`.
+- Noticias: portada y hasta cinco imágenes JPG/PNG/WEBP, 2048 KB cada una; hasta cinco enlaces. El personal prepara y envía a revisión, solo Directora aprueba y la publicación es una acción posterior. Materiales: PDF 10240 KB, imagen 5120 KB o video por URL HTTP/HTTPS. Las preguntas del simulador admiten una imagen opcional JPG/PNG/WEBP de hasta 2048 KB. MIME y contenido se verifican; nombres aleatorios, fuera de `public/`.
 - Edición acepta PUT JSON/multipart y POST multipart con `_method=PUT`, como envía el panel actual. El límite global de formulario es 24 MB; con un archivo por material y hasta seis imágenes de noticia alcanza para los límites del contrato.
 - Reservas: transacción con bloqueo de franja, fecha válida, propiedad, duplicación y capacidad. Auditoría administrativa se confirma en la misma transacción que los datos; un fallo revierte la operación y limpia archivos nuevos.
 
-No incorpora consultas, Directora, categorías o adjuntos del test, ni cierra CC-01 a CC-04. Agenda y reservas continúan como alcance académico.
+La demo incorpora consultas, Directora y gráficos del test. No incorpora categorías, respuestas/notificaciones para consultas ni reglas nuevas de agenda. La implementación no equivale a aceptación del cliente; CC-01 conserva definiciones pendientes y agenda/reservas continúan como alcance académico.
 
 ## Verificación
 
 `php scripts/verificar.php` comprueba sintaxis. La suite `tests/integracion.py` requiere Python 3 estándar y cliente MySQL únicamente para pruebas. Necesita dos procesos PHP contra **la misma base vacía** cuyo nombre empiece por `imsj_test_`; se niega a trabajar sobre una base con tablas. Definir `DB_*`, `IMSJ_TEST_MYSQL`, `IMSJ_TEST_URL` y `IMSJ_TEST_URL_2`; iniciar los dos servidores con el entorno de prueba y ejecutar `python tests/integracion.py`. No apuntarla a datos del equipo. El resultado conserva datos de prueba para inspección.
 
-La [evidencia](../docs/verificacion.md) registra resultados HTTP/MySQL y límites. Docker/Apache y recorrido visual completo de ambos frontends requieren comprobación del equipo; no se presentan como ejecutados.
+La [evidencia](../docs/verificacion.md) registra resultados HTTP/MySQL y límites. Para la demo del 13/10/2026 se comprobó un arranque Docker aislado, 25 verificaciones HTTP de los tres cambios y un recorrido visual del portal y del panel; la revisión del equipo y la aceptación institucional siguen pendientes.

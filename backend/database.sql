@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     nombre VARCHAR(120) NULL,
     cedula VARCHAR(20) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    rol ENUM('PUBLICO_GENERAL', 'PERSONAL_IMSJ') NOT NULL DEFAULT 'PUBLICO_GENERAL',
+    rol ENUM('PUBLICO_GENERAL', 'PERSONAL_IMSJ', 'DIRECTORA') NOT NULL DEFAULT 'PUBLICO_GENERAL',
     activo BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS noticias (
     fecha_inicio_vigencia DATE NOT NULL,
     fecha_fin_vigencia DATE NOT NULL,
     imagen_portada VARCHAR(2048) NULL,
-    estado ENUM('PUBLICADO', 'NO_PUBLICADO') NOT NULL DEFAULT 'NO_PUBLICADO',
+    estado ENUM('BORRADOR', 'PENDIENTE', 'APROBADO', 'PUBLICADO') NOT NULL DEFAULT 'BORRADOR',
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -66,6 +66,7 @@ CREATE TABLE IF NOT EXISTS preguntas_frecuentes (
 CREATE TABLE IF NOT EXISTS preguntas_prueba (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     pregunta VARCHAR(500) NOT NULL,
+    imagen VARCHAR(2048) NULL,
     opcion_a VARCHAR(255) NOT NULL,
     opcion_b VARCHAR(255) NOT NULL,
     opcion_c VARCHAR(255) NOT NULL,
@@ -73,6 +74,17 @@ CREATE TABLE IF NOT EXISTS preguntas_prueba (
     respuesta_correcta ENUM('A', 'B', 'C', 'D') NOT NULL,
     created_at TIMESTAMP NULL,
     updated_at TIMESTAMP NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS consultas (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(120) NOT NULL,
+    email VARCHAR(254) NOT NULL,
+    mensaje TEXT NOT NULL,
+    leida BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
+    INDEX consultas_bandeja_index (leida, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS franjas_disponibilidad (

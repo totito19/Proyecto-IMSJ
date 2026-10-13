@@ -46,4 +46,49 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    const footerContainer = document.querySelector('.site-footer .container');
+    if (footerContainer && window.ImsjApi && !footerContainer.querySelector('#form-consulta')) {
+        const contact = document.createElement('section');
+        contact.className = 'footer-contact';
+        contact.innerHTML = `
+            <div class="footer-contact__intro">
+                <span>Contacto</span>
+                <h2>¿Tenés una consulta?</h2>
+                <p>Enviá tu mensaje a la Sección Tránsito. El personal podrá leerlo desde el panel IMSJ.</p>
+            </div>
+            <form id="form-consulta" class="footer-contact__form">
+                <label>Nombre<input name="nombre" maxlength="120" autocomplete="name" required></label>
+                <label>Correo electrónico<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
+                <label class="footer-contact__message">Consulta<textarea name="mensaje" maxlength="2000" rows="4" required></textarea></label>
+                <div class="footer-contact__submit"><p id="consulta-status" role="status"></p><button class="btn btn-accent" type="submit">Enviar consulta</button></div>
+            </form>`;
+        const bottom = footerContainer.querySelector('.footer-bottom');
+        footerContainer.insertBefore(contact, bottom || footerContainer.firstChild);
+
+        contact.querySelector('form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const form = event.currentTarget;
+            if (!form.reportValidity()) return;
+            const button = form.querySelector('button[type="submit"]');
+            const status = form.querySelector('#consulta-status');
+            button.disabled = true;
+            status.className = '';
+            status.textContent = 'Enviando...';
+            try {
+                await ImsjApi.request('/portal/consultas', {
+                    method: 'POST',
+                    body: Object.fromEntries(new FormData(form).entries()),
+                });
+                form.reset();
+                status.className = 'is-success';
+                status.textContent = 'Consulta enviada correctamente.';
+            } catch (error) {
+                status.className = 'is-error';
+                status.textContent = error.message;
+            } finally {
+                button.disabled = false;
+            }
+        });
+    }
+
 });

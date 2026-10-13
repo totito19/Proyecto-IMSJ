@@ -16,7 +16,7 @@ final class NoticiaController {
         Auth::requireUser('PERSONAL_IMSJ');
         Response::json(['noticia' => $this->service->detalle($id)->toArray()]);
     }
-    /** La creación comienza como NO_PUBLICADO. */
+    /** La creación comienza como BORRADOR. */
     public function store(): never { $this->save(); }
     /** PUT admite JSON o multipart cuando se reemplazan imágenes. */
     public function update(int $id): never { $this->save($id); }
@@ -24,7 +24,7 @@ final class NoticiaController {
     public function updateEstado(int $id): never {
         $actor = Auth::requireUser('PERSONAL_IMSJ');
         $d = Solicitud::body();
-        $estado = Solicitud::option($d['estado'] ?? null, 'estado', ['PUBLICADO', 'NO_PUBLICADO']);
+        $estado = Solicitud::option($d['estado'] ?? null, 'estado', ['BORRADOR', 'PENDIENTE', 'APROBADO', 'PUBLICADO']);
         Response::json(['noticia' => $this->service->estado($id, $estado, $actor)->toArray()]);
     }
     /** Tras confirmar la eliminación se limpian los archivos locales asociados. */

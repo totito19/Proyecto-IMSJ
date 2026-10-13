@@ -11,6 +11,7 @@ function renderSimulacion() {
     container.innerHTML = preguntasSimulacion.map((item, index) => `
         <fieldset class="quiz-question" data-pregunta-id="${item.id}">
             <legend><span class="quiz-number">${index + 1}.</span> ${escQuiz(item.pregunta)}</legend>
+            ${item.imagen ? `<img class="quiz-question-image" src="${escQuiz(item.imagen)}" alt="Material gráfico para responder la pregunta">` : ''}
             <div class="quiz-options">
                 ${Object.entries(item.opciones).map(([key, option]) => `
                     <label class="quiz-answer" data-opcion="${key}">

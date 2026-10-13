@@ -71,6 +71,9 @@ try {
         // POST /api/portal/prueba/corregir: acceso publico.
         case $method === 'POST' && $route === 'portal/prueba/corregir':
             (new PruebaController())->corregir();
+        // POST /api/portal/consultas: acceso publico.
+        case $method === 'POST' && $route === 'portal/consultas':
+            (new ConsultaController())->store();
         // GET /api/franjas/disponibles: acceso publico.
         case $method === 'GET' && $route === 'franjas/disponibles':
             (new ReservaController())->disponibles();
@@ -89,6 +92,12 @@ try {
         // GET /api/historial: acceso personal.
         case $method === 'GET' && $route === 'historial':
             (new UsuarioController())->historial();
+        // GET /api/consultas: acceso personal.
+        case $method === 'GET' && $route === 'consultas':
+            (new ConsultaController())->index();
+        // PATCH /api/consultas/{id}/leida: acceso personal.
+        case $method === 'PATCH' && preg_match('~^consultas/([1-9][0-9]*)/leida$~D', $route, $match):
+            (new ConsultaController())->marcarLeida(Solicitud::number($match[1], 'id'));
         // GET /api/usuarios-admin: acceso personal.
         case $method === 'GET' && $route === 'usuarios-admin':
             (new UsuarioController())->index();

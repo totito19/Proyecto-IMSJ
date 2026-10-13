@@ -5,7 +5,7 @@ final class Prueba {
     public function __construct(public readonly array $row) {}
     public function toArray(bool $includeAnswer = true): array {
         $r=$this->row;
-        $data=['id'=>(int)$r['id'],'pregunta'=>$r['pregunta'],'opciones'=>['A'=>$r['opcion_a'],'B'=>$r['opcion_b'],'C'=>$r['opcion_c'],'D'=>$r['opcion_d']]];
+        $data=['id'=>(int)$r['id'],'pregunta'=>$r['pregunta'],'imagen'=>Archivo::url($r['imagen']??null),'opciones'=>['A'=>$r['opcion_a'],'B'=>$r['opcion_b'],'C'=>$r['opcion_c'],'D'=>$r['opcion_d']]];
         if ($includeAnswer) $data['respuesta_correcta']=$r['respuesta_correcta'];
         return $data;
     }

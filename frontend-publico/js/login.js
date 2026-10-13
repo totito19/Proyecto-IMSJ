@@ -114,7 +114,7 @@ function initLogin() {
                     document.getElementById('adm-cedula').value,
                     document.getElementById('adm-password').value,
                 );
-                if (user.rol !== 'PERSONAL_IMSJ') {
+                if (!ImsjApi.isStaff(user)) {
                     ImsjApi.clearSession();
                     throw new Error('Esta cuenta no pertenece al personal IMSJ.');
                 }

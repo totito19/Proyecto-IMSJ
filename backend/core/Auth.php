@@ -13,7 +13,11 @@ final class Auth {
         if (!$token || !hash_equals($token['token_hash'], hash('sha256', $matches[2])) || strtotime($token['expires_at'] . ' UTC') <= time()) throw new ApiException(401, 'La sesión venció o no es válida.');
         $user = (new UsuarioRepository())->buscar((int)$token['usuario_id']);
         if (!$user || !$user->activo()) throw new ApiException(401, 'La cuenta no está habilitada.');
-        if ($role !== null && $user->rol() !== $role) throw new ApiException(403, 'No tiene permiso para realizar esta acción.');
+        // Directora hereda el acceso operativo del personal, pero las acciones de
+        // aprobación comprueban DIRECTORA de forma explícita en el servicio.
+        $allowed = $role === null || $user->rol() === $role
+            || ($role === 'PERSONAL_IMSJ' && $user->rol() === 'DIRECTORA');
+        if (!$allowed) throw new ApiException(403, 'No tiene permiso para realizar esta acción.');
         self::$tokenId = $id;
         return $user;
     }

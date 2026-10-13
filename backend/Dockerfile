@@ -15,3 +15,4 @@ RUN sed -ri 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-availabl
     && chown -R www-data:www-data storage
 RUN printf 'display_errors=Off\nlog_errors=On\nupload_max_filesize=10M\npost_max_size=24M\n' > /usr/local/etc/php/conf.d/imsj.ini
 EXPOSE 80
+CMD ["sh", "-c", "php scripts/migrar.php && exec apache2-foreground"]

@@ -37,6 +37,7 @@ function today() {
 const BADGES = {
   confirmada:            { label: 'Confirmada',          cls: 'badge--emerald' },
   pendiente:             { label: 'Pendiente',           cls: 'badge--amber' },
+  aprobado:              { label: 'Aprobado',            cls: 'badge--blue' },
   cancelada:             { label: 'Cancelada',           cls: 'badge--red' },
   urgente:               { label: 'Urgente',             cls: 'badge--urgent' },
   publicada:             { label: 'Publicada',           cls: 'badge--emerald' },
@@ -59,12 +60,13 @@ function badge(estado) {
 
 function actionBtn(iconName, title, opts = {}) {
   const danger = opts.danger ? ' action-btn--danger' : '';
+  const labeled = opts.labeled ? ' action-btn--labeled' : '';
   const attrs = Object.entries(opts.data || {})
     .map(([k, v]) => ` data-${k}="${esc(v)}"`)
     .join('');
   return (
-    `<button type="button" class="action-btn${danger}" title="${esc(title)}" ` +
-    `aria-label="${esc(title)}"${attrs}>${icon(iconName, 14)}</button>`
+    `<button type="button" class="action-btn${danger}${labeled}" title="${esc(title)}" ` +
+    `aria-label="${esc(title)}"${attrs}>${icon(iconName, 14)}${opts.labeled ? `<span>${esc(title)}</span>` : ''}</button>`
   );
 }
 
@@ -161,6 +163,7 @@ function initAdminNavigation() {
   if (!nav) return;
 
   [
+    { href: 'consultas.html', icon: 'mail', label: 'Consultas' },
     { href: 'preguntas-prueba.html', icon: 'clipboard-check', label: 'Banco de pruebas' },
     { href: 'usuarios.html', icon: 'users', label: 'Personal IMSJ' },
   ].forEach((item) => {
@@ -196,8 +199,10 @@ function initUserProfile() {
 
   const name = $('.user__name');
   const avatar = $('.user__avatar');
+  const role = $('.user__role');
   if (name) name.textContent = displayName;
   if (avatar) avatar.textContent = initials || 'IM';
+  if (role) role.textContent = usuario.rol === 'DIRECTORA' ? 'Directora' : 'Personal IMSJ';
 }
 
 function historyElementLabel(type) {
@@ -207,6 +212,7 @@ function historyElementLabel(type) {
     Noticia: 'noticia',
     PreguntaFrecuente: 'pregunta frecuente',
     PreguntaPrueba: 'pregunta de prueba',
+    Consulta: 'consulta',
     User: 'integrante del personal',
   })[type] || type;
 }
@@ -214,12 +220,16 @@ function historyElementLabel(type) {
 function historyActionLabel(action) {
   return ({
     ACTUALIZAR: 'actualizó',
+    APROBAR: 'aprobó',
     CREAR: 'creó',
     DESACTIVAR: 'quitó',
     DESPUBLICAR: 'ocultó',
     ELIMINAR: 'eliminó',
+    ENVIAR_REVISION: 'envió a revisión',
+    LEER: 'leyó',
     PUBLICAR: 'publicó',
     REACTIVAR: 'volvió a habilitar',
+    VOLVER_BORRADOR: 'volvió a borrador',
   })[action] || action.toLowerCase();
 }
 

@@ -3,20 +3,20 @@
 **Proyecto:** Sistema de Gestión para Educación y Tránsito — IMSJ  
 **Fecha de registro documental:** 07/09/2026
 
-**Actualización de aclaraciones del grupo:** 02/10/2026
+**Actualización técnica para demo:** 13/10/2026
 
 > **Revisión asistida por IA — 02/10/2026:** se conservan solicitudes y fechas registradas. Se agregan impactos documentales y evidencia separada. Las decisiones, estimaciones y aceptación no se deducen de la existencia del código.
 
-Este documento registra los cambios comunicados por el equipo, sus fechas y las aclaraciones posteriores. El grupo confirmó el 02/10/2026 que **CC-01 a CC-04 están pendientes** y corresponden a la **entrega real**. No hay fecha de entrega fijada ni prioridad distinta entre estas cuatro solicitudes. «Pendiente» no acredita implementación terminada, pruebas ni aceptación final. El Inspector de Tránsito tiene autoridad para aceptar entregas y aprobar cambios; su aprobación o solicitud de ajustes se registra en actas a cargo del equipo.
+Este documento registra los cambios comunicados por el equipo, sus fechas y las aclaraciones posteriores. El 02/10/2026 el grupo confirmó que **CC-01 a CC-04 estaban pendientes** para la entrega real. El 13/10/2026 se preparó una implementación técnica de demo para CC-02, CC-03 y CC-04; no se registra como aceptación final. El Inspector de Tránsito tiene autoridad para aceptar entregas y aprobar cambios; su aprobación o solicitud de ajustes se registra en actas a cargo del equipo.
 
 ## 1. Registro de solicitudes
 
 | Código | Fecha de solicitud | Cambio | Solicitante o instancia informada | Estado actual |
 |---|---|---|---|---|
 | CC-01 | 14/08/2026 | Incorporar simulacros de pruebas teóricas. | Profesores, para mantener el nivel del curso. | Pendiente; entrega real |
-| CC-02 | 03/09/2026 | Incorporar un formulario de consultas en el pie de página y su lectura en el panel IMSJ. | Auditoría / demo con el cliente. | Pendiente; entrega real |
-| CC-03 | 03/09/2026 | Incorporar la validación de contenidos por la Directora y separar la aprobación de la publicación. | Auditoría / demo con el cliente. | Pendiente; entrega real |
-| CC-04 | 03/09/2026 | Permitir adjuntar material gráfico a las preguntas de los test. | Auditoría / demo con el cliente. | Pendiente; entrega real |
+| CC-02 | 03/09/2026 | Incorporar un formulario de consultas en el pie de página y su lectura en el panel IMSJ. | Auditoría / demo con el cliente. | Implementación de demo 13/10/2026; aceptación pendiente |
+| CC-03 | 03/09/2026 | Incorporar la validación de contenidos por la Directora y separar la aprobación de la publicación. | Auditoría / demo con el cliente. | Implementación de demo 13/10/2026; aceptación pendiente |
+| CC-04 | 03/09/2026 | Permitir adjuntar material gráfico a las preguntas de los test. | Auditoría / demo con el cliente. | Implementación de demo 13/10/2026; aceptación pendiente |
 | CC-05 | 02/10/2026 | Sustituir Laravel por un backend PHP sin framework, basado en `api-completa`. | Grupo, instrucción directa en esta actualización. | Implementación PHP nativa en versión de trabajo, 05/10/2026; pruebas HTTP/MySQL registradas; revisión y aceptación pendientes. |
 
 ## 2. Detalle de los cambios
@@ -60,6 +60,10 @@ El flujo registrado en este documento es (sin evidencia de aprobación formal ad
 
 **Definiciones pendientes:** solicitante e instancia de origen, formatos admitidos, cantidad y tamaño de adjuntos, y si su incorporación será opcional u obligatoria.
 
+### Implementación de demo — 13/10/2026
+
+Se implementaron CC-02, CC-03 y CC-04 sobre el backend PHP nativo existente: formulario de pie y bandeja de lectura; rol Directora y flujo de cuatro estados aplicado a noticias; una imagen opcional por pregunta del simulador. Se añadió una migración idempotente para instalaciones Docker con volumen existente. La comprobación técnica incluyó arranque aislado con Docker, 25 verificaciones HTTP y revisión visual de portal/panel. Esto registra evidencia de implementación, no revisión interna ni aceptación del cliente.
+
 ## 3. Impacto, decisión y evidencia por cambio
 
 ### CC-05 — Sustitución de Laravel por PHP sin framework
@@ -83,9 +87,9 @@ El flujo registrado en este documento es (sin evidencia de aprobación formal ad
 | ID | Impacto en alcance / documentos | Backlog / requisitos | Decisión y responsable | Evidencia técnica | Tiempo, costo y aceptación |
 |---|---|---|---|---|---|
 | CC-01 | Simulacro, banco de preguntas y corrección; falta configuración acordada; destino confirmado: entrega real. | RF22, US31 (borrador). | Pendiente para entrega real, confirmado por el grupo; tarea/responsable concreto no registrado. Origen: profesores. | Banco/corrección base conservados y comprobados por HTTP el 05/10; reglas completas y aceptación de CC-01 pendientes. | Sin fecha fijada; costo no estimado / aceptación no registrada. |
-| CC-02 | Formulario de pie de portal, persistencia y lectura en panel; implica datos de consultas y permisos. | RF23, US32 (borrador). | Pendiente para entrega real, confirmado por el grupo; tarea/responsable concreto no registrado. Instancia: demo 03/09. | Sin circuito localizado. La consulta de reservas no cumple este cambio. | Sin fecha fijada; costo no estimado / aceptación no registrada. |
-| CC-03 | Estados, aprobación separada y rol Directora; afecta permisos, modelo, UI, API y auditoría. | RF21, US30 (borrador), US2/US7/US9. | Pendiente para entrega real, confirmado por el grupo; tarea/responsable concreto no registrado. Instancia: demo 03/09. | Actual: PUBLICADO/NO_PUBLICADO y PUBLICO_GENERAL/PERSONAL_IMSJ. No se localizó flujo solicitado. | Sin fecha fijada; costo no estimado / aceptación no registrada. |
-| CC-04 | Gráficos asociados a preguntas, almacenamiento y presentación; amplía CC-01. | RF24, US33 (borrador). | Pendiente para entrega real, confirmado por el grupo; tarea/responsable concreto y solicitante personal no registrados. | Preguntas de prueba no tienen adjunto ni validación de archivo. | Sin fecha fijada; costo no estimado / aceptación no registrada. |
+| CC-02 | Formulario de pie de portal, persistencia y lectura en panel; implica datos de consultas y permisos. | RF23, US32 (borrador). | Implementación de demo preparada; revisión/aceptación pendientes. Instancia: demo 03/09. | Formulario, tabla `consultas`, API y bandeja verificados el 13/10. | Costo no estimado / aceptación no registrada. |
+| CC-03 | Estados, aprobación separada y rol Directora; afecta permisos, modelo, UI, API y auditoría. | RF21, US30 (borrador), US2/US7/US9. | Implementación de demo preparada; revisión/aceptación pendientes. Instancia: demo 03/09. | BORRADOR/PENDIENTE/APROBADO/PUBLICADO y rol DIRECTORA verificados el 13/10. | Costo no estimado / aceptación no registrada. |
+| CC-04 | Gráficos asociados a preguntas, almacenamiento y presentación; amplía CC-01. | RF24, US33 (borrador). | Implementación de demo preparada; revisión/aceptación pendientes. | Carga, persistencia y presentación pública de una imagen opcional verificadas el 13/10. | Costo no estimado / aceptación no registrada. |
 | CC-05 | Sustitución tecnológica transversal; guías de migración, API, arquitectura, seguridad, SSOO y pruebas. | Todos los módulos ya presentes; RNF1–RNF4/RNF7–RNF10 y tareas TM-01–TM-07. | Decisión tecnológica del grupo confirmada; tareas concretas por acordar; revisión documental de Juan Robaina pendiente. | Backend nativo y evidencia HTTP/MySQL de 05/10/2026 en [verificación](verificacion.md); api-simple fijada a `d6f61c9`. | Sin fecha/costo/estimación fijados; aprobación académica y aceptación del cliente no registradas. |
 
 ### Definiciones necesarias para cerrar cada solicitud

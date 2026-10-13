@@ -62,6 +62,12 @@ final class Solicitud {
         if (!is_string($value) || strlen($value) > 2048 || !filter_var($value, FILTER_VALIDATE_URL) || !in_array(strtolower((string) parse_url($value, PHP_URL_SCHEME)), ['http', 'https'], true)) Response::invalid($key, 'Se requiere una URL HTTP o HTTPS válida.');
         return $value;
     }
+    public static function email(mixed $value, string $key = 'email'): string {
+        if (!is_string($value)) Response::invalid($key, 'Ingrese un correo electrónico válido.');
+        $email = strtolower(trim($value));
+        if (strlen($email) > 254 || filter_var($email, FILTER_VALIDATE_EMAIL) === false) Response::invalid($key, 'Ingrese un correo electrónico válido.');
+        return $email;
+    }
     /** Normaliza $_FILES tanto para archivo único como para galeria[]. */
     public static function files(string $key): array {
         if (!isset($_FILES[$key])) return [];

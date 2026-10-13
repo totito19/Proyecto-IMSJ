@@ -1,12 +1,12 @@
 # Contrato API IMSJ - PHP nativo
 
-**Versión de trabajo - 05/10/2026; CC-05.** Contrato leído en los consumidores existentes, reimplementado en `backend/public/index.php` y comprobado mediante HTTP/MySQL. La documentación fue preparada con apoyo externo de IA; revisión de Juan Robaina pendiente. [Flujo individual de los 42 endpoints](flujo_endpoints_backend.md).
+**Versión de demo - 13/10/2026; CC-02, CC-03, CC-04 y CC-05.** Contrato implementado en `backend/public/index.php`. La documentación fue preparada con apoyo externo de IA; revisión de Juan Robaina y aceptación del cliente pendientes. El [flujo individual de los 42 endpoints](flujo_endpoints_backend.md) documenta la base previa; este inventario incluye las tres rutas de consultas añadidas.
 
 Base local: `http://localhost:8000/api`. JSON de entrada/salida; archivos mediante multipart. En rutas protegidas: `Authorization: Bearer <token>` y `Accept: application/json`. El token se entrega en la raíz junto a `usuario` y `expira_en`; el frontend lo guarda en `sessionStorage`. Los valores concretos de ejemplos son ilustrativos.
 
 ## Acceso y respuestas
 
-Roles conservados: `PUBLICO_GENERAL` y `PERSONAL_IMSJ`. `Auth` valida hash del token, vigencia de ocho horas, cuenta activa y rol almacenado en MySQL; iniciar sesión revoca sesiones anteriores. Logout y desactivación revocan tokens. Las sesiones anteriores a la reescritura requieren nuevo login.
+Roles: `PUBLICO_GENERAL`, `PERSONAL_IMSJ` y `DIRECTORA`. Directora hereda el acceso administrativo y es el único rol que puede aprobar una noticia pendiente. `Auth` valida hash del token, vigencia de ocho horas, cuenta activa y rol almacenados en MySQL; iniciar sesión revoca sesiones anteriores. Logout y desactivación revocan tokens.
 
 200: consulta/edición/corrección; 201: alta/registro/reserva; 204: eliminación/desactivación/logout, sin cuerpo; 400: JSON mal formado; 401: falta de sesión, token inválido/expirado o cuenta inactiva; 403: rol insuficiente; 404: ruta/recurso inexistente; 413: cuerpo multipart por encima del límite PHP; 422: validación o conflicto de unicidad; 429: más de cinco intentos/minuto para login o registro; 500: fallo interno, sin SQL ni secretos en la respuesta. Ruta y método sin coincidencia en el switch devuelven 404.
 
@@ -24,12 +24,15 @@ Errores de campo: `{"message":"Los datos no son válidos.","errors":{"campo":["d
 | GET | `/portal/preguntas` | publico | `PreguntaController::publicIndex` |
 | GET | `/portal/prueba` | publico | `PruebaController::publicIndex` |
 | POST | `/portal/prueba/corregir` | publico | `PruebaController::corregir` |
+| POST | `/portal/consultas` | publico | `ConsultaController::store` |
 | GET | `/franjas/disponibles` | publico | `ReservaController::disponibles` |
 | GET | `/me` | autenticado | `AuthController::me` |
 | POST | `/logout` | autenticado | `AuthController::logout` |
 | POST | `/reservas` | ciudadano | `ReservaController::store` |
 | GET | `/reservas/mias` | ciudadano | `ReservaController::mine` |
 | GET | `/historial` | personal | `UsuarioController::historial` |
+| GET | `/consultas` | personal/directora | `ConsultaController::index` |
+| PATCH | `/consultas/{id}/leida` | personal/directora | `ConsultaController::markRead` |
 | GET | `/usuarios-admin` | personal | `UsuarioController::index` |
 | POST | `/usuarios-admin` | personal | `UsuarioController::store` |
 | DELETE | `/usuarios-admin/{id}` | personal | `UsuarioController::destroy` |
@@ -78,8 +81,10 @@ Además de PUT JSON y multipart nativo, se conserva **POST multipart con `_metho
 
 `/storage/<ruta>` sirve PDF/imágenes validados fuera de `public/`; los nombres son aleatorios. Las URL de archivos se construyen con `APP_URL`. Solo esos tipos se sirven; se comprueba que la ruta resuelta siga dentro del almacenamiento. El formulario global admite 24 MB. OPTIONS responde 204 para los orígenes configurados; un preflight de origen ajeno devuelve 403. CORS no reemplaza autenticación.
 
-## Diferencias y pendientes
+## Reglas de la demo y pendientes
 
-No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`. Conservados los estados PUBLICADO/NO_PUBLICADO y los dos roles existentes. Consultas, Directora, aprobación diferenciada, categorías y gráficos del test siguen pendientes. Cancelación, confirmación de agenda, costo urgente y nuevos campos de contacto no se incorporan por esta reescritura. Agenda y reservas son académicas.
+Las noticias siguen `BORRADOR → PENDIENTE → APROBADO → PUBLICADO`. Personal puede preparar, enviar a revisión y publicar una noticia aprobada; solo Directora puede aprobar. Editar una noticia la devuelve a borrador. El portal acepta consultas con nombre, correo y mensaje; el panel permite leerlas y marcarlas como leídas. Las preguntas del simulador admiten una imagen opcional que se muestra sin revelar la respuesta correcta.
+
+No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`. Categorías, respuestas/notificaciones para consultas, cancelación, confirmación de agenda, costo urgente y nuevos campos de contacto no se incorporan. Agenda y reservas son académicas. La implementación de demo no acredita aceptación institucional.
 
 Las equivalencias frente a la [letra académica](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md) y la aceptación de PHP nativo corresponden al equipo/docentes. Las pruebas no acreditan aceptación institucional; [resultados y límites](verificacion.md).

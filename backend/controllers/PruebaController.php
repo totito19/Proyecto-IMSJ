@@ -12,12 +12,14 @@ final class PruebaController {
     /** Crear incluye validación y registro de auditoría en la transacción. */
     public function store(): never {
         $actor = Auth::requireUser('PERSONAL_IMSJ');
-        Response::json(['pregunta' => $this->service->guardar($this->validate(), $actor)->toArray()], 201);
+        [$datos, $imagen] = $this->validate();
+        Response::json(['pregunta' => $this->service->guardar($datos, $imagen, $actor)->toArray()], 201);
     }
     /** La edición conserva el identificador y exige todos los campos editables. */
     public function update(int $id): never {
         $actor = Auth::requireUser('PERSONAL_IMSJ');
-        Response::json(['pregunta' => $this->service->guardar($this->validate(), $actor, $id)->toArray()]);
+        [$datos, $imagen] = $this->validate();
+        Response::json(['pregunta' => $this->service->guardar($datos, $imagen, $actor, $id)->toArray()]);
     }
     /** El servicio elimina el elemento y registra quién realizó la operación. */
     public function destroy(int $id): never {
@@ -40,6 +42,10 @@ final class PruebaController {
         $result = ['pregunta' => Solicitud::text($d, 'pregunta', 500)];
         foreach (['a', 'b', 'c', 'd'] as $letter) $result['opcion_' . $letter] = Solicitud::text($d, 'opcion_' . $letter, 255);
         $result['respuesta_correcta'] = Solicitud::option($d['respuesta_correcta'] ?? null, 'respuesta_correcta', ['A', 'B', 'C', 'D']);
-        return $result;
+        $result['eliminar_imagen'] = ($d['eliminar_imagen'] ?? '0') === '1';
+        $imagen = Solicitud::files('imagen');
+        if (count($imagen) > 1) Response::invalid('imagen', 'Se admite una imagen por pregunta.');
+        if ($imagen && $result['eliminar_imagen']) Response::invalid('imagen', 'No puede subir y quitar la imagen a la vez.');
+        return [$result, $imagen];
     }
 }

@@ -4,7 +4,7 @@ let queryUsuarios = '';
 function usuariosFiltrados() {
   if (!queryUsuarios) return usuariosAdmin;
   return usuariosAdmin.filter((usuario) =>
-    [usuario.nombre, usuario.cedula].join(' ').toLowerCase().includes(queryUsuarios));
+    [usuario.nombre, usuario.cedula, usuario.rol].join(' ').toLowerCase().includes(queryUsuarios));
 }
 
 function formatDateTime(value) {
@@ -19,6 +19,7 @@ function renderUsuarios() {
     <tr>
       <td><strong>${esc(usuario.nombre)}</strong></td>
       <td class="mono">${esc(usuario.cedula)}</td>
+      <td>${badge(usuario.rol === 'DIRECTORA' ? 'aprobado' : 'activo').replace(usuario.rol === 'DIRECTORA' ? 'Aprobado' : 'Activo', usuario.rol === 'DIRECTORA' ? 'Directora' : 'Personal')}</td>
       <td>${esc(formatDateTime(usuario.created_at))}</td>
       <td><div class="actions">
         ${usuario.id === currentUser.id
@@ -43,9 +44,12 @@ async function cargarUsuarios() {
 
 async function guardarUsuario(event) {
   event.preventDefault();
-  if (!event.currentTarget.reportValidity()) return;
+  // currentTarget deja de estar disponible después del primer await.
+  // Conservar el formulario evita que el reset intente ejecutarse sobre null.
+  const form = event.currentTarget;
+  if (!form.reportValidity()) return;
 
-  const submitButton = event.currentTarget.querySelector('[type="submit"]');
+  const submitButton = form.querySelector('[type="submit"]');
   submitButton.disabled = true;
   try {
     const payload = await ImsjApi.request('/usuarios-admin', {
@@ -53,10 +57,11 @@ async function guardarUsuario(event) {
       body: {
         nombre: $('#u-nombre').value.trim(),
         cedula: $('#u-cedula').value.trim(),
+        rol: $('#u-rol').value,
       },
     });
     Modal.close('modal-usuario');
-    event.currentTarget.reset();
+    form.reset();
     await cargarUsuarios();
     alert(`Acceso creado para ${payload.usuario.nombre}. Clave inicial: ${payload.clave_inicial}`);
   } catch (error) {
@@ -68,7 +73,7 @@ async function guardarUsuario(event) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const usuario = ImsjApi.currentUser();
-  if (!usuario || usuario.rol !== 'PERSONAL_IMSJ') {
+  if (!ImsjApi.isStaff(usuario)) {
     window.location.assign(`/frontend-publico/login.html?return=${encodeURIComponent(window.location.pathname)}`);
     return;
   }

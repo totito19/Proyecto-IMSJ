@@ -6,7 +6,7 @@
   <title>Noticias | IMSJ</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" href="img/escudo-san-jose.png">
-  <link rel="stylesheet" href="css/styles.css?v=2">
+  <link rel="stylesheet" href="css/styles.css?v=5">
 </head>
 <body>
 
@@ -71,6 +71,7 @@
           <div>
             <div class="card__title">Noticias administrativas</div>
             <div class="card__meta"><span id="contador-noticias">0</span> noticias en el sistema</div>
+            <div class="card__meta">Flujo: enviar a revisión → aprobar como Directora → publicar.</div>
           </div>
           <button type="button" class="btn btn--primary" id="btn-nueva-noticia">
             <span data-icon="plus" data-size="14"></span> Nueva noticia
@@ -115,19 +116,11 @@
                   <span data-file-label>Seleccionar imagen...</span>
                 </button>
               </div>
-              <div class="form-grid">
-                <div class="field">
-                  <label for="n-estado">Estado</label>
-                  <select class="input" id="n-estado" name="estado">
-                    <option value="borrador">Borrador</option>
-                    <option value="publicada">Publicada</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label for="n-vigencia">Vigencia hasta</label>
-                  <input type="date" class="input" id="n-vigencia" name="vigencia">
-                </div>
+              <div class="field">
+                <label for="n-vigencia">Vigencia hasta</label>
+                <input type="date" class="input" id="n-vigencia" name="vigencia" required>
               </div>
+              <p class="card__meta" id="n-flujo-nota">La noticia se guarda como Borrador. Luego se envía a revisión.</p>
               <div class="form-foot">
                 <button type="button" class="btn btn--ghost" data-modal-close>Cancelar</button>
                 <button type="submit" class="btn btn--primary" id="btn-guardar-noticia">Guardar noticia</button>
@@ -141,8 +134,8 @@
 </div>
 
 <script src="js/icons.js?v=2"></script>
-<script src="js/api.js?v=2"></script>
-<script src="js/ui.js?v=2"></script>
-<script src="js/noticias.js"></script>
+<script src="js/api.js?v=5"></script>
+<script src="js/ui.js?v=5"></script>
+<script src="js/noticias.js?v=5"></script>
 </body>
 </html>

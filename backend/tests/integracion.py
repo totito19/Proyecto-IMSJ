@@ -80,6 +80,7 @@ sql((ROOT / 'database.sql').read_text(encoding='utf-8'))
 # La cuenta inicial requiere una acción CLI explícita. Este hash es solo de prueba.
 hash_value = '$2y$12$wHo2qJcmf0kZPEuBo.6jfOunmku6xpF/Ikuv1kuJeQmVS6/SjfzJC'
 sql(f"INSERT INTO usuarios(nombre,cedula,password,rol,activo) VALUES ('Equipo prueba','22222222','{hash_value}','PERSONAL_IMSJ',1);")
+sql(f"INSERT INTO usuarios(nombre,cedula,password,rol,activo) VALUES ('Dirección prueba','22222223','{hash_value}','DIRECTORA',1);")
 
 call('GET', '/api/health', fields=['status'])
 call('GET', '/api/me', expect=401)
@@ -88,6 +89,7 @@ call('GET', '/.env', expect=404)
 call('GET', '/api/desconocido', expect=404)
 call('POST', '/api/login', raw=b'{mal', expect=400)
 staff = call('POST', '/api/login', {'cedula': '22222222', 'password': 'prueba123'}, fields=['token', 'usuario', 'expira_en'])['token']
+director = call('POST', '/api/login', {'cedula': '22222223', 'password': 'prueba123'}, fields=['token', 'usuario', 'expira_en'])['token']
 user_data = {'cedula': '33333333', 'password': 'prueba123', 'password_confirmation': 'prueba123'}
 citizen = call('POST', '/api/register', user_data, expect=201, fields=['token', 'usuario', 'expira_en'])['token']
 call('GET', '/api/me', token=citizen, fields=['usuario'])
@@ -97,12 +99,16 @@ call('POST', '/api/register', user_data, expect=422)
 call('POST', '/api/register', {**user_data, 'password_confirmation': 'otra'}, expect=422)
 check(len(sql('SELECT token_hash FROM auth_tokens LIMIT 1;')) == 64 and staff.split('|')[1] not in sql('SELECT token_hash FROM auth_tokens;'), 'Solo hashes de token persistidos')
 
+png = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/l9sAAAAASUVORK5CYII=')
 question = {'pregunta': '¿Semáforo rojo?', 'opcion_a': 'Detenerse', 'opcion_b': 'Seguir', 'opcion_c': 'Acelerar', 'opcion_d': 'Girar', 'respuesta_correcta': 'A'}
-qid = call('POST', '/api/preguntas-prueba', question, staff, 201, ['pregunta'])['pregunta']['id']
+created_question = call('POST', '/api/preguntas-prueba', question, staff, 201, ['pregunta'], multipart=[('imagen', 'senal.png', png, 'image/png')])['pregunta']
+qid = created_question['id']
+check(created_question['imagen'] and call('GET', created_question['imagen'].replace(URL, '')) == png, 'Gráfico de pregunta almacenado y descargable')
 call('GET', '/api/preguntas-prueba', token=staff, fields=['preguntas'])
 call('PUT', f'/api/preguntas-prueba/{qid}', {**question, 'pregunta': '¿Qué indica rojo?'}, staff, fields=['pregunta'])
 public_quiz = call('GET', '/api/portal/prueba', fields=['preguntas'])
 check('respuesta_correcta' not in public_quiz['preguntas'][0], 'Prueba pública sin respuestas correctas')
+check(public_quiz['preguntas'][0]['imagen'], 'Prueba pública presenta material gráfico')
 result = call('POST', '/api/portal/prueba/corregir', {'respuestas': [{'pregunta_id': qid, 'opcion': 'A'}]}, fields=['total', 'correctas', 'resultados'])
 check(result['correctas'] == 1, 'Corrección usa respuesta de SQL')
 call('POST', '/api/portal/prueba/corregir', {'respuestas': [{'pregunta_id': qid, 'opcion': 'A'}] * 2}, expect=422)
@@ -124,9 +130,12 @@ call('GET', f'/api/noticias/{nid}', token=staff, fields=['noticia'])
 check(not call('GET', '/api/portal/noticias')['noticias'], 'Noticias borrador ocultas')
 call('PUT', f'/api/noticias/{nid}', {**news, 'titulo': 'Información actualizada', 'enlaces': []}, staff, fields=['noticia'])
 call('POST', f'/api/noticias/{nid}', {**{k: v for k, v in news.items() if k != 'enlaces'}, '_method': 'PUT'}, staff, multipart=[])
+call('PATCH', f'/api/noticias/{nid}/estado', {'estado': 'PENDIENTE'}, staff, fields=['noticia'])
+call('PATCH', f'/api/noticias/{nid}/estado', {'estado': 'APROBADO'}, staff, expect=403)
+call('GET', '/api/noticias', token=director, fields=['noticias'])
+call('PATCH', f'/api/noticias/{nid}/estado', {'estado': 'APROBADO'}, director, fields=['noticia'])
 call('PATCH', f'/api/noticias/{nid}/estado', {'estado': 'PUBLICADO'}, staff, fields=['noticia'])
 check(len(call('GET', '/api/portal/noticias')['noticias']) == 1, 'Noticia vigente publicada visible')
-png = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/l9sAAAAASUVORK5CYII=')
 cover = call('PUT', f'/api/noticias/{nid}', {k: v for k, v in news.items() if k != 'enlaces'}, staff,
              multipart=[('imagen_portada', 'imagen.png', png, 'image/png')])['noticia']['imagen_portada']
 check(call('GET', cover.replace(URL, '')) == png, 'Portada real descargable')
@@ -135,6 +144,12 @@ call('PUT', f'/api/noticias/{nid}', {k: v for k, v in news.items() if k != 'enla
 call('POST', '/api/noticias', {k: v for k, v in news.items() if k != 'enlaces'}, staff, 422,
      multipart=[('imagen_portada', 'imagen.png', b'<?php echo 1;', 'image/png')])
 call('POST', '/api/noticias', {**news, 'fecha_fin_vigencia': '2000-01-01'}, staff, 422)
+
+consulta = call('POST', '/api/portal/consultas', {'nombre': 'María Pérez', 'email': 'maria@example.org', 'mensaje': 'Necesito información sobre educación vial.'}, expect=201, fields=['consulta'])['consulta']
+inbox = call('GET', '/api/consultas', token=staff, fields=['consultas'])['consultas']
+check(inbox[0]['id'] == consulta['id'] and not inbox[0]['leida'], 'Consulta pública llega sin leer al panel')
+read_consultation = call('PATCH', f"/api/consultas/{consulta['id']}/leida", token=staff, fields=['consulta'])['consulta']
+check(read_consultation['leida'], 'Lectura de consulta persistida')
 
 video = {'nombre': 'Educación vial', 'tipo': 'VIDEO', 'ubicacion_recurso': 'https://example.org/video'}
 mid = call('POST', '/api/materiales', video, staff, 201, ['material'])['material']['id']
@@ -171,8 +186,8 @@ slot2 = call('POST', '/api/franjas', {**franja, 'hora_inicio': '11:00', 'hora_fi
 call('DELETE', f'/api/franjas/{slot2}', token=staff, expect=204)
 call('GET', '/api/agenda?vista=anual', token=staff, expect=422)
 
-created = call('POST', '/api/usuarios-admin', {'nombre': 'Segundo personal', 'cedula': '44444444'}, staff, 201, ['usuario', 'clave_inicial'])
-check(set(created['usuario']) == {'id', 'nombre', 'cedula'}, 'Alta de personal conserva los tres campos originales')
+created = call('POST', '/api/usuarios-admin', {'nombre': 'Segundo personal', 'cedula': '44444444', 'rol': 'PERSONAL_IMSJ'}, staff, 201, ['usuario', 'clave_inicial'])
+check(set(created['usuario']) == {'id', 'nombre', 'cedula', 'rol'}, 'Alta de personal devuelve identidad y rol')
 admin = created['usuario']['id']
 listed = call('GET', '/api/usuarios-admin', token=staff, fields=['usuarios'])
 timestamp = next(u['created_at'] for u in listed['usuarios'] if u['id'] == admin)
@@ -230,10 +245,10 @@ call('GET', '/api/me', token=new_token, expect=401)
 for _ in range(1):
     call('POST', '/api/login', {'cedula': '22222222', 'password': 'incorrecta'}, expect=422)
 call('POST', '/api/login', {'cedula': '22222222', 'password': 'incorrecta'}, expect=429)
-# Contrastar las 42 rutas implementadas con peticiones efectivamente ejecutadas.
+# Contrastar las rutas implementadas con peticiones efectivamente ejecutadas.
 expected = set(re.findall(r'// (GET|POST|PUT|PATCH|DELETE) (/api/[^:]+): acceso', (ROOT/'public/index.php').read_text(encoding='utf-8')))
 normalized = {(m, re.sub(r'/[0-9]+(?=/|$)', '/{id}', p)) for m,p in covered}
-check(expected.issubset(normalized), 'Cobertura efectiva de las 42 declaraciones de ruta')
+check(expected.issubset(normalized), 'Cobertura efectiva de todas las declaraciones de ruta')
 report = {'fecha': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'checks': len(checks), 'peticiones_distintas': len(covered),
           'ultimo_cupo': statuses, 'base': NAME, 'resultado': 'OK', 'endpoints': len(expected), 'php': '8.5.11', 'mysql': sql('SELECT VERSION();'), 'archivos_php_sha256': {str(p.relative_to(ROOT)).replace(chr(92), '/'): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(ROOT.rglob('*.php'))}}
 print(json.dumps(report, ensure_ascii=False, indent=2))

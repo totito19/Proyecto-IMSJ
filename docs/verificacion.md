@@ -1,5 +1,11 @@
 # Verificación de la versión PHP nativa - 05/10/2026
 
+## Actualización de demo — 13/10/2026
+
+CC-02, CC-03 y CC-04 se comprobaron en un proyecto Docker aislado y descartable con base/volúmenes propios. `tests/demo_smoke.mjs` completó 25 verificaciones: salud y autenticación; rol Directora; envío, listado y lectura de consultas; alta y descarga del gráfico de una pregunta sin exponer la respuesta; borrador, envío a revisión, rechazo de aprobación por personal, aprobación por Directora, publicación y visibilidad pública. También se revisaron visualmente el formulario del portal, noticias, consultas y banco de preguntas, sin errores de consola observados. La instancia normal se reconstruyó preservando sus volúmenes. Estos resultados acreditan la implementación de demo, no aceptación del cliente ni revisión interna.
+
+Las secciones fechadas 05/10/2026 que siguen documentan la línea base de 42 rutas anterior a las tres rutas de consultas; se conservan como antecedente.
+
 **Resultado:** 155 comprobaciones correctas de la suite HTTP/MySQL y cobertura efectiva de las **42 declaraciones de ruta** en public/index.php. Se probaron los archivos definitivos de backend, no una API de ejemplo. [Evidencia por hash](evidencia_backend_nativo.json); revisión interna de Juan Robaina pendiente. Preparado con apoyo externo de IA; crédito y responsabilidad del proyecto corresponden al equipo.
 
 ## Entorno y procedimiento ejecutados

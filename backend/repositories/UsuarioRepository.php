@@ -24,15 +24,15 @@ final class UsuarioRepository {
     }
     /** Consulta cuentas de personal activas, sin exponer sus contraseñas. */
     public function personal(): array {
-        return array_map(fn($r)=>(new Usuario($r))->adminArray(), Database::query("SELECT * FROM usuarios WHERE rol = 'PERSONAL_IMSJ' AND activo = 1 ORDER BY nombre, id")->fetchAll());
+        return array_map(fn($r)=>(new Usuario($r))->adminArray(), Database::query("SELECT * FROM usuarios WHERE rol IN ('PERSONAL_IMSJ','DIRECTORA') AND activo = 1 ORDER BY nombre, id")->fetchAll());
     }
     /** Bloquea en orden estable al personal para evitar dos desactivaciones simultáneas del último acceso. */
     public function bloquearPersonal(): array {
-        return Database::query("SELECT id FROM usuarios WHERE rol = 'PERSONAL_IMSJ' AND activo = 1 ORDER BY id FOR UPDATE")->fetchAll();
+        return Database::query("SELECT id FROM usuarios WHERE rol IN ('PERSONAL_IMSJ','DIRECTORA') AND activo = 1 ORDER BY id FOR UPDATE")->fetchAll();
     }
     /** Recupera una cuenta de personal existente con la nueva clave inicial. */
-    public function reactivar(int $id, string $nombre, string $hash): Usuario {
-        Database::query('UPDATE usuarios SET nombre = ?, password = ?, activo = 1, updated_at = UTC_TIMESTAMP() WHERE id = ?', [$nombre, $hash, $id]);
+    public function reactivar(int $id, string $nombre, string $hash, string $rol): Usuario {
+        Database::query('UPDATE usuarios SET nombre = ?, password = ?, rol = ?, activo = 1, updated_at = UTC_TIMESTAMP() WHERE id = ?', [$nombre, $hash, $rol, $id]);
         return $this->buscar($id);
     }
     /** Retira acceso activo conservando las relaciones históricas del usuario. */

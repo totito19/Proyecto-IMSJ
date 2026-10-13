@@ -27,7 +27,8 @@ final class NoticiaService {
             $galleryPaths=[];
             foreach ($galeria as $file) { $path=Archivo::save($file,'noticias',2048); $newPaths[]=$path; $galleryPaths[]=$path; }
             if ($old && $galeria) $remove=[...$remove,...array_filter($old->paths(),fn($p)=>$p!==$old->row['imagen_portada'])];
-            $datos['imagen_portada']=$cover; $datos['estado']=$old?->row['estado']??'NO_PUBLICADO';
+            // Toda edición vuelve a borrador: el contenido modificado debe validarse otra vez.
+            $datos['imagen_portada']=$cover; $datos['estado']='BORRADOR';
             $noticia=Database::transaction(function() use($datos,$galleryPaths,$galeria,$old,$id,$actor) {
                 $saved=$old?$this->repo->actualizar($id,$datos):$this->repo->crear($datos);
                 $savedId=(int)$saved->row['id'];
@@ -41,14 +42,29 @@ final class NoticiaService {
         foreach($remove as $path) Archivo::delete($path);
         return $noticia;
     }
-    /** Modifica la publicación como una operación administrativa auditada. */
+    /** Aplica el flujo Borrador -> Pendiente -> Aprobado -> Publicado. */
     public function estado(int $id,string $estado,Usuario $actor): Noticia {
         $old=$this->detalle($id);
         if ($old->row['estado']===$estado) return $old;
+        $actual=$old->row['estado'];
+        $transiciones=[
+            'BORRADOR'=>['PENDIENTE'],
+            'PENDIENTE'=>['BORRADOR','APROBADO'],
+            'APROBADO'=>['BORRADOR','PUBLICADO'],
+            'PUBLICADO'=>['BORRADOR'],
+        ];
+        if (!in_array($estado,$transiciones[$actual]??[],true)) Response::invalid('estado','La transición de estado no está permitida.');
+        if ($estado==='APROBADO' && $actor->rol()!=='DIRECTORA') throw new ApiException(403,'Solo la Directora puede aprobar noticias.');
         return Database::transaction(function() use($old,$id,$estado,$actor) {
             $data=$old->row; $data['estado']=$estado;
             $saved=$this->repo->actualizar($id,$data);
-            $this->audit->registrar($actor->id(),$estado==='PUBLICADO'?'PUBLICAR':'DESPUBLICAR','Noticia',$id);
+            $accion=match($estado) {
+                'PENDIENTE'=>'ENVIAR_REVISION',
+                'APROBADO'=>'APROBAR',
+                'PUBLICADO'=>'PUBLICAR',
+                default=>'VOLVER_BORRADOR',
+            };
+            $this->audit->registrar($actor->id(),$accion,'Noticia',$id);
             return $saved;
         });
     }

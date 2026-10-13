@@ -50,7 +50,7 @@
         </div>
         <div class="table-wrap">
           <table class="data">
-            <thead><tr><th>Nombre</th><th>Cédula</th><th>Fecha de alta</th><th>Acciones</th></tr></thead>
+            <thead><tr><th>Nombre</th><th>Cédula</th><th>Rol</th><th>Fecha de alta</th><th>Acciones</th></tr></thead>
             <tbody id="tbody-usuarios"></tbody>
           </table>
           <div class="empty" id="empty-usuarios" hidden>No hay integrantes cargados.</div>
@@ -65,6 +65,7 @@
             <form class="form-body" id="form-usuario" novalidate>
               <div class="field"><label for="u-nombre">Nombre completo</label><input class="input" id="u-nombre" placeholder="Ej.: Ana Pérez" maxlength="120" required></div>
               <div class="field"><label for="u-cedula">Cédula</label><input class="input" id="u-cedula" placeholder="X.XXX.XXX-X" inputmode="numeric" required></div>
+              <div class="field"><label for="u-rol">Rol</label><select class="input" id="u-rol"><option value="PERSONAL_IMSJ">Personal IMSJ</option><option value="DIRECTORA">Directora</option></select></div>
               <p class="card__meta">La clave inicial será <strong>imsj1234</strong>. El nombre se utiliza para identificar sus acciones en el historial.</p>
               <div class="form-foot"><button type="button" class="btn btn--ghost" data-modal-close>Cancelar</button><button type="submit" class="btn btn--primary">Agregar integrante</button></div>
             </form>
@@ -76,8 +77,8 @@
 </div>
 
 <script src="js/icons.js?v=2"></script>
-<script src="js/api.js?v=2"></script>
-<script src="js/ui.js?v=2"></script>
-<script src="js/usuarios.js"></script>
+<script src="js/api.js?v=4"></script>
+<script src="js/ui.js?v=4"></script>
+<script src="js/usuarios.js?v=4"></script>
 </body>
 </html>

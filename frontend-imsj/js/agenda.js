@@ -107,7 +107,7 @@ async function cargarAgenda() {
 
 document.addEventListener('DOMContentLoaded', () => {
   const usuario = ImsjApi.currentUser();
-  if (!usuario || usuario.rol !== 'PERSONAL_IMSJ') {
+  if (!ImsjApi.isStaff(usuario)) {
     window.location.assign(`/frontend-publico/login.html?return=${encodeURIComponent(window.location.pathname)}`);
     return;
   }

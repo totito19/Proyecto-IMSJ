@@ -11,7 +11,7 @@ final class Usuario {
         return ['id' => $this->id(), 'nombre' => $this->row['nombre'], 'cedula' => $this->row['cedula'], 'rol' => $this->rol()];
     }
     public function adminArray(): array {
-        $data = $this->toArray(); unset($data['rol']);
+        $data = $this->toArray();
         // ISO 8601 permite al navegador interpretar UTC igual que en la API anterior.
         $data['created_at'] = $this->row['created_at'] === null ? null
             : (new DateTimeImmutable($this->row['created_at'], new DateTimeZone('UTC')))->format(DATE_ATOM);

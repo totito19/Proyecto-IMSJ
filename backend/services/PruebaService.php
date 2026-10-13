@@ -18,17 +18,31 @@ final class PruebaService {
         return $this->repo->buscar($id) ?? throw new ApiException(404,'No existe esa pregunta.');
     }
     /** Coordina alta o edición y confirma la auditoría junto con el cambio. */
-    public function guardar(array $datos,Usuario $actor,?int $id=null): Prueba {
+    public function guardar(array $datos,array $imagen,Usuario $actor,?int $id=null): Prueba {
         $old=$id!==null?$this->detalle($id):null;
-        return Database::transaction(function() use($old,$id,$datos,$actor) {
-            $saved=$old?$this->repo->actualizar($id,$datos):$this->repo->crear($datos);
-            $this->audit->registrar($actor->id(),$old?'ACTUALIZAR':'CREAR','PreguntaPrueba',(int)$saved->row['id']); return $saved;
-        });
+        $oldPath=$old?->row['imagen']??null;
+        $newPath=null;
+        try {
+            if ($imagen) $newPath=Archivo::save($imagen[0],'pruebas',2048);
+            $datos['imagen']=$newPath ?? (($datos['eliminar_imagen']??false) ? null : $oldPath);
+            unset($datos['eliminar_imagen']);
+            $saved=Database::transaction(function() use($old,$id,$datos,$actor) {
+                $result=$old?$this->repo->actualizar($id,$datos):$this->repo->crear($datos);
+                $this->audit->registrar($actor->id(),$old?'ACTUALIZAR':'CREAR','PreguntaPrueba',(int)$result->row['id']);
+                return $result;
+            });
+        } catch (Throwable $error) {
+            if ($newPath) Archivo::delete($newPath);
+            throw $error;
+        }
+        if ($oldPath && $oldPath!==$saved->row['imagen']) Archivo::delete($oldPath);
+        return $saved;
     }
     /** Elimina el registro indicado; la transacción la coordina el servicio. */
     public function eliminar(int $id,Usuario $actor): void {
-        $this->detalle($id);
+        $old=$this->detalle($id);
         Database::transaction(function() use($id,$actor) { $this->audit->registrar($actor->id(),'ELIMINAR','PreguntaPrueba',$id); $this->repo->eliminar($id); });
+        Archivo::delete($old->row['imagen']??null);
     }
     /** Presenta las preguntas públicas sin incluir la respuesta correcta. */
     public function publica(): array {
@@ -42,7 +56,8 @@ final class PruebaService {
             $id=Solicitud::number($answer['pregunta_id']??null,'pregunta_id');
             $option=Solicitud::option($answer['opcion']??null,'opcion',['A','B','C','D']);
             if (isset($seen[$id])) Response::invalid('respuestas','Las preguntas no pueden repetirse.');
-            $seen[$id]=true; $question=$this->repo->buscar($id);
+            $seen[$id]=true;
+            $question=$this->repo->buscar($id);
             if (!$question) Response::invalid('pregunta_id','La pregunta indicada no existe.');
             $results[]=['pregunta_id'=>$id,'correcta'=>$question->row['respuesta_correcta']===$option,'respuesta_correcta'=>$question->row['respuesta_correcta']];
         }

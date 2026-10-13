@@ -13,9 +13,10 @@ final class UsuarioController {
     public function store(): never {
         $actor = Auth::requireUser('PERSONAL_IMSJ');
         $d = Solicitud::body();
-        $user = $this->service->crear(Solicitud::text($d, 'nombre', 120), Solicitud::cedula($d), $actor);
+        $rol = Solicitud::option($d['rol'] ?? 'PERSONAL_IMSJ', 'rol', ['PERSONAL_IMSJ', 'DIRECTORA']);
+        $user = $this->service->crear(Solicitud::text($d, 'nombre', 120), Solicitud::cedula($d), $rol, $actor);
         $data = $user->adminArray();
-        unset($data['created_at']); // El alta conserva id/nombre/cédula; la fecha pertenece al listado.
+        unset($data['created_at']);
         Response::json(['usuario' => $data, 'clave_inicial' => UsuarioService::INITIAL_PASSWORD], 201);
     }
     /** La cuenta se desactiva sin borrar sus reservas o registros de auditoría. */

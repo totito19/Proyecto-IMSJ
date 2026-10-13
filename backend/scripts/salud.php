@@ -7,6 +7,8 @@ require_once dirname(__DIR__) . '/core/Database.php';
 try {
     // Un volumen MySQL sano todavia puede estar importando el esquema inicial.
     Database::query('SELECT id FROM usuarios LIMIT 1');
+    Database::query('SELECT id FROM consultas LIMIT 1');
+    Database::query('SELECT imagen FROM preguntas_prueba LIMIT 1');
     $context = stream_context_create(['http' => ['timeout' => 2]]);
     $health = @file_get_contents('http://127.0.0.1/api/health', false, $context);
     $portal = @file_get_contents('http://127.0.0.1/frontend-publico/', false, $context);

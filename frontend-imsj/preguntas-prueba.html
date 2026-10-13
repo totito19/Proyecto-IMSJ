@@ -45,7 +45,7 @@
         </div>
         <div class="table-wrap">
           <table class="data">
-            <thead><tr><th class="col-num">#</th><th>Pregunta</th><th>Respuesta correcta</th><th>Acciones</th></tr></thead>
+            <thead><tr><th class="col-num">#</th><th>Pregunta</th><th>Gráfico</th><th>Respuesta correcta</th><th>Acciones</th></tr></thead>
             <tbody id="tbody-prueba"></tbody>
           </table>
           <div class="empty" id="empty-prueba" hidden>No hay preguntas cargadas.</div>
@@ -60,6 +60,14 @@
             <form class="form-body" id="form-pregunta-prueba" novalidate>
               <input type="hidden" id="pp-id">
               <div class="field"><label for="pp-pregunta">Pregunta</label><textarea class="input h-24" id="pp-pregunta" maxlength="500" required></textarea></div>
+              <div class="field">
+                <label for="pp-imagen">Material gráfico opcional</label>
+                <input type="file" id="pp-imagen" accept="image/jpeg,image/png,image/webp" hidden>
+                <button type="button" class="uploader" id="pp-imagen-boton"><span data-icon="image" data-size="14"></span><span id="pp-imagen-label">Seleccionar imagen...</span></button>
+                <img id="pp-imagen-actual" class="question-image-preview" alt="Gráfico actual de la pregunta" hidden>
+                <label id="pp-quitar-wrap" class="check-row" hidden><input type="checkbox" id="pp-quitar-imagen"> Quitar imagen actual</label>
+                <span class="card__meta">JPG, PNG o WEBP; máximo 2 MB.</span>
+              </div>
               <div class="form-grid"><div class="field"><label for="pp-a">Opción A</label><input class="input" id="pp-a" required></div><div class="field"><label for="pp-b">Opción B</label><input class="input" id="pp-b" required></div></div>
               <div class="form-grid"><div class="field"><label for="pp-c">Opción C</label><input class="input" id="pp-c" required></div><div class="field"><label for="pp-d">Opción D</label><input class="input" id="pp-d" required></div></div>
               <div class="field"><label for="pp-correcta">Respuesta correcta</label><select class="input" id="pp-correcta" required><option value="A">Opción A</option><option value="B">Opción B</option><option value="C">Opción C</option><option value="D">Opción D</option></select></div>
@@ -73,8 +81,8 @@
 </div>
 
 <script src="js/icons.js?v=2"></script>
-<script src="js/api.js?v=2"></script>
-<script src="js/ui.js?v=2"></script>
-<script src="js/preguntas-prueba.js"></script>
+<script src="js/api.js?v=4"></script>
+<script src="js/ui.js?v=4"></script>
+<script src="js/preguntas-prueba.js?v=4"></script>
 </body>
 </html>
