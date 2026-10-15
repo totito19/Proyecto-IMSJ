@@ -1,17 +1,22 @@
 # Diagramas del proyecto y responsabilidades actuales
 
-**Actualización - 05/10/2026.** Los PNG existentes se conservan como antecedentes del dominio; no se redibujan ni se presentan como diagramas físicos completos de la versión nueva. Las vistas Mermaid siguientes describen archivos actuales; preparación asistida por IA, revisión del equipo pendiente.
+**Actualización - 14/10/2026.** Se separan el modelo conceptual y el modelo relacional para evitar presentar claves foráneas o tablas como si fueran parte del MER.
 
-## MER histórico
+## Modelo entidad–relación conceptual
 
-![MER existente](MER.png)
+![MER conceptual](MER.png)
 
-Diez entidades de negocio: usuario, noticia, imagen/enlace de noticia, material, FAQ, pregunta de prueba, franja, reserva e historial. Para nombres y restricciones exactos prevalece [database.sql](../../backend/database.sql), que mantiene las diez tablas y añade `auth_tokens` como tabla técnica.
+El MER utiliza notación conceptual: rectángulos para entidades, rombos para relaciones, óvalos para atributos y cardinalidades mínimas/máximas. Los identificadores aparecen subrayados; no se muestran `PK`, `FK`, tipos SQL, índices ni tablas técnicas.
 
-- `RESERVA.franja_id` del dibujo corresponde a `franja_disponibilidad_id`.
-- La contraseña se guarda en `usuarios.password` como hash bcrypt; sin cast de ORM.
-- Índices únicos: cédula, usuario/franja y fecha/inicio/fin/tipo de franja. Noticias eliminan galería/enlaces en cascada; usuario/franja no pueden borrarse mientras reservas los referencien.
-- El PNG omite timestamps, índices y tokens. No hay categorías, consultas, Directora o adjuntos del test implementados.
+La reserva se representa como una entidad asociativa: un usuario puede realizar muchas reservas y cada reserva corresponde a una sola franja de disponibilidad; una franja puede recibir muchas reservas. `auth_tokens` no aparece porque es un mecanismo técnico de autenticación.
+
+## Pasaje a tablas
+
+![Pasaje a tablas](Pasaje_a_tablas.png)
+
+El modelo relacional incorpora las claves primarias, foráneas y únicas. También incluye `consultas`, la imagen opcional de las preguntas de prueba y la tabla técnica `auth_tokens`, de acuerdo con [database.sql](../../backend/database.sql).
+
+Las reglas aplicadas y la notación textual de todas las tablas están en [Pasaje del MER al modelo relacional](PASO_A_TABLAS.md).
 
 ## UML histórico y recorrido actual
 
