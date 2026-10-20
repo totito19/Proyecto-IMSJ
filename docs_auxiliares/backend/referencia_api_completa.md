@@ -1,13 +1,12 @@
-> **Antecedente del 02/10/2026:** el grupo cambió la referencia de implementación a api-simple el 05/10/2026. La [comparación vigente](referencia_api_simple.md) y los flujos implementados (documento auxiliar retirado del árbol actual) prevalecen. El contenido siguiente documenta el estudio anterior, no la estructura actual.
+> **Antecedente del 02/10/2026:** el grupo cambió la referencia de implementación a api-simple el 05/10/2026. La [comparación vigente](referencia_api_simple.md) y el contrato de IMSJ prevalecen. El contenido siguiente documenta el estudio anterior, no la estructura actual.
 
 ---
 
 # Análisis de la API de referencia para CC-05
 
-**Fecha de consulta:** 02/10/2026  
-**Fuente indicada por el grupo:** [RodrigoCazard/api-ejemplo-utu — api-completa](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/main/api-completa).  
-**Revisión consultada:** `d6f61c999369b754d70bfa0621a154e9a630589a`.  
-**Preparación:** asistencia externa de IA; crédito documental del grupo, revisión interna de Juan Robaina pendiente.
+**Fecha de consulta:** 02/10/2026
+**Fuente indicada por el grupo:** [RodrigoCazard/api-ejemplo-utu — api-completa](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/main/api-completa).
+**Revisión consultada:** `d6f61c999369b754d70bfa0621a154e9a630589a`.
 
 Se leyeron los 38 archivos de `api-completa`, incluido `composer.lock`, y el README de la raíz. Se consultaron como ejemplo; no se copiaron al código de IMSJ ni se ejecutó su API o SQL. La referencia fijada permite separar lo leído de futuras modificaciones de `main`.
 
@@ -39,14 +38,14 @@ El router recibe método y ruta; ejecuta controles y controlador. Este valida y 
 | Token | JWT en cookie HttpOnly, SameSite=Lax; duración predeterminada 3600 s. | Token Bearer en `sessionStorage`; ocho horas, revocación de anteriores y logout. |
 | Logout | Elimina cookie; ruta pública. | Ruta autenticada que revoca token actual en servidor. |
 | Usuario activo / rol | El token conserva claims; el middleware no reconsulta la cuenta en cada petición. | Comprobar identidad y permisos actuales; preservar rechazo de cuentas desactivadas en las rutas que lo exigen. |
-| JSON | Éxito `ok`, `mensaje`, `datos`; error `ok`, `mensaje`, `errores`. | Login raíz `token`/`expira_en`/`usuario`; recursos `data`; errores `message`/`errors`. |
+| JSON | Éxito `ok`, `mensaje`, `datos`; error `ok`, `mensaje`, `errores`. | Login raíz `token`/`expira_en`/`usuario`; recursos con claves propias (`noticias`, `materiales`, etc.); errores `message`/`errors`. |
 | Actualización | PATCH de productos; respuesta de borrado JSON. | PUT de entidades, PATCH de estados; borrados/logout pueden devolver 204. |
 | Parámetros | Único marcador `{id}` reconocido por Router. | `{usuario}`, `{noticia}`, `{material}`, `{pregunta}`, `{franja}` y rutas con sufijo `/estado`. |
 | Archivos | CRUD de productos sin carga de materiales/noticias. | Multipart, validación, persistencia y URLs de imágenes/PDF; POST con `_method=PUT` en edición. |
 | CORS | Origen único configurable, cookies, cabecera Content-Type; GET/POST/PATCH/DELETE/OPTIONS. | Apache sirve frontends y API en el mismo origen/puerto configurable; Bearer/Accept; también PUT y multipart. |
 | Límites HTTP | 60/min por IP para todas las rutas, excepto OPTIONS. | Login/registro con `throttle:5,1`; comportamiento a preservar durante sustitución. |
 
-**IA — Observación:** copiar la referencia sin adaptación rompería la integración de ambos frontends. La decisión de retirar Laravel permite trasladar su organización por capas; no aprueba automáticamente todas estas diferencias de contrato.
+Copiar la referencia sin adaptación rompería la integración de ambos frontends. La decisión de retirar Laravel permite trasladar su organización por capas; no aprueba automáticamente todas estas diferencias de contrato.
 
 ## 3. Dependencias y requisitos reales
 
@@ -63,7 +62,7 @@ Los componentes Symfony 7.4 del lock requieren PHP >=8.2, aunque el manifiesto d
 
 ## 4. Límites que hay que resolver al adaptar
 
-Estas son **observaciones de IA sobre código leído**, sin pruebas de explotación ni ejecución:
+El estudio identificó los siguientes límites del ejemplo, sin ejecutar pruebas de explotación:
 
 - La verificación JWT utiliza algoritmo HS256 fijado. Borrar la cookie no invalida una copia del token; el ejemplo no incluye revocación en servidor. No acredita las garantías de cierre de sesión y renovación observadas en IMSJ.
 - El router original trata un método no coincidente como ruta inexistente. Debe documentarse y comprobarse la política HTTP final; no asumir códigos de error del framework solo por copiar el router.
@@ -75,8 +74,12 @@ Estas son **observaciones de IA sobre código leído**, sin pruebas de explotaci
 
 ## 5. Qué se toma y qué necesita otra decisión
 
-Se toma como base autorizada la separación por capas, el router propio, PDO, validadores/DTO y la organización de configuración/respuestas. Se adaptan al dominio y contrato de IMSJ según [migración](migracion_backend_vanilla.md).
+En el estudio inicial se tomaban como referencia capas, router, PDO, validadores/DTO y configuración/respuestas. El refinamiento posterior adoptó el recorrido simple con validación común en Solicitud y despacho explícito. Se adaptan al dominio y contrato de IMSJ según [migración](migracion_backend_vanilla.md).
 
-**IA — Alternativas declaradas, sin adopción:** cookie JWT, nuevo envoltorio JSON, cambio de rutas/roles, expiración distinta, otro límite global o puertos del ejemplo. Si se elige alguna, el grupo debe aprobarla antes de implementar cambios en frontend, seguridad o datos. Esta actualización no transforma esas alternativas en decisiones.
+**Alternativas declaradas, sin adopción:** cookie JWT, nuevo envoltorio JSON, cambio de rutas/roles, expiración distinta, otro límite global o puertos del ejemplo. Si se elige alguna, el grupo debe aprobarla antes de implementar cambios en frontend, seguridad o datos. Esta actualización no transforma esas alternativas en decisiones.
 
 La referencia técnica se conserva en enlaces y revisión fija. Antes de copiar código, revisar los avisos y permisos de reutilización del repositorio y de las bibliotecas; `composer.json` indica MIT para el proyecto, pero no se localizó un archivo LICENSE independiente en el árbol consultado. Esto queda como comprobación de procedencia, sin modificar la licencia de IMSJ ni inventar titularidad.
+
+## Lectura de este antecedente
+
+Las dependencias, cookies, puertos y formatos de esta comparación pertenecen a la revisión fijada del ejemplo completo. La implementación vigente de IMSJ utiliza la referencia simple, Bearer opaco revocable, respuestas propias y 46 rutas. Para mantener o instalar el proyecto se utilizan el contrato y el README actuales, no los comandos o credenciales del ejemplo.

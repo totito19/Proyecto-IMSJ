@@ -1,30 +1,46 @@
-# Educación Vial IMSJ
+# Portal Vial — Educación Vial IMSJ
 
-Plataforma web para la Sección Tránsito de la Intendencia de San José.
+Plataforma web para la Sección Tránsito de la Intendencia de San José, desarrollada por el equipo RC5. **Portal Vial** es la denominación pública; **Educación Vial IMSJ** identifica el proyecto académico y sus documentos.
 
-## Estado actual - 13/10/2026
+**Actualización:** 20/10/2026. Backend PHP 8.5 nativo, PDO y MySQL 8.4; dos interfaces HTML/CSS/JavaScript y despliegue local con Apache y Docker Compose.
 
-Backend en **PHP 8.5 nativo, PDO y MySQL 8.4**, con la estructura por controladores, servicios y repositorios solicitada por el grupo y el recorrido de [api-simple de RodrigoCazard](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-simple). La entrada sigue en `backend/public/index.php` y actualmente expone 45 endpoints. La demo incorpora CC-02, CC-03 y CC-04: consultas del portal, aprobación por Directora de noticias, materiales y preguntas frecuentes, e imágenes opcionales en las preguntas del simulador.
+## Funciones y alcance
+
+El portal reúne noticias vigentes, materiales de estudio, preguntas frecuentes, simulacros y un formulario de consultas. El panel permite mantener contenidos y leer consultas. Los contenidos se preparan en borrador, se envían a revisión, los aprueba la Directora y se publican mediante una acción posterior.
+
+La versión académica incorpora franjas, cupos, reservas de prueba de manejo y renovación normal/urgente, cancelación propia y agenda diaria, semanal y mensual. Este módulo está excluido de la entrega actual al cliente. El costo urgente y las categorías de FAQ siguen pendientes; galería y enlaces de noticias todavía no están completos en las interfaces.
+
+## Inicio local
+
+En Windows, con Docker/Compose y motor Linux operativo, abrir [backend/iniciar.bat](backend/iniciar.bat). Prepara la configuración de una instalación nueva, inicia los servicios, espera la salud y abre el portal. La primera cuenta de personal se crea expresamente con la herramienta indicada en el [README del backend](backend/README.md).
+
+Apache sirve portal, panel y API en un único puerto configurable, 8000 por defecto. Se utilizan únicamente los servicios `app` y `db`. [detener.bat](backend/detener.bat) detiene sin borrar volúmenes. Para otros sistemas, configuración previa y diagnóstico, consultar las instrucciones del backend y [reconstrucción](docs/administracion_ssoo/reconstruccion-infraestructura.md).
+
+## Estructura del repositorio
 
 ```text
 Proyecto-IMSJ/
-├── backend/            API PHP nativa, comentarios, SQL, Docker y pruebas
-├── frontend-publico/   portal ciudadano e ingreso
-├── frontend-imsj/      panel administrativo
-├── docs/               documentación de entrega
-└── docs_auxiliares/    informes, referencias y evidencias complementarias
+├── backend/            API, SQL, Docker, herramientas y pruebas
+├── frontend-publico/   Portal ciudadano e ingreso
+├── frontend-imsj/      Panel administrativo
+├── docs/               Documentos organizados por asignatura
+└── docs_auxiliares/    Referencias, evidencias y datos por completar
 ```
 
-Para iniciar en Windows con Docker/Compose, abrir **[backend/iniciar.bat](backend/iniciar.bat)**. Prepara claves de una instalación local nueva, inicia Apache/PHP y MySQL, espera al sistema y abre el portal en el navegador. Apache sirve API, portal y panel en un único puerto configurable; se retiró Nginx. Se conservan los volúmenes de datos/archivos. Instrucciones y recuperación de configuración previa en el [README del backend](backend/README.md); evidencia y límites en [verificación](docs_auxiliares/evidencias/verificacion.md).
+La API expone **46 rutas** en `backend/public/index.php`, organizadas en ocho módulos. El recorrido es entrada → controlador → servicio → repositorio → PDO/MySQL → modelo/respuesta. La reescritura sigue la [referencia api-simple](docs_auxiliares/backend/referencia_api_simple.md), adaptada al dominio del proyecto.
 
-## Documentación
+## Documentación y evidencia
 
-- [Índice de documentos de entrega](docs/README.md).
-- [Guía para estudiar y defender el código](docs/guia_codigo_y_defensa.md).
-- [Control de cambios](docs/control_cambios.md), [arquitectura](docs/arquitectura_propuesta.md) y [SSOO](docs/ssoo/README.md).
-- [Documentación auxiliar](docs_auxiliares/README.md): contrato de API, referencias, migración y evidencias.
-- [Revisión del 13/10/2026 y pendientes actuales](docs_auxiliares/revision/revision_2026-10-13.md).
+- [Índice de documentos](docs/README.md) y [constitución del proyecto](docs/ingenieria_software/project_charter.md).
+- [Requisitos y estados](docs/ingenieria_software/analisis_de_requerimientos.md), [backlog](docs/ingenieria_software/backlog.md) y [control de cambios](docs/ingenieria_software/control_cambios.md).
+- [Arquitectura](docs/administracion_ssoo/arquitectura_propuesta.md), [modelo de datos](docs/programacion_full_stack/Diagramas/README.md) y [SSOO](docs/administracion_ssoo/README.md).
+- [Guía del código](docs/programacion_full_stack/guia_codigo_y_defensa.md) y [contrato API](docs_auxiliares/backend/api.md).
+- [Evidencia de pruebas](docs_auxiliares/evidencias/verificacion.md) y [formulario de información pendiente](docs_auxiliares/revision/formulario_datos_documentacion.md).
 
-**Estado consolidado al 15/10/2026:** CC-01, CC-02, CC-03, CC-04 y CC-05 están **Listos**. La demo del 03/09 originó CC-02–CC-04 con la Directora y el Inspector de Tránsito; su implementación fue verificada el 13/10/2026. CC-01 conserva el comportamiento implementado del simulador y CC-05 corresponde al backend PHP nativo. Agenda y reservas continúan dentro del alcance académico.
+CC-01–CC-05 constan como **Listos**. Los resultados del 05/10 y 13/10 corresponden a sus versiones y entornos; los cambios del 20/10 requieren su revalidación funcional. Los PDF existentes conservan versiones anteriores a los Markdown actuales. El índice distingue los documentos disponibles de manual, cierre e informes todavía pendientes.
 
-El crédito del proyecto y su documentación corresponde a **Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales**. La implementación y la documentación fueron preparadas con apoyo externo de IA. CC-02–CC-04 conservan como origen la reunión/demo con la Directora y el Inspector de Tránsito; su estado actual se expresa directamente como **Listo**, sin crear un apartado separado de aprobaciones. La administración y el mantenimiento posteriores corresponden a la Intendencia, por ahora.
+## Equipo y operación posterior
+
+Tomás Cabrera: liderazgo/backend; Juan Robaina: testing/documentación y revisión interna; Gabriela Romero: base de datos; Verónica Romero y Juan Corrales: frontend. El crédito del proyecto y su documentación pertenece a estos cinco integrantes. El registro de herramientas utilizadas se concentra en la [declaración correspondiente](docs/ingenieria_software/declaracion_etica_ia.md).
+
+El referente del cliente es el Inspector de Tránsito de la Intendencia. Las decisiones de aceptación y cambios se registran en actas del equipo. La administración y el mantenimiento posteriores corresponden a la Intendencia, por ahora; las condiciones de alojamiento, HTTPS, contacto y respaldo siguen por definir.

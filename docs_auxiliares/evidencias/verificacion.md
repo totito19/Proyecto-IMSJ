@@ -6,7 +6,7 @@ CC-02, CC-03 y CC-04 se comprobaron en un proyecto Docker aislado y descartable 
 
 Las secciones fechadas 05/10/2026 que siguen documentan la línea base de 42 rutas anterior a las tres rutas de consultas; se conservan como antecedente.
 
-**Resultado:** 155 comprobaciones correctas de la suite HTTP/MySQL y cobertura efectiva de las **42 declaraciones de ruta** que componían la línea base del 05/10. Se probaron los archivos definitivos de backend, no una API de ejemplo. [Evidencia por hash](evidencia_backend_nativo.json). Preparado con apoyo externo de IA; crédito y responsabilidad del proyecto corresponden al equipo.
+**Resultado:** 155 comprobaciones correctas de la suite HTTP/MySQL y cobertura efectiva de las **42 declaraciones de ruta** que componían la línea base del 05/10. Se probaron los archivos definitivos de backend, no una API de ejemplo. [Evidencia por hash](evidencia_backend_nativo.json). El crédito y responsabilidad del proyecto corresponden al equipo.
 
 ## Entorno y procedimiento ejecutados
 
@@ -42,7 +42,7 @@ La evidencia JSON conserva SHA-256 de cada PHP ejecutado para identificar la ver
 
 **Consulta del grupo:** los BAT no inician Docker. Se encontró Docker Desktop instalado por usuario en `%LOCALAPPDATA%\Programs\DockerDesktop`, fuera del PATH de esta sesión. La CLI responde con Docker 29.8.0 y Compose v5.5.1 al usar su ruta completa; el motor Linux no responde porque no está disponible su conexión `dockerDesktopLinuxEngine`. Falta `backend/.env`. La versión anterior de los BAT terminaba sin pausa y había perdido la preparación de configuración y el arranque/espera de Docker Desktop.
 
-**Corrección:** búsqueda de Docker por PATH o instalaciones habituales; creación de la plantilla `.env` solo si falta y detención hasta completar sus claves; validación silenciosa de Compose; apertura/espera de Docker Desktop desde el BAT de inicio; errores visibles y códigos de salida. `detener.bat` conserva `compose stop` sin borrar volúmenes y no abre Docker Desktop. Uso detallado en [README del backend](../../backend/README.md). Intervención asistida por IA; este corte fue superado por la comprobación del 13/10.
+**Corrección:** búsqueda de Docker por PATH o instalaciones habituales; creación de la plantilla `.env` solo si falta y detención hasta completar sus claves; validación silenciosa de Compose; apertura/espera de Docker Desktop desde el BAT de inicio; errores visibles y códigos de salida. `detener.bat` conserva `compose stop` sin borrar volúmenes y no abre Docker Desktop. Uso detallado en [README del backend](../../backend/README.md). Este corte fue superado por la comprobación del 13/10.
 
 **Comprobado:** la CLI real validó `compose.yaml` con `.env.example` mediante `config --quiet`, sin iniciar servicios ni imprimir claves. En Windows se ejecutaron 21 escenarios con copias de los BAT y un ejecutable Docker simulado, fuera del proyecto: detección por PATH/usuario/todos los usuarios, rutas con espacios, plantilla ausente/nueva, rechazo de claves de ejemplo, errores de Compose/configuración/motor/construcción/detención, apertura y espera de Desktop, preservación de `.env`, pausa y códigos de salida. Los 21 terminaron correctamente. Estas pruebas comprueban el flujo de los BAT; no acreditan construcción de imágenes ni disponibilidad de la aplicación en contenedores. Los servicios reales siguen pendientes de configurar las claves locales e iniciar el motor.
 
@@ -54,7 +54,7 @@ La evidencia JSON conserva SHA-256 de cada PHP ejecutado para identificar la ver
 
 **Comprobado:** la CLI real validó Compose y enumeró solamente db/app. PowerShell 5.1 pudo ejecutar los scripts; 38 archivos PHP pasaron sintaxis. Se aprobaron 22 escenarios externos con Docker simulado y un servidor HTTP sintético: claves nuevas sin mostrarlas, conservación de claves reales, protección de base previa, cambio de puerto ocupado y URL de adjuntos, rutas con espacios, instalación por PATH/usuario/todos los usuarios, apertura/espera de Desktop, fallos de configuración/motor/construcción/HTTP y detención. En estas pruebas se interceptó la apertura del navegador y se aisló la ruta de instalación global; no se acredita navegación real ni Apache. Los dos clientes JavaScript pasaron 12 comprobaciones de URL y cabecera Bearer, con tres orígenes distintos.
 
-**Prueba real y límite encontrado en ese equipo:** se ejecutó iniciar.bat, que encontró y abrió Docker Desktop, pero el motor no llegó a estar disponible porque WSL no estaba instalado. Docker Desktop se cerró; no se construyeron imágenes, iniciaron contenedores ni modificaron datos en aquella ejecución. Esta limitación histórica fue superada por el arranque Docker aislado y la revisión visual del 13/10. Los archivos preparados siguen siendo generales para Docker/Compose con motor Linux operativo; apoyo de IA identificado.
+**Prueba real y límite encontrado en ese equipo:** se ejecutó iniciar.bat, que encontró y abrió Docker Desktop, pero el motor no llegó a estar disponible porque WSL no estaba instalado. Docker Desktop se cerró; no se construyeron imágenes, iniciaron contenedores ni modificaron datos en aquella ejecución. Esta limitación histórica fue superada por el arranque Docker aislado y la revisión visual del 13/10. Los archivos preparados siguen siendo generales para Docker/Compose con motor Linux operativo;
 
 ### Antecedente de la reescritura, anterior a la retirada de Nginx
 
@@ -72,7 +72,6 @@ Los apartados siguientes corresponden a las revisiones del 02/10/2026 y al códi
 
 # Verificación y evidencia de pruebas
 
-> **Revisión de IA — 02/10/2026:** se inspeccionan archivos, no se certifica una ejecución funcional. Existen siete archivos Feature y 22 métodos de prueba en `df581ab`. No se localizaron resultados versionados ni acta de aceptación vinculada.
 
 ## Pruebas disponibles y trazabilidad
 
@@ -100,7 +99,7 @@ Los caminos de esta tabla son relativos a `backend/tests/Feature/`.
 
 ## Registro para completar al ejecutar
 
-**IA — Sugerencia documental:** registrar las pruebas sin cambiar el método de trabajo del equipo. Los responsables y las fechas deben ser acordados.
+**Registro de ejecución:** registrar las pruebas sin cambiar el método de trabajo del equipo. Los responsables y las fechas deben ser acordados.
 
 | ID / criterio | Versión/commit | Entorno y datos | Procedimiento | Resultado y evidencia | Responsable / fecha | Estado |
 |---|---|---|---|---|---|---|
@@ -114,7 +113,7 @@ El resultado de la comprobación documental se completa al final de esta interve
 
 ### Resultado de la revisión inicial — 02/10/2026
 
-**IA — Comprobación documental realizada:**
+**Comprobación documental:**
 
 - Los 20 Markdown originales se leyeron y corrigieron; cinco nuevos documentos reúnen índice, revisión, API, verificación y aclaraciones de diagramas. Se comprobaron los 25 Markdown resultantes.
 - Los 108 enlaces relativos y anclas internas resuelven; las tablas mantienen número consistente de columnas y los bloques de código están cerrados. No se afirma una comprobación de disponibilidad de cada enlace externo.
@@ -129,7 +128,7 @@ Estos resultados comprueban los documentos, no el funcionamiento del producto. N
 
 Se integraron las aclaraciones proporcionadas por el grupo y se agregó [aclaraciones y pendientes](../revision/aclaraciones_y_pendientes.md). Esta sección conserva el resultado documental del 02/10; el estado vigente al 15/10 es CC-01–CC-05 Listos.
 
-**IA — Comprobación documental realizada:**
+**Comprobación documental:**
 
 - Se comprobaron los 26 Markdown actuales, sus 142 enlaces relativos/anclas y 103 tablas. RF1–RF24 y US1–US34 conservan su numeración completa.
 - Las cuatro hojas de PDF y sus 12 comentarios se actualizaron con las aclaraciones. Se conservaron tamaño de página, tipografía visual, colores y tablas de cada original; el logo RC5 se reutiliza sin edición desde la declaración histórica, también en el nuevo Markdown.
@@ -145,7 +144,7 @@ Fuentes de estructura: [historias y criterios](https://github.com/portalutu/proy
 
 **Estado al redactar esta sección (02/10):** se había decidido retirar Laravel y la migración todavía no se había ejecutado. El estado vigente se documenta al comienzo de este archivo.
 
-**IA — Criterios derivados de conservar el sistema:** preparación y ejecución pendientes por el equipo. No se presenta un resultado esperado como resultado obtenido.
+**Criterios de compatibilidad:** preparación y ejecución pendientes por el equipo. No se presenta un resultado esperado como resultado obtenido.
 
 | ID | Escenario / condición verificable | Entorno / evidencia requerida | Estado |
 |---|---|---|---|
@@ -163,10 +162,28 @@ Cada ejecución completará versión, entorno/datos, procedimiento, resultado, e
 
 ### Resultado documental de CC-05 — 02/10/2026
 
-**IA — Comprobación realizada:** se revisaron los 29 Markdown resultantes, 226 enlaces relativos/anclas y 121 tablas; bloques de código cerrados, sin enlaces internos rotos ni cambios de numeración RF1–RF24/US1–US34. Se contrastó el total de 42 rutas con `routes/api.php` y se identificaron diez tablas del dominio más la tabla técnica de tokens en el esquema existente.
+**Comprobación realizada:** se revisaron los 29 Markdown resultantes, 226 enlaces relativos/anclas y 121 tablas; bloques de código cerrados, sin enlaces internos rotos ni cambios de numeración RF1–RF24/US1–US34. Se contrastó el total de 42 rutas con `routes/api.php` y se identificaron diez tablas del dominio más la tabla técnica de tokens en el esquema existente.
 
 Los cuatro PDF conservan 20 páginas en total y 12 comentarios de revisión; se actualizaron sus hojas/comentarios para CC-05 con tipografía, colores, tablas y logo ya utilizados. El texto de las 16 páginas históricas permanece exacto respecto de los originales, y la comparación de imágenes confirma contenido idéntico fuera del margen de anotaciones. Las cuatro hojas nuevas se renderizaron e inspeccionaron: legibles y sin recortes/superposiciones.
 
 Los cambios frente al inicio de CC-05 se limitan a Markdown y los cuatro PDF. Se comprobó por hash que actas, código, configuración, esquema, pruebas, diagramas PNG, identidad y licencia no cambiaron en esta intervención. La revisión del diff pasa sin errores de espacios. La comparación de referencia abarcó 38 archivos de `api-completa` y el README raíz, fijados a `d6f61c9`.
 
 Estas fueron comprobaciones documentales del 02/10. Su estado pendiente quedó superado por la implementación y las verificaciones posteriores registradas al comienzo del archivo. Estado vigente: CC-01–CC-05 Listos.
+
+
+## Consolidación de documentos Markdown — 20/10/2026
+
+**Solicitud:** retirar notas editoriales de revisión y sugerencia y desarrollar el contenido de todos los Markdown del proyecto. Se trabajó sobre el corte `f5c6545`, conservando las correcciones locales del equipo en la entrevista y R-01.
+
+Se revisaron los 39 Markdown del repositorio, backend, documentos por asignatura y material auxiliar. Las actas incorporan objetivo, desarrollo y seguimiento sustentados en los registros; R-05 se relaciona con CC-02–CC-04 y R-01 conserva fecha, horario, modalidad y asistentes corregidos. Se desarrollaron responsabilidades, requisitos, reglas, infraestructura y recorridos de las capas. La declaración concentra el registro de herramientas y el formulario conserva las respuestas del equipo.
+
+**Comprobaciones documentales realizadas:**
+
+- 39 archivos revisados y modificados; sin las marcas editoriales retiradas.
+- 370 enlaces locales y anclas verificados, sin destinos ausentes; 130 tablas con estructura de columnas consistente y bloques de código cerrados.
+- RF1–RF24, RNF1–RNF10 y US1–US34 conservados, sin identificadores faltantes.
+- Las 14 respuestas del informe de entrevista y las 11 respuestas confirmadas con ID del formulario permanecen exactas respecto de la copia inicial de esta intervención.
+- SHA-256 de 120 archivos no Markdown comparado antes y después: código, configuración, SQL, imágenes, PDF y demás archivos conservados.
+- Revisión de diferencias sin errores de espacios finales o formato.
+
+No se ejecutaron pruebas nuevas de la aplicación durante esta consolidación. Los resultados del 05/10 y 13/10 conservan sus versiones; la cancelación y los ajustes del 20/10 requieren una ejecución funcional registrada. Tampoco se añadieron firmas, tareas acordadas, resultados de seguridad o aprobaciones del cliente sin su fuente. Los datos pendientes continúan en el formulario y las limitaciones se explican en los documentos afectados.

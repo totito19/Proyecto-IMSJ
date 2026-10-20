@@ -1,6 +1,6 @@
 # Backend IMSJ en PHP nativo
 
-Reescrito desde cero el 05/10/2026 por solicitud del grupo, con el recorrido explícito de [api-simple](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-simple). PHP 8.5, PDO y MySQL 8.4; sin paquetes externos. La versión del 13/10/2026 conserva las rutas existentes y suma tres rutas de consultas, para un total de 45 endpoints. **Estado consolidado al 15/10/2026: CC-01–CC-05, Listos.** El crédito y la responsabilidad del proyecto corresponden a Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales. Implementación y documentación preparadas con apoyo externo de IA.
+Reescrito desde cero el 05/10/2026 por solicitud del grupo, con el recorrido explícito de [api-simple](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-simple). PHP 8.5, PDO y MySQL 8.4; sin paquetes externos. La demo del 13/10 sumó tres rutas de consultas y alcanzó 45 endpoints. La cancelación del 20/10 amplía el contrato vigente a 46. **Estado documental al 20/10/2026: CC-01–CC-05, Listos.** El crédito y la responsabilidad del proyecto corresponden a Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales.
 
 ## Organización y recorrido
 
@@ -94,10 +94,20 @@ Los usuarios, hashes bcrypt, identificadores, relaciones, historial y rutas rela
 - Edición acepta PUT JSON/multipart y POST multipart con `_method=PUT`, como envía el panel actual. El límite global de formulario es 24 MB; con un archivo por material y hasta seis imágenes de noticia alcanza para los límites del contrato.
 - Reservas: transacción con bloqueo de franja, fecha válida, propiedad, duplicación y capacidad. Auditoría administrativa se confirma en la misma transacción que los datos; un fallo revierte la operación y limpia archivos nuevos.
 
-La versión incorpora el simulador, consultas, Directora, flujo de aprobación y gráficos del test. No incorpora categorías, respuestas/notificaciones para consultas ni reglas nuevas de agenda porque no forman parte de CC-01–CC-05. Agenda y reservas continúan como alcance académico.
+La versión incorpora el simulador, consultas, Directora, flujo de aprobación y gráficos del test. Categorías, respuestas/notificaciones para consultas y costo urgente permanecen fuera del alcance implementado de CC-01–CC-05. La cancelación académica se añadió posteriormente. Agenda y reservas continúan como alcance académico.
 
 ## Verificación
 
 `php scripts/verificar.php` comprueba sintaxis. La suite `tests/integracion.py` requiere Python 3 estándar y cliente MySQL únicamente para pruebas. Necesita dos procesos PHP contra **la misma base vacía** cuyo nombre empiece por `imsj_test_`; se niega a trabajar sobre una base con tablas. Definir `DB_*`, `IMSJ_TEST_MYSQL`, `IMSJ_TEST_URL` y `IMSJ_TEST_URL_2`; iniciar los dos servidores con el entorno de prueba y ejecutar `python tests/integracion.py`. No apuntarla a datos del equipo. El resultado conserva datos de prueba para inspección.
 
 La [evidencia](../docs_auxiliares/evidencias/verificacion.md) registra resultados HTTP/MySQL y límites. Para la versión del 13/10/2026 se comprobó un arranque Docker aislado, 41 verificaciones HTTP de CC-02–CC-04 y un recorrido visual del portal y del panel.
+
+## Comportamiento incorporado el 20/10
+
+`DELETE /api/reservas/{id}` permite al ciudadano cancelar su reserva. La cuenta se obtiene del token y la eliminación exige coincidencia de reserva y propietario; responde 204 al eliminar y 404 si no existe una reserva propia con ese ID. Personal no puede usar esta operación ciudadana. Al eliminar la fila se libera el cupo y no queda un estado de cancelación.
+
+Los listados de franjas y reservas excluyen fechas anteriores a hoy también en el panel. La agenda abre inicialmente en vista mensual. El cierre de sesión administrativo revoca el token y vuelve al ingreso de personal. Los casos nuevos están en la suite de integración y requieren registrar una ejecución sobre esta versión.
+
+## Mapa de lectura para mantenimiento
+
+Una operación empieza en `public/index.php`, pasa por el controlador del módulo y su servicio y termina en consultas del repositorio. Para modificar una regla se debe revisar además el modelo de salida, el consumidor JavaScript y el escenario de integración afectado. La [arquitectura](../docs/administracion_ssoo/arquitectura_propuesta.md), la [justificación de clases](../docs/programacion_full_stack/Justificación%20de%20clases,%20atributos%20y%20métodos.md) y el [contrato](../docs_auxiliares/backend/api.md) desarrollan estas relaciones.

@@ -4,7 +4,6 @@
 
 # Proyecto Educación Vial IMSJ — Concepción del proyecto
 
-> **Revisión asistida por IA — 02/10/2026:** la síntesis conserva el relevamiento inicial. La numeración se alinea con [Requerimientos](Requerimientos.md) y [backlog](backlog.md). Las interpretaciones sin evidencia se señalan; no se certifican decisiones ni aceptación del cliente.
 
 ---
 
@@ -43,7 +42,7 @@
 **Área:** Sección Tránsito
 **Referente institucional:** Inspector de Tránsito de la Intendencia, conocido como Nacho. El grupo no confirma un apellido; se usa principalmente el cargo.
 **Público alcanzado:** ciudadanía del departamento de San José, con foco especial en adolescentes
-**Nivel tecnológico actual:** bajo en cuanto a canales digitales propios
+**Situación relevada:** necesidad de un canal propio para administrar y centralizar información pública
 **Registro actual:** información dispersa en canales no integrados; el trámite de licencia se gestiona
 telefónicamente
 
@@ -180,16 +179,12 @@ Por el momento no se identifican nuevos requerimientos.
 
 ### Interpretación del relevamiento
 
-> **IA — Observación:** este resumen interpreta el informe existente. No se localizó validación del entrevistado ni fecha completa. Los permisos iguales corresponden a esta instancia; CC-03 registra una solicitud posterior de diferenciación.
-
-Tres resultados concretos, que conviene poder explicar en la defensa:
+El relevamiento aportó tres precisiones de alcance:
 
 1. **Confirmó la exclusión de la agenda con el cliente.** No fue una decisión del equipo: el
    referente indicó que el trámite sigue siendo telefónico en esta etapa. La exclusión consta en el informe y el charter, aunque falta evidencia de validación institucional del registro.
 
-2. **Simplificó un requerimiento sobredimensionado.** El equipo asumía roles administrativos diferenciados;
-   el cliente aclaró que todos los administrativos tienen los mismos privilegios. Menos complejidad real de
-   implementación.
+2. **Aclaró los permisos de la instancia inicial.** El informe expresa permisos administrativos iguales y aprobación de Dirección. La solicitud posterior CC-03 distingue formalmente la aprobación de la publicación; el diseño actual no se interpreta como una respuesta de aquella entrevista.
 
 3. **Descubrió tres requerimientos no previstos:** categorización de preguntas frecuentes, soporte de video
    en materiales, y aprobación de la Dirección antes de publicar.
@@ -198,10 +193,8 @@ Las precisiones se incorporan como RF19–RF21. Confirmar lo ya supuesto tambié
 
 ### Temas sin respuesta documentada
 
-> **IA — Sugerencia:** las preguntas siguientes son pendientes para el equipo, no pedidos confirmados por el cliente.
 
-Comparando con el estándar del caso de referencia, quedaron sin relevar tres temas que TamboTrace sí
-consulta y que conviene preguntar en la próxima instancia con el cliente:
+El registro disponible no define todavía los siguientes aspectos de la entrega institucional:
 
 - **Plazo esperado:** ¿para cuándo necesita la IMSJ una primera versión funcionando?
 - **Infraestructura:** ¿hay servidor propio o se despliega en hosting externo? ¿Qué dispositivos usa el
@@ -239,7 +232,7 @@ que aumenten el costo o retrasen la entrega.
 6. Consulta pública de noticias vigentes.
 7. Administración de materiales de estudio (PDF, imágenes y videos).
 8. Consulta pública de materiales de estudio.
-9. Gestión de preguntas frecuentes clasificadas por categorías.
+9. Gestión de preguntas frecuentes; la clasificación por categorías está relevada, pero sigue pendiente de implementación.
 10. Consulta pública de preguntas frecuentes.
 11. Historial de acciones administrativas (auditoría de modificaciones).
 12. Interfaz responsive con accesibilidad básica.
@@ -252,7 +245,7 @@ que aumenten el costo o retrasen la entrega.
 
 Las solicitudes CC-01–CC-04 se consultan en [control de cambios](control_cambios.md) y están Listas. CC-02–CC-04 se originaron en la reunión/demo del 03/09 con la Directora y el Inspector de Tránsito. La agenda es el único módulo señalado como exclusivamente académico.
 
-**Aclaración del grupo — actualizada al 15/10/2026:** la coordinación y el seguimiento se realizan en reuniones; Juan Robaina se encarga del testing y la revisión documental. CC-02–CC-04 surgieron de la reunión/demo con la Directora y el Inspector de Tránsito. **Estado consolidado: CC-01–CC-05, Listos.** La Intendencia administrará y mantendrá el sistema por ahora. Otros datos institucionales por completar se separan en [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
+**Aclaración del grupo — actualizada al 15/10/2026:** la coordinación y el seguimiento se realizan en reuniones; Juan Robaina se encarga del testing y la revisión documental. CC-02–CC-04 surgieron de la reunión/demo con la Directora y el Inspector de Tránsito. **Estado consolidado: CC-01–CC-05, Listos.** La Intendencia administrará y mantendrá el sistema por ahora. Otros datos institucionales por completar se separan en [aclaraciones y pendientes](../../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
 
 ---
 
@@ -296,10 +289,31 @@ Consultar RNF1–RNF10 en [Requerimientos.md](Requerimientos.md). En la versión
 
 Se mantienen EP1–EP7 de [backlog](backlog.md). La versión anterior de esta síntesis llamó EP3 a materiales (ahora EP5), EP4 a preguntas frecuentes (ahora EP6) y EP5 a calidad (ahora EP7). EP1 y EP2 coinciden. Agenda y gestión de agenda conservan EP3 y EP4 en el backlog académico.
 
-Las necesidades posteriores se muestran separadas y como borradores trazados a sus fuentes en el backlog. No se transforma una propuesta de IA en compromiso del equipo.
+El backlog distingue las historias incorporadas posteriormente, sus fuentes y su estado. Una necesidad relevada puede permanecer pendiente aunque otros cambios relacionados estén Listos.
 
 ## 14. Actualización tecnológica — CC-05, 02/10/2026
 
-Por decisión explícita del grupo, el destino del backend es PHP sin Laravel, por capas y con PDO/MySQL a partir de `api-completa` de RodrigoCazard. La [migración](../docs_auxiliares/backend/migracion_backend_vanilla.md), la [comparación de referencia](../docs_auxiliares/backend/referencia_api_completa.md) y el [control de cambios](control_cambios.md) describen esta actualización posterior al relevamiento; no se la atribuye a la entrevista inicial.
+Por decisión explícita del grupo, se sustituyó Laravel por PHP nativo, con capas y PDO/MySQL. La referencia inicial fue `api-completa` y el refinamiento del 05/10 adoptó el recorrido de `api-simple` de RodrigoCazard. La [migración](../../docs_auxiliares/backend/migracion_backend_vanilla.md), la [comparación de referencia](../../docs_auxiliares/backend/referencia_api_completa.md) y el [control de cambios](control_cambios.md) describen esta actualización posterior al relevamiento; no se la atribuye a la entrevista inicial.
 
 La implementación presente utiliza PHP nativo, PDO y MySQL, siguiendo el recorrido de api-simple. Se conserva el dominio y el contrato de los frontends; agenda sigue siendo académica y CC-01–CC-05 están Listos. No se adoptaron las rutas de productos, cookies JWT ni formatos ajenos al dominio IMSJ.
+
+## 15. Operación de la versión vigente
+
+El portal presenta noticias vigentes, materiales y preguntas frecuentes publicados. El personal prepara contenidos y los envía a revisión; la Directora los aprueba y el personal realiza la publicación como una acción posterior. Al editar un contenido aprobado o publicado, vuelve a borrador. Esta secuencia reduce la posibilidad de publicar modificaciones que no hayan pasado por revisión.
+
+Las consultas ciudadanas se envían con nombre, correo y mensaje. El panel permite desplegarlas y marcarlas como leídas; no incluye una función de respuesta ni notificaciones. El simulador selecciona hasta diez preguntas, ofrece cuatro opciones y calcula la corrección usando las respuestas almacenadas en el servidor. La solución no se devuelve en la consulta pública inicial.
+
+En la versión académica, el ciudadano elige una franja con cupo y la reserva se vincula a su cuenta. La API comprueba propiedad, duplicación y capacidad. La cancelación elimina únicamente una reserva del propietario. Los listados actuales muestran fechas vigentes y futuras, incluso en la agenda administrativa; no ofrecen una vista de reservas históricas.
+
+## 16. Límites que afectan a la entrega
+
+| Aspecto | Situación concreta | Documento de seguimiento |
+|---|---|---|
+| Noticias completas | La API admite galería y enlaces; las interfaces todavía no cubren ambos recursos. | US6, RF9. |
+| Categorías de FAQ | Necesidad relevada sin catálogo ni implementación. | US29, RF19. |
+| Renovación urgente | Tipo de trámite disponible, sin costo definido. | US12, RF4; alcance académico. |
+| Auditoría | Hay identidad, acción, elemento y fecha; faltan cobertura total y retención acordadas. | US25, RNF3. |
+| Uso móvil y accesibilidad | Hay diseño adaptable y controles semánticos; falta evidencia formal de evaluación. | US27–US28. |
+| Operación institucional | Alojamiento, HTTPS, contactos, respaldos y conservación por definir. | SSOO y formulario auxiliar. |
+
+El catálogo, el backlog y los documentos técnicos describen estas diferencias de forma complementaria. El estado Listo de CC-01–CC-05 no elimina los pendientes que están fuera de esas solicitudes.

@@ -1,120 +1,108 @@
-> **Estado consolidado - 15/10/2026:** CC-01–CC-05 están **Listos**. El análisis vigente corresponde al backend PHP nativo, con roles PUBLICO_GENERAL, PERSONAL_IMSJ y DIRECTORA, consultas ciudadanas, aprobación de contenidos y gráficos del simulador.
+# Análisis de ciberseguridad
 
----
+**Proyecto:** Educación Vial IMSJ — Portal Vial.
 
-# Análisis de Ciberseguridad
+**Asignatura:** Electiva Ciberseguridad. **Actualización documental:** 20/10/2026.
 
-**Asignatura:** Electiva Ciberseguridad — 1ª entrega (Análisis y Diseño Seguro)
-**Proyecto:** Plataforma Web Educación Vial IMSJ
+## 1. Alcance del análisis
 
-> **Revisión asistida por IA — 02/10/2026:** se conserva el análisis de diseño de primera entrega. La adenda final separa controles presentes en código de resultados de auditoría y decisiones pendientes. El PDF incluye una matriz adicional con valoración pendiente de justificar.
+El análisis describe los activos, amenazas y controles de la versión PHP nativa y los relaciona con la evidencia disponible. Comprende el portal público, el panel IMSJ, la API, la base de datos, los archivos cargados y la infraestructura local Docker. La agenda y las reservas se evalúan como parte del alcance académico, aunque no formen parte de la entrega actual al cliente.
 
----
+Se distinguen tres situaciones: control implementado en el código, resultado de una prueba registrada y actividad todavía pendiente. La presencia de validaciones o consultas preparadas no acredita por sí misma una auditoría completa. El registro técnico contiene pruebas HTTP/MySQL del 05/10 y arranque y demo del 13/10; los cambios del 20/10 requieren su propia revalidación funcional.
 
-## 1. Amenazas digitales identificadas
+## 2. Activos y límites de confianza
 
-| # | Amenaza | Explicación del riesgo para este proyecto |
+| Activo | Información o función que debe protegerse | Consecuencia de un incidente |
 |---|---|---|
-| 1 | Inyección SQL | El login administrativo usa cédula y contraseña, y el dashboard permite crear y modificar noticias, materiales y preguntas frecuentes. Si el backend construye consultas concatenando esos datos, una entrada manipulada podría alterar la consulta, permitir el acceso sin credenciales válidas o leer, modificar y eliminar información de la base de datos. |
-| 2 | XSS almacenado | El personal del IMSJ carga texto, enlaces y otros datos que luego se muestran en el frontend público. Si ese contenido se guarda y se presenta sin validación, sanitización o codificación de salida, un valor malicioso podría ejecutar código en el navegador de cada ciudadano que consulte la publicación. |
-| 3 | Robo de credenciales y ataques de fuerza bruta | El acceso al panel se realiza con cédula y contraseña (RF1). Un engaño al personal, una contraseña débil o una gran cantidad de intentos automatizados podría permitir que una persona ajena ingrese al dashboard y actúe como usuario administrativo. |
-| 4 | Fallas de control de acceso | El proyecto separa al público general del personal IMSJ (RNF1). Si esa separación se aplica solo en la interfaz y no se verifica en cada operación del backend, un usuario no autorizado podría invocar directamente funciones de creación, edición, publicación o eliminación de contenido. |
+| Cuentas y contraseñas | Identidad, rol y acceso al panel y a reservas propias. | Suplantación y ejecución de operaciones no autorizadas. |
+| Tokens de sesión | Acceso temporal a las operaciones de la cuenta. | Uso de una sesión robada hasta su vencimiento o revocación. |
+| Noticias, materiales y FAQ | Integridad, aprobación, publicación y vigencia de la información. | Difusión de contenido falso, interno o desactualizado. |
+| Consultas ciudadanas | Nombre, correo y mensaje. | Exposición de datos o uso de la bandeja para abuso y contenido malicioso. |
+| Banco del simulador | Enunciados, gráficos, opciones y respuestas correctas. | Alteración educativa o exposición anticipada de la solución. |
+| Reservas y franjas | Relación de ciudadano, horario y cupo. | Cancelación ajena, duplicación o exceso de capacidad. |
+| Historial | Usuario, acción, elemento y fecha. | Pérdida de trazabilidad o atribución incorrecta de acciones. |
+| Adjuntos y respaldos | PDF, imágenes, exportaciones y configuración de instalación. | Pérdida de información, descarga indebida o ejecución de archivos inseguros. |
 
-## 2. Mapa de riesgos
-
-
-
-| Componente del sistema | Amenaza(s) asociada(s) | Impacto técnico | Impacto sobre usuarios |
-|---|---|---|---|
-| Login administrativo (RF1) | Inyección SQL; robo de credenciales; fuerza bruta | Omisión de la autenticación, acceso a una cuenta administrativa y ejecución de acciones con permisos del personal IMSJ. | Un integrante del personal podría sufrir la suplantación de su identidad y quedar asociado en el historial a cambios que no realizó. |
-| Carga de contenidos (noticias, materiales y preguntas frecuentes) | XSS almacenado; fallas de control de acceso; carga de archivos inseguros | Publicación o modificación no autorizada de información, almacenamiento de contenido malicioso y pérdida de integridad de los datos. | La ciudadanía podría recibir información falsa, desactualizada o maliciosa desde un sitio que identifica como oficial. |
-| Consulta pública (`frontend-publico`) | XSS almacenado; exposición de contenido no publicado | Ejecución de código en el navegador y visualización de contenidos que todavía no deberían ser públicos. | Los visitantes podrían ser redirigidos, ver contenido manipulado o acceder antes de tiempo a publicaciones internas o no aprobadas. |
-| Base de datos | Inyección SQL; acceso no autorizado | Lectura, alteración o eliminación de usuarios administrativos, contenidos y registros del historial de acciones. | Podrían exponerse cédulas u otros datos vinculados a los usuarios administrativos, perderse información pública o dejar de estar disponible el servicio. |
-
-**IA — Esquema de relaciones basado en la tabla anterior; no representa probabilidades medidas:**
+El navegador y sus datos se consideran entradas externas. Ocultar un botón no autoriza ni prohíbe una operación: la API debe comprobar la sesión y los permisos. La base y el almacenamiento se acceden desde el servidor; los archivos del backend fuera de `public` no deben publicarse como recursos estáticos.
 
 ```mermaid
 flowchart LR
-    Login[Login y cuentas] --> Credenciales[Suplantación / fuerza bruta]
-    Login --> SQL[Inyección SQL si se concatenan entradas]
-    Contenido[Carga de contenidos] --> XSS[XSS almacenado]
-    Contenido --> Archivos[Archivos inseguros]
-    API[Rutas administrativas] --> Permisos[Acceso no autorizado]
-    Portal[Consulta pública] --> XSS
-    Portal --> Exposicion[Contenido interno expuesto]
-    BD[Base de datos] --> SQL
-    BD --> Permisos
+    Navegador[Navegador: datos externos] --> API[API: validacion y autorizacion]
+    API --> Negocio[Servicios: reglas y transacciones]
+    Negocio --> BD[(MySQL: datos y sesiones)]
+    Negocio --> Archivos[Almacenamiento: PDF e imagenes]
+    API --> Portal[Contenido publico permitido]
 ```
 
-El PDF anterior contiene una matriz probabilidad/impacto que no aparece en el Markdown. No se documentan escala, justificación, fuente ni quién asignó los valores. Se marca como valoración a validar, sin certificarla como medición del equipo.
+## 3. Amenazas y efectos sobre el proyecto
 
-## 3. Buenas prácticas de seguridad aplicables
-
-| Práctica | Aplicación concreta en este proyecto |
-|---|---|
-| Validación de entradas | Para cumplir RNF2, el backend debe validar todos los datos recibidos antes de procesarlos o almacenarlos: campos obligatorios, tipo, longitud, formato y valores permitidos. Las consultas a la base de datos deben ser parametrizadas y, al mostrar contenido en los frontends, se debe aplicar codificación de salida o sanitización según el contexto. La validación del navegador sirve para orientar al usuario, pero no sustituye la validación del backend. |
-| Hashing de contraseñas | Las contraseñas del personal IMSJ no deben guardarse en texto plano ni mediante cifrado reversible. Como propuesta de diseño, se utilizará `bcrypt` mediante una biblioteca mantenida, con salt individual gestionado por la propia implementación. En el login se comparará la contraseña ingresada con el hash almacenado, sin recuperar nunca la contraseña original. |
-| Control de roles y permisos | Para cumplir RNF1, el backend debe comprobar la autorización en cada operación. El público solo podrá consultar contenidos que correspondan al sitio público, mientras que las operaciones de crear, editar, publicar o eliminar requerirán una sesión válida de personal IMSJ. Ocultar botones en el frontend administrativo no se considerará un control de seguridad suficiente. |
-| Protección de datos personales | Para cumplir RNF4, se almacenarán únicamente los datos necesarios para autenticar e identificar las acciones del personal. La comunicación entre los frontends y la API deberá usar HTTPS; las credenciales de servicios y de base de datos se mantendrán fuera del código; y el acceso a usuarios, copias de respaldo e historial administrativo quedará restringido. |
-| Registro de acciones administrativas | En relación con RNF3 y con el alcance definido en el charter, cada creación, modificación, publicación o eliminación deberá registrar como mínimo el usuario responsable, la acción, la fecha y hora y el elemento afectado. El historial debe estar protegido para que un usuario común no pueda modificarlo ni eliminarlo desde las funciones normales del dashboard. |
-| Gestión segura de archivos | El proyecto contempla materiales en PDF, imágenes y videos, además de imágenes asociadas a noticias. El backend deberá aceptar solo los tipos previstos, comprobar extensión y tipo real del archivo, limitar el tamaño, generar nombres de almacenamiento seguros e impedir que los archivos cargados se ejecuten como código. |
-
-## 4. Referencias consultadas
-
-### Documentación interna del proyecto
-
-- [Project Charter — Proyecto Educación Vial IMSJ](https://github.com/totito19/Proyecto-IMSJ/blob/main/docs/project_charter.md)
-- [Documento de Requisitos](https://github.com/totito19/Proyecto-IMSJ/blob/main/docs/Requerimientos.md)
-- [Concepción y documentación general del proyecto](https://github.com/totito19/Proyecto-IMSJ/blob/main/docs/documentacion_proyecto_imsj.md)
-- [Descripción y responsabilidades del backend](https://github.com/totito19/Proyecto-IMSJ/blob/main/backend/README.md)
-
-### Fuentes de seguridad
-
-- [OWASP — SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection)
-- [OWASP — Cross Site Scripting Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)
-- [OWASP — Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)
-- [OWASP — Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html)
-- [OWASP — Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
-- [OWASP — Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
-- [OWASP — Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
-- [OWASP — File Upload Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html)
-
----
-
-## 5. Estado observado y evidencia pendiente — 02/10/2026
-
-**IA — Observación de código, no auditoría ejecutada:**
-
-| Control | Evidencia observada | Límite / verificación pendiente |
+| Amenaza | Escenario relevante | Impacto técnico y sobre usuarios |
 |---|---|---|
-| Hash de contraseña | `password_hash`/bcrypt con costo 12; el hash no se expone en las respuestas. | Las cuentas existentes deben conservar hashes compatibles durante una migración. |
-| Autenticación y autorización | Bearer opaco revocable; cuenta activa y rol consultados en MySQL; cinco intentos por minuto para login/registro. | El rol Directora y la aprobación exclusiva están implementados. |
-| Tokens | AuthService emite por ocho horas y revoca anteriores; JS usa sessionStorage. | Comprobar expiración, logout y riesgo de XSS en entorno de entrega. |
-| Validación y archivos | Reglas en controladores; imágenes de noticias y preguntas, y PDF/imágenes de estudio gestionados por servicios/almacenamiento. | VIDEO se representa mediante URL HTTP/HTTPS; CC-04 admite una imagen opcional JPG/PNG/WEBP de hasta 2048 KB. |
-| Auditoría | HistorialAccion registra usuario/acción/fecha/elemento; rutas de consulta reservadas a personal. | No hay valores anterior/nuevo. Cobertura completa y retención no definidas. |
-| Infraestructura | MySQL sin puerto publicado, frontends de solo lectura y entorno descrito en SSOO. | HTTPS, hardening completo, secretos de producción, respaldo/restauración y monitoreo pendientes. |
-| Cupos de agenda académica | Transacción y bloqueo de fila en ReservaService/repositorio. | Pruebas de capacidad SQLite no demuestran concurrencia real MySQL. |
+| Inyección SQL | Entradas manipuladas en acceso, filtros y operaciones de administración. | Lectura o modificación de cuentas, contenidos y datos de ciudadanos si una consulta concatena entradas sin control. |
+| XSS almacenado o reflejado | Texto, enlaces o mensajes incorporados al DOM sin codificación contextual. | Ejecución en el navegador, redirección, alteración visual o robo del token accesible a JavaScript. |
+| Fuerza bruta y robo de credenciales | Intentos automatizados, claves previsibles o engaño al personal. | Acceso a una cuenta y acciones atribuidas a su identidad. |
+| Fallas de autorización | Invocar directamente una ruta administrativa o un identificador de otra cuenta. | Publicación sin permiso, lectura de información interna o cancelación de reservas ajenas. |
+| Archivos inseguros | Carga de un archivo ejecutable, contenido distinto del tipo declarado o ruta manipulada. | Ejecución, exposición de archivos privados o consumo indebido de recursos. |
+| Pérdida de integridad | Falla parcial entre SQL, historial y adjuntos, o solicitudes simultáneas por el último cupo. | Registros inconsistentes, archivos huérfanos o más reservas que capacidad. |
+| Exposición de configuración | Publicación de `.env`, SQL, mensajes internos, logs o respaldos. | Filtración de claves y datos y acceso a servicios de la instalación. |
+| Falta de recuperación | Pérdida de volumen o copia sin adjuntos, configuración o versión compatible. | Interrupción del servicio e imposibilidad de reconstruir su estado. |
 
-No se debe asumir sanitización/codificación de salida completa por usar PHP: los frontends construyen contenido con `innerHTML` en varios módulos. Se requiere revisión contextual y evidencia SAST/DAST; no se declara aquí una vulnerabilidad explotada ni una corrección de código.
+La valoración es cualitativa. No se dispone de la escala, metodología, fuente y responsable que justifiquen las puntuaciones de la matriz del PDF histórico. Esos valores no se presentan como una medición validada ni se reemplazan por números inventados.
 
-Los archivos y resultados pendientes están en [verificación](../docs_auxiliares/evidencias/verificacion.md). Los términos y la política conservan datos por completar; los comentarios de PDF no sustituyen decisiones institucionales ni revisión jurídica.
+## 4. Controles presentes y límites
 
-## 6. Transición de controles a PHP sin Laravel — CC-05
-
-**Decisión del grupo, 02/10/2026:** retirar Laravel y utilizar las capas/PDO de la API completa. La sección 5 describe el código anterior todavía presente; no se acredita una auditoría de la versión PHP. La [migración](../docs_auxiliares/backend/migracion_backend_vanilla.md) y el [análisis de referencia](../docs_auxiliares/backend/referencia_api_completa.md) detallan la sustitución.
-
-| Control que debe conservarse | Responsabilidad explícita en PHP | Evidencia pendiente |
+| Área | Implementación disponible | Límite o evidencia adicional necesaria |
 |---|---|---|
-| Contraseñas y login | `password_hash`/`password_verify`, compatibilidad de hashes existentes y rechazo de credenciales inválidas. | Usuarios actuales y cuentas nuevas sin exponer hashes ni claves. |
-| Sesión y roles | Validación de Bearer, expiración/revocación, usuario activo, rol y propiedad según la operación. | Logout invalida token, renovación revoca anteriores, cuenta desactivada/rol incorrecto rechazados. |
-| SQL y negocio | Repositorios PDO con parámetros; transacciones y restricciones del dominio. | Entradas inválidas sin persistencia parcial; reservas concurrentes en MySQL. |
-| Entradas y JSON | Validadores/DTO y respuestas compatibles; errores controlados sin detalles internos. | JSON/formularios/id/fechas y archivos inválidos; errores entendidos por frontends. |
-| Archivos y raíz pública | MIME/tamaño/nombres/permisos y URLs preservadas; secretos/código fuera del acceso web. | Carga y descarga de PDF/imágenes; ejecución y acceso a `.env`/SQL/caché denegados. |
-| Auditoría y publicación | Registrar cambios con identidad/fecha/elemento; filtrar estado y vigencia en repositorios. | Historial y portal consistentes tras cada operación; sin publicar contenido interno. |
-| CORS e intentos | Origen/métodos/cabeceras usados por ambos frontends y política de intentos existente. | OPTIONS/Bearer/PUT/multipart; exceso de intentos de login/registro. |
+| Contraseñas | Hash bcrypt con costo 12 y `password_verify`; la salida del usuario omite el hash. | La política institucional de claves, recuperación y cuentas debe acordarse. El alta posterior de personal conserva una clave inicial fija. |
+| Sesiones | Bearer opaco, secreto aleatorio de 32 bytes, hash SHA-256 y ocho horas de vigencia. Ingreso revoca sesiones previas; logout y desactivación revocan tokens. | `sessionStorage` es accesible a scripts del mismo origen; la prevención de XSS y HTTPS son necesarias en el entorno real. |
+| Roles | Comprobación de cuenta activa y rol en cada operación protegida; Directora hereda acceso de personal y es la única que aprueba. | La asignación y revisión institucional de permisos no se deduce de las cuentas de demostración. |
+| Intentos de acceso | Cinco intentos por minuto por IP y operación para login/registro, con contador y bloqueo de archivo compartido. | No es un limitador general de todas las rutas; varias instancias necesitan caché compartida. |
+| SQL e integridad | PDO preparado, transacciones, claves foráneas y restricciones únicas. Reserva bloquea la franja antes de comprobar cupo. | La parametrización no sustituye los permisos y las reglas de negocio. |
+| Entradas y errores | `Solicitud` valida JSON/multipart, tipos, tamaños, opciones, fechas, horas, cédulas y URL. Los errores internos no devuelven SQL o claves. | La validación del navegador es complementaria. Se debe revisar cada contexto de salida de HTML y URL. |
+| Archivos | MIME/contenido, límites por recurso, nombres aleatorios y rutas restringidas fuera de `public`. | VIDEO usa URL externa; los proveedores y sus condiciones deben definirse para la operación institucional. |
+| Publicación | Estados Borrador, Pendiente, Aprobado y Publicado; edición devuelve a borrador y noticias se filtran por vigencia. | Una aprobación técnica de contenido no es una aceptación del proyecto. |
+| Auditoría | Operaciones administrativas guardan usuario, acción, fecha y elemento en la misma transacción de datos. | No conserva valores anterior/nuevo; cobertura total y retención están por acordar. La cancelación ciudadana elimina la reserva sin estado histórico. |
+| Infraestructura | MySQL sin puerto del host, frontends montados en lectura y raíz Apache limitada a `public`. | La configuración local no incorpora dominio ni HTTPS de producción; falta evidencia final de hardening y recuperación. |
 
-**IA — Límites de la referencia:** cookie JWT de una hora y logout que solo elimina la cookie no equivalen a las sesiones de ocho horas con revocación de IMSJ. Sus claims no reconsultan estado/rol en cada petición; su límite global 60/min no equivale al límite de login actual. Estas diferencias requieren adaptación o decisión expresa, sin tratarlas como controles ya implementados.
+## 5. Superficies específicas
 
-Si el grupo propone cambiar Bearer por cookie, debe aprobar y documentar conjuntamente transporte, CORS y protección de las operaciones frente a CSRF. Esa alternativa permanece sin adopción; no se modifica el frontend en esta revisión.
+### Contenidos y consultas
 
-El hashing y las consultas preparadas siguen los mecanismos de [verificación de contraseñas PHP](https://www.php.net/manual/en/function.password-verify.php) y [PDO](https://www.php.net/manual/en/pdo.prepared-statements.php). No se promete seguridad completa por usar esas funciones. La valoración de la matriz histórica, HTTPS, SAST/DAST y restauración siguen pendientes. Ver V-CC05 en [verificación](../docs_auxiliares/evidencias/verificacion.md).
+Noticias, materiales y FAQ se administran con sesión y permisos. El portal solo debe consumir la representación pública. La bandeja de consultas contiene datos personales y su lectura requiere acceso de personal; el formulario público no expone su listado. La revisión de salida debe considerar los módulos que utilizan `innerHTML`, además de los que construyen nodos con `textContent`.
+
+### Simulacro
+
+La consulta pública omite la respuesta correcta. La corrección obtiene la solución desde la base, sin aceptar del navegador una marca de respuesta verdadera. Las imágenes admitidas son JPG, PNG y WEBP de hasta 2048 KB. Debe comprobarse tanto la carga válida como el rechazo de contenido ejecutable y la descarga del recurso almacenado.
+
+### Agenda académica
+
+La reserva se asocia a la cuenta del token. La transacción y el bloqueo impiden superar el cupo por solicitudes simultáneas, y la unicidad evita duplicación por ciudadano/franja. La ruta DELETE comprueba el propietario; personal recibe rechazo de rol y otra cuenta ciudadana no puede eliminar el registro. El borrado libera capacidad y no conserva un historial de cancelación.
+
+Los listados solo muestran fechas vigentes; ese filtro de presentación no elimina los registros pasados ni define su conservación. La política de retención debe contemplar datos efectivamente guardados, no solo lo que la interfaz permite ver.
+
+## 6. Evidencia disponible y trabajo pendiente
+
+| Bloque | Referencia actual | Estado de cierre |
+|---|---|---|
+| Funciones, permisos, archivos y concurrencia | Suite HTTP/MySQL y registro del 05/10. | Resultados históricos disponibles para su versión y entorno. |
+| Consultas, Directora, gráficos y Docker | Demo del 13/10, con 41 comprobaciones HTTP y revisión visual. | Ejecución técnica registrada; no equivale a despliegue institucional. |
+| Cancelación y ajustes del 20/10 | Casos incorporados a la suite y revisión de sintaxis. | Falta una nueva ejecución integral documentada sobre este corte. |
+| SAST, DAST y auditoría API | Actividades enumeradas en el checklist de entrega. | Informes finales, hallazgos y revalidación todavía sin incorporar. |
+| Respuesta a incidentes | Necesidad identificada. | Faltan procedimiento institucional, responsables y evidencia de ejercicio. |
+| Privacidad y términos | PDF con datos y decisiones pendientes. | Completar con la Intendencia antes de presentarlos como definitivos. |
+| Restauración y operación real | Guía de respaldo y reconstrucción. | Falta ensayo de recuperación y definición institucional de conservación y responsables. |
+
+## 7. Condiciones de evaluación final
+
+El informe de seguridad de la entrega debe identificar versión, entorno, alcance autorizado, herramienta y configuración, procedimiento, resultado y ubicación de evidencia. Cada hallazgo debe relacionar impacto, corrección o decisión y nueva prueba. No se completan casillas de ejecución a partir de un resultado esperado.
+
+El [checklist de ciberseguridad](checklist_ciberseguridad_entrega_final.md) organiza las actividades pendientes. El [registro técnico](../../docs_auxiliares/evidencias/verificacion.md) conserva resultados de ejecuciones anteriores. El PDF de este análisis mantiene una versión previa; esta actualización Markdown no modifica sus páginas.
+
+## 8. Referencias
+
+- [Requisitos](../ingenieria_software/Requerimientos.md), [arquitectura](../administracion_ssoo/arquitectura_propuesta.md), [infraestructura](../administracion_ssoo/documentacion-infraestructura.md) y [contrato de API](../../docs_auxiliares/backend/api.md).
+- [OWASP SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection).
+- [OWASP XSS Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html).
+- [OWASP Authentication](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html) y [Authorization](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html).
+- [OWASP Input Validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) y [Password Storage](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html).
+- [OWASP Logging](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) y [File Upload](https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html).

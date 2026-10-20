@@ -2,9 +2,9 @@
 
 ## Sistema de Gestión de Educación Vial — IMSJ
 
-**Versión documental:** 1.0  
-**Fecha de consolidación:** 20/10/2026  
-**Estado del proyecto:** CC-01–CC-05 implementados  
+**Versión documental:** 1.0
+**Fecha de consolidación:** 20/10/2026
+**Estado del proyecto:** CC-01–CC-05 implementados
 **Propósito:** reunir en un único documento el relevamiento, el alcance, los requisitos, las reglas de negocio y su trazabilidad.
 
 ---
@@ -82,7 +82,8 @@ Además de lo anterior, la versión académica incluye:
 - administración de franjas y cupos;
 - consulta de agenda por día, semana y mes;
 - prevención de reservas duplicadas;
-- confirmación visual de la reserva.
+- confirmación visual de la reserva;
+- cancelación de reservas propias.
 
 ### 5.3 Fuera del alcance confirmado
 
@@ -180,6 +181,8 @@ Además de lo anterior, la versión académica incluye:
 - Un ciudadano no puede duplicar una reserva para la misma franja.
 - Las renovaciones normales y urgentes deben poder distinguirse.
 - El costo de la modalidad urgente no se implementará hasta contar con una regla validada.
+- Un ciudadano puede cancelar únicamente su propia reserva. La operación elimina el registro y libera el cupo.
+- Los listados vigentes excluyen fechas pasadas, también para personal; no incluyen un historial de reservas canceladas.
 
 ## 9. Casos de uso principales
 
@@ -194,6 +197,7 @@ Además de lo anterior, la versión académica incluye:
 | Directora | Aprobar contenido | Habilita un contenido para su publicación posterior. |
 | Personal IMSJ | Publicar contenido | Publica un contenido previamente aprobado. |
 | Ciudadano | Reservar un trámite | Obtiene una reserva y una confirmación, si existe cupo. |
+| Ciudadano | Cancelar reserva propia | Se elimina su reserva; una reserva ajena no puede cancelarse. |
 | Personal IMSJ | Gestionar agenda | Crea franjas y consulta reservas por período. |
 
 ## 10. Criterios generales de aceptación
@@ -213,12 +217,15 @@ Los criterios específicos por historia se encuentran en el [backlog](backlog.md
 
 ## 11. Priorización y estado
 
+La clasificación agrupa prioridades del backlog. No establece una prioridad distinta entre CC-01–CC-04 ni un nuevo orden de entrega al cliente.
+
 ### Prioridad alta
 
 - autenticación y control de acceso;
 - consulta y administración de noticias;
 - flujo de aprobación institucional;
 - protección y validación de datos;
+- adaptación móvil, conforme a US27 del backlog;
 - funcionamiento del simulacro;
 - consultas ciudadanas.
 
@@ -228,7 +235,7 @@ Los criterios específicos por historia se encuentran en el [backlog](backlog.md
 - preguntas frecuentes;
 - vigencia automática;
 - historial administrativo;
-- accesibilidad y adaptación móvil.
+- accesibilidad básica.
 
 ### Pendientes principales
 
@@ -293,3 +300,16 @@ Este documento consolida la información existente, pero no sustituye las actas,
 - [Documentación general del proyecto](documentacion_proyecto_imsj.md)
 - [Evidencia técnica](../../docs_auxiliares/evidencias/verificacion.md)
 
+## 17. Recorridos de verificación
+
+| Recorrido | Componentes que intervienen | Evidencia que permite revisarlo |
+|---|---|---|
+| Ingreso y cierre de sesión | AuthController, AuthService, AuthRepository y `auth_tokens`. | Suite HTTP de credenciales, acceso protegido y revocación. |
+| Publicación de contenido | Controladores y servicios de Noticia, Material y Pregunta; Auth y registro de acciones. | Pruebas del flujo Directora y demo del 13/10. |
+| Simulacro con gráfico | PruebaController/Service/Repository, modelo Prueba y Archivo. | Consulta pública sin respuesta correcta, carga permitida y corrección en servidor. |
+| Consulta ciudadana | ConsultaController/Service/Repository y panel Consultas. | Envío, lectura y marcado registrados en la demo del 13/10. |
+| Cupo y reserva | ReservaService/Repository, usuarios, franjas y reservas. | Prueba concurrente con dos procesos y MySQL del registro técnico. |
+| Cancelación propia | Ruta DELETE, ReservaController/Service/Repository e interfaz de reservas. | Casos incorporados a `backend/tests/integracion.py`; la revisión actual no acredita una nueva ejecución HTTP. |
+| Instalación local | BAT, script de Docker, Compose, migración, Apache y MySQL. | Arranque aislado del 13/10 y procedimiento SSOO. |
+
+Los recorridos facilitan relacionar una necesidad con las capas que la implementan. Para reproducir un resultado se debe utilizar la versión y el entorno de su registro; las pruebas anteriores no cubren automáticamente cambios posteriores.

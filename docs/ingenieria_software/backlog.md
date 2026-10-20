@@ -91,42 +91,42 @@
 
 Las filas siguientes relacionan cada historia con el comportamiento observable y la evidencia localizada. No agregan reglas nuevas ni sustituyen las fuentes de cada requisito.
 
-| US | Criterio propuesto | Evidencia disponible / límite |
+| US | Criterio verificable | Evidencia disponible / límite |
 |---|---|---|
 | US1 | Credenciales válidas permiten acceder; las inválidas se rechazan; cerrar sesión revoca el acceso. | AuthController/AuthService; comprobado en la suite HTTP/MySQL. |
 | US2 | Una cuenta pública no puede ejecutar operaciones administrativas; personal puede acceder a ellas. | `Auth` comprueba cuenta y rol; Directora hereda acceso de personal. Implementado y verificado. |
-| US3 | Solo se muestran noticias publicadas y dentro de vigencia; no se exponen las demás. | NewsApiTest. |
+| US3 | Solo se muestran noticias publicadas y dentro de vigencia; no se exponen las demás. | `NoticiaRepository` y suite HTTP/MySQL. |
 | US4 | Personal puede crear, editar y retirar noticia; cada operación queda asociada a su usuario. | `NoticiaService`, auditoría y flujo de aprobación implementados. |
 | US5 | Inicio y fin se guardan y no se admite fin anterior al inicio. | Validación de NoticiaController. |
 | US6 | Portada, galería y enlaces se conservan y presentan; archivos o enlaces inválidos se rechazan. | El backend conserva portada, galería y enlaces; el panel y el portal todavía no gestionan/presentan galería y enlaces. |
 | US7 | Cambiar publicación modifica la visibilidad pública; aprobación y publicación son acciones separadas. | Cuatro estados implementados: BORRADOR, PENDIENTE, APROBADO y PUBLICADO. |
-| US8 | Una noticia fuera de vigencia no aparece públicamente sin requerir modificación manual del estado. | Filtro de Noticia y NewsApiTest. |
+| US8 | Una noticia fuera de vigencia no aparece públicamente sin requerir modificación manual del estado. | Filtro de Noticia y `NoticiaRepository` y suite HTTP/MySQL. |
 | US9 | Administración puede ver no publicados; el portal público no los devuelve. | Rutas administrativas/públicas y filtros. |
-| US10 | Público autenticado reserva franja de prueba con cupo y ve confirmación; sin cupo se rechaza. | ReservaService y SchedulingApiTest; solo destino académico. |
+| US10 | Público autenticado reserva franja de prueba con cupo y ve confirmación; sin cupo se rechaza. | ReservaService y suite HTTP/MySQL de agenda; solo destino académico. |
 | US11 | La reserva normal queda asociada al ciudadano y a la franja seleccionada. | Mismo circuito de reservas, implementado y comprobado. |
 | US12 | Se distingue renovación urgente; el costo especial debe tener regla y registro acordados. | Tipo urgente existente; no hay campo de costo. Esta US no puede cerrarse por distinguir el tipo únicamente. |
 | US13 | Se rechaza duplicación por ciudadano/franja y la concurrencia no supera los cupos. | Unicidad, transacción y bloqueo; concurrencia comprobada con dos procesos y MySQL. |
-| US14 | Luego de guardar, el ciudadano ve identificador, trámite, fecha y horario correspondientes a su reserva. | API/resource y confirmación visible en el frontend. |
-| US15 | Personal crea franja normal con fecha, intervalo y cupos; se rechazan datos inválidos. | FranjaDisponibilidadController/Service y SchedulingApiTest. |
+| US14 | Luego de guardar, el ciudadano ve identificador, trámite, fecha y horario correspondientes a su reserva. | API/modelo y confirmación visible en el frontend. |
+| US15 | Personal crea franja normal con fecha, intervalo y cupos; se rechazan datos inválidos. | `ReservaController`/`ReservaService` y suite HTTP/MySQL de agenda. |
 | US16 | Personal crea franja urgente y puede distinguirla de una normal. | Tipo urgente implementado en esquema, API y panel; el costo pertenece a US12. |
 | US17 | Personal crea franja de prueba de manejo, disponible en la consulta ciudadana según cupo/fecha. | API de franjas y pruebas. |
-| US18 | La vista diaria devuelve reservas del día elegido, con ciudadano y franja. | `GET /agenda?vista=dia&fecha=...` y SchedulingApiTest. |
+| US18 | La vista diaria devuelve reservas del día elegido, con ciudadano y franja. | `GET /agenda?vista=dia&fecha=...` y suite HTTP/MySQL de agenda. |
 | US19 | La vista semanal muestra las reservas del período solicitado. | ReservaService calcula el período semanal y el panel permite recorrerlo. |
-| US20 | La vista mensual muestra las reservas del mes solicitado. | ReservaService y SchedulingApiTest. |
-| US21 | Ciudadano accede a materiales publicados y no a los no publicados. | ContentApiTest. |
+| US20 | La vista mensual muestra las reservas del mes solicitado. | ReservaService y suite HTTP/MySQL de agenda. |
+| US21 | Ciudadano accede a materiales publicados y no a los no publicados. | suite HTTP/MySQL de contenidos. |
 | US22 | Personal administra PDF, imagen y video conforme a formatos acordados; retirar un archivo elimina su referencia válida. | RF17 se amplía con RF20; VIDEO es URL, no archivo, en código actual. |
-| US23 | Se muestran FAQ publicadas con sus respuestas; las no publicadas permanecen en administración. | ContentApiTest. Categorías: US29. |
+| US23 | Se muestran FAQ publicadas con sus respuestas; las no publicadas permanecen en administración. | suite HTTP/MySQL de contenidos. Categorías: US29. |
 | US24 | Personal crea, modifica y retira FAQ con validación y auditoría. | PreguntaService y panel implementados; categorías se controlan aparte en US29. |
-| US25 | Una acción administrativa registra usuario, acción, fecha y elemento; público no consulta ni modifica el historial. | HistorialAccion y rutas. «Completo» requiere acordar operaciones cubiertas y retención. |
-| US26 | Se restringen datos por usuario/rol, se usan hashes y se documentan medidas para entorno real. | AuthService, middleware y borrador legal. HTTPS, retención y respaldo probado pendientes. |
+| US25 | Una acción administrativa registra usuario, acción, fecha y elemento; público no consulta ni modifica el historial. | `historial_acciones`, `UsuarioRepository` y rutas. «Completo» requiere acordar operaciones cubiertas y retención. |
+| US26 | Se restringen datos por usuario/rol, se usan hashes y se documentan medidas para entorno real. | `AuthService`, `Auth` y borradores legales. HTTPS, retención y respaldo probado pendientes. |
 | US27 | Los flujos principales se completan desde móvil sin pérdida de contenido o controles. | CSS adaptable disponible; falta una prueba formal en dispositivos. |
 | US28 | Los flujos principales se pueden recorrer con teclado, etiquetas y foco comprensibles. | Hay etiquetas ARIA, foco y controles semánticos; falta una auditoría formal. |
 
-## Necesidades que faltaban en el backlog
+## Historias incorporadas desde el relevamiento y los cambios
 
 **Trazabilidad posterior:** se reservan US29–US34 para evitar identificadores ambiguos. US30–US33 corresponden a CC-03, CC-01, CC-02 y CC-04, respectivamente, y están Listas conforme al comportamiento implementado. US29 continúa fuera de esos cambios porque la clasificación de FAQ por categorías no fue incorporada.
 
-| ID | Historia propuesta | Fuente / requisito | Criterio propuesto | Situación observada |
+| ID | Historia de usuario | Fuente / requisito | Criterio verificable | Situación observada |
 |---|---|---|---|---|
 | US29 | Como ciudadano, quiero consultar FAQ por categoría para encontrar información relevante. | Entrevista, RF19; EP6. | Clasificación y consulta por categorías acordadas. | Sin implementación localizada; categorías concretas pendientes. |
 | US30 | Como Dirección, quiero validar contenidos antes de publicarlos para controlar la comunicación institucional. | RF21, CC-03; EP2. | Borrador → Pendiente → Aprobado → Publicado; aprobación no publica por sí sola. | **Lista.** Flujo aplicado a noticias, materiales y FAQ; solo Directora aprueba. |
@@ -142,9 +142,9 @@ La administración de personal y el registro ciudadano existen en código. Su pr
 | Campo | Estado |
 |---|---|
 | Puntos por US y total por épica | No estimados por el equipo en este documento. Los puntos por tarea del planning no se reparten retrospectivamente entre US. |
-| Responsable y revisor por US | Roles generales aclarados en [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md); tareas concretas por US aún no registradas. |
+| Responsable y revisor por US | Roles generales aclarados en [aclaraciones y pendientes](../../docs_auxiliares/revision/aclaraciones_y_pendientes.md); tareas concretas por US aún no registradas. |
 | Sprint seleccionado / capacidad | No registrados como compromiso; ver reconstrucción de [planning](sprint_planning.md). |
-| Evidencia de implementación y pruebas | Registrada en [verificación](../docs_auxiliares/evidencias/verificacion.md); los límites de US parciales se mantienen visibles. |
+| Evidencia de implementación y pruebas | Registrada en [verificación](../../docs_auxiliares/evidencias/verificacion.md); los límites de US parciales se mantienen visibles. |
 | Estado de los cambios controlados | **CC-01–CC-05, Listos.** CC-02–CC-04 provienen de la reunión/demo con Directora e Inspector de Tránsito. |
 
 Fuentes: [historias del curso](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/03_historias_de_usuario.md) y [criterios de historias](https://github.com/portalutu/ing_software-3ro-bt/blob/ae1c0f118a959c5bba7fd6c8badf60de1b7ea23a/Teoricos/user-stories.md).
@@ -153,14 +153,28 @@ Fuentes: [historias del curso](https://github.com/portalutu/proyecto-3ro-bt-2026
 
 **Decisión del grupo, 02/10/2026; estado Listo:** Laravel fue sustituido por PHP sin framework siguiendo `api-simple`, conservando el contrato y el dominio de IMSJ. Se registra como trabajo técnico transversal; US1–US34 mantienen sus identificadores.
 
-**IA — Desglose para revisión del equipo:** las tareas TM-01–TM-07 y sus dependencias se describen en la [guía de migración](../docs_auxiliares/backend/migracion_backend_vanilla.md). No se asignan puntos, fechas, sprint ni responsables concretos por deducirlos del rol general.
+**Desglose técnico:** las tareas TM-01–TM-07 y sus dependencias se describen en la [guía de migración](../../docs_auxiliares/backend/migracion_backend_vanilla.md). No se asignan puntos, fechas, sprint ni responsables concretos por deducirlos del rol general.
 
 | Tareas técnicas | Historias / necesidad afectada | Implementación / evidencia |
 |---|---|---|
-| TM-01/TM-02: contrato y base PHP | Todas las rutas; RNF2, US34 y calidad transversal. | Router/configuración/JSON compatibles. |
-| TM-03: cuenta y permisos | US1/US2/US26 y usuarios ya presentes. | Autenticación, expiración, revocación y autorización. |
+| TM-01/TM-03: estructura, contrato y persistencia | Todas las rutas; RNF2, US34 y calidad transversal. | Entrada/configuración/JSON compatibles. |
+| TM-02: cuenta y permisos | US1/US2/US26 y usuarios ya presentes. | Autenticación, expiración, revocación y autorización. |
 | TM-04: contenidos, historial y banco | US3–US9, US21–US25, base de US31. | CRUD, visibilidad, archivos y corrección compatibles; los límites de US6 y US25 figuran arriba. |
-| TM-05: agenda académica | US10–US20, RNF8/RNF9. | Cupos, propiedad y concurrencia MySQL. |
-| TM-06/TM-07: entorno y validación | Infraestructura/calidad y todos los módulos migrados. | Reconstrucción/restauración, pruebas adaptadas y frontends operativos. |
+| TM-05: banco y agenda académica | US10–US20, RNF8/RNF9. | Cupos, propiedad y concurrencia MySQL. |
+| TM-06/TM-07: entorno y validación | Infraestructura/calidad y todos los módulos migrados. | Arranque, procedimientos de recuperación, pruebas adaptadas y frontends operativos; restauración institucional sin evidencia adjunta. |
 
-CC-01–CC-05 están Listos. La implementación y sus pruebas se consultan en [control de cambios](control_cambios.md) y [verificación](../docs_auxiliares/evidencias/verificacion.md).
+CC-01–CC-05 están Listos. La implementación y sus pruebas se consultan en [control de cambios](control_cambios.md) y [verificación](../../docs_auxiliares/evidencias/verificacion.md).
+
+## Detalle operativo y límites de las historias
+
+US10–US14 incorporan el circuito vigente de reserva propia y cancelación. El ciudadano consulta sus reservas, selecciona una y confirma su eliminación; la API comprueba su identidad desde el token. Al eliminarla deja de contar para el cupo. El sistema no conserva un estado de cancelación ni ofrece reprogramación automática.
+
+US18–US20 utilizan los períodos diario, semanal y mensual, pero el repositorio actual limita todos ellos a fechas de hoy en adelante. Por lo tanto, recorrer un período anterior puede producir una agenda vacía aunque la base conserve reservas. Esta restricción debe considerarse al demostrar esas historias y al evaluar cualquier necesidad posterior de consulta histórica.
+
+| Estado | Lectura para la entrega |
+|---|---|
+| Lista | Comportamiento implementado con el alcance y los límites descritos; su aceptación institucional tiene un registro independiente. |
+| Parcial | Existe parte de la función, pero queda un resultado concreto sin completar. Se indica en la propia historia. |
+| Pendiente | Falta implementación o una definición necesaria para producir el resultado. |
+
+Los puntos históricos del planning no se convierten en puntos terminados por historia. La evidencia actual se registra por versión y ejecución; los casos de cancelación añadidos el 20/10 están disponibles en la suite, sin atribuirles el resultado de las pruebas del 13/10.

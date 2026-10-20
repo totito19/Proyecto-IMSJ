@@ -6,7 +6,7 @@
 
 | Pieza del ejemplo simple | Adaptación IMSJ implementada |
 |---|---|
-| `index.php`, `switch (true)`, carga explícita | `public/index.php`; 45 rutas de IMSJ, conservando `/api`. |
+| `index.php`, `switch (true)`, carga explícita | `public/index.php`; 46 rutas de IMSJ, conservando `/api`. |
 | Controladores exigen login/rol y validan | `Auth::requireUser()` y `Solicitud`; ocho controladores. |
 | Servicios y repositorios PDO | Un servicio/repositorio por módulo; SQL preparado y transacciones MySQL. |
 | Modelos sin ORM | Datos de usuario, consulta, noticia, material, FAQ, prueba, franja y reserva; serialización explícita. |
@@ -16,8 +16,14 @@
 | No hay limitador en api-simple | Se conserva el límite IMSJ de cinco intentos/minuto, con archivo y `flock`. |
 | SQL de demostración | `database.sql` sin DROP ni datos de ejemplo; primera cuenta mediante CLI explícita. |
 
-**IA - Observación:** compartir el patrón del ejemplo no significa copiar su contrato o certificar su seguridad. Autenticación revocable, reservas, archivos y auditoría responden al comportamiento IMSJ existente. El recorrido de cada endpoint se documenta en flujos (documento auxiliar retirado del árbol actual).
+Compartir el patrón del ejemplo no significa copiar su contrato o certificar su seguridad. Autenticación revocable, reservas, archivos y auditoría responden al comportamiento IMSJ existente. El contrato vigente identifica rutas, permisos, métodos y efectos por operación.
 
 La estructura actual incluye `public/`, tres clases `core/`, ocho controladores, ocho servicios, ocho repositorios, `models/`, SQL raíz, Composer y Docker. Las franjas/agenda se agrupan en Reserva, el historial en Usuario y las consultas ciudadanas forman el octavo módulo. CC-01–CC-05 están Listos.
 
 Los archivos operativos `scripts/`, `tests/`, almacenamiento y plantillas de entorno permiten crear la primera cuenta, comprobar la implementación y ejecutarla. No añaden endpoints. Composer declara PHP/extensiones; esta versión no requiere paquetes externos ni `vendor/autoload.php`.
+
+## Correspondencia con los recorridos actuales
+
+La referencia aporta la forma de seguir una petición y separar HTTP, negocio y SQL. IMSJ agrega reglas propias: aprobación de Dirección, vigencia, tipos de adjunto, consultas, cupos, propiedad y auditoría. Por ello los modelos, métodos y límites se justifican desde los requisitos de IMSJ y no desde las entidades del ejemplo.
+
+El contrato pasó de 42 rutas en la reescritura a 45 con consultas y 46 con cancelación. Los inventarios y pruebas se relacionan con esas versiones; el ejemplo no determina la cantidad ni las autorizaciones del sistema vial.

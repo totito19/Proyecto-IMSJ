@@ -4,7 +4,7 @@
 
 ## Resultado y correspondencia
 
-La entrada actual es `public/index.php`, con switch de 45 rutas; ocho controladores, servicios y repositorios PHP nativos, modelos sin ORM y PDO preparado. Se retiraron del backend los directorios app/bootstrap/routes/config del framework, migraciones/factories/seeders, Artisan, manifiesto/lock y pruebas dependientes de Laravel. Git conserva el antecedente `68d34fb`; no existe una segunda API heredada dentro del backend.
+La entrada actual es `public/index.php`, con switch de 46 rutas; ocho controladores, servicios y repositorios PHP nativos, modelos sin ORM y PDO preparado. Se retiraron del backend los directorios app/bootstrap/routes/config del framework, migraciones/factories/seeders, Artisan, manifiesto/lock y pruebas dependientes de Laravel. Git conserva el antecedente `68d34fb`; no existe una segunda API heredada dentro del backend.
 
 | Componente anterior | Sustitución actual |
 |---|---|
@@ -35,7 +35,7 @@ La [guía del backend](../../backend/README.md) contiene el arranque nuevo/local
 
 | Tarea del plan anterior | Estado técnico | Observación |
 |---|---|---|
-| TM-01 - estructura y arranque | **Listo.** Árbol nativo, entrada y 45 rutas implementados; sintaxis/HTTP comprobados. | La línea base fue de 42 rutas y CC-02 añadió tres. |
+| TM-01 - estructura y arranque | **Listo.** Árbol nativo, entrada y 46 rutas implementados; sintaxis/HTTP comprobados. | La línea base fue de 42 rutas y CC-02 añadió tres. |
 | TM-02 - sesiones y permisos | **Listo.** Bearer revocable, cuenta/rol, vencimiento y límite de intentos comprobados. | La configuración de un futuro proxy pertenece al despliegue. |
 | TM-03 - persistencia y datos | **Listo.** PDO, SQL, claves y transacciones comprobados en MySQL 8.4. | Una instalación real debe respaldarse antes de actualizar. |
 | TM-04 - contenidos y archivos | **Listo.** CRUD/estado, archivos, visibilidad y rollback comprobados. | Recorrido visual registrado el 13/10. |
@@ -47,6 +47,12 @@ Son estados técnicos; no asignan puntos, costo ni tareas individuales retrospec
 
 ## Límites
 
-**Estado consolidado al 15/10/2026:** CC-01–CC-05 están Listos. La versión incorpora simulador, consultas, Directora, aprobación diferenciada y gráficos del test. Agenda/reservas siguen siendo académicas. No se incorporan categorías, respuestas a consultas, cancelación, costo ni campos nuevos porque no forman parte de estos cambios.
+**Estado consolidado al 15/10/2026:** CC-01–CC-05 están Listos. La versión incorpora simulador, consultas, Directora, aprobación diferenciada y gráficos del test. Agenda/reservas siguen siendo académicas. Categorías, respuestas a consultas, costo urgente y campos institucionales permanecen pendientes o fuera de esos cambios. La cancelación ciudadana se añadió a la agenda académica el 20/10.
 
-El crédito corresponde al equipo, con apoyo externo de IA declarado. Los resultados y límites se registran en [verificación](../evidencias/verificacion.md).
+El crédito y la responsabilidad corresponden al equipo. Los resultados y límites se registran en [verificación](../evidencias/verificacion.md).
+
+## Evolución posterior de la base nativa
+
+La base del 05/10 expuso 42 rutas. Consultas añadió tres en la demo del 13/10 y la cancelación añadió una el 20/10. Estos incrementos conservan la estructura nativa y no reincorporan archivos del framework. El manifiesto actual declara requisitos de PHP/extensiones, sin paquetes externos.
+
+Al revisar una instalación se debe comparar el esquema actual, la migración incremental, los adjuntos y la configuración. La compatibilidad de nombres y hashes no acredita que cualquier base previa pueda actualizarse sin ensayo. La restauración debe verificarse con una copia y una versión de código compatible.

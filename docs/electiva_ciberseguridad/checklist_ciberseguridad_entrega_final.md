@@ -1,13 +1,13 @@
 # Checklist para cerrar Electiva Ciberseguridad
 
-**Fecha de revisión:** 20/10/2026  
+**Fecha documental:** 20/10/2026
 **Fecha de entrega:** 29/10/2026
 
 Fuente docente: [Requerimientos por asignatura](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/Lineamientos/requerimientos_por_asignatura.md#electiva-ciberseguridad).
 
 ## Diagnóstico corto
 
-Sí, Ciberseguridad es actualmente el bloque con más entregables obligatorios sin cerrar.
+La sección reúne controles implementados y entregables de evaluación todavía pendientes. Cada casilla se cierra con evidencia de ejecución sobre una versión identificada.
 
 | Entrega docente | Estado actual | Qué falta |
 |---|---|---|
@@ -30,7 +30,7 @@ Sí, Ciberseguridad es actualmente el bloque con más entregables obligatorios s
 - [ ] Mantener el mapa que relaciona componentes, amenazas e impacto técnico/sobre usuarios.
 - [ ] Definir una escala simple de probabilidad e impacto, por ejemplo 1 a 5.
 - [ ] Justificar quién valoró cada riesgo y con qué criterio. No presentarlo como medición si fue una estimación del equipo.
-- [ ] Corregir el PDF: actualmente todavía afirma que el código usa Laravel, que CC-01–CC-04 están pendientes y que falta la migración a PHP.
+- [ ] Actualizar el PDF frente a este Markdown: conserva referencias a Laravel y cambios pendientes que ya no describen el backend vigente.
 - [ ] Generar una versión final coherente con el Markdown y con el código entregado.
 
 **Terminado cuando:** el análisis describe el sistema actual, no tiene afirmaciones históricas falsas y cada riesgo tiene amenaza, activo, impacto, control y riesgo residual.
@@ -198,7 +198,7 @@ docs/ciberseguridad/
 └── 10_reflexion_etica.md
 ```
 
-## Reparto sugerido para terminar rápido
+## Distribución de actividades por área
 
 | Frente | Responsable sugerido | Revisor |
 |---|---|---|
@@ -219,3 +219,9 @@ Ciberseguridad queda cerrada solo si:
 - [ ] no quedan contradicciones históricas ni campos de plantilla presentados como versión final;
 - [ ] el equipo puede demostrar autenticación, permisos, SAST, DAST, Bash, hardening y respuesta a incidentes;
 - [ ] ningún documento o reporte expone secretos o datos personales reales.
+
+## Identificación y cierre de evidencia
+
+Cada informe debe incluir el commit o versión evaluada, herramientas y configuración, entorno, datos de prueba, pasos ejecutados, resultado y ubicación del archivo original. La revisión de un informe registra quién lo revisó y sus observaciones. Una casilla sin marcar conserva su condición de pendiente, aunque el control exista en código.
+
+Las funciones añadidas el 20/10 requieren repetir los escenarios afectados, especialmente propiedad y cancelación de reservas. Los resultados de la demo del 13/10 no se reasignan a esa versión. La distribución por área orienta el trabajo de los roles existentes y no acredita que el equipo haya aceptado tareas o fechas individuales.

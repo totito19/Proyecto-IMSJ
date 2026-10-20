@@ -1,39 +1,73 @@
-# Reconstrucción de la infraestructura PHP nativa
+# Reconstrucción de la infraestructura
 
-**05/10/2026 - instalación nueva local.** Procedimiento basado en archivos implementados. Docker/Apache no se ejecutaron en esta intervención; registrar su resultado antes de presentarlo como reconstrucción comprobada. Preparado con apoyo externo de IA, revisión de Juan Robaina pendiente.
+**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 20/10/2026.
 
-## Instalación nueva
+## Alcance y requisitos previos
 
-1. Disponer de Docker/Compose con contenedores Linux. En Windows abrir backend/iniciar.bat desde cualquier carpeta; no requiere runtimes PHP/MySQL en el host.
-2. El BAT abre/espera Docker Desktop cuando corresponde, prepara .env con claves aleatorias para una base nueva y conserva las existentes. Si detecta un volumen previo sin sus claves, exige recuperarlas y se detiene. APP_PORT es el puerto único; por defecto 8000, con búsqueda de uno libre si otro programa lo ocupa.
-3. Inicia Apache/PHP y MySQL con espera de salud y retira el Nginx anterior del mismo proyecto, sin borrar volúmenes. El SQL raíz se importa solo cuando db_data está vacío; no contiene usuarios o contenido de demostración. Para ejecución manual en otros sistemas: copiar .env.example, completar claves y ejecutar `docker compose up -d --build --remove-orphans --wait --wait-timeout 180`.
-4. Crear explícitamente la primera cuenta de personal con scripts/crear_admin.php, siguiendo el [README del backend](../../backend/README.md). Si ya hay personal activo, la herramienta rechaza la operación.
-5. Consultar /api/health y verificar login/listado con la nueva cuenta; health no consulta MySQL.
-6. El BAT abre el portal en el navegador después de comprobar HTTP/base/páginas. Con el puerto por defecto: localhost:8000/frontend-publico/ y localhost:8000/frontend-imsj/; si cambia, usar el puerto mostrado. Verificar ingreso, contenidos/archivos, permisos y agenda académica; registrar versión, entorno, pasos y resultados.
+Este procedimiento describe una instalación local nueva a partir del repositorio. Se necesita Docker con Compose y contenedores Linux, acceso a Internet para descargar imágenes en el primer inicio y la carpeta completa del proyecto, incluidos ambos frontends. Los comandos se ejecutan desde `backend`.
 
-```powershell
+Una instalación existente debe conservar su configuración y volúmenes y seguir primero la [guía de transición](../../docs_auxiliares/backend/transicion_backend_vanilla.md). Crear un entorno vacío y restaurar un respaldo son operaciones distintas de actualizar contenedores.
+
+## Instalación nueva en Windows
+
+1. Abrir `backend/iniciar.bat`. La herramienta detecta Docker y abre Desktop si corresponde. Si el motor informa un problema de WSL o virtualización, se debe resolver ese requisito del equipo antes de continuar.
+2. Esperar la preparación de `.env`, la descarga/construcción y la salud de los servicios. Las claves se generan para una base nueva. Si se detecta una base previa sin configuración válida, el inicio se detiene y solicita recuperar las claves originales.
+3. Leer las direcciones mostradas. El puerto es 8000 por defecto; si está ocupado, el inicio busca uno disponible y lo guarda. El navegador se abre cuando el portal responde.
+4. Crear la primera cuenta de personal mediante `scripts/crear_admin.php`, con las variables `INITIAL_ADMIN_*` indicadas en el [README del backend](../../backend/README.md#instalación-nueva-con-docker). Es una acción explícita, separada del arranque.
+5. Acceder al panel con esa cuenta y comprobar que las listas vacías corresponden a una instalación sin contenido. El SQL inicial no incorpora usuarios ni datos de demostración.
+
+El inicio ejecuta la migración incremental antes de Apache. Se utiliza para incorporar columnas, roles y estados requeridos por la versión actual; no sustituye una migración arbitraria de cualquier base histórica.
+
+## Inicio manual en otros sistemas
+
+Copiar `.env.example` a `.env` y definir las credenciales de la instalación. Desde `backend`:
+
+```text
+docker compose up -d --build --remove-orphans --wait --wait-timeout 180
 docker compose ps
-docker compose logs --tail 50 app
-docker compose logs --tail 50 db
 ```
 
-Los logs son diagnóstico; revisar antes de adjuntarlos para no publicar datos de instalación. No se utilizan Composer install/Artisan como paso obligatorio: no hay paquetes externos.
+Con el puerto predeterminado se accede al portal en `http://localhost:8000/frontend-publico/`, al panel en `http://localhost:8000/frontend-imsj/` y a la comprobación PHP en `http://localhost:8000/api/health`. Si se elige otro puerto, las direcciones deben utilizarlo; los clientes JavaScript siguen el origen de la página.
 
-## Reinicio y persistencia
+## Comprobaciones posteriores
 
-`docker compose stop` detiene; `docker compose up -d` inicia con los volúmenes. Usar el mismo proyecto Compose y los nombres db_data/app_uploads. Probar en entorno aislado que recrear los contenedores conserve cuentas, contenido, archivos, historial y reservas. No borrar volúmenes como parte del arranque normal.
+| Comprobación | Resultado esperado |
+|---|---|
+| Contenedores | `app` y `db` aparecen iniciados y saludables. |
+| Portal y API | Responden las páginas y `/api/health`; la salud interna también consulta tablas y columnas esenciales. |
+| Inicio de sesión | La cuenta válida ingresa y una credencial incorrecta es rechazada. |
+| Contenidos | El panel permite preparar contenido y el portal solo presenta lo publicado y vigente. |
+| Aprobación | La Directora puede aprobar y esa acción no publica por sí sola. |
+| Archivos | Una carga permitida puede descargarse y las entradas inválidas se rechazan. |
+| Agenda académica | Una franja con cupo admite una reserva propia y su cancelación; se impiden duplicación y cancelación ajena. |
+| Persistencia | Al detener e iniciar los mismos servicios se conservan los registros y adjuntos preparados para la prueba. |
 
-## Backend local sin contenedores
+Cada ejecución debe registrar versión del código, entorno, fecha, procedimiento, resultado y evidencia. Esta lista describe la comprobación que debe realizarse; no constituye un informe de una ejecución nueva.
 
-PHP 8.5 con PDO MySQL, mbstring y fileinfo, MySQL 8.4 y esquema importado en la base elegida. Ajustar DB_HOST/DB_PORT de .env; crear primera cuenta solo cuando corresponda. Desde backend:
+## Detención, reinicio y diagnóstico
 
-```powershell
+`detener.bat` detiene los contenedores conservando volúmenes. El equivalente manual es `docker compose stop`; para volver a iniciar se utiliza `docker compose up -d`. Mantener el nombre de proyecto evita iniciar accidentalmente otra base vacía.
+
+```text
+docker compose ps -a
+docker compose logs --tail 80 app db
+```
+
+Los mensajes permiten distinguir fallos de motor, descarga, migración, conexión o HTTP. La creación de la primera cuenta rechaza una base que ya tenga personal activo. Si el portal responde pero el panel no permite ingresar, revisar primero la cuenta y las credenciales, sin volver a importar SQL ni borrar datos.
+
+## Ejecución local sin Docker
+
+Se necesitan PHP 8.5 con PDO MySQL, mbstring y fileinfo, MySQL 8.4, el esquema importado en una base seleccionada y las variables de conexión ajustadas. El servidor integrado puede utilizarse para desarrollo de la API:
+
+```text
 php -d upload_max_filesize=10M -d post_max_size=24M -S 127.0.0.1:8000 -t public public/index.php
 php scripts/verificar.php
 ```
 
-El servidor integrado es de desarrollo. El entorno utilizado para las pruebas reales fue local portable, con dos procesos contra una base MySQL aislada; [evidencia](../../docs_auxiliares/evidencias/verificacion.md).
+Este comando no reproduce los alias de Apache que sirven los frontends. Para recorrer el sistema completo se utiliza Docker o una configuración Apache equivalente con raíz en `public` y los dos alias. Composer no instala dependencias necesarias para responder en esta versión.
 
-## Instalación con datos existentes
+## Recuperación y evidencia disponible
 
-Este procedimiento nuevo no borra/restaura una instalación anterior. Seguir [transición y recuperación](../../docs_auxiliares/backend/transicion_backend_vanilla.md): respaldo, copia de prueba, comparación de esquema, SQL no destructivo, configuración/volúmenes conservados y nuevo login. No importar un SQL histórico con DROP ni volver a sembrar datos de demostración.
+Un respaldo recuperable debe reunir exportación SQL, adjuntos, versión de código y configuración protegida. La restauración se ensaya en un destino aislado, comparando cuentas, relaciones, conteos, permisos y descargas. El procedimiento detallado está en [respaldo y recuperación](../../docs_auxiliares/backend/transicion_backend_vanilla.md).
+
+El registro del 13/10 acredita arranque Docker aislado y revisión visual. No acredita restauración institucional ni despliegue productivo. Las condiciones definitivas de alojamiento, HTTPS, conservación y responsables se completan con la Intendencia.

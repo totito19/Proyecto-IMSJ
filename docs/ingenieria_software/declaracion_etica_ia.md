@@ -1,205 +1,61 @@
-> **Estado consolidado - 15/10/2026:** CC-01–CC-05 están **Listos**. El backend PHP nativo y los cambios funcionales fueron preparados con apoyo externo de IA declarado; el crédito y la responsabilidad permanecen en el equipo.
+# Declaración de uso de inteligencia artificial
 
----
+**Proyecto:** Educación Vial IMSJ — Portal Vial.
 
-# Declaración de Ética en el Uso de Inteligencia Artificial
+**Equipo:** Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales.
 
-> **Nota de revisión de IA — actualizada al 15/10/2026:** las secciones 1–10 conservan la declaración histórica del equipo fechada 05/08/2026. La adenda 11 registra el apoyo de IA sin atribuirle crédito individual. El estado funcional se documenta por separado: **CC-01–CC-05, Listos**.
+**Declaración inicial:** 05/08/2026. **Actualización del registro:** 20/10/2026.
 
-**Proyecto:** Plataforma Web Educación Vial IMSJ
-**Equipo:** Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero, Juan Corrales
-**Fecha:** 05/08/2026
+## Objeto
 
----
+Este documento concentra la información sobre el uso de herramientas de inteligencia artificial durante el proyecto. Describe actividades y límites de la asistencia, la responsabilidad sobre los entregables y el estado de la revisión. El crédito del proyecto y su documentación corresponde a los cinco integrantes del grupo.
 
-# 1. Objetivo
+El registro actual integra lo declarado al inicio y las actividades posteriores. Las afirmaciones de la primera versión sobre un uso limitado a documentación describían aquella declaración; no se extienden a la reescritura e integración realizadas en octubre.
 
-La presente declaración tiene como finalidad informar de manera transparente el uso que el equipo realizó de herramientas de inteligencia artificial durante el desarrollo del proyecto **Plataforma Web Educación Vial IMSJ**.
+## Uso documentado por etapa
 
-El equipo entiende que la inteligencia artificial constituye una herramienta de apoyo para determinadas tareas, pero que el análisis del problema, las decisiones técnicas, la implementación del sistema y la validación del contenido son responsabilidad exclusiva de sus integrantes.
-
-En consecuencia, esta declaración describe el alcance del uso de dichas herramientas y las medidas adoptadas para asegurar que los entregables finales reflejen el trabajo realizado por el equipo.
-
----
-
-# 2. Declaración del equipo
-
-Declaramos que el contenido entregado como parte del proyecto fue revisado y validado por los integrantes del equipo antes de su incorporación a la documentación final.
-
-Las herramientas de inteligencia artificial utilizadas durante el desarrollo del proyecto tuvieron un rol complementario, limitado principalmente a tareas de organización de documentación, elaboración de borradores y generación de plantillas de trabajo. En ningún caso sustituyeron las decisiones de análisis, diseño, implementación o validación realizadas por el equipo.
-
-Asimismo, declaramos que toda la información obtenida durante las reuniones con el cliente, las decisiones de alcance, la arquitectura propuesta y el desarrollo del software fueron elaborados por los integrantes del equipo sobre la base del trabajo realizado durante el curso.
-
----
-
-# 3. Uso de herramientas de IA
-
-Durante el desarrollo del proyecto se utilizaron herramientas de inteligencia artificial, principalmente **Claude** mediante **Claude Code**, como apoyo para distintas actividades vinculadas a la documentación, la investigación y la organización del trabajo.
-
-Su utilización respondió al objetivo de optimizar los tiempos de desarrollo, mejorar la eficiencia en tareas repetitivas o de organización y facilitar la consolidación de información ya existente. Entre los usos realizados se incluyen la generación de borradores, la elaboración de estructuras documentales, la consulta de conceptos técnicos y el apoyo en la redacción de documentos.
-
-En todos los casos, las herramientas de IA fueron utilizadas como un recurso complementario al trabajo del equipo y no como un sustituto del análisis, las decisiones técnicas, la implementación del sistema o la validación del contenido final.
-
----
-
-# 4. Documentos elaborados con asistencia de IA
-
-## 4.1 Documentación general del proyecto
-
-Durante la elaboración de `docs/documentacion_proyecto_imsj.md` se utilizó asistencia de IA para generar una primera versión que consolidara la información disponible en distintos documentos del proyecto, entre ellos el Project Charter, los requerimientos funcionales, el backlog y la documentación de relevamiento.
-
-La versión inicial sirvió como borrador de trabajo. Posteriormente fue revisada por integrantes del equipo, quienes realizaron correcciones, eliminaron información desactualizada, ajustaron tablas y modificaron distintos apartados hasta obtener la versión definitiva incorporada al repositorio.
-
-Por este motivo, la IA actuó como herramienta de apoyo para la organización inicial del documento, mientras que el contenido final quedó sujeto a revisión y validación humana.
-
----
-
-## 4.2 Plantillas de documentación
-
-También se utilizó IA para generar plantillas correspondientes a documentación que aún no había sido desarrollada al momento de la primera entrega.
-
-Las plantillas contenían únicamente la estructura general de cada documento, encabezados y marcadores destinados a ser reemplazados posteriormente con información elaborada por el equipo.
-
-Algunos de los documentos involucrados fueron:
-
-* `actas_reuniones(INCOMPLETO).md`
-* `analisis_ciberseguridad(INCOMPLETO).md`
-* `arquitectura_propuesta(INCOMPLETO).md`
-* `declaracion_etica_ia(INCOMPLETO).md`
-
-Posteriormente, las plantillas correspondientes a actas, arquitectura y análisis de ciberseguridad fueron completadas manualmente utilizando información obtenida durante el desarrollo del proyecto.
-
-En el caso de la declaración de ética de IA, la plantilla inicial fue descartada y reemplazada por el presente documento.
-
----
-
-# 5. Actividades realizadas sin asistencia de IA
-
-El equipo declara que las siguientes actividades fueron desarrolladas íntegramente por sus integrantes:
-
-* relevamiento de información junto al cliente;
-* análisis de requerimientos;
-* elaboración de historias de usuario y backlog inicial;
-* decisiones de alcance del proyecto;
-* definición de la arquitectura propuesta;
-* implementación del backend;
-* implementación de los frontends público y administrativo;
-* integración entre componentes;
-* pruebas y corrección de errores.
-
-Asimismo, la documentación base del proyecto —como el Project Charter, los requerimientos funcionales, la entrevista con el cliente y demás documentos de análisis— fue elaborada por el equipo durante el desarrollo de la asignatura.
-
----
-
-# 6. Resumen del uso de IA
-
-| Herramienta                       | Ámbito de utilización                | Tipo de uso                                                                                                           |
-| --------------------------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
-| Claude (Claude Code)              | Documentación y gestión del proyecto | Elaboración de borradores, organización de información, generación de estructuras documentales y apoyo a la redacción |
-| Herramientas de IA conversacional | Desarrollo general del proyecto      | Investigación de conceptos técnicos, consulta de alternativas, resolución de dudas y apoyo en tareas de documentación |
-
-El uso de estas herramientas se dio de manera transversal durante el desarrollo del proyecto, siendo empleadas por distintos integrantes del equipo cuando resultaban útiles para optimizar tiempos, mejorar la eficiencia del trabajo y apoyar la elaboración de la documentación. En todos los casos, las decisiones de análisis, diseño, implementación y validación permanecieron bajo responsabilidad exclusiva del equipo, y todo el contenido fue revisado antes de su incorporación a la versión final del proyecto.
-
-
----
-
-# 7. Responsabilidad sobre el contenido
-
-El equipo reconoce que la utilización de herramientas de inteligencia artificial no transfiere la responsabilidad sobre el contenido generado.
-
-Todos los documentos entregados fueron revisados por integrantes del equipo antes de su incorporación al proyecto y representan las decisiones adoptadas durante su desarrollo.
-
-En consecuencia, el equipo asume la responsabilidad sobre la totalidad del contenido presentado y manifiesta estar en condiciones de explicar y defender cada uno de los entregables durante la instancia de evaluación correspondiente.
-
----
-
-# 8. Principios adoptados
-
-Durante el desarrollo del proyecto se procuró que el uso de inteligencia artificial respetara los siguientes principios:
-
-* utilizar la IA únicamente como herramienta de apoyo;
-* mantener el control humano sobre las decisiones técnicas y funcionales;
-* revisar y validar todo contenido generado con asistencia de IA antes de incorporarlo al proyecto;
-* no utilizar IA para reemplazar el trabajo de análisis ni el desarrollo del software;
-* preservar la transparencia respecto al uso de estas herramientas dentro de la documentación del proyecto.
-
----
-
-# 9. Conclusión
-
-El equipo considera que el uso de inteligencia artificial realizado durante el desarrollo del proyecto fue limitado y complementario al trabajo propio.
-
-Las herramientas utilizadas permitieron agilizar determinadas tareas de documentación y organización de la información, mientras que las actividades de análisis, diseño, implementación, validación y toma de decisiones permanecieron bajo responsabilidad exclusiva de los integrantes del equipo.
-
-Con esta declaración el equipo deja constancia del alcance real del uso de IA durante el proyecto y reafirma su compromiso con la integridad académica y la autoría de los entregables presentados.
-
----
-
-# 10. Conformidad del equipo
-
-| Integrante      | Conformidad        |
-| --------------- | ------------------ |
-| Tomás Cabrera   | (firma) |
-| Juan Robaina    | (firma) |
-| Gabriela Romero | (firma) |
-| Verónica Romero | (firma) |
-| Juan Corrales   | (firma) |
-
-# 11. Adenda de trazabilidad de IA — 02/10/2026
-
-**Equipo responsable y destinatario del crédito:** Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales. **Preparación:** con apoyo externo de IA. **Estado del registro:** incorporado como adenda de trazabilidad; no modifica los testimonios históricos ni el estado funcional **Listo** de CC-01–CC-05.
-
-## 11.1 Asistencia histórica con evidencia
-
-| Fuente | Uso declarado | Datos que faltan |
+| Etapa o fuente | Uso que consta en el proyecto | Alcance |
 |---|---|---|
-| Secciones 3–4 de esta declaración | Claude/Claude Code para borradores, organización y plantillas. | Integrante, fecha por actividad, versión y revisor. |
-| Acta R-04 del 11/08 | Ordenar con IA la justificación de clases/atributos/métodos. | Herramienta, redactor, cambios aceptados y revisión. Es posterior a la fecha de esta declaración. |
-| Sprint Planning / Review | Review declara reconstrucción; no hay registro de herramienta/autores. | No se atribuye a IA sin evidencia. Reconstrucción no equivale a reuniones realizadas. |
+| Declaración inicial del 05/08 | Claude mediante Claude Code y herramientas conversacionales para consultas, borradores, organización y plantillas. | Documentación general, investigación y estructura de documentos. No identifica cada uso por integrante y fecha. |
+| Reunión R-04 del 11/08 | Organización del documento de clases, atributos y métodos. | El acta declara el uso; no identifica la herramienta ni un responsable individual de cada modificación. |
+| Revisión documental de octubre | Lectura y comparación de documentos y repositorios de referencia; corrección de requisitos, enlaces, estructura y trazabilidad. | Se trabajó sobre información existente y aclaraciones del grupo. Las decisiones institucionales requieren su fuente propia. |
+| CC-05 y ajustes de ejecución | Asistencia en la reescritura del backend PHP nativo, validaciones, sesiones, persistencia, adaptación de Docker y herramientas de inicio. | Incluye producción y revisión de código; no se limita a una plantilla documental. La decisión tecnológica fue del grupo. |
+| Pruebas y verificación | Preparación y ejecución asistida de comprobaciones de sintaxis, HTTP/MySQL, concurrencia y arranque Docker aislado, según el registro técnico. | Cada resultado corresponde a la versión, el entorno y los datos indicados en su evidencia. |
+| Documentación PDF existente | Incorporación de hojas y comentarios de revisión en los cuatro PDF. | No equivale a la validación de datos institucionales, cláusulas legales, riesgos o firmas. |
+| Consolidación de Markdown del 20/10 | Desarrollo de explicaciones, organización de información y retiro de anotaciones editoriales dispersas. | Se conservan hechos, respuestas y resultados acreditados; los datos desconocidos se mantienen en el formulario auxiliar. |
 
-**IA — Observación:** «sin asistencia de IA» y «todo revisado» en la declaración histórica son afirmaciones del equipo, no verificaciones de esta auditoría. R-04 requiere actualizar el detalle histórico con sus responsables; no demuestra que el código fuera generado con IA.
+La documentación y el código se prepararon con asistencia externa, sin crédito individual al asistente. El equipo conserva la responsabilidad de comprender, revisar y defender los contenidos que presenta. La existencia de un archivo no acredita por sí sola una validación humana ni una aceptación del cliente.
 
-## 11.2 Intervención actual
+## Criterios de elaboración
 
-| Apoyo utilizado | Etapa / archivos | Tipo de asistencia | Equipo responsable | Revisión humana |
-|---|---|---|---|---|
-| Apoyo externo de IA | Revisión documental, índice y comparación de repositorios. | Lectura, contraste y generación de observaciones identificadas como IA. | Integrantes del grupo. | Revisión documental: Juan Robaina; no constituye una autoridad distinta sobre los cambios funcionales. |
-| Apoyo externo de IA | Requisitos, síntesis, actas, cambios, backlog, planning y Review. | Corrección de estructura/códigos/enlaces; preservación de hechos históricos. | Integrantes del grupo. | Incorporado; el backlog distingue estados Listo, Parcial y Pendiente según evidencia. |
-| Apoyo externo de IA | Arquitectura, modelo/diagramas, API, SSOO y verificación. | Correspondencia con código y sugerencias documentales. | Integrantes del grupo. | Contrastado con la implementación y el registro de pruebas. |
-| Apoyo externo de IA | Cuatro PDF del proyecto. | Hoja de revisión y comentarios de «Revisión documental»; contenido original conservado. | Integrantes del grupo. | Conservados como material histórico; no constituyen validación jurídica. |
+- Las necesidades y decisiones de alcance provienen del relevamiento, las reuniones y las instrucciones del grupo.
+- Las descripciones técnicas se contrastan con los archivos implementados y las pruebas registradas.
+- Las propuestas se distinguen de las decisiones acordadas; un cronograma propuesto no acredita compromisos individuales.
+- No se crean entrevistas, intervenciones de reuniones, firmas, resultados o aprobaciones para completar un documento.
+- Las fuentes y referencias permiten revisar el origen del contenido sin repetir comentarios editoriales en cada documento.
 
-El crédito del proyecto y su documentación corresponde a los integrantes del grupo. Las sugerencias, interpretaciones y criterios preparados con apoyo de IA se mantienen identificados para su discusión, elaboración y comprensión por el equipo antes de presentarlos como contenido definitivo. El crédito editorial del grupo no implica que los aportes ya hayan sido validados ni que todo el texto se haya redactado sin asistencia.
+## Revisión y responsabilidad del equipo
 
-## 11.3 Convenciones para identificar aportes
+Tomás Cabrera mantiene la función de liderazgo y backend; Juan Robaina, testing, documentación y revisión interna; Gabriela Romero, base de datos; Verónica Romero y Juan Corrales, frontend. Cada área debe contrastar los documentos con el comportamiento de la versión que se entregue. Estos roles no sustituyen el registro concreto de documentos revisados, correcciones y resultados.
 
-- **IA — Observación:** afirmación basada en una fuente identificada.
-- **IA — Sugerencia:** comentario o criterio propuesto, pendiente de decisión humana.
-- **IA — Suposición no confirmada:** interpretación sin acuerdo acreditado; no debe ejecutarse como regla.
-- **No registrado:** falta evidencia en el repositorio; no implica que la actividad no ocurrió.
+La aceptación del cliente corresponde al Inspector de Tránsito y se registra en actas. La aprobación de contenidos dentro del programa corresponde al rol Directora. Ambas funciones son diferentes de la revisión interna de los entregables del equipo.
 
-No se identifica IA por tono, prolijidad o vocabulario. No se eliminan aportes por ser de IA; se hace visible su origen y qué validación falta.
+## Información histórica por completar
 
-## 11.4 Registro de revisión documental
+Faltan el detalle de herramientas por actividad, integrantes que las utilizaron, fechas y referencias de revisión humana que no constan en los registros. Estos datos se recopilan en el [formulario documental](../../docs_auxiliares/revision/formulario_datos_documentacion.md#h-revisión-documental-y-uso-de-ia), sin inferir autoría a partir del estilo del texto.
 
-| Documento / aporte | Integrante que lo revisa | Correcciones o decisión | Evidencia / fecha |
-|---|---|---|---|
-| Revisión documental y aclaraciones del 02/10 | Juan Robaina, función confirmada por el grupo | Incorporadas a la documentación vigente | 15/10/2026 |
-| Criterios sugeridos e historias derivadas | Juan Robaina para revisión documental interna | CC-01–CC-05 consolidados como **Listos**; otros criterios conservan su estado propio | 15/10/2026 |
-| Comentarios de PDF y datos institucionales | Juan Robaina para revisión documental interna; datos/validación institucional a confirmar con la Intendencia | Pendiente; contacto se completará después | No registrada |
+El PDF de la declaración conserva una versión anterior y no incorpora automáticamente esta actualización del Markdown. Su actualización y las firmas deben realizarse sobre una versión revisada por el equipo.
 
-Las aclaraciones aportadas por el grupo, sus roles y el estado Listo de CC-01–CC-05 están en [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md). Las hojas añadidas a los PDF conservan la identidad visual de los originales, incluyendo el logo RC5 de esta declaración.
+## Conformidad
 
-Las firmas de la sección 10 pertenecen a la declaración histórica y no se rellenan en esta intervención. Las pautas del [curso sobre ética de IA](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/08_etica_uso_de_ia.md) exigen autoría, elaboración y comprensión del equipo; esta revisión se entrega como asistencia identificada, para su trabajo posterior.
+| Integrante | Registro de conformidad individual de esta actualización |
+|---|---|
+| Tomás Cabrera | Pendiente de registro. |
+| Juan Robaina | Pendiente de registro. |
+| Gabriela Romero | Pendiente de registro. |
+| Verónica Romero | Pendiente de registro. |
+| Juan Corrales | Pendiente de registro. |
 
-## 11.5 Documentación de la migración CC-05 — 02/10/2026
+## Referencias
 
-La decisión de retirar Laravel y usar PHP sin framework basado en `api-completa` fue proporcionada directamente por el grupo. La asistencia externa de IA consistió en leer la referencia completa, contrastarla con IMSJ, redactar guías de transición, actualizar documentos/diagramas y preparar criterios de compatibilidad, pruebas y comentarios de PDF.
-
-| Aporte | Procedencia / límite | Revisión humana |
-|---|---|---|
-| Cambio de tecnología CC-05 | Instrucción del grupo, no recomendación ni decisión de IA. | **Listo:** PHP nativo implementado y verificado. |
-| Análisis de API base y contrato IMSJ | Lectura fijada a `d6f61c9` y código IMSJ `df581ab`; diferencias identificadas como observaciones. | Incorporado a la documentación técnica vigente. |
-| Tareas, criterios y diagramas de destino | Aportes documentales asistidos por IA. | Implementación y documentos actuales contrastados; **Listo** para CC-05. |
-| PDF y aclaraciones | Hojas/comentarios actualizados; páginas, cláusulas y firmas históricas preservadas. | Registro histórico; cualquier validación jurídica es independiente del estado de los CC. |
-
-El crédito del proyecto y la documentación sigue correspondiendo a los cinco integrantes del grupo, sin crédito individual al asistente. No se atribuye al grupo una revisión ya realizada ni se oculta el carácter de propuesta de las alternativas cookie/JSON/rutas de la referencia. Las actas quedan a cargo del equipo.
+[Acta R-04](actas_reuniones.md#r-04--11082026), [control de cambios](control_cambios.md), [verificación técnica](../../docs_auxiliares/evidencias/verificacion.md) y [pauta docente de declaración](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/08_etica_uso_de_ia.md).

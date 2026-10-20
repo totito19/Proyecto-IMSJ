@@ -1,28 +1,27 @@
-> **Índice histórico archivado.** Refleja estados anteriores al 13/10/2026. Estado vigente al 15/10/2026: **CC-01–CC-05, Listos**. Para la documentación actual, consultar [el índice de entrega](../../docs/README.md) y el [control de cambios](../../docs/control_cambios.md).
+> **Índice histórico archivado.** Refleja estados anteriores al 13/10/2026. Estado vigente al 15/10/2026: **CC-01–CC-05, Listos**. Para la documentación actual, consultar [el índice de entrega](../../docs/README.md) y el [control de cambios](../../docs/ingenieria_software/control_cambios.md).
 
 ## Documentación vigente del backend - 05/10/2026
 
-Backend reescrito en PHP nativo con api-simple. Para esta versión, leer [arranque y estructura](../../backend/README.md), [referencia simple](../backend/referencia_api_simple.md), flujos de los 42 endpoints (documento auxiliar retirado del árbol actual) y su PDF (documento auxiliar retirado del árbol actual), [API](../backend/api.md), [arquitectura](../../docs/arquitectura_propuesta.md), [transición](../backend/migracion_backend_vanilla.md), [SSOO](../../docs/ssoo/README.md) y [evidencia](../evidencias/verificacion.md). [Control de cambios](../../docs/control_cambios.md) y [pendientes para completar](aclaraciones_y_pendientes.md) distinguen implementación de revisión/aceptación.
+Backend reescrito en PHP nativo con api-simple. Para esta versión, leer [arranque y estructura](../../backend/README.md), [referencia simple](../backend/referencia_api_simple.md), flujos de los 42 endpoints (documento auxiliar retirado del árbol actual) y su PDF (documento auxiliar retirado del árbol actual), [API](../backend/api.md), [arquitectura](../../docs/administracion_ssoo/arquitectura_propuesta.md), [transición](../backend/migracion_backend_vanilla.md), [SSOO](../../docs/administracion_ssoo/README.md) y [evidencia](../evidencias/verificacion.md). [Control de cambios](../../docs/ingenieria_software/control_cambios.md) y [pendientes para completar](aclaraciones_y_pendientes.md) distinguen implementación de revisión/aceptación.
 
-Los apartados fechados el 02/10 y el análisis de api-completa se conservan como antecedentes. Los cuatro PDF previos mantienen su contenido/identidad; el nuevo PDF documenta la implementación actual. Crédito del equipo y apoyo externo de IA declarado. Actas y PNG no se modifican.
+Los apartados fechados el 02/10 y el estudio de api-completa son antecedentes. En el corte del 05/10 se generó un PDF de flujos, retirado posteriormente del árbol. El contrato actual está en la carpeta auxiliar de backend. Los cuatro PDF originales conservan su versión; los cambios posteriores de actas y diagramas se consultan en el índice vigente.
 
 ---
 
 # Documentación y guía de incorporación
 
-> **Revisión asistida por IA — 02/10/2026:** índice de archivos y aclaraciones a partir de `df581ab`. Las sugerencias requieren revisión del equipo; los campos «No registrado» no prueban ausencia de una actividad.
 
 **Actualización CC-05:** el grupo decide backend PHP sin Laravel, basado en la API completa de RodrigoCazard. El destino está documentado; el código y la infraestructura aún usan Laravel. Ver [guía de migración](../backend/migracion_backend_vanilla.md), [análisis de referencia](../backend/referencia_api_completa.md) y [transición SSOO](../backend/transicion_backend_vanilla.md). Revisión interna de Juan Robaina pendiente.
 
 ## Orden de lectura
 
 1. [Aclaraciones y pendientes del equipo](aclaraciones_y_pendientes.md), luego [revisión y dudas de incorporación](revision_documental.md).
-2. [Charter](../../docs/project_charter.md), [informe de entrevista](../../docs/informe%20entrevista.md) y [concepción](../../docs/documentacion_proyecto_imsj.md).
-3. [Requisitos](../../docs/Requerimientos.md), [backlog](../../docs/backlog.md) y [control de cambios](../../docs/control_cambios.md).
-4. [Arquitectura](../../docs/arquitectura_propuesta.md), [modelo](../../docs/Justificaci%C3%B3n%20de%20clases,%20atributos%20y%20m%C3%A9todos.md), [diagramas](../../docs/Diagramas/README.md) y [API](../backend/api.md).
+2. [Charter](../../docs/ingenieria_software/project_charter.md), [informe de entrevista](../../docs/ingenieria_software/informe%20entrevista.md) y [concepción](../../docs/ingenieria_software/documentacion_proyecto_imsj.md).
+3. [Requisitos](../../docs/ingenieria_software/Requerimientos.md), [backlog](../../docs/ingenieria_software/backlog.md) y [control de cambios](../../docs/ingenieria_software/control_cambios.md).
+4. [Arquitectura](../../docs/administracion_ssoo/arquitectura_propuesta.md), [modelo](../../docs/programacion_full_stack/Justificaci%C3%B3n%20de%20clases%2C%20atributos%20y%20m%C3%A9todos.md), [diagramas](../../docs/programacion_full_stack/Diagramas/README.md) y [API](../backend/api.md).
    Para CC-05, leer después [migración](../backend/migracion_backend_vanilla.md) y [comparación con la API base](../backend/referencia_api_completa.md).
-5. [Planificación](../../docs/sprint_planning.md), [Review](../../docs/actas_sprint_review.md), [actas](../../docs/actas_reuniones.md) y [verificación](../evidencias/verificacion.md).
-6. [Infraestructura SSOO](../../docs/ssoo/README.md), [seguridad](../../docs/analisis_ciberseguridad.md) y [declaración de IA](../../docs/declaracion_etica_ia.md).
+5. [Planificación](../../docs/ingenieria_software/sprint_planning.md), [Review](../../docs/ingenieria_software/actas_sprint_review.md), [actas](../../docs/ingenieria_software/actas_reuniones.md) y [verificación](../evidencias/verificacion.md).
+6. [Infraestructura SSOO](../../docs/administracion_ssoo/README.md), [seguridad](../../docs/electiva_ciberseguridad/analisis_ciberseguridad.md) y [declaración de IA](../../docs/ingenieria_software/declaracion_etica_ia.md).
 
 ## Inventario de la documentación original revisada
 
@@ -32,33 +31,33 @@ Se leyeron **20 Markdown, cuatro PDF (16 páginas originales), dos diagramas PNG
 |---|---|
 | [README principal](../../README.md) | Estructura y acceso; faltaba una guía de incorporación. |
 | [README backend](../../backend/README.md) | Inicio; se unifica con la guía SSOO y se explica la separación controlador/servicio/repositorio. |
-| [project_charter.md](../../docs/project_charter.md) | Acuerdo inicial; adenda con roles, autoridad del referente y destinos confirmados. |
-| [Entrevista.md](../../docs/Entrevista.md) | Preguntas previas; codificación corregida. |
-| [informe entrevista.md](../../docs/informe%20entrevista.md) | Respuestas; fecha y autoría incompletas. |
-| [documentacion_proyecto_imsj.md](../../docs/documentacion_proyecto_imsj.md) | Síntesis; códigos unificados y separación temporal de decisiones. |
-| [Requerimientos.md](../../docs/Requerimientos.md) | Catálogo RF/RNF; se conserva la numeración original usada por US. |
-| [backlog.md](../../docs/backlog.md) | US1–US28; criterios propuestos y cambios trazados. |
-| [actas_reuniones.md](../../docs/actas_reuniones.md) | Cinco registros; acuerdos y tareas no registrados. |
-| [actas_sprint_review.md](../../docs/actas_sprint_review.md) | Reconstrucción, no evidencia de cuatro reuniones. |
-| [sprint_planning.md](../../docs/sprint_planning.md) | Períodos y puntos propuestos; capacidad no registrada. |
-| [control_cambios.md](../../docs/control_cambios.md) | CC-01–CC-04 pendientes para entrega real, sin fecha ni prioridad distinta; aceptación futura en actas. |
+| [project_charter.md](../../docs/ingenieria_software/project_charter.md) | Acuerdo inicial; adenda con roles, autoridad del referente y destinos confirmados. |
+| [Entrevista.md](../../docs/ingenieria_software/Entrevista.md) | Preguntas previas; codificación corregida. |
+| [informe entrevista.md](../../docs/ingenieria_software/informe%20entrevista.md) | Respuestas; fecha y autoría incompletas. |
+| [documentacion_proyecto_imsj.md](../../docs/ingenieria_software/documentacion_proyecto_imsj.md) | Síntesis; códigos unificados y separación temporal de decisiones. |
+| [Requerimientos.md](../../docs/ingenieria_software/Requerimientos.md) | Catálogo RF/RNF; se conserva la numeración original usada por US. |
+| [backlog.md](../../docs/ingenieria_software/backlog.md) | US1–US28; criterios propuestos y cambios trazados. |
+| [actas_reuniones.md](../../docs/ingenieria_software/actas_reuniones.md) | Cinco registros; acuerdos y tareas no registrados. |
+| [actas_sprint_review.md](../../docs/ingenieria_software/actas_sprint_review.md) | Reconstrucción, no evidencia de cuatro reuniones. |
+| [sprint_planning.md](../../docs/ingenieria_software/sprint_planning.md) | Períodos y puntos propuestos; capacidad no registrada. |
+| [control_cambios.md](../../docs/ingenieria_software/control_cambios.md) | CC-01–CC-04 pendientes para entrega real, sin fecha ni prioridad distinta; aceptación futura en actas. |
 | [Migración del backend](../backend/migracion_backend_vanilla.md) | Nuevo: CC-05, capas, compatibilidad, datos, seguridad, tareas TM y cierre pendiente. |
 | [Referencia api-completa](../backend/referencia_api_completa.md) | Nuevo: 38 archivos y README raíz leídos; comparación fijada a `d6f61c9`. |
 | [Transición SSOO](../backend/transicion_backend_vanilla.md) | Nuevo: adaptación pendiente de infraestructura y operación sin Laravel. |
-| [arquitectura_propuesta.md](../../docs/arquitectura_propuesta.md) | Arquitectura e infraestructura; se aclara implementación observada. |
-| [Justificación de clases, atributos y métodos.md](../../docs/Justificaci%C3%B3n%20de%20clases,%20atributos%20y%20m%C3%A9todos.md) | Modelo conceptual inicial; se añade correspondencia con el código actual. |
-| [analisis_ciberseguridad.md](../../docs/analisis_ciberseguridad.md) | Diseño seguro; controles observados no equivalen a auditoría ejecutada. |
-| [declaracion_etica_ia.md](../../docs/declaracion_etica_ia.md) | Declaración del 05/08 y adenda de esta intervención. |
-| [ssoo/README.md](../../docs/ssoo/README.md) | Índice; enlaces corregidos. |
-| [justificacion-tecnologica.md](../../docs/ssoo/justificacion-tecnologica.md) | Tecnologías y límites de producción. |
-| [documentacion-infraestructura.md](../../docs/ssoo/documentacion-infraestructura.md) | Inventario de servicios; evidencia de reconstrucción pendiente. |
-| [reconstruccion-infraestructura.md](../../docs/ssoo/reconstruccion-infraestructura.md) | Procedimiento local; se aclara cambio de puertos y uso sobre base nueva. |
-| [MER.png](../../docs/Diagramas/MER.png) | Vista simplificada; ya contiene preguntas de prueba. |
-| [UML.png](../../docs/Diagramas/UML.png) | Clases del dominio; nota de responsabilidad desactualizada. |
-| [analisis_ciberseguridad.pdf](../../docs/analisis_ciberseguridad.pdf) | Tres páginas originales; matriz adicional sin método de valoración documentado. |
-| [declaracion_etica_ia.pdf](../../docs/declaracion_etica_ia.pdf) | Seis páginas originales, con firmas en blanco. |
-| [Política de privacidad](../../docs/Politica_de_Privacidad_IMSJ_Uruguay.pdf) | Cuatro páginas originales; borrador con datos y decisiones pendientes. |
-| [Términos y condiciones](../../docs/Terminos_y_Condiciones_IMSJ_Uruguay.pdf) | Tres páginas originales; borrador con alcance y aceptación pendientes. |
+| [arquitectura_propuesta.md](../../docs/administracion_ssoo/arquitectura_propuesta.md) | Arquitectura e infraestructura; se aclara implementación observada. |
+| [Justificación de clases, atributos y métodos.md](../../docs/programacion_full_stack/Justificaci%C3%B3n%20de%20clases%2C%20atributos%20y%20m%C3%A9todos.md) | Modelo conceptual inicial; se añade correspondencia con el código actual. |
+| [analisis_ciberseguridad.md](../../docs/electiva_ciberseguridad/analisis_ciberseguridad.md) | Diseño seguro; controles observados no equivalen a auditoría ejecutada. |
+| [declaracion_etica_ia.md](../../docs/ingenieria_software/declaracion_etica_ia.md) | Declaración del 05/08 y adenda de esta intervención. |
+| [ssoo/README.md](../../docs/administracion_ssoo/README.md) | Índice; enlaces corregidos. |
+| [justificacion-tecnologica.md](../../docs/administracion_ssoo/justificacion-tecnologica.md) | Tecnologías y límites de producción. |
+| [documentacion-infraestructura.md](../../docs/administracion_ssoo/documentacion-infraestructura.md) | Inventario de servicios; evidencia de reconstrucción pendiente. |
+| [reconstruccion-infraestructura.md](../../docs/administracion_ssoo/reconstruccion-infraestructura.md) | Procedimiento local; se aclara cambio de puertos y uso sobre base nueva. |
+| [MER.png](../../docs/programacion_full_stack/Diagramas/MER.png) | Vista simplificada; ya contiene preguntas de prueba. |
+| [UML.png](../../docs/programacion_full_stack/Diagramas/UML.png) | Clases del dominio; nota de responsabilidad desactualizada. |
+| [analisis_ciberseguridad.pdf](../../docs/electiva_ciberseguridad/analisis_ciberseguridad.pdf) | Tres páginas originales; matriz adicional sin método de valoración documentado. |
+| [declaracion_etica_ia.pdf](../../docs/ingenieria_software/declaracion_etica_ia.pdf) | Seis páginas originales, con firmas en blanco. |
+| [Política de privacidad](../../docs/electiva_ciberseguridad/Politica_de_Privacidad_IMSJ_Uruguay.pdf) | Cuatro páginas originales; borrador con datos y decisiones pendientes. |
+| [Términos y condiciones](../../docs/electiva_ciberseguridad/Terminos_y_Condiciones_IMSJ_Uruguay.pdf) | Tres páginas originales; borrador con alcance y aceptación pendientes. |
 | [LICENSE](../../LICENSE) | Titular/denominación a confirmar; sin modificación. |
 | robots.txt (archivo de la versión anterior) | Permite rastreo; no constituye autorización ni política de privacidad. |
 
@@ -87,11 +86,13 @@ Las aclaraciones proporcionadas por el equipo el 02/10/2026 están reunidas en [
 
 El trabajo de las actas queda a cargo del equipo. La lista de campos por completar está en el nuevo Markdown; esta actualización no completa ni modifica las actas.
 
-## Cómo interpretar notas de IA
 
-- **IA — Observación:** lectura comprobable de un archivo; incluye su fuente.
-- **IA — Sugerencia:** propuesta documental o criterio que el equipo debe revisar.
-- **IA — Suposición no confirmada:** interpretación que no puede tratarse como acuerdo.
-- **No registrado / pendiente de validación:** falta evidencia, sin afirmar que la actividad no ocurrió.
+## Condición del índice
 
-El crédito del proyecto y la documentación corresponde a Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales. El apoyo de IA se registra para distinguir sugerencias y suposiciones, sin crédito individual al asistente. La asistencia histórica solo se identifica cuando un documento la declara; no se deduce autoría por el estilo.
+Este archivo conserva la organización y los estados de los cortes anteriores. Los enlaces apuntan a la ubicación actual de los documentos. El índice de entrega vigente es `docs/README.md`; CC-01–CC-05 están Listos y el contrato actual contiene 46 rutas.
+
+## Seguimiento documental del 20/10/2026
+
+Este informe conserva sus hallazgos y conteos históricos. Los documentos vigentes fueron reorganizados por asignatura y desarrollados para explicar propósito, reglas, responsabilidades y evidencia. Las actas incorporan los datos corregidos por el equipo en R-01 y la relación de R-05 con los cambios de septiembre, sin reconstruir intervenciones ni aprobaciones.
+
+El contrato actual tiene 46 rutas y el MER/pasaje a tablas está actualizado; el UML PNG y los PDF mantienen sus versiones anteriores. Para conocer el estado vigente se utilizan el índice de entrega, el control de cambios y el formulario. El uso de herramientas se registra en su declaración, sin comentarios editoriales repetidos en los documentos.

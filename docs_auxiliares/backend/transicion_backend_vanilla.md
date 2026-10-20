@@ -1,10 +1,10 @@
 # Transición, respaldo y recuperación del backend
 
-**Estado consolidado al 15/10/2026: CC-05 Listo.** Procedimiento preparado con apoyo externo de IA. No se ejecutó sobre una instalación institucional; un futuro despliegue con datos reales debe ensayar respaldo/restauración sobre una copia.
+**Estado consolidado al 15/10/2026: CC-05 Listo.** No se ejecutó sobre una instalación institucional; un futuro despliegue con datos reales debe ensayar respaldo/restauración sobre una copia.
 
 ## Qué se conserva
 
-Apache/PHP sirve API y frontends; MySQL usa el servicio `db` y se conservan los volúmenes `db_data`/`app_uploads`. Las once tablas de dominio conservan nombres/relaciones y `database.sql` añade `auth_tokens`; no contiene DROP ni cuentas de demo. Credenciales bcrypt y rutas de adjuntos existentes siguen siendo compatibles. La API actual expone 45 rutas.
+Apache/PHP sirve API y frontends; MySQL usa el servicio `db` y se conservan los volúmenes `db_data`/`app_uploads`. Las once tablas de dominio conservan nombres/relaciones y `database.sql` añade `auth_tokens`; no contiene DROP ni cuentas de demo. Credenciales bcrypt y rutas de adjuntos existentes siguen siendo compatibles. La API actual expone 46 rutas.
 
 La nueva autenticación no consulta la tabla técnica de tokens anterior. Volver a iniciar sesión después del cambio; no se convierte una sesión heredada ni se crea SECRET_KEY/JWT. La tabla técnica previa puede quedar sin uso en una base existente hasta que el equipo decida su tratamiento. [Transición general](migracion_backend_vanilla.md).
 
@@ -56,6 +56,12 @@ Importar una copia no elimina archivos que sobren de un destino anterior; usar u
 
 ## Estado de ejecución y pendientes
 
-En esta intervención se preservaron archivos locales previos al reemplazar el backend y se creó una copia de resguardo del código anterior fuera del proyecto. No se usó una base institucional ni se borraron volúmenes. Las pruebas HTTP usaron PHP/MySQL portable y datos sintéticos. Docker, Apache, actualización real y restauración de respaldo requieren ejecución del equipo; [verificación](../evidencias/verificacion.md).
+En esta intervención se preservaron archivos locales previos al reemplazar el backend y se creó una copia de resguardo del código anterior fuera del proyecto. No se usó una base institucional ni se borraron volúmenes. Las pruebas HTTP usaron PHP/MySQL portable y datos sintéticos. El arranque Docker aislado se comprobó el 13/10. Actualización institucional y restauración de respaldo requieren evidencia específica; [verificación](../evidencias/verificacion.md).
 
 Alojamiento, dominio/HTTPS, referente operativo, frecuencia y conservación de respaldos se completarán cuando la Intendencia/equipo los definan. Esta guía no incorpora servicios externos ni cambia la administración posterior confirmada.
+
+## Comprobación del conjunto recuperado
+
+Una recuperación se considera comprobada cuando el entorno aislado inicia con la versión elegida, las cuentas conservan sus relaciones, los conteos coinciden con el respaldo, las publicaciones mantienen su estado y los adjuntos pueden descargarse. También se deben comprobar reservas, consultas e historial y realizar un ingreso nuevo con las sesiones de esa versión.
+
+Registrar nombre del respaldo, fecha, integridad, código compatible, destino de prueba, procedimiento y resultado. El arranque Docker de la demo no sustituye esta comprobación: iniciar una base nueva y restaurar un conjunto de datos previo evalúan situaciones distintas. Los comandos anteriores son un procedimiento y no certifican su ejecución institucional.

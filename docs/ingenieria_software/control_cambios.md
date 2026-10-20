@@ -1,11 +1,10 @@
 # Control de cambios
 
-**Proyecto:** Sistema de Gestión para Educación y Tránsito — IMSJ  
+**Proyecto:** Sistema de Gestión para Educación y Tránsito — IMSJ
 **Fecha de registro documental:** 07/09/2026
 
-**Actualización técnica para demo:** 13/10/2026
+**Demo técnica de referencia:** 13/10/2026. **Actualización documental:** 20/10/2026.
 
-> **Revisión asistida por IA — 02/10/2026:** se conservan solicitudes y fechas registradas. Se agregan impactos documentales y evidencia separada. Las decisiones, estimaciones y aceptación no se deducen de la existencia del código.
 
 Este documento registra los cambios comunicados por el equipo, sus fechas y las aclaraciones posteriores. **Estado consolidado al 15/10/2026: CC-01–CC-05, Listos.** CC-02–CC-04 surgieron de la reunión/demo del 03/09 con la Directora y el Inspector de Tránsito y fueron implementados y verificados en la versión del 13/10. CC-01 y CC-05 también se encuentran implementados conforme al comportamiento descrito en este documento.
 
@@ -32,6 +31,8 @@ Este documento registra los cambios comunicados por el equipo, sus fechas y las 
 ### CC-02 — Formulario de consultas y apartado en el panel IMSJ
 
 **Solicitud:** agregar un formulario de consultas en el pie de página del sitio. Las consultas enviadas deben llegar a un apartado **Consultas** del panel IMSJ, donde cada consulta pueda desplegarse para leer su contenido.
+
+**Resultado:** nombre, correo y mensaje se almacenan en `consultas`; personal y Directora acceden a la bandeja y pueden marcar cada consulta como leída. No se incorporaron respuestas desde el sistema ni notificaciones automáticas.
 
 
 ### CC-03 — Validación de contenidos por la Directora
@@ -66,21 +67,21 @@ Se implementaron CC-02, CC-03 y CC-04 sobre el backend PHP nativo existente: for
 
 ### CC-05 — Sustitución de Laravel por PHP sin framework
 
-**Solicitud del grupo:** retirar Laravel y basar el backend en la [API completa de RodrigoCazard](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-completa). **Motivo registrado:** cambio de tecnología y referencia indicado por el grupo; no se deduce una mejora medida de rendimiento, costo o seguridad.
+**Solicitud del grupo:** retirar Laravel y basar el backend en la [API completa de RodrigoCazard](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-completa). **Motivo registrado:** facilitar la documentación y la defensa, según aclaración del grupo que sitúa la decisión el 30/09; el control documental se abrió el 02/10; no se deduce una mejora medida de rendimiento, costo o seguridad.
 
 **Decisión:** cambio de framework confirmado por instrucción directa del grupo el 02/10/2026. No se atribuye a la reunión/demo ni a la Directora o al Inspector. El backend nativo y las pruebas HTTP/MySQL quedaron implementados el 05/10; la verificación Docker aislada y visual se completó el 13/10. **Estado actual: Listo.**
 
-**Impacto:** router/arranque, validación/DTO, servicios, PDO/modelos, autenticación y revocación, JSON, archivos, esquema/instalación, Composer, Docker/scripts y pruebas. Afecta ambos frontends por su API compartida; se conserva su contrato como condición de compatibilidad. Abarca los módulos reales y la agenda académica. CC-01–CC-04 también están **Listos**.
+**Impacto:** router/arranque, validación de entradas, servicios, PDO/modelos, autenticación y revocación, JSON, archivos, esquema/instalación, Composer, Docker/scripts y pruebas. Afecta ambos frontends por su API compartida; se conserva su contrato como condición de compatibilidad. Abarca los módulos reales y la agenda académica. CC-01–CC-04 también están **Listos**.
 
-**Documentación y tareas:** [migración](../docs_auxiliares/backend/migracion_backend_vanilla.md), [referencia comparada](../docs_auxiliares/backend/referencia_api_completa.md), [API](../docs_auxiliares/backend/api.md), arquitectura/modelo/diagramas, seguridad, SSOO, backlog TM-01–TM-07, planning y [verificación](../docs_auxiliares/evidencias/verificacion.md). RF/RNF y US mantienen sus identificadores; no se inventa una nueva función ciudadana por cambiar una tecnología.
+**Documentación y tareas:** [migración](../../docs_auxiliares/backend/migracion_backend_vanilla.md), [referencia comparada](../../docs_auxiliares/backend/referencia_api_completa.md), [API](../../docs_auxiliares/backend/api.md), arquitectura/modelo/diagramas, seguridad, SSOO, backlog TM-01–TM-07, planning y [verificación](../../docs_auxiliares/evidencias/verificacion.md). RF/RNF y US mantienen sus identificadores; no se inventa una nueva función ciudadana por cambiar una tecnología.
 
 **Límites:** no se adoptaron automáticamente cookie JWT, rutas, formato `datos`/`mensaje`, roles, datos de productos, puertos o secretos del ejemplo. Se implementó el contrato propio del proyecto en PHP sin framework conforme a la instrucción del grupo. No se impone una fecha, costo, puntos ni prioridad nueva.
 
 **Responsabilidades:** se mantienen los roles generales del equipo: Tomás Cabrera liderazgo/backend, Gabriela Romero base de datos, Verónica Romero y Juan Corrales frontend, Juan Robaina testing/documentación y revisión interna. Las tareas concretas y compromisos los asignará el equipo en reuniones; las actas quedan a su cargo.
 
-**Resultado final del alcance acordado:** API PHP sin dependencias Laravel/Eloquent/Sanctum ni pasos Artisan; contrato consumido por ambos frontends; datos/archivos preservados; transición de sesiones, reconstrucción y restauración documentadas; pruebas de negocio, seguridad y concurrencia MySQL registradas. Ver V-CC05-01–V-CC05-09 en [verificación](../docs_auxiliares/evidencias/verificacion.md). **Estado: Listo.**
+**Resultado final del alcance acordado:** API PHP sin dependencias Laravel/Eloquent/Sanctum ni pasos Artisan; contrato consumido por ambos frontends; datos/archivos preservados; transición de sesiones, reconstrucción y restauración documentadas; pruebas de negocio, seguridad y concurrencia MySQL registradas. Ver V-CC05-01–V-CC05-09 en [verificación](../../docs_auxiliares/evidencias/verificacion.md). **Estado: Listo.**
 
-**IA — Observación de trazabilidad:** impactos técnicos/documentales derivados de la solicitud. Tiempo, costo y tareas por integrante no están estimados/asignados aquí. La ausencia de fecha y de prioridad distinta entre CC-01–CC-04 fue confirmada por el grupo; no se inventa un orden de implementación.
+**Trazabilidad:** impactos técnicos/documentales derivados de la solicitud. Tiempo, costo y tareas por integrante no están estimados ni asignados en este registro. La ausencia de fecha y de prioridad distinta entre CC-01–CC-04 fue confirmada por el grupo; no se inventa un orden de implementación.
 
 | ID | Impacto en alcance / documentos | Backlog / requisitos | Origen y estado | Evidencia técnica | Notas |
 |---|---|---|---|---|---|
@@ -88,7 +89,7 @@ Se implementaron CC-02, CC-03 y CC-04 sobre el backend PHP nativo existente: for
 | CC-02 | Formulario de pie de portal, persistencia y lectura en panel. | RF23, US32. | **Listo.** Reunión/demo del 03/09 con Directora e Inspector. | Formulario, tabla `consultas`, API y bandeja verificados el 13/10. | Comportamiento vigente documentado. |
 | CC-03 | Estados, aprobación separada y rol Directora. | RF21, US30, US2/US7/US9. | **Listo.** Reunión/demo del 03/09 con Directora e Inspector. | BORRADOR/PENDIENTE/APROBADO/PUBLICADO y rol DIRECTORA verificados el 13/10. | Comportamiento vigente documentado. |
 | CC-04 | Gráficos asociados a preguntas, almacenamiento y presentación. | RF24, US33. | **Listo.** Reunión/demo del 03/09 con Directora e Inspector. | Carga, persistencia y presentación pública verificadas el 13/10. | Comportamiento vigente documentado. |
-| CC-05 | Sustitución tecnológica transversal; guías, API, arquitectura, seguridad, SSOO y pruebas. | Todos los módulos; RNF1–RNF4/RNF7–RNF10 y TM-01–TM-07. | **Listo.** Decisión tecnológica del grupo. | Backend nativo y evidencia HTTP/MySQL en [verificación](../docs_auxiliares/evidencias/verificacion.md); api-simple fijada a `d6f61c9`. | Comportamiento vigente documentado. |
+| CC-05 | Sustitución tecnológica transversal; guías, API, arquitectura, seguridad, SSOO y pruebas. | Todos los módulos; RNF1–RNF4/RNF7–RNF10 y TM-01–TM-07. | **Listo.** Decisión tecnológica del grupo. | Backend nativo y evidencia HTTP/MySQL en [verificación](../../docs_auxiliares/evidencias/verificacion.md); api-simple fijada a `d6f61c9`. | Comportamiento vigente documentado. |
 
 ### Configuración aplicada a cada solicitud
 
@@ -97,7 +98,7 @@ Se implementaron CC-02, CC-03 y CC-04 sobre el backend PHP nativo existente: for
 - **CC-03:** noticias, materiales y FAQ; personal prepara, envía y publica; solo Directora aprueba; editar devuelve a borrador.
 - **CC-04:** una imagen opcional JPG/PNG/WEBP de hasta 2048 KB por pregunta.
 
-La evidencia técnica, las rutas y las pruebas asociadas se encuentran en [verificación](../docs_auxiliares/evidencias/verificacion.md).
+La evidencia técnica, las rutas y las pruebas asociadas se encuentran en [verificación](../../docs_auxiliares/evidencias/verificacion.md).
 
 ## 4. Aclaración de alcance anterior a estas solicitudes
 
@@ -107,9 +108,9 @@ La exclusión de agenda para el cliente consta en entrevista y charter; la letra
 
 | ID | Fecha | Origen | Cambio | Decisión / estado | Alcance y validación |
 |---|---|---|---|---|---|
-| DOC-20261002 | 02/10/2026 | Solicitud del grupo de revisar y reparar documentación con IA identificada. | Unificar códigos conservando equivalencias, corregir enlaces/codificación, completar estructura de actas y cambios, añadir trazabilidad, guía/API/verificación y comentarios de PDF. | Correcciones documentales incorporadas; estado funcional consolidado al 15/10: **CC-01–CC-05, Listos**. | Crédito y responsabilidad editorial del grupo. Sin cambio de licencia. Detalle en [revisión](../docs_auxiliares/revision/revision_documental.md). |
+| DOC-20261002 | 02/10/2026 | Solicitud del grupo de revisar y reparar documentación con IA identificada. | Unificar códigos conservando equivalencias, corregir enlaces/codificación, completar estructura de actas y cambios, añadir trazabilidad, guía/API/verificación y comentarios de PDF. | Correcciones documentales incorporadas; estado funcional consolidado al 15/10: **CC-01–CC-05, Listos**. | Crédito y responsabilidad editorial del grupo. Sin cambio de licencia. Detalle en [revisión](../../docs_auxiliares/revision/revision_documental.md). |
 
-**Actualización documental del 02/10/2026:** se integraron roles, referente, registro en reuniones, distinción entre entrega real y académica, ausencia de fecha/prioridad distinta y mantenimiento institucional. Se añadió [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md) y se actualizaron las hojas de revisión de los PDF con su identidad gráfica original. Aquella nota antecede a la implementación posterior; estado vigente al 15/10: **CC-01–CC-05, Listos**.
+**Actualización documental del 02/10/2026:** se integraron roles, referente, registro en reuniones, distinción entre entrega real y académica, ausencia de fecha/prioridad distinta y mantenimiento institucional. Se añadió [aclaraciones y pendientes](../../docs_auxiliares/revision/aclaraciones_y_pendientes.md) y se actualizaron las hojas de revisión de los PDF con su identidad gráfica original. Aquella nota antecede a la implementación posterior; estado vigente al 15/10: **CC-01–CC-05, Listos**.
 
 Fuente de estructura: [control de cambios del curso](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/06_control_de_cambios.md).
 
@@ -122,9 +123,9 @@ Fuente de estructura: [control de cambios del curso](https://github.com/portalut
 
 **Instrucción directa del grupo:** reescribir desde cero por rastros de Laravel, usar el ejemplo api-simple, código comentado, estructura explícita de los siete módulos existentes en la línea base del 05/10 y PDF de flujo de cada endpoint. Es un refinamiento de CC-05; no se inventa otra solicitud funcional. CC-02 añadió después el octavo módulo, Consulta.
 
-**Resultado de la línea base del 05/10:** entrada public/index.php, config.php, Database/Response/Auth, siete controladores/servicios/repositorios, modelos nativos, database.sql, Composer, Docker/Compose, scripts operativos y suite HTTP/MySQL. Se retiraron componentes y pruebas del framework y se conservaron 42 rutas, diez tablas de negocio, almacenamiento y nombres de servicios/volúmenes Docker. CC-02–CC-04 ampliaron después la versión actual a ocho módulos, 45 rutas y once tablas del dominio. Sesiones anteriores requieren nuevo login; las sesiones nativas son revocables, duran ocho horas y almacenan el secreto con hash. [Referencia vigente](../docs_auxiliares/backend/referencia_api_simple.md) y [guía](../docs_auxiliares/backend/migracion_backend_vanilla.md).
+**Resultado de la línea base del 05/10:** entrada public/index.php, config.php, Database/Response/Auth, siete controladores/servicios/repositorios, modelos nativos, database.sql, Composer, Docker/Compose, scripts operativos y suite HTTP/MySQL. Se retiraron componentes y pruebas del framework y se conservaron 42 rutas, diez tablas de negocio, almacenamiento y nombres de servicios/volúmenes Docker. CC-02–CC-04 ampliaron después la versión actual a ocho módulos, 45 rutas en la demo del 13/10 y once tablas del dominio. La cancelación del 20/10 amplía el contrato a 46 rutas. Sesiones anteriores requieren nuevo login; las sesiones nativas son revocables, duran ocho horas y almacenan el secreto con hash. [Referencia vigente](../../docs_auxiliares/backend/referencia_api_simple.md) y [guía](../../docs_auxiliares/backend/migracion_backend_vanilla.md).
 
-**Evidencia:** sintaxis PHP y pruebas reales sobre MySQL aislado, incluido último cupo con dos procesos PHP y rollback de datos/archivo cuando falla auditoría. Los resultados detallados y hashes se registran en [verificación](../docs_auxiliares/evidencias/verificacion.md). No se ejecutó Docker/Apache ni una actualización/restauración de datos institucionales, ni recorrido visual integral de ambos frontends. No se declara cierre total por pasar las pruebas.
+**Evidencia:** sintaxis PHP y pruebas reales sobre MySQL aislado, incluido último cupo con dos procesos PHP y rollback de datos/archivo cuando falla auditoría. Los resultados detallados y hashes se registran en [verificación](../../docs_auxiliares/evidencias/verificacion.md). No se ejecutó Docker/Apache ni una actualización/restauración de datos institucionales, ni recorrido visual integral de ambos frontends. No se declara cierre total por pasar las pruebas.
 
 **Control de alcance de aquel corte:** sin cambios de frontend, actas, cuatro PDF previos, diagramas PNG, identidad o licencia; todavía no se incorporaban CC-02–CC-04 ni nuevas reglas de agenda/costo. Se cambió la excepción SQL de .gitignore para incluir el nuevo database.sql. El estado fue superado por la implementación posterior; al 15/10, **CC-01–CC-05 están Listos**.
 
@@ -132,7 +133,7 @@ Fuente de estructura: [control de cambios del curso](https://github.com/portalut
 
 **Origen:** consulta del grupo sobre el fallo de los archivos de inicio. La reescritura había reducido los BAT y retirado la preparación de `.env`, el arranque/espera de Docker Desktop y la pausa final. El diagnóstico encontró Docker instalado por usuario fuera del PATH, motor sin conexión y configuración `.env` ausente; se corrige la afirmación documental previa sobre la ausencia de Docker.
 
-**Cambio preparado:** `iniciar.bat` y `detener.bat` detectan las instalaciones habituales de Docker, validan Compose y mantienen los errores visibles. Inicio crea únicamente la plantilla ausente, exige completar las claves y abre/espera Docker Desktop cuando corresponde. Detención conserva `compose stop`. Se actualizan la guía del backend y la [evidencia de verificación](../docs_auxiliares/evidencias/verificacion.md). Sin cambios de API, esquema, servicios/volúmenes, frontend o actas; no se incorporan solicitudes funcionales adicionales.
+**Cambio preparado:** `iniciar.bat` y `detener.bat` detectan las instalaciones habituales de Docker, validan Compose y mantienen los errores visibles. Inicio crea únicamente la plantilla ausente, exige completar las claves y abre/espera Docker Desktop cuando corresponde. Detención conserva `compose stop`. Se actualizan la guía del backend y la [evidencia de verificación](../../docs_auxiliares/evidencias/verificacion.md). Sin cambios de API, esquema, servicios/volúmenes, frontend o actas; no se incorporan solicitudes funcionales adicionales.
 
 **Validación de aquel corte:** Compose validado con la CLI real; 21 escenarios correctos de los BAT con Docker simulado. No se iniciaron contenedores reales ni se alteraron datos del equipo en esa ejecución. La limitación fue superada por el arranque Docker aislado del 13/10. **Estado actual de CC-05: Listo.**
 
@@ -142,14 +143,34 @@ Fuente de estructura: [control de cambios del curso](https://github.com/portalut
 
 **Cambio:** quedan app/db; Apache sirve API, portal y panel mediante alias de lectura en un puerto configurable. JavaScript toma la API del origen de la página. El inicio prepara .env y claves aleatorias solo para una base nueva, conserva las reales, resuelve un puerto ocupado, espera salud del sistema y abre el navegador predeterminado. Retira el contenedor Nginx anterior del mismo proyecto sin eliminar volúmenes. Los BAT usan rutas del proyecto y de la instalación de Docker, sin rutas particulares de un equipo. El alias de login corrige la diferencia de mayúsculas del archivo histórico al servirlo en Linux.
 
-**Documentación y alcance:** se actualizaron README, arquitectura, SSOO y verificación. Sin cambios de negocio, roles, cuentas o actas; la primera cuenta sigue siendo una acción explícita. La evidencia y sus límites están en [verificación](../docs_auxiliares/evidencias/verificacion.md). **Estado actual de CC-05: Listo.** Apoyo de IA identificado, crédito y responsabilidad del grupo.
+**Documentación y alcance:** se actualizaron README, arquitectura, SSOO y verificación. Sin cambios de negocio, roles, cuentas o actas; la primera cuenta sigue siendo una acción explícita. La evidencia y sus límites están en [verificación](../../docs_auxiliares/evidencias/verificacion.md). **Estado actual de CC-05: Listo.** Crédito y responsabilidad del grupo.
 
-**Verificación de esta actualización:** Compose real validado con solo app/db; 38 PHP con sintaxis válida; 22 escenarios de inicio/detención con Docker simulado y HTTP sintético; 12 comprobaciones de los clientes API con distintos orígenes. El primer intento real no pudo iniciar el motor por WSL ausente; esa limitación quedó superada por la ejecución Docker aislada y la revisión visual del 13/10. [Evidencia](../docs_auxiliares/evidencias/evidencia_inicio_docker.json).
+**Verificación de esta actualización:** Compose real validado con solo app/db; 38 PHP con sintaxis válida; 22 escenarios de inicio/detención con Docker simulado y HTTP sintético; 12 comprobaciones de los clientes API con distintos orígenes. El primer intento real no pudo iniciar el motor por WSL ausente; esa limitación quedó superada por la ejecución Docker aislada y la revisión visual del 13/10. [Evidencia](../../docs_auxiliares/evidencias/evidencia_inicio_docker.json).
 
 ### DOC-20261013 — Separación de documentación auxiliar
 
 **Solicitud del grupo:** volver a revisar documentos, identificar notas de IA y datos incompletos y separar materiales ajenos a los entregables exigidos.
 
-**Resultado:** diez archivos trasladados a `docs_auxiliares/`, índice anterior conservado, índices de entrega/apoyo separados y enlaces Markdown ajustados. El [informe del 13/10](../docs_auxiliares/revision/revision_2026-10-13.md) registra pendientes, desactualizaciones y criterios de clasificación. Los flujos MD/PDF retirados previamente no se recrean. Se mantienen declaración de IA, seguridad, términos y privacidad como entregables del curso.
+**Resultado:** diez archivos trasladados a `docs_auxiliares/`, índice anterior conservado, índices de entrega/apoyo separados y enlaces Markdown ajustados. El [informe del 13/10](../../docs_auxiliares/revision/revision_2026-10-13.md) registra pendientes, desactualizaciones y criterios de clasificación. Los flujos MD/PDF retirados previamente no se recrean. Se mantienen declaración de IA, seguridad, términos y privacidad como entregables del curso.
 
-**Alcance:** orden documental y referencias; código, SQL, Docker, frontends y PDF conservados. Las actas no se completan; solo se ajustan enlaces si su destino fue trasladado. Esta tarea no cambió las reglas del producto. Revisión asistida por IA, con crédito y responsabilidad del grupo; estado funcional vigente: **CC-01–CC-05, Listos**.
+**Alcance:** orden documental y referencias; código, SQL, Docker, frontends y PDF conservados. Las actas no se completan; solo se ajustan enlaces si su destino fue trasladado. Esta tarea no cambió las reglas del producto. Crédito y responsabilidad del grupo; estado funcional vigente: **CC-01–CC-05, Listos**.
+
+## Actualización técnica documentada — 20/10/2026
+
+| Modificación ya incorporada | Referencia del repositorio | Impacto y estado |
+|---|---|---|
+| Cancelación de reservas propias | Commit `bfd7f52`; `DELETE /api/reservas/{id}` y casos en `tests/integracion.py`. | Amplía la agenda académica. Requiere ciudadano propietario; responde 204 al eliminar y 404 si la reserva no le pertenece o no existe. Libera el cupo al borrar la relación. |
+| Listados de fechas vigentes | Commit `b7eb9a2`; `ReservaRepository`. | Portal y panel excluyen fechas anteriores a hoy, incluso al recorrer períodos pasados. La base no se depura por este filtro. |
+| Presentación y navegación | Commits `b7eb9a2` y `f5c6545`. | Agenda abre en vista mensual, ajustes móviles y del simulador, salida del panel hacia el ingreso administrativo. |
+
+El inventario vigente comprende **46 rutas**: diez públicas, dos para cualquier cuenta autenticada, tres ciudadanas y 31 administrativas. Las pruebas agregadas comprueban cancelación propia, rechazo de personal, rechazo de otro ciudadano y repetición de una eliminación. Su existencia no acredita una nueva ejecución HTTP sobre la versión del 20/10.
+
+Este apartado registra cambios existentes en el código. No les asigna un solicitante que no conste, una aprobación del cliente ni un nuevo identificador CC retrospectivo. CC-01–CC-05 conservan su estado Listo y la agenda mantiene su alcance académico.
+
+## DOC-20261020 — Consolidación de documentos Markdown
+
+**Solicitud:** retirar notas editoriales de revisión y sugerencia, desarrollar explicaciones y completar los documentos con la información disponible.
+
+**Resultado documental:** se revisan los 39 Markdown de proyecto, backend, entregables y material auxiliar; se amplían actas con sus fuentes, responsabilidades, arquitectura, infraestructura y reglas operativas; se conserva la información añadida por el equipo y se corrigen enlaces por la organización en asignaturas. El registro de herramientas se concentra en la declaración correspondiente.
+
+**Alcance:** documentación Markdown. No se modifican código, esquema, configuración, imágenes o PDF. Se preservan las respuestas de la entrevista y del formulario. Los datos institucionales, firmas, tareas y reuniones que no tengan respaldo no se completan por deducción. La validación de esta intervención se registra en [verificación](../../docs_auxiliares/evidencias/verificacion.md).

@@ -1,12 +1,12 @@
 # Contrato API IMSJ - PHP nativo
 
-**Versión vigente - 15/10/2026; CC-01–CC-05 Listos.** Contrato implementado en `backend/public/index.php`. El inventario incluye los 45 endpoints actuales, incluidas las tres rutas de consultas añadidas.
+**Versión documental - 20/10/2026; CC-01–CC-05 Listos.** Contrato implementado en `backend/public/index.php`. El inventario incluye los 46 endpoints actuales, incluidas las tres rutas de consultas y la cancelación ciudadana.
 
 Base local: `http://localhost:8000/api`. JSON de entrada/salida; archivos mediante multipart. En rutas protegidas: `Authorization: Bearer <token>` y `Accept: application/json`. El token se entrega en la raíz junto a `usuario` y `expira_en`; el frontend lo guarda en `sessionStorage`. Los valores concretos de ejemplos son ilustrativos.
 
 ## Acceso y respuestas
 
-Roles: `PUBLICO_GENERAL`, `PERSONAL_IMSJ` y `DIRECTORA`. Directora hereda el acceso administrativo y es el único rol que puede aprobar una noticia pendiente. `Auth` valida hash del token, vigencia de ocho horas, cuenta activa y rol almacenados en MySQL; iniciar sesión revoca sesiones anteriores. Logout y desactivación revocan tokens.
+Roles: `PUBLICO_GENERAL`, `PERSONAL_IMSJ` y `DIRECTORA`. Directora hereda el acceso administrativo y es el único rol que puede aprobar noticias, materiales y preguntas frecuentes pendientes. `Auth` valida hash del token, vigencia de ocho horas, cuenta activa y rol almacenados en MySQL; iniciar sesión revoca sesiones anteriores. Logout y desactivación revocan tokens.
 
 200: consulta/edición/corrección; 201: alta/registro/reserva; 204: eliminación/desactivación/logout, sin cuerpo; 400: JSON mal formado; 401: falta de sesión, token inválido/expirado o cuenta inactiva; 403: rol insuficiente; 404: ruta/recurso inexistente; 413: cuerpo multipart por encima del límite PHP; 422: validación o conflicto de unicidad; 429: más de cinco intentos/minuto para login o registro; 500: fallo interno, sin SQL ni secretos en la respuesta. Ruta y método sin coincidencia en el switch devuelven 404.
 
@@ -63,7 +63,7 @@ Errores de campo: `{"message":"Los datos no son válidos.","errors":{"campo":["d
 | DELETE | `/franjas/{id}` | personal | `ReservaController::eliminarFranja` |
 | GET | `/agenda` | personal | `ReservaController::agenda` |
 
-`{id}` es un entero positivo. La suma es diez rutas públicas, dos para cualquier cuenta autenticada, dos ciudadanas y 31 del personal: 45 endpoints en total.
+`{id}` es un entero positivo. La suma es diez rutas públicas, dos para cualquier cuenta autenticada, tres ciudadanas y 31 del personal: 46 endpoints en total.
 
 ## Entradas y límites conservados
 
@@ -89,3 +89,22 @@ Noticias, materiales y preguntas frecuentes siguen `BORRADOR → PENDIENTE → A
 No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`. Categorías, respuestas/notificaciones para consultas, costo urgente y nuevos campos de contacto no forman parte de CC-01–CC-05. La cancelación ciudadana se incorporó posteriormente. Agenda y reservas son académicas.
 
 La relación con la [letra académica](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md) y los resultados técnicos se documentan en [verificación](../evidencias/verificacion.md).
+
+## Cancelación y consulta de agenda
+
+La cancelación no recibe un ID de usuario en el cuerpo. `Auth` exige `PUBLICO_GENERAL` y el repositorio ejecuta DELETE con el ID de reserva y la cuenta autenticada. El éxito devuelve 204 sin JSON; reserva inexistente o ajena devuelve 404. El registro se elimina físicamente, por lo que el cupo se libera al recalcular el número de reservas.
+
+`GET /reservas/mias`, los listados de franjas y `GET /agenda` excluyen fechas anteriores a hoy. El filtro también se aplica a personal, además del intervalo día/semana/mes solicitado. No existe una ruta alternativa de historial de reservas ni una operación de reprogramación automática.
+
+## Recorridos y efectos persistentes
+
+| Operación | Validación y autorización | Efecto |
+|---|---|---|
+| Login / logout | Credenciales o token válido; límite de intentos en ingreso. | Emitir y revocar sesiones en `auth_tokens`. |
+| Crear o editar contenido | Cuenta administrativa, campos y adjuntos permitidos. | Datos y auditoría; editar contenido validado devuelve a borrador. |
+| Cambiar estado | Transición permitida y Directora para aprobación. | Estado e historial; publicar habilita la consulta pública correspondiente. |
+| Corregir prueba | IDs y opciones válidos, sin duplicar preguntas. | Calcular resultado con la respuesta almacenada; no persiste una calificación académica. |
+| Enviar consulta / marcar leída | Campos públicos válidos; personal para gestionar lectura. | Crear la consulta o actualizar su marca de lectura. |
+| Reservar / cancelar | Cuenta ciudadana, cupo/duplicación o propiedad según acción. | Crear o eliminar la relación usuario/franja. |
+
+El [análisis de requisitos](../../docs/ingenieria_software/analisis_de_requerimientos.md) explica el alcance y la [justificación de clases](../../docs/programacion_full_stack/Justificación%20de%20clases,%20atributos%20y%20métodos.md) identifica los métodos de cada capa. Los ejemplos de formato no constituyen datos reales ni resultados de ejecución.

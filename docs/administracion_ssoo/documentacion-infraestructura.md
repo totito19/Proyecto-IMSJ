@@ -1,36 +1,67 @@
-# Inventario de infraestructura
+# Inventario y operación de infraestructura
 
-**05/10/2026 - versión PHP nativa.** Archivos definidos; ejecución Docker no acreditada. Crédito/responsabilidad del grupo; apoyo externo de IA y revisión interna pendiente.
+**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 20/10/2026.
 
-| Servicio / volumen | Definición actual | Responsabilidad |
+## Servicios y datos persistentes
+
+| Elemento | Definición | Información operativa |
 |---|---|---|
-| app | Dockerfile php:8.5-apache; APP_PORT local 8000 por defecto; depende de db saludable. | API en public; portal/panel mediante alias de Apache y montajes de lectura. Healthcheck verifica API, esquema y portal. |
-| db | mysql:8.4; puerto 3306 interno, sin publicación al host. | Datos; schema se importa solo en volumen inicialmente vacío. |
-| db_data | Nombre conservado, /var/lib/mysql. | Persistencia de tablas. |
-| app_uploads | Nombre conservado, storage/app/public. | PDF/imágenes; fuera de public. |
-| cache | storage/cache, nuevo volumen técnico. | Contador de intentos compartido por procesos. |
+| `app` | Imagen construida desde `php:8.5-apache`. | Sirve API y frontends; depende de `db` saludable y ejecuta la migración incremental antes de iniciar Apache. |
+| `db` | Imagen `mysql:8.4`. | Usa el puerto interno 3306. Importa `database.sql` únicamente si el volumen de MySQL está vacío. |
+| `db_data` | Montaje en `/var/lib/mysql`. | Conserva usuarios, contenidos, reservas, consultas, historial y tokens. |
+| `app_uploads` | Montaje en `/var/www/html/storage/app/public`. | Conserva adjuntos; el código guarda rutas relativas y construye sus URL. |
+| `cache` | Montaje en `/var/www/html/storage/cache`. | Comparte contadores de intentos de autenticación entre procesos. |
+| Frontends | Montajes de solo lectura en `/var/www/frontend-publico` y `/var/www/frontend-imsj`. | Apache los sirve mediante alias; el contenedor no modifica los archivos de las interfaces. |
 
-Usar el mismo directorio/proyecto Compose para reutilizar los volúmenes previos; crear otro nombre de proyecto produciría volúmenes distintos. No eliminar volúmenes para actualizar. Se retira el servicio frontend/Nginx por solicitud del grupo. Apache publica un solo puerto en 127.0.0.1 y ambos frontends llaman a la API del mismo origen, sin puerto fijo en JavaScript.
+Compose publica un único puerto de `app` en `127.0.0.1`. MySQL se comunica con PHP mediante el nombre de servicio `db`. Se deben conservar el directorio o nombre de proyecto Compose y sus volúmenes para actualizar una instalación existente.
 
 ## Archivos de operación
 
-Dockerfile instala pdo_mysql y mbstring; fileinfo está disponible en PHP. Configura display_errors apagado, logs, upload_max_filesize=10M y post_max_size=24M. apache.conf habilita public y dos alias de frontends, sin exponer el backend privado. .dockerignore excluye .env, adjuntos locales, caché, tests y vendor de la imagen. Almacenamiento con permisos para www-data.
-
-Compose define app/db y transmite al proceso PHP configuración nativa; MySQL healthcheck habilita app y scripts/salud.php comprueba Apache, esquema y portal. Los BAT delegan en scripts/docker.ps1: detección de Docker, inicio/espera de Desktop, configuración y claves para una base nueva, puerto libre, espera de salud y apertura del navegador. Conserva claves de una base previa; exige recuperarlas si faltan. `detener.bat` detiene sin borrar volúmenes. `scripts/crear_admin.php` sigue siendo CLI explícita; `scripts/verificar.php` revisa sintaxis sin SQL.
-
-## Variables
-
-| Variable | Uso |
+| Archivo del backend | Función |
 |---|---|
-| APP_ENV, APP_URL | Ambiente informativo y base para las URL de adjuntos. |
-| FRONTEND_ORIGIN | Orígenes exactos para CORS; Compose usa localhost con APP_PORT por defecto. En el despliegue actual la API tiene el mismo origen que las páginas. |
-| APP_PORT | Puerto único local, 8000 por defecto; el inicio puede elegir uno libre y guardarlo. FRONTEND_PORT ya no se utiliza. |
-| DB_HOST, DB_PORT | db:3306 en Compose; 127.0.0.1/puerto del servidor en ejecución local. |
-| DB_DATABASE, DB_USERNAME, DB_PASSWORD | Conexión PDO con credenciales específicas de la instalación. |
-| DB_ROOT_PASSWORD | Contraseña administrativa de MySQL, no utilizada por la API. |
-| INITIAL_ADMIN_* | Nombre/cédula/contraseña de primera cuenta, solo para acción CLI explícita. |
-| UPLOAD_ROOT, CACHE_ROOT | Overrides opcionales de rutas locales; defaults en storage. Compartir caché entre procesos. |
+| `Dockerfile` | Instala PDO MySQL y mbstring, habilita `mod_rewrite`, copia código y configura permisos de almacenamiento. |
+| `compose.yaml` | Define servicios, variables, red, montajes, dependencias y salud. |
+| `apache.conf` y `public/.htaccess` | Publican únicamente la entrada de API y los alias de interfaces y transmiten las peticiones al punto de entrada. |
+| `.env.example` y `config.php` | Describen variables de instalación; la configuración del proceso tiene precedencia sobre `.env`. |
+| `.dockerignore` | Excluye secretos, almacenamiento local, caché, pruebas y otras dependencias de la imagen. |
+| `iniciar.bat`, `detener.bat`, `scripts/docker.ps1` | Detectan Docker, administran el arranque/detención y mantienen los mensajes de error visibles. |
+| `scripts/migrar.php` | Ajusta tablas y estados necesarios para consultas, Directora y gráficos sin borrar los registros. |
+| `scripts/crear_admin.php` | Crea explícitamente la primera cuenta; rechaza hacerlo si ya existe personal activo. |
+| `scripts/salud.php` | Comprueba MySQL, columnas esenciales y respuesta HTTP de API y portal. |
+| `scripts/verificar.php` | Comprueba sintaxis de PHP sin requerir una conexión SQL. |
 
-La configuración de proceso tiene precedencia sobre .env. No hay APP_KEY, SECRET_KEY, token JWT o pasos Artisan en el backend actual. No incluir secretos reales en Git. [Reconstrucción](reconstruccion-infraestructura.md), [transición](../../docs_auxiliares/backend/transicion_backend_vanilla.md), [verificación](../../docs_auxiliares/evidencias/verificacion.md).
+PHP registra errores sin mostrarlos al cliente. El contenedor establece `upload_max_filesize=10M` y `post_max_size=24M`. Los límites de cada recurso se validan además en la aplicación: imágenes de noticias/pruebas de hasta 2048 KB, imagen de material de hasta 5120 KB y PDF de hasta 10240 KB.
 
-Dominio/HTTPS, alojamiento, administrador operativo y plan institucional de respaldos siguen pendientes. Los procedimientos documentados no certifican disponibilidad, seguridad de producción o aceptación.
+## Variables de configuración
+
+| Variable | Uso y valor de referencia |
+|---|---|
+| `APP_ENV` | Entorno de ejecución; Compose utiliza `development` por defecto. |
+| `APP_PORT` | Puerto local único; 8000 por defecto. El inicio puede elegir y guardar otro disponible. |
+| `APP_URL` | Base de las URL de adjuntos. Debe coincidir con la dirección utilizada por el navegador. |
+| `FRONTEND_ORIGIN` | Lista de orígenes exactos permitidos en CORS. Compose deriva el origen local del puerto cuando no se define otro. |
+| `DB_HOST`, `DB_PORT` | `db:3306` dentro de Compose; host y puerto reales para ejecución externa. |
+| `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` | Base, usuario de aplicación y contraseña de esa instalación. |
+| `DB_ROOT_PASSWORD` | Contraseña administrativa de MySQL. La API no utiliza la cuenta root. |
+| `INITIAL_ADMIN_*` | Nombre, cédula y contraseña proporcionados a la acción CLI de creación inicial. |
+| `UPLOAD_ROOT`, `CACHE_ROOT` | Rutas alternativas para ejecución local; por defecto se utilizan las carpetas `storage`. |
+
+La configuración nativa no utiliza `APP_KEY`, claves JWT ni comandos Artisan. La plantilla no reemplaza las credenciales de una base existente. Si se perdió `.env` y existe un volumen previo, el inicio solicita recuperar sus valores originales.
+
+## Secuencia del inicio y control de salud
+
+En Windows el inicio detecta Docker, abre Desktop cuando corresponde y espera el motor. Prepara `.env` y claves aleatorias solamente para una instalación nueva. Verifica un puerto local disponible, construye e inicia los servicios y espera la salud antes de abrir el navegador.
+
+`GET /api/health` confirma que la entrada PHP responde. El control interno de Compose realiza también consultas sobre usuarios, consultas y el campo de imagen del simulador y abre la página pública por HTTP. Que responda `/health` por sí solo no demuestra que la base y los módulos de negocio funcionen.
+
+## Diagnóstico y persistencia
+
+Desde `backend`, `docker compose ps -a` muestra el estado de los contenedores. `docker compose logs --tail 80 app db` permite revisar un fallo de migración, conexión o arranque. La salida debe revisarse antes de compartirla para evitar publicar información de la instalación.
+
+`detener.bat` utiliza detención sin borrar volúmenes. La recreación de la imagen conserva datos cuando se reutilizan los mismos volúmenes. Un respaldo completo debe relacionar base SQL, adjuntos, configuración protegida y versión del código; copiar solo el código no recupera el estado del servicio.
+
+## Evidencia y operación institucional
+
+El registro del 13/10 documenta arranque Docker aislado y pruebas visuales. No se ha incorporado un ensayo de restauración de un respaldo institucional. Dominio, HTTPS, proveedor, responsable operativo, frecuencia y conservación de copias continúan en el [formulario de información](../../docs_auxiliares/revision/formulario_datos_documentacion.md).
+
+[Reconstrucción](reconstruccion-infraestructura.md), [backend](../../backend/README.md), [respaldo y transición](../../docs_auxiliares/backend/transicion_backend_vanilla.md) y [verificación](../../docs_auxiliares/evidencias/verificacion.md).

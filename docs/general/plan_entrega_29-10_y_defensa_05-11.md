@@ -1,11 +1,13 @@
 # Plan de preparación — entrega 29/10/2026 y defensa 05/11/2026
 
+**Actualización documental:** 20/10/2026. **Estado:** plan de preparación; los acuerdos efectivos y asignaciones se registran en reuniones del equipo.
+
 ## 1. Fechas, alcance y regla de trabajo
 
 - **Entrega final:** jueves 29/10/2026.
 - **Defensa:** jueves 05/11/2026.
 - Los repos docentes públicos todavía muestran la fecha anterior (15/10) y la defensa “a establecer”. Para este plan se toman como válidas las fechas nuevas comunicadas al equipo. Se debe guardar una captura, correo o mensaje docente que confirme el cambio.
-- Desde el 26/10 rige **congelamiento funcional**: no se agregan funciones nuevas. Solo se corrigen defectos que impidan entregar, instalar o demostrar el sistema.
+- El plan prevé desde el 26/10 un **congelamiento funcional**: no se agregan funciones nuevas. Solo se corrigen defectos que impidan entregar, instalar o demostrar el sistema.
 - Una tarea se considera terminada únicamente si incluye: implementación, prueba, evidencia, documentación actualizada y cambio guardado en Git.
 - No se deben inventar entrevistas, reuniones, resultados, firmas ni pruebas anteriores. Lo que no pueda demostrarse se registra como pendiente, fuera de alcance o limitación.
 
@@ -67,7 +69,7 @@
 - Acuse de recibo detallado en dos copias: una queda con la institución y otra vuelve firmada al equipo.
 - Copia idéntica de todo el material fuera del pendrive entregado.
 
-## 3. Responsables sugeridos
+## 3. Distribución de trabajo por responsabilidades
 
 | Área | Responsable principal | Revisión cruzada |
 |---|---|---|
@@ -87,8 +89,8 @@ Cada responsable debe tener un suplente capaz de ejecutar su parte el día de la
 1. Guardar la comunicación que confirma 29/10 y 05/11.
 2. Reunión de 45 minutos para aceptar este cronograma y asignar cada tarea.
 3. Convertir este documento en un tablero simple: `Pendiente`, `En curso`, `Para revisar`, `Terminado`.
-4. Revisar los cambios locales actuales: hay muchos archivos modificados y no deben mezclarse en un único cambio sin entenderlos.
-5. Elegir la computadora oficial de demostración y resolver en ella Docker Desktop/WSL.
+4. Revisar los cambios locales existentes en el momento de ejecución y agruparlos de acuerdo con su propósito.
+5. Elegir la computadora de demostración y comprobar su motor Docker; el arranque aislado del 13/10 es una referencia y no sustituye esa comprobación.
 6. Crear una lista única de bloqueos y dudas docentes.
 
 **Salida del día:** responsables confirmados, tablero visible, equipo de demo elegido y estado inicial guardado.
@@ -393,3 +395,11 @@ Si un control no se aprueba, se recorta una mejora opcional y se protege primero
 - Repositorio de Administración de SSOO: https://github.com/portalutu/3--Adm-SSOO
 - Plan de servidor, backup y restauración: https://github.com/portalutu/3--Adm-SSOO/blob/main/Teoricos/plan_servidor_linux_docker.md
 - Guía Docker: https://github.com/portalutu/3--Adm-SSOO/blob/main/docker/docker.md
+
+## 10. Línea de base documental del 20/10
+
+El contrato actual comprende 46 rutas, ocho módulos y PHP nativo. Se incorporaron cancelación de reservas, filtrado de fechas vigentes, vista mensual inicial de agenda y ajustes de navegación y simulador. La cancelación tiene casos añadidos a la suite; el cierre del plan necesita evidencia de su ejecución en la versión elegida.
+
+El estado Listo de CC-01–CC-05 convive con historias parciales y entregables pendientes. El manual, el cierre, las pruebas finales de seguridad y los datos institucionales deben verificarse por separado. Las actas conservan las reuniones registradas y no se completan con actividades futuras del cronograma.
+
+Los PDF mantienen versiones anteriores a la consolidación actual de Markdown. La preparación final debe partir de los textos revisados y de los datos confirmados en el formulario, conservando la identidad RC5 y los colores naranja y azul. La actualización de este plan no cambia ni regenera los PDF.

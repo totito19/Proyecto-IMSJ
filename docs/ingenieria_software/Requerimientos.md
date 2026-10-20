@@ -1,11 +1,10 @@
-> **Estado consolidado - 15/10/2026:** CC-01–CC-05 están **Listos**. El backend está implementado en PHP nativo a partir de api-simple y expone 45 endpoints. CC-02–CC-04 surgieron de la reunión/demo del 03/09 con la Directora y el Inspector de Tránsito. [Implementación/transición](../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas](../docs_auxiliares/evidencias/verificacion.md).
+**Estado documental — 20/10/2026:** CC-01–CC-05 están **Listos**. El backend está implementado en PHP nativo a partir de api-simple y expone 46 endpoints. CC-02–CC-04 surgieron de la reunión/demo del 03/09 con la Directora y el Inspector de Tránsito. [Implementación/transición](../../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas](../../docs_auxiliares/evidencias/verificacion.md).
 
 ---
 
 # Documento de Requisitos
 ## Sistema de Gestión de Educación Vial - IMSJ
 
-> **Revisión asistida por IA — 02/10/2026:** se conservan RF1–RF18 y RNF1–RNF10 porque son los códigos usados por el backlog y el modelo original. Los añadidos RF19–RF24 identifican necesidades ya presentes en entrevista/control de cambios; su numeración es documental, no una aprobación de alcance. Ver [revisión](../docs_auxiliares/revision/revision_documental.md).
 ---
 
 **Descripción General:**
@@ -66,7 +65,7 @@ Sistema web para centralizar información de la sección Tránsito de la Intende
 
 ## Necesidades relevadas posteriormente
 
-| Código | Necesidad documentada | Fuente | Situación observada al 02/10/2026 |
+| Código | Necesidad documentada | Fuente | Situación vigente al 20/10/2026 |
 |---|---|---|---|
 | RF19 | Clasificar las preguntas frecuentes por categorías. | Informe de entrevista. | Sin categoría en esquema/modelo/API. Clasificación concreta pendiente. |
 | RF20 | Administrar materiales PDF, imágenes y videos. | Informe de entrevista; desarrolla RF5/RF17. | PDF e imagen se cargan como archivo; VIDEO usa URL HTTP/HTTPS. El acuerdo sobre subir videos o enlazarlos no está registrado. |
@@ -75,9 +74,9 @@ Sistema web para centralizar información de la sección Tránsito de la Intende
 | RF23 | Enviar consultas desde el pie del portal y leerlas desplegables en el panel IMSJ. | CC-02, reunión/demo del 03/09. | **Listo.** Formulario público, tabla `consultas`, API, bandeja del panel y marcado como leído. |
 | RF24 | Adjuntar material gráfico a preguntas de simulacros. | CC-04, reunión/demo del 03/09. | **Listo.** Una imagen opcional JPG/PNG/WEBP de hasta 2048 KB, administrable y visible al resolver. |
 
-## Reglas que no se deben completar por suposición
+## Reglas operativas y definiciones pendientes
 
-- **Agenda académica:** la letra requiere costo especial urgente; la implementación distingue el trámite, pero no registra costo. No se define precio ni cálculo sin decisión. La cancelación ciudadana está implementada; la confirmación sigue pendiente.
+- **Agenda académica:** la letra requiere costo especial urgente; la implementación distingue el trámite, pero no registra costo. No se define precio ni cálculo sin decisión. La cancelación ciudadana está implementada; se muestra confirmación de la reserva con identificador, trámite, fecha y horario.
 - **Preguntas frecuentes:** la letra prevé enlaces útiles; el esquema actual tiene pregunta, respuesta y estado. Falta confirmar el tratamiento de enlaces.
 - **Usuarios:** hay registro ciudadano y alta/desactivación de personal en código. Su procedencia no está documentada como un cambio controlado; no se atribuye a CC-01–CC-05.
 - **RNF5–RNF6:** «mobile first» y «accesibilidad básica» carecen de dispositivos, medidas y criterios acordados. Los criterios propuestos en el backlog son sugerencias, no estándares adoptados.
@@ -89,4 +88,25 @@ La [matriz del backlog](backlog.md) vincula requisitos con su estado, comportami
 
 **Grupo, 02/10/2026:** sustituir Laravel por PHP sin framework de aplicación, por capas y con PDO/MySQL, siguiendo el recorrido de `api-simple`. Cambia la implementación de la API, no las necesidades de RF1–RF24/RNF1–RNF10 ni el destino real/académico ya registrado. No se renumeran requisitos ni se añade una función del dominio de productos del ejemplo.
 
-La [guía de migración](../docs_auxiliares/backend/migracion_backend_vanilla.md) conserva el contrato de los frontends y los controles de RNF1–RNF4/RNF7–RNF10. El código actual usa PHP nativo, PDO y MySQL; CC-01–CC-05 están Listos. Ver [control de cambios](control_cambios.md) y [verificación](../docs_auxiliares/evidencias/verificacion.md).
+La [guía de migración](../../docs_auxiliares/backend/migracion_backend_vanilla.md) conserva el contrato de los frontends y los controles de RNF1–RNF4/RNF7–RNF10. El código actual usa PHP nativo, PDO y MySQL; CC-01–CC-05 están Listos. Ver [control de cambios](control_cambios.md) y [verificación](../../docs_auxiliares/evidencias/verificacion.md).
+
+## Comportamiento esperado por grupo funcional
+
+| Grupo y requisitos | Entrada o condición | Resultado y control |
+|---|---|---|
+| Acceso: RF1, RNF1 | Cédula y contraseña; token en operaciones protegidas. | Se identifica la cuenta, se comprueba su estado y se exige el rol. Credenciales o permisos inválidos no habilitan la operación. |
+| Noticias: RF2, RF7–RF10 | Título, texto, fechas y adjuntos permitidos. | Se conserva el contenido y su historial; solo lo publicado y vigente aparece en el portal. La fecha final no puede preceder a la inicial. |
+| Materiales: RF5, RF17, RF20 | Nombre, tipo y archivo o URL según corresponda. | PDF e imágenes se almacenan como archivos; VIDEO utiliza una URL HTTP/HTTPS. La consulta pública excluye los no publicados. |
+| FAQ: RF6, RF18–RF19 | Pregunta, respuesta y estado. | Administración validada y publicación controlada. Las categorías siguen pendientes y no deben mostrarse como disponibles. |
+| Aprobación: RF21 | Contenido pendiente y cuenta Directora. | La aprobación habilita publicar después. Modificar contenido aprobado/publicado obliga a revisar nuevamente. |
+| Simulacro: RF22, RF24 | Preguntas disponibles y respuestas elegidas por el aspirante. | Hasta diez preguntas aleatorias, cuatro opciones, gráfico opcional y corrección posterior; sin temporizador ni umbral. |
+| Consultas: RF23 | Nombre, correo válido y mensaje. | Se guarda la consulta para lectura del personal. No se envía una respuesta automática. |
+| Agenda: RF3–RF4, RF11–RF16 | Franja, cupo y cuenta ciudadana; tipo de trámite. | Se impiden duplicación y exceso de cupo; las vistas actuales excluyen fechas pasadas. El costo urgente permanece sin regla. |
+| Cancelación académica | Identificador de reserva y cuenta propietaria. | Se elimina la reserva propia y se libera capacidad; personal y otros ciudadanos no pueden cancelarla con esa ruta. |
+| Calidad: RNF2–RNF6, RNF8–RNF10 | Entradas, datos personales, auditoría y acceso desde distintos dispositivos. | Se aplican los controles implementados; la validación de móvil, accesibilidad, retención y operación productiva requiere evidencia específica. |
+
+## Identificación, estado y aceptación
+
+Los identificadores RF1–RF24 y RNF1–RNF10 se conservan para que el historial y las historias sigan siendo localizables. Las operaciones posteriores relacionadas con una función se describen junto a ella sin renumerar el catálogo. El [análisis de requisitos](analisis_de_requerimientos.md) concentra estados y reglas; el [backlog](backlog.md) los relaciona con US1–US34.
+
+Implementado significa que existe el comportamiento en el código. Parcial identifica un límite concreto del requisito. Pendiente indica que la necesidad no está resuelta. La conformidad del cliente debe constar en actas y no se deduce del estado técnico. Las referencias de verificación distinguen la demo del 13/10 de las modificaciones del 20/10.

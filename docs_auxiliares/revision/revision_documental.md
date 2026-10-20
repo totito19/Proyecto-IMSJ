@@ -6,7 +6,6 @@
 
 **Fecha:** 02/10/2026. **Base revisada:** commit `df581ab`.
 **Equipo responsable y destinatario del crédito:** Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales.
-**Preparación:** apoyo externo de IA, sin crédito individual al asistente.
 **Estado:** correcciones documentales y observaciones para revisión humana; no constituye aceptación del cliente.
 
 ## Comprensión actual del proyecto
@@ -17,7 +16,7 @@ La entrevista inicial describe administrativos con iguales permisos y aprobació
 
 ## Dificultades de incorporación detectadas
 
-Las siguientes son **observaciones de IA con evidencia**, no testimonios de reuniones ni decisiones nuevas del equipo.
+Los hallazgos siguientes documentan la revisión de archivos y sus fuentes. No son una transcripción de reuniones ni nuevas decisiones del equipo.
 
 | ID | Dificultad e impacto para incorporarse | Evidencia encontrada | Solución documental aplicada o pendiente |
 |---|---|---|---|
@@ -33,7 +32,7 @@ Las siguientes son **observaciones de IA con evidencia**, no testimonios de reun
 | D-10 | Falta claridad sobre las direcciones de API actuales y las operaciones de la consigna que siguen pendientes. | La letra usa `/auth/login`, `/agendas` y cancelación; las rutas actuales usan `/login`, `/reservas` y no incluyen cancelación. | Se documenta la API observada y las diferencias. Costo urgente y enlaces útiles de FAQ requieren decisión; no se agregan funciones al código. |
 | D-11 | La reconstrucción tiene enlaces rotos y promete que basta cambiar un puerto. | Índice SSOO enlaza nombres `01-`, `02-`, `03-` inexistentes; ambos `js/api.js` fijan `localhost:8000`. | Se corrigen enlaces y se aclaran límites de puertos/acceso remoto. La validación de Compose declarada el 02/09 no tiene salida adjunta. |
 | D-12 | Los requisitos de seguridad necesitan distinguirse de las medidas probadas. | Análisis inicial en futuro, PDF con matriz sin método de valoración; existen pruebas, pero no resultados versionados. | Se añaden controles observados, pruebas disponibles y carencias de evidencia. SQLite en memoria no prueba concurrencia real en MySQL. |
-| D-13 | Los PDF parecen entregables institucionales, pero todavía tienen supuestos y campos sin completar. | Política y términos tienen `[COMPLETAR]`; incluyen reservas, aceptación y conservación no cerradas. No existe evidencia de validación jurídica/institucional. | Se añaden notas de revisión de IA en los PDF, conservando el texto original y sus fechas. No se inventan contactos, bases jurídicas ni plazos. |
+| D-13 | Los PDF parecen entregables institucionales, pero todavía tienen supuestos y campos sin completar. | Política y términos tienen `[COMPLETAR]`; incluyen reservas, aceptación y conservación no cerradas. No existe evidencia de validación jurídica/institucional. | Se añaden notas de revisión documental en los PDF, conservando el texto original y sus fechas. No se inventan contactos, bases jurídicas ni plazos. |
 | D-14 | No estaba identificado qué uso de IA correspondía a cada intervención. | Declaración general; R-04 reconoce ordenar el modelo con IA; planificación retrospectiva sin autoría identificada. | Se conserva la declaración histórica y se distingue del registro actual de herramienta, documento, uso y equipo responsable. El estilo de un texto no se usa como detector de IA. |
 | D-15 | Falta información para reproducir el flujo de contribución y comprobar entregas completas. | Solo se observan `main` y `origin/main` localmente; no hay guía interna de ramas/revisión ni acuses. La consigna pide PR y reportes quincenales. | Se documenta lo exigido y lo que falta confirmar. No se afirma que nunca hubo PR ni se cambia la estrategia de ramas. |
 | D-16 | La titularidad de los derechos sobre el software necesita confirmación. | `LICENSE` nombra «Instituto Municipal de Seguridad y Justicia», distinto de la Intendencia usada por el proyecto. | Se deja pendiente confirmar titular y denominación; no se cambia un aviso legal sin información del equipo. |
@@ -63,7 +62,7 @@ Los ejemplos también contienen inconsistencias: la Review de TamboTrace referen
 
 **Pendiente del equipo:** completar las actas, los datos históricos y las evidencias concretas de pruebas, Git y entregas. Las reglas de los cambios, la configuración de la entrega real y los campos institucionales se reúnen en [aclaraciones y pendientes](aclaraciones_y_pendientes.md). El contacto oficial se añadirá posteriormente. Esta actualización no interviene en las actas.
 
-**IA — Sugerencia para completar los documentos:** al resolver un pendiente, incorporar el dato y su fuente o enlace a evidencia. Solo se registran responsables y fechas si el equipo los acuerda; no se exige inventar una fecha de entrega ni prioridades distintas.
+**Actualización de datos:** al resolver un pendiente, incorporar el dato y su fuente o enlace a evidencia. Solo se registran responsables y fechas si el equipo los acuerda; no se exige inventar una fecha de entrega ni prioridades distintas.
 
 ## Correspondencia de entregables
 
@@ -82,11 +81,11 @@ La referencia anuncia tercera entrega el **15/10/2026** y defensa con fecha por 
 
 ## Límite de esta intervención
 
-Se corrigen documentos, vínculos y trazabilidad; los PDF reciben comentarios y una hoja de revisión que distingue aclaraciones del grupo de observaciones de IA y conserva la identidad visual original. Se conservan registros históricos y se evita atribuir nuevas decisiones a reuniones anteriores.
+Se corrigen documentos, vínculos y trazabilidad; los PDF reciben comentarios y una hoja de revisión que distingue aclaraciones del grupo de hallazgos documentales y conserva la identidad visual original. Se conservan registros históricos y se evita atribuir nuevas decisiones a reuniones anteriores.
 
 **Fuera de CC-01–CC-05:** categorías, costo urgente, cancelaciones, cambios de API o despliegue, flujo Git, cláusulas legales y licencia requieren una decisión separada si se incorporan. Los datos institucionales restantes mantienen su propio estado.
 
-La revisión de IA no determina la validez jurídica de los PDF ni la autoría histórica de textos sin evidencia. Las leyes citadas en ellos no fueron revalidadas en esta intervención.
+La revisión documental no determina la validez jurídica de los PDF ni la autoría histórica de textos sin evidencia. Las leyes citadas en ellos no fueron revalidadas en esta intervención.
 
 **Actualización autorizada — 02/10/2026:** se añadió el Markdown de aclaraciones y campos pendientes; se actualizaron las referencias afectadas y las cuatro hojas/comentarios de PDF con la tipografía, tablas y colores originales. Se reutilizó el logo RC5 extraído de la declaración de IA. No se modificaron actas, funciones del sistema ni avisos legales históricos. Estado funcional vigente al 15/10: **CC-01–CC-05, Listos**.
 
@@ -96,10 +95,16 @@ El inventario completo de archivos y el orden de lectura están en [el índice d
 
 El grupo decide retirar Laravel y basar el backend en PHP sin framework a partir de la API completa de RodrigoCazard. La comprensión inicial de este informe conserva el estado Laravel leído en `df581ab`; el destino se actualiza con esta decisión posterior, sin alterar hechos históricos.
 
-**IA — Análisis realizado:** se leyeron los 38 archivos de `api-completa` y el README raíz en `d6f61c999369b754d70bfa0621a154e9a630589a`. Se contrastaron capas, dependencias, rutas, PDO, validación/DTO, JWT/cookie, respuestas, limitador y Docker/SQL con código, frontends y esquema IMSJ. La [comparación completa](../backend/referencia_api_completa.md) documenta diferencias y límites; no se ejecutó ni incorporó el ejemplo al código.
+**Análisis realizado:** se leyeron los 38 archivos de `api-completa` y el README raíz en `d6f61c999369b754d70bfa0621a154e9a630589a`. Se contrastaron capas, dependencias, rutas, PDO, validación/DTO, JWT/cookie, respuestas, limitador y Docker/SQL con código, frontends y esquema IMSJ. La [comparación completa](../backend/referencia_api_completa.md) documenta diferencias y límites; no se ejecutó ni incorporó el ejemplo al código.
 
 La [guía de migración](../backend/migracion_backend_vanilla.md) y la [transición SSOO](../backend/transicion_backend_vanilla.md) son documentos nuevos. Se actualizan READMEs, índice, control CC-05, arquitectura/diagramas/modelo, API, requisitos, backlog/planning, seguridad, pendientes, registro de IA y hojas/comentarios de PDF. Los diagramas Mermaid muestran el destino; las vistas PNG y responsabilidades Eloquent se conservan como antecedentes.
 
 **Decisión confirmada:** PHP sin Laravel, por capas/PDO. **Estado vigente: Listo.** Código, infraestructura, SQL/procedimientos, sesiones y pruebas V-CC05 fueron implementados posteriormente. **Alternativas sin adopción:** cookie JWT, otro JSON/rutas y datos del ejemplo.
 
 La sustitución no cambia el carácter académico de la agenda. Esta sección describe el alcance de la intervención documental del 02/10; el estado posterior consolidado es CC-01–CC-05 Listos. La [verificación](../evidencias/verificacion.md) registra las pruebas posteriores del producto.
+
+## Seguimiento documental del 20/10/2026
+
+Este informe conserva sus hallazgos y conteos históricos. Los documentos vigentes fueron reorganizados por asignatura y desarrollados para explicar propósito, reglas, responsabilidades y evidencia. Las actas incorporan los datos corregidos por el equipo en R-01 y la relación de R-05 con los cambios de septiembre, sin reconstruir intervenciones ni aprobaciones.
+
+El contrato actual tiene 46 rutas y el MER/pasaje a tablas está actualizado; el UML PNG y los PDF mantienen sus versiones anteriores. Para conocer el estado vigente se utilizan el índice de entrega, el control de cambios y el formulario. El uso de herramientas se registra en su declaración, sin comentarios editoriales repetidos en los documentos.

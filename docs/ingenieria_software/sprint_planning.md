@@ -1,10 +1,12 @@
-> **Estado consolidado - 15/10/2026:** CC-01–CC-05 están **Listos**. Este documento conserva la planificación histórica; el estado vigente está en [control de cambios](control_cambios.md).
+# Planificación por períodos del proyecto
 
----
+**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización documental:** 20/10/2026.
 
-# Sprint Planning
+## Alcance del registro
 
-> **Revisión asistida por IA — 02/10/2026:** este documento fue incorporado el 08/09/2026 (commit `60667ef`) y propone períodos anteriores. No acredita reuniones de planning, compromisos, capacidad o estimaciones realizadas en esas fechas. La autoría histórica de las propuestas no está identificada. Se conservan los puntos; no son velocidad medida.
+El documento conserva cuatro períodos propuestos, incorporados al repositorio el 08/09 mediante el commit `60667ef`. Sus tablas organizan tareas históricas y suman 82 puntos. No hay un registro adjunto de reuniones de planning, método de estimación, capacidad o compromisos que permita presentarlos como sprints formalmente acordados.
+
+Los períodos se utilizan para comprender la evolución del producto. Los puntos son los valores del documento original y no una medida de velocidad o de trabajo aceptado. La sustitución posterior de Laravel no cambia la tecnología que se menciona en las tareas de agosto.
 
 ## Sprint 1 — Maquetación de los frontends
 **Período propuesto:** 10/07–23/07/2026.
@@ -66,54 +68,44 @@
 | Agregar pruebas automatizadas y archivos de arranque y detención con Docker. | 5 |
 | **Total Sprint 4** | **44** |
 
-## Relación documental con el backlog
 
-**IA — Correspondencia propuesta, no selección histórica confirmada:** una pantalla maquetada no equivale a terminar sus historias. Los 82 puntos suman tareas propuestas, no US aceptadas.
+## Relación con el backlog
 
-| Período | Trabajo descrito | Historias relacionadas |
+| Período | Necesidad de trabajo | Relación documental |
 |---|---|---|
-| 1 | Panel y noticias/ingreso públicos | US1–US7, US15–US24, solo presentación inicial. |
-| 1 | Relevamiento y requisitos | Tarea documental; no se inventa una US de producto. |
-| 2 | Portal y operaciones con datos locales | US3–US24, sin evidencia de persistencia completa al cierre. |
-| 2 | Historias y arquitectura | Tarea documental. |
-| 3 | Portal, ingreso, estilos y modelo | US1/US3/US21/US23/US27/US28 y tareas documentales; no implica accesibilidad validada. |
-| 4 | Acceso y roles | US1/US2/US26/US34. |
-| 4 | Noticias, materiales y FAQ | US3–US9, US21–US24; US29/US30 pendientes. |
-| 4 | Franjas, reservas y agenda | US10–US20; solo versión académica, costo urgente pendiente. |
-| 4 | Simulacro | CC-01/US31 y CC-04/US33, Listos. |
-| 4 | Personal e historial | US25 y administración con origen pendiente. |
-| 4 | Pruebas y Docker | Tareas técnicas; evidencia de ejecución pendiente. |
+| 1 | Pantallas del panel, ingreso y noticias públicas. | Presentación de US1–US7 y US15–US24; no acredita su funcionamiento con datos persistentes. |
+| 2 | Pantallas públicas y operaciones con datos locales. | US3–US24 en interacción de frontend; persistencia e integración aún por resolver en ese momento. |
+| 3 | Portal, acceso, presentación y modelo. | US1, US3, US21, US23, US27 y US28; diseño adaptable no equivale a una auditoría. |
+| 4 | Backend, integración, banco, agenda, personal e historial. | Trabajo transversal sobre acceso, contenidos, agenda y calidad; el estado actual de las historias se consulta en el backlog. |
 
-## Datos ausentes de la planificación real
+El catálogo actual conserva US1–US34. Los cambios de septiembre y octubre se siguen por sus fuentes y no se atribuyen automáticamente a la selección original de un período.
 
-**Actualización — 15/10/2026:** CC-01–CC-05 están Listos. Los períodos reconstruidos de este documento conservan el orden histórico y no sustituyen el estado vigente.
+## Dependencias técnicas
 
-| Campo | Situación |
+El acceso a datos persistentes depende de un esquema compatible y de la conexión del backend. Los formularios administrativos necesitan autenticación y permisos antes de operar datos reales. La publicación necesita estados y revisión de la Directora; los materiales y gráficos necesitan almacenamiento y rutas de descarga. La agenda depende de franjas, cuentas y control de cupos.
+
+Estas dependencias explican el orden de integración. No representan una nueva prioridad entre CC-01–CC-04 ni una reasignación de tareas que el equipo no haya acordado.
+
+## Trabajo técnico posterior: CC-05
+
+| Tarea | Resultado documentado |
 |---|---|
-| Fecha, participantes y aprobación del planning | No registrados. |
-| Responsable, revisor y tareas por integrante | Roles generales confirmados; tareas concretas y selección histórica aún por registrar por el equipo. Ver [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md). |
-| Capacidad por sprint y método de estimación | No registrados. |
-| Selección comprometida de US y criterios acordados | No registrada. |
-| Trabajo arrastrado entre sprints | No registrado por US. |
-| Dependencias y bloqueos | Acceso/API/persistencia aparecen como pendientes en la reconstrucción de Review; registro operativo no localizado. |
-| Plan posterior al 03/09 | No localizado. La revisión del código se basa en cambios posteriores hasta `df581ab`. |
+| TM-01 | Estructura nativa, carga explícita y contrato de rutas. |
+| TM-02 | Autenticación, sesiones revocables y permisos. |
+| TM-03 | Persistencia PDO, esquema y transacciones. |
+| TM-04 | Contenidos, archivos, visibilidad e historial. |
+| TM-05 | Banco del simulador y agenda académica. |
+| TM-06 | Docker, Apache y herramientas de operación. |
+| TM-07 | Pruebas y documentación de los resultados y límites. |
 
-**IA — Observación:** el sprint 4 acumula 44 de los 82 puntos propuestos. No hay capacidad documentada que permita juzgar si es realizable. No se redistribuyen tareas ni se recorta alcance con base en la velocidad del ejemplo TamboTrace.
+La reescritura se realizó el 05/10 y la demo Docker se verificó el 13/10. CC-01–CC-05 figuran como Listos. El código actual tiene 46 rutas después de añadir la cancelación ciudadana el 20/10. Este trabajo posterior no constituye un quinto sprint histórico ni hereda los 44 puntos del cuarto período.
 
-**IA — Sugerencia:** para una planificación futura, completar fecha, asistentes, capacidad, historias/criterios seleccionados, tareas, responsable y evidencia de cierre, según [Sprint Planning](https://github.com/portalutu/ing_software-3ro-bt/blob/ae1c0f118a959c5bba7fd6c8badf60de1b7ea23a/Teoricos/sprint-planning.md). No se declara que el equipo ya adopta esos acuerdos.
+## Datos de planificación aún sin registro
 
-## Planificación ejecutada de la migración CC-05
+Faltan fechas y participantes de los planning efectivos, selección comprometida de historias, capacidad, responsables por tarea, puntos terminados y trabajo trasladado entre períodos. El equipo conserva los roles generales, pero estos no permiten asignar retrospectivamente cada tarea. La información se reúne en el formulario auxiliar.
 
-**Decisión del grupo, 02/10/2026:** backend PHP sin Laravel a partir de la API completa. Los cuatro períodos anteriores se conservan como reconstrucción de la versión previa; no se reescribe el Sprint 4 como si hubiera utilizado PHP vanilla entonces.
+El plan de preparación para el 29/10 y la defensa del 05/11 se encuentra separado de estos períodos históricos. Sus actividades y responsables deben distinguirse de las reuniones efectivamente realizadas.
 
-**IA — Secuencia técnica para revisar:** TM-01 fija contrato y referencia; TM-02 prepara base PHP; TM-03 migra cuenta/permisos; TM-04 y TM-05 migran contenidos y agenda; TM-06 adapta entorno y TM-07 valida integración y retiro de Laravel. Las dependencias y evidencias están en [migración](../docs_auxiliares/backend/migracion_backend_vanilla.md). La secuencia no establece prioridad distinta para CC-01–CC-04, fechas, puntos, capacidad o un Sprint 5 ficticio.
+## Referencias
 
-| Dato de planificación de CC-05 | Estado |
-|---|---|
-| Fecha de reunión y participantes | Por registrar por el equipo. |
-| Capacidad, selección y estimación de tareas | Por acordar; no se trasladan los 44 puntos anteriores. |
-| Asignaciones concretas y revisión | Roles generales confirmados; tareas por acordar. Juan Robaina revisará la documentación. |
-| Decisión sobre tokens/sesiones y conjunto final de bibliotecas | Pendiente, conservando compatibilidad como base. |
-| Diferencia académica y evidencia de cierre | Por registrar con docentes y en [verificación](../docs_auxiliares/evidencias/verificacion.md). |
-
-Los acuerdos y las aprobaciones quedan en actas a cargo del equipo. La preparación documental no acredita inicio/cierre de un sprint ni implementación.
+[Backlog](backlog.md), [balance por períodos](actas_sprint_review.md), [actas](actas_reuniones.md), [migración](../../docs_auxiliares/backend/migracion_backend_vanilla.md), [formulario](../../docs_auxiliares/revision/formulario_datos_documentacion.md) y [plan de entrega](../general/plan_entrega_29-10_y_defensa_05-11.md).

@@ -14,42 +14,61 @@ La reserva se representa como una entidad asociativa: un usuario puede realizar 
 
 ![Pasaje a tablas](Pasaje_a_tablas.png)
 
-El modelo relacional incorpora las claves primarias, foráneas y únicas. También incluye `consultas`, la imagen opcional de las preguntas de prueba y la tabla técnica `auth_tokens`, de acuerdo con [database.sql](../../backend/database.sql).
+El modelo relacional incorpora las claves primarias, foráneas y únicas. También incluye `consultas`, la imagen opcional de las preguntas de prueba y la tabla técnica `auth_tokens`, de acuerdo con [database.sql](../../../backend/database.sql).
 
 Las reglas aplicadas y la notación textual de todas las tablas están en [Pasaje del MER al modelo relacional](PASO_A_TABLAS.md).
 
-## UML histórico y recorrido actual
+## Diagrama de clases del backend nativo
 
-![UML existente](UML.png)
-
-La nota del PNG sobre CRUD/corrección en controladores es incompleta: el controlador atiende HTTP, el servicio coordina negocio y el repositorio ejecuta SQL. Ya no existen interfaces/Eloquent del backend anterior. Los modelos actuales representan datos y salida JSON.
+La vista siguiente describe las dependencias de los ocho módulos actuales. Cada controlador llama a su servicio y cada servicio a su repositorio; la conexión se comparte mediante Database. Los modelos representan registros y salida JSON, sin herencia de Eloquent.
 
 ```mermaid
 classDiagram
-    class NoticiaController
-    class NoticiaService
-    class NoticiaRepository
-    class Noticia
-    class ReservaController
-    class ReservaService
-    class ReservaRepository
-    class Franja
-    class Reserva
-    class Database
-    class Auth
-    class Response
-    NoticiaController --> Auth : exigir personal
+    AuthController --> AuthService
+    AuthService --> AuthRepository
+    AuthRepository --> Database
+    ConsultaController --> ConsultaService
+    ConsultaService --> ConsultaRepository
+    ConsultaRepository --> Database
     NoticiaController --> NoticiaService
     NoticiaService --> NoticiaRepository
-    NoticiaRepository --> Database : PDO
-    NoticiaRepository --> Noticia
-    NoticiaController --> Response
-    ReservaController --> Auth : rol de la operación
+    NoticiaRepository --> Database
+    MaterialController --> MaterialService
+    MaterialService --> MaterialRepository
+    MaterialRepository --> Database
+    PreguntaController --> PreguntaService
+    PreguntaService --> PreguntaRepository
+    PreguntaRepository --> Database
+    PruebaController --> PruebaService
+    PruebaService --> PruebaRepository
+    PruebaRepository --> Database
     ReservaController --> ReservaService
     ReservaService --> ReservaRepository
-    ReservaRepository --> Database : SQL y bloqueo
+    ReservaRepository --> Database
+    UsuarioController --> UsuarioService
+    UsuarioService --> UsuarioRepository
+    UsuarioRepository --> Database
+    NoticiaRepository --> Noticia
+    MaterialRepository --> Material
+    PreguntaRepository --> Pregunta
+    PruebaRepository --> Prueba
+    ConsultaRepository --> Consulta
     ReservaRepository --> Franja
     ReservaRepository --> Reserva
+    AuthRepository --> Usuario
+    UsuarioRepository --> Usuario
 ```
 
-Franjas y agenda pertenecen al módulo Reserva; historial al módulo Usuario; las consultas ciudadanas forman el módulo Consulta. Hay ocho controladores, ocho servicios y ocho repositorios. Esta vista muestra ejemplos representativos, no todas las clases o endpoints. [Modelo y justificación](../Justificación%20de%20clases,%20atributos%20y%20métodos.md), [arquitectura](../arquitectura_propuesta.md).
+Los controladores utilizan Auth para exigir acceso y Response para responder. Solicitud reúne las reglas comunes de entrada y Archivo valida, guarda y elimina adjuntos. Franjas y agenda pertenecen al módulo Reserva; historial pertenece a Usuario y las consultas forman el módulo Consulta.
+
+## Correspondencia e integridad
+
+El modelo relacional contiene doce tablas: once del dominio y `auth_tokens`. `usuarios.cedula` y el hash del token son únicos. La combinación usuario/franja impide duplicación de reservas y la combinación fecha, inicio, fin y tipo identifica una franja sin duplicados exactos. Las relaciones de noticias tienen eliminación en cascada; reservas e historial conservan sus referencias mediante claves foráneas.
+
+No hay una entidad de categorías porque esa necesidad no está implementada. Tampoco existe una tabla de respuestas a consultas ni un estado de cancelación: la cancelación académica elimina la reserva. Los gráficos de preguntas se guardan como ruta en `preguntas_prueba.imagen`.
+
+## Antecedente UML
+
+![UML de la versión anterior](UML.png)
+
+Este PNG se conserva como antecedente y no representa completamente las clases del backend nativo. Para describir la implementación vigente se utiliza la vista de clases anterior, la [justificación de responsabilidades](../Justificación%20de%20clases,%20atributos%20y%20métodos.md), la [arquitectura](../../administracion_ssoo/arquitectura_propuesta.md) y el [esquema SQL](../../../backend/database.sql).

@@ -1,8 +1,7 @@
-# Sprint Review — IMSJ
+# Seguimiento de incrementos y Sprint Review — IMSJ
 
-> **Revisión asistida por IA — 02/10/2026:** se conserva la reconstrucción del 08/09 como antecedente. Estos balances no sustituyen las actas de reuniones efectivas. Estado vigente al 15/10/2026: **CC-01–CC-05, Listos**.
 
-**Reconstrucción retrospectiva para revisión del equipo · 08/09/2026.**
+**Balance retrospectivo original:** 08/09/2026. **Actualización documental:** 20/10/2026.
 
 Balance de los cuatro períodos propuestos en [Sprint Planning](sprint_planning.md), basado en los archivos incorporados por los commits. Las fechas delimitan el análisis, no acreditan reuniones realizadas. La presencia de código o pruebas no certifica su ejecución ni la aceptación del cliente.
 
@@ -50,7 +49,7 @@ Los puntos terminados requieren verificar el cumplimiento y las pruebas de cada 
 ## Sprint 4 — Backend e integración
 **Período:** 21/08–03/09/2026.
 
-**Resultado:**
+**Antecedente de integración observado en el repositorio:**
 - Se incorporaron el backend Laravel, modelos, migraciones, rutas, controles de acceso y archivos de pruebas.
 - Los frontends incorporaron llamadas a la API para trabajar con contenidos y agenda.
 - Se añadieron el simulacro, el banco de preguntas, la administración de personal y la consulta del historial.
@@ -58,7 +57,7 @@ Los puntos terminados requieren verificar el cumplimiento y las pruebas de cada 
 
 **Actualización de estado al 15/10/2026:** CC-01–CC-05 están Listos. Los detalles históricos de cada demostración se conservan en las actas y la evidencia técnica en el registro de verificación.
 
-**Evidencia documental actual:** [API](../docs_auxiliares/backend/api.md), [verificación](../docs_auxiliares/evidencias/verificacion.md), `backend/routes/api.php`, migraciones y archivos Feature; los documentos originales citan commits de períodos anteriores y esta vista actual corresponde a `df581ab`, no necesariamente al cierre del 03/09.
+**Documentación de seguimiento:** [API](../../docs_auxiliares/backend/api.md) y [verificación](../../docs_auxiliares/evidencias/verificacion.md). El backend Laravel corresponde al antecedente `df581ab`; sus rutas y pruebas no existen en el árbol actual. El balance no permite atribuir todo ese código al cierre exacto del 03/09.
 
 La [acta R-05](actas_reuniones.md#r-05--03092026) registra la reunión/demo del 03/09 con Directora e Inspector, origen de CC-02–CC-04. Estado vigente: CC-01–CC-05 Listos.
 
@@ -69,8 +68,21 @@ La [acta R-05](actas_reuniones.md#r-05--03092026) registra la reunión/demo del 
 | 1 | No registrados. | El balance de commits no prueba una demo. | No registrados. | No registrado por US. |
 | 2 | No registrados. | El balance de commits no prueba una demo. | No registrados. | No registrado por US. |
 | 3 | No registrados. | El balance de commits no prueba una demo. | No registrados. | CC-01 registrado; estado vigente **Listo**. |
-| 4 | R-05 registra demo, sin confirmar que fuera Review del sprint. | No registrado en detalle. | No registrados; total terminado «Por verificar». | CC-02–CC-04; US30/US32/US33 son borradores derivados. |
-
-**IA — Sugerencia:** completar cada Review con fuente, fecha, asistentes, funcionalidades mostradas, comentarios fieles del cliente, resultado y efectos en backlog/control de cambios. No usar citas del ejemplo ni reconstruir aprobaciones a partir de commits.
+| 4 | R-05 registra demo, sin confirmar que fuera Review del sprint. | No registrado en detalle. | No registrados; total terminado «Por verificar». | CC-02–CC-04, relacionados actualmente con US30/US32/US33. |
 
 Fuentes: [Review del curso](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/05_sprint_review.md) y [eventos de Scrum](https://github.com/portalutu/ing_software-3ro-bt/blob/ae1c0f118a959c5bba7fd6c8badf60de1b7ea23a/Teoricos/scrum-events.md).
+
+## Evolución posterior y alcance de la evidencia
+
+| Fecha | Incremento o comprobación registrada | Límite de interpretación |
+|---|---|---|
+| 03/09 | Demo con Directora e Inspector; origen de CC-02–CC-04. | El acta no la identifica como Review formal ni adjunta una versión exacta o aceptación final. |
+| 05/10 | Reescritura PHP nativa y pruebas HTTP/MySQL de la migración. | No constituye una reunión retrospectiva ni acredita entrega institucional. |
+| 13/10 | Consultas, flujo Directora y gráficos del simulador; arranque Docker aislado, 41 verificaciones HTTP y recorrido visual. | Resultado técnico de esa demo y ese entorno. |
+| 20/10 | Cancelación de reservas y ajustes de interfaz incorporados al repositorio. | Hay casos de prueba añadidos; no se extiende automáticamente el resultado de la demo anterior. |
+
+## Contenido del registro de una Review efectiva
+
+Para relacionar una Review con este balance se necesita su fecha, participantes, versión demostrada, historias presentadas, observaciones del cliente, decisiones y efectos sobre el backlog. Los puntos terminados se vinculan con resultados verificados, no solo con archivos incorporados.
+
+Las actas del equipo son la fuente de intervenciones y acuerdos. Hasta disponer de ellas, este documento cumple la función de balance técnico y documental por períodos y mantiene los campos históricos sin datos inventados.

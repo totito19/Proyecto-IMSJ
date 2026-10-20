@@ -1,98 +1,93 @@
-> **Estado consolidado - 15/10/2026:** CC-01–CC-05 están **Listos**. El backend actual es PHP nativo/PDO; CC-02–CC-04 se trazan a la reunión/demo del 03/09 con la Directora y el Inspector de Tránsito.
+# Constitución del proyecto — Educación Vial IMSJ
 
----
+**Producto público:** Portal Vial.
 
-# Project Charter - Proyecto Educación Vial IMSJ
+**Denominación académica:** Plataforma Web Educación Vial IMSJ.
 
-> **Documento inicial conservado. Adenda asistida por IA — 02/10/2026:** las aclaraciones del final distinguen cliente y evaluación académica; no reemplazan los acuerdos originales ni acreditan nuevas decisiones del equipo.
-**Nombre del proyecto:** Plataforma Web Educación Vial IMSJ
-**Patrocinador:** Intendencia Municipal de San José - Sección Tránsito
+**Organismo destinatario:** Intendencia de San José, Sección Tránsito.
 
----
+**Inicio:** julio de 2026. **Actualización documental:** 20/10/2026.
 
-## Objetivo del proyecto
-Desarrollar una aplicación web que centralice la comunicación pública de la sección tránsito de la IMSJ, permitiendo que ciudadanos consulten noticias, accedan a materiales de estudio, preguntas frecuentes y agenden trámites de obtención y renovación de libreta de conducir, mientras que el personal administrativo gestiona toda la información desde un dashboard con funciones equivalentes.
+## Propósito y necesidad
 
----
+El proyecto desarrolla una plataforma web que reúne noticias de Tránsito, materiales de estudio y preguntas frecuentes en un mismo canal de consulta. El relevamiento identifica información dispersa y la necesidad de comunicarla con un lenguaje comprensible, especialmente para adolescentes y aspirantes a la licencia de conducir. La administración de los contenidos requiere controlar su vigencia y conocer qué persona realizó cada modificación.
 
-## Justificación del proyecto
-Actualmente la información sobre noticias, agendas de trámites y materiales de estudio está dispersa o depende de canales no integrados. Esto genera:
-- Dificultad para que ciudadanos accedan a información
-- Procesos administrativos manuales e ineficientes
-- Riesgo de dobles agendamientos
-- Falta de historial centralizado
+Portal Vial ofrece una interfaz para la ciudadanía y un panel para el personal de la Intendencia. Ambos utilizan la misma API y base de datos. Esta organización permite mantener los contenidos en un único lugar y aplicar las reglas de acceso y publicación desde el servidor.
 
-Una plataforma integrada mejorará la experiencia del ciudadano y la eficiencia operativa de la IMSJ.
+La letra inicial también incluye agenda de pruebas de manejo y renovaciones. El cliente excluyó ese módulo de su entrega actual; el equipo lo conserva en la versión académica para cumplir el alcance del proyecto de egreso. Esta distinción se aplica a los requisitos, las pruebas y la presentación del producto.
 
----
+## Objetivos
 
-## Alcance inicial
-- Interfaz pública (noticias, agenda, materiales de estudio, preguntas frecuentes)
-- Dashboard administrativo (crear/editar noticias, cargar franjas, gestionar materiales, mantener preguntas frecuentes)
-- Control de acceso con roles (público general vs personal IMSJ)
-- Historial de acciones administrativas
-- Responsividad móvil y accesibilidad básica
+1. Centralizar la consulta de noticias, materiales y respuestas frecuentes.
+2. Permitir que el personal mantenga los contenidos sin modificar archivos del sitio.
+3. Separar preparación, revisión de la Directora y publicación efectiva.
+4. Incorporar simulacros con corrección y un canal de consultas ciudadanas.
+5. Identificar las acciones administrativas y proteger el acceso según la cuenta y su rol.
+6. Entregar una versión local reproducible con Docker y documentación que permita instalarla, comprenderla y verificarla.
 
----
+## Alcance y entregables
 
-## alcance excluido
-- Aclaración: (Se excluyen las agendas en la entrega al cliente por petición del mismo, sin embargo se incluira en la entrega de proyecto de egreso para respetar el nivel de complejidad tecnica que exige el curso.) 
----
-
-## Stakeholders principales
-- Intendencia Municipal de San José (patrocinador)
-- Personal administrativo de tránsito (usuarios admin)
-- Ciudadanía general (usuarios finales - consulta)
-- Equipo de estudiantes (desarrollan el software)
-
----
-
-## Riesgos iniciales
-- Cambio de requerimientos durante el desarrollo
-
----
-
-## Criterios de éxito
-- El sistema registra y almacena correctamente todos los datos 
-- Ciudadano puede agendar una prueba de manejo completamente por la web
-- Personal IMSJ puede consultar la agenda semanal sin errores
-- Interfaz es responsive
-- Todo el código está ordenado correctamente en Github
-- Documentación completa 
-- Demo funciona sin fallos durante la defensa
-
----
-
-## Adenda de lectura y datos pendientes — 02/10/2026
-
-El objetivo y los criterios anteriores conservan el alcance inicial de la letra. La exclusión de agenda para el cliente ya consta en este charter y el informe de entrevista. Por tanto, los criterios de reservar y consultar agenda se aplican a la **versión académica**, no a un compromiso actual de instalación en la IMSJ.
-
-| Destino | Alcance documentado | Estado / referencia |
-|---|---|---|
-| Cliente IMSJ | Noticias, materiales, preguntas frecuentes, simulador, consultas y administración; CC-01–CC-04 Listos. Agenda excluida. | Versión implementada y trazada en control de cambios. |
-| Egreso académico | Lo anterior más agenda, franjas y reservas de prueba/renovación. | Cumplimiento de letra, costo urgente, diferencias de API, datos y evidencia de pruebas. |
-| Solicitudes posteriores | CC-01–CC-04 corresponden a la entrega real y están Listas. | Ver [control de cambios](control_cambios.md) y [verificación](../docs_auxiliares/evidencias/verificacion.md). |
-
-| Dato del charter | Información disponible |
+| Destino | Funciones y entregables |
 |---|---|
-| Director / líder del proyecto | Tomás Cabrera, también desarrollador backend, confirmado por el grupo. |
-| Equipo | Tomás Cabrera: liderazgo/backend; Juan Robaina: testing, documentación y revisión interna; Gabriela Romero: base de datos; Verónica Romero y Juan Corrales: frontend. |
-| Fecha de inicio | Julio de 2026, según aclaración del grupo. |
-| Duración y esfuerzo | No registrados. Los cuatro períodos y 82 puntos del planning no se presentan como medición real de capacidad. |
-| Referente del cliente | Inspector de Tránsito de la Intendencia, conocido como Nacho. Tiene autoridad para aceptar entregas y aprobar cambios de alcance; registro en actas. No se usa un apellido no confirmado. |
-| Fecha de entrega real | No fijada por el grupo. |
-| Administración y mantenimiento posteriores | A cargo de la Intendencia, por ahora; contacto institucional se completará después. |
-| Presupuesto | No registrado; no se traslada el importe del ejemplo TamboTrace. |
-| Aprobación del charter | No se localizó firma o evidencia de aprobación. |
+| Cliente | Portal público; noticias y vigencia; materiales PDF, imágenes y videos mediante URL; preguntas frecuentes; simulador y gráficos opcionales; formulario de consultas y bandeja de lectura; panel, roles, aprobación y publicación de contenidos. |
+| Académico | Todo lo anterior y agenda de prueba de manejo y renovación normal/urgente, administración de franjas y cupos, reservas propias, cancelación y vistas diaria, semanal y mensual. |
+| Técnico | Código de los dos frontends y backend PHP nativo, esquema SQL, configuración Docker, herramientas de inicio y suite de integración. |
+| Documental | Relevamiento, requisitos, backlog, seguimiento, control de cambios, arquitectura, modelo de datos, infraestructura, seguridad y declaración de uso de herramientas. El índice identifica los documentos disponibles y los entregables aún sin desarrollar. |
 
-**Aclaraciones del grupo — actualizadas al 15/10/2026:** la coordinación y el seguimiento se realizan en reuniones; las actas quedan a cargo del equipo. El origen y estado de cada cambio se consultan en el [control de cambios](control_cambios.md): **CC-01–CC-05, Listos**. Los datos institucionales por completar están en [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
+CC-01–CC-05 constan como **Listos**. Esta clasificación corresponde a los cambios controlados; no convierte en terminadas todas las necesidades del catálogo. Permanecen parciales la galería/enlaces de noticias en las interfaces, el costo urgente, la cobertura y conservación de auditoría y la validación formal móvil y de accesibilidad. Las categorías de preguntas frecuentes están pendientes.
 
-**IA — Sugerencia:** reemplazar criterios generales como «documentación completa» o «sin errores» por verificaciones acordadas y evidencia. Los criterios de CC-01–CC-05 quedaron incorporados al [backlog](backlog.md) y su estado consolidado es **Listo**.
+## Límites del compromiso actual
 
-Fuentes de estructura: [charter del curso](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/01_project_charter.md) y [letra IMSJ](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md). Los cambios posteriores se registran en el control de cambios.
+La agenda no constituye un servicio institucional comprometido para la ciudadanía en esta entrega. No se han definido pagos en línea, costo de renovación urgente, respuesta a consultas desde el panel ni notificaciones automáticas. El simulador no tiene temporizador ni un puntaje mínimo de aprobación.
 
-## Adenda tecnológica del grupo — CC-05, 02/10/2026
+La forma de distribuir la versión para el cliente separada de la académica, el dominio, alojamiento, HTTPS, canales de soporte y política institucional de respaldos requieren definición. La fecha de entrega real a la Intendencia no está fijada. El plan académico contempla entrega el 29/10 y defensa el 05/11, con respaldo de la comunicación docente todavía por incorporar.
 
-Se reemplazó Laravel por un backend PHP sin framework, siguiendo api-simple, organizado por capas y conectado a MySQL con PDO. El [control de cambios](control_cambios.md) y la [guía de migración](../docs_auxiliares/backend/migracion_backend_vanilla.md) registran alcance, compatibilidad, datos y cierre. CC-01–CC-05 están Listos; agenda continúa como alcance académico.
+## Equipo y participantes
 
-El backend PHP nativo, sus pruebas y la documentación están implementados. **Estado: CC-01–CC-05, Listos.** No se fija una fecha o un presupuesto que no estén registrados; las actas conservan el origen histórico de las decisiones.
+| Integrante o interesado | Responsabilidad |
+|---|---|
+| Tomás Cabrera | Liderazgo y desarrollo backend. |
+| Juan Robaina | Testing, documentación y revisión documental interna. |
+| Gabriela Romero | Base de datos. |
+| Verónica Romero | Desarrollo frontend. |
+| Juan Corrales | Desarrollo frontend. |
+| Inspector de Tránsito | Referente del cliente, con autoridad para aceptar entregas y aprobar cambios de alcance. Sus decisiones se registran en actas del equipo. |
+| Directora de Tránsito | Participa en la validación de necesidades y aprueba contenidos dentro del sistema. |
+| Personal de la Intendencia | Utiliza el panel para mantener los contenidos y consultar la información habilitada. |
+| Ciudadanía | Consulta el portal, utiliza materiales y simulacros y envía consultas. |
+
+El referente se identifica por su cargo; se conoce su nombre Nacho y no se dispone de su apellido. La administración y el mantenimiento posteriores corresponden a la Intendencia, por ahora. Los roles generales no constituyen asignaciones retrospectivas de tareas a cada integrante.
+
+## Organización del trabajo y cambios
+
+Las reuniones son la instancia de coordinación y seguimiento. Las actas registran solicitudes, decisiones y observaciones del cliente. El control de cambios relaciona cada solicitud con su motivo, impacto, implementación y evidencia; el backlog expresa el estado de cada historia. La revisión interna de documentación corresponde a Juan Robaina y la aceptación del cliente se registra según las decisiones del Inspector de Tránsito.
+
+El backend se sustituyó por PHP nativo dentro de CC-05. El formulario del equipo sitúa la decisión de retirar Laravel el 30/09 y el control conserva su registro documental del 02/10. La reescritura con referencia a `api-simple` se realizó el 05/10. Se conservan los identificadores RF1–RF24, RNF1–RNF10 y US1–US34.
+
+## Criterios de evaluación del resultado
+
+| Área | Comportamiento que debe comprobarse | Referencia |
+|---|---|---|
+| Comunicación | El portal presenta contenidos publicados; las noticias respetan su vigencia. | RF2, RF5, RF6, RF8, RNF7 y RNF10. |
+| Publicación | Solo Directora aprueba; aprobar no publica y editar obliga a revisar nuevamente. | RF21 y CC-03. |
+| Simulacro y consultas | Se corrigen las respuestas sin anticipar la solución; una consulta enviada puede leerse en el panel. | RF22–RF24. |
+| Acceso e integridad | Se rechazan operaciones sin autorización y datos inválidos; las modificaciones administrativas conservan su auditoría. | RNF1–RNF4. |
+| Agenda académica | Se respeta propiedad, duplicación y cupo; se confirma la reserva y su cancelación. | RF3–RF4, RF11–RF16, RNF8 y RNF9. |
+| Instalación | El sistema inicia con configuración propia, conserva volúmenes y permite acceder a API y páginas. | Documentación SSOO y evidencia técnica. |
+| Calidad de uso | Los flujos principales son utilizables en móvil y con teclado. La evidencia formal todavía debe incorporarse. | RNF5–RNF6. |
+
+La ejecución de pruebas técnicas no sustituye el registro de aceptación del cliente. Presupuesto, esfuerzo total y aprobación formal del charter no tienen un registro adjunto.
+
+## Riesgos y seguimiento
+
+| Riesgo | Consecuencia | Tratamiento documental y operativo |
+|---|---|---|
+| Cambios de requisitos | Diferencias entre expectativas y versión entregada. | Registrar el cambio y actualizar requisitos, backlog, implementación y pruebas afectadas. |
+| Confusión entre alcance real y académico | Ofrecer agenda como servicio institucional sin acuerdo. | Mantener la separación explícita en entregables y demostraciones. |
+| Documentación y código desalineados | Dificultad de instalación, revisión y defensa. | Vincular documentos con archivos actuales y distinguir resultados históricos. |
+| Pérdida de datos o archivos | Imposibilidad de reconstruir una instalación. | Respaldar base, adjuntos y configuración; ensayar recuperación antes del despliegue real. |
+| Datos institucionales incompletos | Términos y privacidad sin condiciones definitivas. | Completar esos datos con la Intendencia en el formulario auxiliar. |
+
+## Documentos relacionados
+
+[Relevamiento](informe%20entrevista.md), [requisitos](Requerimientos.md), [análisis de requisitos](analisis_de_requerimientos.md), [backlog](backlog.md), [actas](actas_reuniones.md), [control de cambios](control_cambios.md), [plan académico](../general/plan_entrega_29-10_y_defensa_05-11.md) y [datos por completar](../../docs_auxiliares/revision/formulario_datos_documentacion.md).

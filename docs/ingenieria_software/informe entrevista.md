@@ -1,11 +1,13 @@
 # Reporte de Entrevista de Relevamiento de Requisitos
 
-> **Nota de revisión de IA — 02/10/2026:** se conserva este relevamiento como registro histórico. Fecha, entrevistadores, evidencia original y validación del entrevistado no están completos. No se atribuye esta entrevista a la demo del 03/09. El grupo aclaró posteriormente que el referente debe identificarse principalmente como Inspector de Tránsito de la Intendencia, conocido como Nacho, sin apellido confirmado. Esa aclaración no completa fecha, participantes ni validación de esta entrevista histórica; ver [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
 
-**Fecha:** ____________________
-**Entrevistador:** ____________________
-**Entrevistado:** ____________________
-**Proyecto:** Sistema de Gestión para Educación y Tránsito
+**Proyecto:** Educación Vial IMSJ — Portal Vial.
+
+**Actualización documental:** 20/10/2026.
+
+**Referente actual:** Inspector de Tránsito de la Intendencia.
+
+La reunión R-01 registra una entrevista inicial el 09/07/2026 con Tomás Cabrera, Juan Robaina y el Inspector de Tránsito. El presente informe no contiene una identificación original completa; queda por confirmar que sus respuestas correspondan a esa instancia y adjuntar la validación del resumen. Se conserva su contenido como relevamiento disponible, separado de las solicitudes posteriores del 03/09.
 
 ## Objetivo de la entrevista
 
@@ -135,16 +137,27 @@ De la entrevista se desprenden los siguientes aspectos relevantes para el desarr
 
 ## Aclaraciones para utilizar el relevamiento
 
-**IA — Observación:** la frase final significa que el entrevistado no agregó otros pedidos a los discutidos. Categorías, formatos y aprobación de noticias sí aportan precisiones respecto del catálogo inicial: se identifican ahora como RF19, RF20 y RF21 en [Requerimientos](Requerimientos.md).
+La frase final significa que el entrevistado no agregó otros pedidos a los discutidos. Categorías, formatos y aprobación de noticias sí aportan precisiones respecto del catálogo inicial: se identifican ahora como RF19, RF20 y RF21 en [Requerimientos](Requerimientos.md).
 
 Los permisos iguales describen esta instancia inicial. La solicitud posterior CC-03 incorpora validación por Directora; debe consultarse en [control de cambios](control_cambios.md), sin corregir retrospectivamente las respuestas de esta entrevista.
 
-| Pendiente | Información que debe aportar el equipo |
-|---|---|
-| Procedencia | Fecha, lugar/modalidad, entrevistadores, entrevistado y enlace a notas/grabación si existen. |
-| Validación | Quién revisó el resumen y qué evidencia respalda las respuestas. |
-| Agenda | Duración, cupos, datos del ciudadano y costo urgente para la versión académica; preguntas originales en [Entrevista](Entrevista.md). |
-| Materiales | Si video se carga o se enlaza; el código actual usa enlaces para VIDEO. |
-| Publicación | Quién aprueba, quién publica, qué pasa al editar o rechazar y qué contenidos abarca CC-03. |
+## Relación con los requisitos y estado actual
 
-**IA — Sugerencia:** conservar separadas las respuestas del cliente y las interpretaciones del equipo, con una referencia a su fuente y responsable de validación.
+| Hallazgo de la entrevista | Requisitos relacionados | Tratamiento vigente |
+|---|---|---|
+| Necesidad de conocer quién modifica contenidos | RNF3 | Hay historial de acciones; cobertura total y retención aún no definidas. |
+| Agenda fuera de la entrega actual al cliente | RF3–RF4, RF11–RF16 | Se mantiene exclusivamente en el alcance académico. |
+| Clasificación de FAQ | RF19 | Pendiente de categorías concretas e implementación. |
+| Materiales en distintos formatos | RF5, RF17, RF20 | PDF e imagen como archivos; videos mediante URL. Falta confirmar esa modalidad operativa. |
+| Vigencia de noticias | RF8, RNF7 | Fechas validadas y filtro público por vigencia. |
+| Aprobación de Dirección | RF21, CC-03 | Solo Directora aprueba; el personal publica después. Se aplica a noticias, materiales y FAQ. |
+
+La respuesta histórica que describe permisos iguales no refleja la diferenciación posterior introducida por CC-03. La frase «sin nuevos requerimientos» cierra la entrevista, pero no elimina las precisiones sobre categorías, formatos y aprobación que sí aparecen en sus respuestas.
+
+## Datos de procedencia por completar
+
+El equipo debe confirmar la correspondencia con R-01, la fuente de las respuestas y quién validó el resumen. Las decisiones pendientes sobre categorías, video y operación institucional se reúnen en el [formulario auxiliar](../../docs_auxiliares/revision/formulario_datos_documentacion.md), para evitar duplicar campos vacíos en el informe.
+
+## Referencias
+
+[Guía de preguntas](Entrevista.md), [actas](actas_reuniones.md), [requisitos](Requerimientos.md), [análisis](analisis_de_requerimientos.md) y [control de cambios](control_cambios.md).
