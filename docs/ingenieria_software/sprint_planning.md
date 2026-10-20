@@ -1,4 +1,4 @@
-> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas y límites](../docs_auxiliares/evidencias/verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
+> **Estado consolidado - 15/10/2026:** CC-01–CC-05 están **Listos**. Este documento conserva la planificación histórica; el estado vigente está en [control de cambios](control_cambios.md).
 
 ---
 
@@ -80,13 +80,13 @@
 | 4 | Acceso y roles | US1/US2/US26/US34. |
 | 4 | Noticias, materiales y FAQ | US3–US9, US21–US24; US29/US30 pendientes. |
 | 4 | Franjas, reservas y agenda | US10–US20; solo versión académica, costo urgente pendiente. |
-| 4 | Simulacro | CC-01/US31; CC-04/US33 pendiente. |
+| 4 | Simulacro | CC-01/US31 y CC-04/US33, Listos. |
 | 4 | Personal e historial | US25 y administración con origen pendiente. |
 | 4 | Pruebas y Docker | Tareas técnicas; evidencia de ejecución pendiente. |
 
 ## Datos ausentes de la planificación real
 
-**Aclaración del grupo — 02/10/2026:** CC-01–CC-04 siguen pendientes para la entrega real, sin fecha fijada ni prioridad distinta entre ellas. Los períodos reconstruidos de este documento no fijan una fecha de entrega. Coordinación y avances se realizan en reuniones y quedan en las actas, a cargo del equipo; esta actualización no modifica las actas ni distribuye tareas.
+**Actualización — 15/10/2026:** CC-01–CC-05 están Listos. Los períodos reconstruidos de este documento conservan el orden histórico y no sustituyen el estado vigente.
 
 | Campo | Situación |
 |---|---|
@@ -102,7 +102,7 @@
 
 **IA — Sugerencia:** para una planificación futura, completar fecha, asistentes, capacidad, historias/criterios seleccionados, tareas, responsable y evidencia de cierre, según [Sprint Planning](https://github.com/portalutu/ing_software-3ro-bt/blob/ae1c0f118a959c5bba7fd6c8badf60de1b7ea23a/Teoricos/sprint-planning.md). No se declara que el equipo ya adopta esos acuerdos.
 
-## Planificación de la migración CC-05 — pendiente de reunión
+## Planificación ejecutada de la migración CC-05
 
 **Decisión del grupo, 02/10/2026:** backend PHP sin Laravel a partir de la API completa. Los cuatro períodos anteriores se conservan como reconstrucción de la versión previa; no se reescribe el Sprint 4 como si hubiera utilizado PHP vanilla entonces.
 

@@ -1,6 +1,6 @@
 # Contrato API IMSJ - PHP nativo
 
-**Versión de demo - 13/10/2026; CC-02, CC-03, CC-04 y CC-05.** Contrato implementado en `backend/public/index.php`. La documentación fue preparada con apoyo externo de IA; revisión de Juan Robaina y aceptación del cliente pendientes. El flujo individual de los 42 endpoints (documento auxiliar retirado del árbol actual) documenta la base previa; este inventario incluye las tres rutas de consultas añadidas.
+**Versión vigente - 15/10/2026; CC-01–CC-05 Listos.** Contrato implementado en `backend/public/index.php`. El inventario incluye los 45 endpoints actuales, incluidas las tres rutas de consultas añadidas.
 
 Base local: `http://localhost:8000/api`. JSON de entrada/salida; archivos mediante multipart. En rutas protegidas: `Authorization: Bearer <token>` y `Accept: application/json`. El token se entrega en la raíz junto a `usuario` y `expira_en`; el frontend lo guarda en `sessionStorage`. Los valores concretos de ejemplos son ilustrativos.
 
@@ -32,7 +32,7 @@ Errores de campo: `{"message":"Los datos no son válidos.","errors":{"campo":["d
 | GET | `/reservas/mias` | ciudadano | `ReservaController::mine` |
 | GET | `/historial` | personal | `UsuarioController::historial` |
 | GET | `/consultas` | personal/directora | `ConsultaController::index` |
-| PATCH | `/consultas/{id}/leida` | personal/directora | `ConsultaController::markRead` |
+| PATCH | `/consultas/{id}/leida` | personal/directora | `ConsultaController::marcarLeida` |
 | GET | `/usuarios-admin` | personal | `UsuarioController::index` |
 | POST | `/usuarios-admin` | personal | `UsuarioController::store` |
 | DELETE | `/usuarios-admin/{id}` | personal | `UsuarioController::destroy` |
@@ -62,7 +62,7 @@ Errores de campo: `{"message":"Los datos no son válidos.","errors":{"campo":["d
 | DELETE | `/franjas/{id}` | personal | `ReservaController::eliminarFranja` |
 | GET | `/agenda` | personal | `ReservaController::agenda` |
 
-`{id}` es un entero positivo. La suma es nueve rutas públicas, dos para cualquier cuenta autenticada, dos ciudadanas y 29 del personal. Consultar flujos (documento auxiliar retirado del árbol actual) para entradas, tablas, validaciones y salida por ruta.
+`{id}` es un entero positivo. La suma es diez rutas públicas, dos para cualquier cuenta autenticada, dos ciudadanas y 31 del personal: 45 endpoints en total.
 
 ## Entradas y límites conservados
 
@@ -81,10 +81,10 @@ Además de PUT JSON y multipart nativo, se conserva **POST multipart con `_metho
 
 `/storage/<ruta>` sirve PDF/imágenes validados fuera de `public/`; los nombres son aleatorios. Las URL de archivos se construyen con `APP_URL`. Solo esos tipos se sirven; se comprueba que la ruta resuelta siga dentro del almacenamiento. El formulario global admite 24 MB. OPTIONS responde 204 para los orígenes configurados; un preflight de origen ajeno devuelve 403. CORS no reemplaza autenticación.
 
-## Reglas de la demo y pendientes
+## Reglas vigentes
 
 Noticias, materiales y preguntas frecuentes siguen `BORRADOR → PENDIENTE → APROBADO → PUBLICADO`. El personal puede preparar, enviar a revisión y publicar contenido aprobado; solo Directora puede aprobar. Editar el contenido lo devuelve a borrador. El portal acepta consultas con nombre, correo y mensaje; el panel permite leerlas y marcarlas como leídas. Las preguntas del simulador admiten una imagen opcional que se muestra sin revelar la respuesta correcta.
 
-No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`. Categorías, respuestas/notificaciones para consultas, cancelación, confirmación de agenda, costo urgente y nuevos campos de contacto no se incorporan. Agenda y reservas son académicas. La implementación de demo no acredita aceptación institucional.
+No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`. Categorías, respuestas/notificaciones para consultas, cancelación, costo urgente y nuevos campos de contacto no forman parte de CC-01–CC-05. Agenda y reservas son académicas.
 
-Las equivalencias frente a la [letra académica](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md) y la aceptación de PHP nativo corresponden al equipo/docentes. Las pruebas no acreditan aceptación institucional; [resultados y límites](../evidencias/verificacion.md).
+La relación con la [letra académica](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md) y los resultados técnicos se documentan en [verificación](../evidencias/verificacion.md).

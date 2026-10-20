@@ -35,7 +35,7 @@ El router recibe método y ruta; ejecuta controles y controlador. Este valida y 
 | Dominio | Productos, stock y ventas. | Noticias, materiales, FAQ, historial, usuarios, simulacros y agenda académica. |
 | Rutas de cuenta | POST `/registro`, `/login`, `/logout`; GET `/perfil`. | POST `/register`, `/login`, `/logout`; GET `/me`, con prefijo `/api`. |
 | Campos de cuenta | `nombre`, `email`, `clave`; `usuarios.clave_hash`. | Cédula y contraseña; `usuarios.password`, nombres y roles existentes. |
-| Roles | `admin` / `usuario`. | `PERSONAL_IMSJ` / `PUBLICO_GENERAL`; Directora pendiente en CC-03. |
+| Roles | `admin` / `usuario`. | `PUBLICO_GENERAL`, `PERSONAL_IMSJ` y `DIRECTORA`; CC-03 Listo. |
 | Token | JWT en cookie HttpOnly, SameSite=Lax; duración predeterminada 3600 s. | Token Bearer en `sessionStorage`; ocho horas, revocación de anteriores y logout. |
 | Logout | Elimina cookie; ruta pública. | Ruta autenticada que revoca token actual en servidor. |
 | Usuario activo / rol | El token conserva claims; el middleware no reconsulta la cuenta en cada petición. | Comprobar identidad y permisos actuales; preservar rechazo de cuentas desactivadas en las rutas que lo exigen. |

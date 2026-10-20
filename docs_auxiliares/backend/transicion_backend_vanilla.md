@@ -1,10 +1,10 @@
 # Transición, respaldo y recuperación del backend
 
-**05/10/2026 - CC-05, PHP nativo implementado.** Procedimiento preparado con apoyo externo de IA; no se ejecutó sobre una instalación institucional. El equipo debe ensayar respaldo/restauración sobre una copia y registrar resultados. Revisión de Juan Robaina pendiente.
+**Estado consolidado al 15/10/2026: CC-05 Listo.** Procedimiento preparado con apoyo externo de IA. No se ejecutó sobre una instalación institucional; un futuro despliegue con datos reales debe ensayar respaldo/restauración sobre una copia.
 
 ## Qué se conserva
 
-Nginx para frontends, Apache/PHP para app, MySQL db y volúmenes db_data/app_uploads. Las diez tablas de dominio conservan nombres/relaciones; database.sql no tiene DROP ni cuentas de demo y añade auth_tokens. Credenciales bcrypt y rutas de adjuntos existentes siguen siendo compatibles. No cambian el JS o las 42 rutas de la API.
+Apache/PHP sirve API y frontends; MySQL usa el servicio `db` y se conservan los volúmenes `db_data`/`app_uploads`. Las once tablas de dominio conservan nombres/relaciones y `database.sql` añade `auth_tokens`; no contiene DROP ni cuentas de demo. Credenciales bcrypt y rutas de adjuntos existentes siguen siendo compatibles. La API actual expone 45 rutas.
 
 La nueva autenticación no consulta la tabla técnica de tokens anterior. Volver a iniciar sesión después del cambio; no se convierte una sesión heredada ni se crea SECRET_KEY/JWT. La tabla técnica previa puede quedar sin uso en una base existente hasta que el equipo decida su tratamiento. [Transición general](migracion_backend_vanilla.md).
 

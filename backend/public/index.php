@@ -2,9 +2,13 @@
 declare(strict_types=1);
 /** Punto único de entrada: carga explícita, CORS, despacho de rutas y errores HTTP. */
 require_once dirname(__DIR__) . '/config.php';
-foreach (['core/Response.php', 'core/Database.php'] as $file) require_once dirname(__DIR__) . '/' . $file;
+foreach (['core/Response.php', 'core/Database.php'] as $file) {
+    require_once dirname(__DIR__) . '/' . $file;
+}
 foreach (['models', 'repositories', 'services', 'controllers'] as $directory) {
-    foreach (glob(dirname(__DIR__) . '/' . $directory . '/*.php') as $file) require_once $file;
+    foreach (glob(dirname(__DIR__) . '/' . $directory . '/*.php') as $file) {
+        require_once $file;
+    }
 }
 require_once dirname(__DIR__) . '/core/Auth.php';
 
@@ -20,7 +24,9 @@ if (in_array($origin, $allowed, true)) {
 
 try {
     if (($_SERVER['REQUEST_METHOD'] ?? '') === 'OPTIONS') {
-        if ($origin !== '' && !in_array($origin, $allowed, true)) throw new ApiException(403, 'Origen no permitido.');
+        if ($origin !== '' && !in_array($origin, $allowed, true)) {
+            throw new ApiException(403, 'Origen no permitido.');
+        }
         Response::empty();
     }
     $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
@@ -35,16 +41,27 @@ try {
     if ($method === 'GET' && str_starts_with($path, '/storage/')) {
         $base = realpath(UPLOAD_ROOT);
         $file = realpath(UPLOAD_ROOT . '/' . substr($path, 9));
-        if (!$base || !$file || !str_starts_with($file, $base . DIRECTORY_SEPARATOR) || !is_file($file)) throw new ApiException(404, 'Archivo no encontrado.');
-        $mime = (new finfo(FILEINFO_MIME_TYPE))->file($file);
-        if (!in_array($mime, ['application/pdf','image/jpeg','image/png','image/webp'], true)) throw new ApiException(404, 'Archivo no disponible.');
+        if (
+            !$base ||
+            !$file ||
+            !str_starts_with($file, $base . DIRECTORY_SEPARATOR) ||
+            !is_file($file)
+        ) {
+            throw new ApiException(404, 'Archivo no encontrado.');
+        }
+        $mime = new finfo(FILEINFO_MIME_TYPE)->file($file);
+        if (!in_array($mime, ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'], true)) {
+            throw new ApiException(404, 'Archivo no disponible.');
+        }
         header('Content-Type: ' . $mime);
         header('X-Content-Type-Options: nosniff');
         header('Content-Length: ' . filesize($file));
         readfile($file);
-        exit;
+        exit();
     }
-    if (!str_starts_with($path, '/api/')) throw new ApiException(404, 'Ruta no encontrada.');
+    if (!str_starts_with($path, '/api/')) {
+        throw new ApiException(404, 'Ruta no encontrada.');
+    }
     $route = trim(substr($path, 5), '/');
     switch (true) {
         // GET /api/health: acceso publico.
@@ -52,136 +69,142 @@ try {
             Response::json(['status' => 'ok']);
         // POST /api/login: acceso publico.
         case $method === 'POST' && $route === 'login':
-            (new AuthController())->login();
+            new AuthController()->login();
         // POST /api/register: acceso publico.
         case $method === 'POST' && $route === 'register':
-            (new AuthController())->register();
+            new AuthController()->register();
         // GET /api/portal/noticias: acceso publico.
         case $method === 'GET' && $route === 'portal/noticias':
-            (new NoticiaController())->publicIndex();
+            new NoticiaController()->publicIndex();
         // GET /api/portal/materiales: acceso publico.
         case $method === 'GET' && $route === 'portal/materiales':
-            (new MaterialController())->publicIndex();
+            new MaterialController()->publicIndex();
         // GET /api/portal/preguntas: acceso publico.
         case $method === 'GET' && $route === 'portal/preguntas':
-            (new PreguntaController())->publicIndex();
+            new PreguntaController()->publicIndex();
         // GET /api/portal/prueba: acceso publico.
         case $method === 'GET' && $route === 'portal/prueba':
-            (new PruebaController())->publicIndex();
+            new PruebaController()->publicIndex();
         // POST /api/portal/prueba/corregir: acceso publico.
         case $method === 'POST' && $route === 'portal/prueba/corregir':
-            (new PruebaController())->corregir();
+            new PruebaController()->corregir();
         // POST /api/portal/consultas: acceso publico.
         case $method === 'POST' && $route === 'portal/consultas':
-            (new ConsultaController())->store();
+            new ConsultaController()->store();
         // GET /api/franjas/disponibles: acceso publico.
         case $method === 'GET' && $route === 'franjas/disponibles':
-            (new ReservaController())->disponibles();
+            new ReservaController()->disponibles();
         // GET /api/me: acceso autenticado.
         case $method === 'GET' && $route === 'me':
-            (new AuthController())->me();
+            new AuthController()->me();
         // POST /api/logout: acceso autenticado.
         case $method === 'POST' && $route === 'logout':
-            (new AuthController())->logout();
+            new AuthController()->logout();
         // POST /api/reservas: acceso ciudadano.
         case $method === 'POST' && $route === 'reservas':
-            (new ReservaController())->store();
+            new ReservaController()->store();
         // GET /api/reservas/mias: acceso ciudadano.
         case $method === 'GET' && $route === 'reservas/mias':
-            (new ReservaController())->mine();
+            new ReservaController()->mine();
         // GET /api/historial: acceso personal.
         case $method === 'GET' && $route === 'historial':
-            (new UsuarioController())->historial();
+            new UsuarioController()->historial();
         // GET /api/consultas: acceso personal.
         case $method === 'GET' && $route === 'consultas':
-            (new ConsultaController())->index();
+            new ConsultaController()->index();
         // PATCH /api/consultas/{id}/leida: acceso personal.
-        case $method === 'PATCH' && preg_match('~^consultas/([1-9][0-9]*)/leida$~D', $route, $match):
-            (new ConsultaController())->marcarLeida(Solicitud::number($match[1], 'id'));
+        case $method === 'PATCH' &&
+            preg_match('~^consultas/([1-9][0-9]*)/leida$~D', $route, $match):
+            new ConsultaController()->marcarLeida(Solicitud::number($match[1], 'id'));
         // GET /api/usuarios-admin: acceso personal.
         case $method === 'GET' && $route === 'usuarios-admin':
-            (new UsuarioController())->index();
+            new UsuarioController()->index();
         // POST /api/usuarios-admin: acceso personal.
         case $method === 'POST' && $route === 'usuarios-admin':
-            (new UsuarioController())->store();
+            new UsuarioController()->store();
         // DELETE /api/usuarios-admin/{id}: acceso personal.
-        case $method === 'DELETE' && preg_match('~^usuarios-admin/([1-9][0-9]*)$~D', $route, $match):
-            (new UsuarioController())->destroy(Solicitud::number($match[1], 'id'));
+        case $method === 'DELETE' &&
+            preg_match('~^usuarios-admin/([1-9][0-9]*)$~D', $route, $match):
+            new UsuarioController()->destroy(Solicitud::number($match[1], 'id'));
         // GET /api/preguntas-prueba: acceso personal.
         case $method === 'GET' && $route === 'preguntas-prueba':
-            (new PruebaController())->index();
+            new PruebaController()->index();
         // POST /api/preguntas-prueba: acceso personal.
         case $method === 'POST' && $route === 'preguntas-prueba':
-            (new PruebaController())->store();
+            new PruebaController()->store();
         // PUT /api/preguntas-prueba/{id}: acceso personal.
         case $method === 'PUT' && preg_match('~^preguntas-prueba/([1-9][0-9]*)$~D', $route, $match):
-            (new PruebaController())->update(Solicitud::number($match[1], 'id'));
+            new PruebaController()->update(Solicitud::number($match[1], 'id'));
         // DELETE /api/preguntas-prueba/{id}: acceso personal.
-        case $method === 'DELETE' && preg_match('~^preguntas-prueba/([1-9][0-9]*)$~D', $route, $match):
-            (new PruebaController())->destroy(Solicitud::number($match[1], 'id'));
+        case $method === 'DELETE' &&
+            preg_match('~^preguntas-prueba/([1-9][0-9]*)$~D', $route, $match):
+            new PruebaController()->destroy(Solicitud::number($match[1], 'id'));
         // GET /api/noticias: acceso personal.
         case $method === 'GET' && $route === 'noticias':
-            (new NoticiaController())->index();
+            new NoticiaController()->index();
         // POST /api/noticias: acceso personal.
         case $method === 'POST' && $route === 'noticias':
-            (new NoticiaController())->store();
+            new NoticiaController()->store();
         // GET /api/noticias/{id}: acceso personal.
         case $method === 'GET' && preg_match('~^noticias/([1-9][0-9]*)$~D', $route, $match):
-            (new NoticiaController())->show(Solicitud::number($match[1], 'id'));
+            new NoticiaController()->show(Solicitud::number($match[1], 'id'));
         // PUT /api/noticias/{id}: acceso personal.
         case $method === 'PUT' && preg_match('~^noticias/([1-9][0-9]*)$~D', $route, $match):
-            (new NoticiaController())->update(Solicitud::number($match[1], 'id'));
+            new NoticiaController()->update(Solicitud::number($match[1], 'id'));
         // PATCH /api/noticias/{id}/estado: acceso personal.
-        case $method === 'PATCH' && preg_match('~^noticias/([1-9][0-9]*)/estado$~D', $route, $match):
-            (new NoticiaController())->updateEstado(Solicitud::number($match[1], 'id'));
+        case $method === 'PATCH' &&
+            preg_match('~^noticias/([1-9][0-9]*)/estado$~D', $route, $match):
+            new NoticiaController()->updateEstado(Solicitud::number($match[1], 'id'));
         // DELETE /api/noticias/{id}: acceso personal.
         case $method === 'DELETE' && preg_match('~^noticias/([1-9][0-9]*)$~D', $route, $match):
-            (new NoticiaController())->destroy(Solicitud::number($match[1], 'id'));
+            new NoticiaController()->destroy(Solicitud::number($match[1], 'id'));
         // GET /api/materiales: acceso personal.
         case $method === 'GET' && $route === 'materiales':
-            (new MaterialController())->index();
+            new MaterialController()->index();
         // POST /api/materiales: acceso personal.
         case $method === 'POST' && $route === 'materiales':
-            (new MaterialController())->store();
+            new MaterialController()->store();
         // PUT /api/materiales/{id}: acceso personal.
         case $method === 'PUT' && preg_match('~^materiales/([1-9][0-9]*)$~D', $route, $match):
-            (new MaterialController())->update(Solicitud::number($match[1], 'id'));
+            new MaterialController()->update(Solicitud::number($match[1], 'id'));
         // PATCH /api/materiales/{id}/estado: acceso personal.
-        case $method === 'PATCH' && preg_match('~^materiales/([1-9][0-9]*)/estado$~D', $route, $match):
-            (new MaterialController())->updateEstado(Solicitud::number($match[1], 'id'));
+        case $method === 'PATCH' &&
+            preg_match('~^materiales/([1-9][0-9]*)/estado$~D', $route, $match):
+            new MaterialController()->updateEstado(Solicitud::number($match[1], 'id'));
         // DELETE /api/materiales/{id}: acceso personal.
         case $method === 'DELETE' && preg_match('~^materiales/([1-9][0-9]*)$~D', $route, $match):
-            (new MaterialController())->destroy(Solicitud::number($match[1], 'id'));
+            new MaterialController()->destroy(Solicitud::number($match[1], 'id'));
         // GET /api/preguntas: acceso personal.
         case $method === 'GET' && $route === 'preguntas':
-            (new PreguntaController())->index();
+            new PreguntaController()->index();
         // POST /api/preguntas: acceso personal.
         case $method === 'POST' && $route === 'preguntas':
-            (new PreguntaController())->store();
+            new PreguntaController()->store();
         // PUT /api/preguntas/{id}: acceso personal.
         case $method === 'PUT' && preg_match('~^preguntas/([1-9][0-9]*)$~D', $route, $match):
-            (new PreguntaController())->update(Solicitud::number($match[1], 'id'));
+            new PreguntaController()->update(Solicitud::number($match[1], 'id'));
         // PATCH /api/preguntas/{id}/estado: acceso personal.
-        case $method === 'PATCH' && preg_match('~^preguntas/([1-9][0-9]*)/estado$~D', $route, $match):
-            (new PreguntaController())->updateEstado(Solicitud::number($match[1], 'id'));
+        case $method === 'PATCH' &&
+            preg_match('~^preguntas/([1-9][0-9]*)/estado$~D', $route, $match):
+            new PreguntaController()->updateEstado(Solicitud::number($match[1], 'id'));
         // DELETE /api/preguntas/{id}: acceso personal.
         case $method === 'DELETE' && preg_match('~^preguntas/([1-9][0-9]*)$~D', $route, $match):
-            (new PreguntaController())->destroy(Solicitud::number($match[1], 'id'));
+            new PreguntaController()->destroy(Solicitud::number($match[1], 'id'));
         // GET /api/franjas: acceso personal.
         case $method === 'GET' && $route === 'franjas':
-            (new ReservaController())->franjas();
+            new ReservaController()->franjas();
         // POST /api/franjas: acceso personal.
         case $method === 'POST' && $route === 'franjas':
-            (new ReservaController())->crearFranja();
+            new ReservaController()->crearFranja();
         // PUT /api/franjas/{id}: acceso personal.
         case $method === 'PUT' && preg_match('~^franjas/([1-9][0-9]*)$~D', $route, $match):
-            (new ReservaController())->actualizarFranja(Solicitud::number($match[1], 'id'));
+            new ReservaController()->actualizarFranja(Solicitud::number($match[1], 'id'));
         // DELETE /api/franjas/{id}: acceso personal.
         case $method === 'DELETE' && preg_match('~^franjas/([1-9][0-9]*)$~D', $route, $match):
-            (new ReservaController())->eliminarFranja(Solicitud::number($match[1], 'id'));
+            new ReservaController()->eliminarFranja(Solicitud::number($match[1], 'id'));
         // GET /api/agenda: acceso personal.
         case $method === 'GET' && $route === 'agenda':
-            (new ReservaController())->agenda();
+            new ReservaController()->agenda();
         default:
             throw new ApiException(404, 'Ruta no encontrada.');
     }
@@ -190,7 +213,9 @@ try {
 } catch (PDOException $error) {
     // Un choque de claves únicas por concurrencia es un conflicto recuperable.
     error_log('Error SQL IMSJ: ' . $error->getCode());
-    if (($error->errorInfo[1] ?? null) === 1062) Response::json(['message' => 'El registro ya existe.'], 422);
+    if (($error->errorInfo[1] ?? null) === 1062) {
+        Response::json(['message' => 'El registro ya existe.'], 422);
+    }
     Response::json(['message' => 'No se pudo completar la operación.'], 500);
 } catch (Throwable $error) {
     error_log('Error IMSJ: ' . $error::class . ': ' . $error->getMessage());

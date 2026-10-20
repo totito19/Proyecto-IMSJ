@@ -1,15 +1,22 @@
+/** ABM de preguntas del simulador, incluidas sus opciones e imagen opcional. */
+
 let preguntasPrueba = [];
 let queryPrueba = '';
 
+/** Aplica la búsqueda al enunciado y a las cuatro opciones de cada pregunta. */
 function preguntasPruebaFiltradas() {
   if (!queryPrueba) return preguntasPrueba;
   return preguntasPrueba.filter((item) =>
-    [item.pregunta, ...Object.values(item.opciones)].join(' ').toLowerCase().includes(queryPrueba));
+    [item.pregunta, ...Object.values(item.opciones)].join(' ').toLowerCase().includes(queryPrueba),
+  );
 }
 
+/** Genera la tabla del banco de preguntas y actualiza su contador. */
 function renderPreguntasPrueba() {
   const data = preguntasPruebaFiltradas();
-  $('#tbody-prueba').innerHTML = data.map((item, index) => `
+  $('#tbody-prueba').innerHTML = data
+    .map(
+      (item, index) => `
     <tr>
       <td class="col-num">${String(index + 1).padStart(2, '0')}</td>
       <td><div class="cell-question">${esc(item.pregunta)}</div></td>
@@ -19,12 +26,15 @@ function renderPreguntasPrueba() {
         ${actionBtn('pencil', 'Editar', { data: { accion: 'editar', id: item.id } })}
         ${actionBtn('trash-2', 'Eliminar', { danger: true, data: { accion: 'eliminar', id: item.id } })}
       </div></td>
-    </tr>`).join('');
+    </tr>`,
+    )
+    .join('');
   $('#empty-prueba').hidden = data.length > 0;
   $('#contador-prueba').textContent = preguntasPrueba.length;
   hydrateIcons($('#tbody-prueba'));
 }
 
+/** Abre el formulario vacío o carga pregunta, opciones, respuesta e imagen actuales. */
 function abrirPreguntaPrueba(item) {
   $('#form-pregunta-prueba').reset();
   $('#modal-pregunta-prueba-title').textContent = item ? 'Editar pregunta' : 'Nueva pregunta';
@@ -44,6 +54,7 @@ function abrirPreguntaPrueba(item) {
   Modal.open('modal-pregunta-prueba');
 }
 
+/** Solicita a la API el banco administrativo completo. */
 async function cargarPreguntasPrueba() {
   try {
     const payload = await ImsjApi.request('/preguntas-prueba');
@@ -54,6 +65,7 @@ async function cargarPreguntasPrueba() {
   }
 }
 
+/** Construye FormData y crea o edita la pregunta, incluida su imagen opcional. */
 async function guardarPreguntaPrueba(event) {
   event.preventDefault();
   if (!event.currentTarget.reportValidity()) return;
@@ -80,10 +92,13 @@ async function guardarPreguntaPrueba(event) {
   }
 }
 
+// Conecta buscador, selector de imagen, formulario y acciones de cada fila.
 document.addEventListener('DOMContentLoaded', () => {
   const usuario = ImsjApi.currentUser();
   if (!ImsjApi.isStaff(usuario)) {
-    window.location.assign(`/frontend-publico/login.html?return=${encodeURIComponent(window.location.pathname)}`);
+    window.location.assign(
+      `/frontend-publico/login.html?return=${encodeURIComponent(window.location.pathname)}`,
+    );
     return;
   }
 
@@ -109,6 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
-  initSearch((query) => { queryPrueba = query; renderPreguntasPrueba(); });
+  initSearch((query) => {
+    queryPrueba = query;
+    renderPreguntasPrueba();
+  });
   cargarPreguntasPrueba();
 });

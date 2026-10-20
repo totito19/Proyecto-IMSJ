@@ -1,6 +1,6 @@
 # Justificación tecnológica
 
-**05/10/2026 - CC-05.** Actualización por solicitud expresa del grupo: backend PHP nativo y estructura de api-simple. La letra académica consultada indica Laravel; registrar con docentes la aceptación de la diferencia sigue pendiente. No se presume una mejora medida de rendimiento, costo o seguridad por retirar el framework.
+**Estado consolidado al 15/10/2026: CC-05, Listo.** Actualización por solicitud expresa del grupo: backend PHP nativo y estructura de api-simple. No se presume una mejora medida de rendimiento, costo o seguridad por retirar el framework.
 
 | Tecnología | Uso y razón en esta versión | Límites |
 |---|---|---|
@@ -14,4 +14,4 @@
 
 La referencia simple facilita seguir HTTP → entrada → controlador → servicio → repositorio → SQL → respuesta. No se incorporan Router/DTO/middleware separados ni dominio de productos. Sesiones opacas revocables conservan el comportamiento IMSJ sin dependencia JWT. [Comparación](../../docs_auxiliares/backend/referencia_api_simple.md), [arquitectura](../arquitectura_propuesta.md).
 
-Agenda y reservas son académicas; CC-01 a CC-04 siguen pendientes para entrega real. La Intendencia administrará y mantendrá por ahora; contacto y configuración institucional se completarán luego. No se selecciona proveedor, hardware o política de respaldo por deducción. Preparado con apoyo externo de IA, revisión del grupo pendiente.
+Agenda y reservas son académicas; CC-01–CC-05 están Listos. La Intendencia administrará y mantendrá por ahora; contacto y configuración institucional se completarán luego. No se selecciona proveedor, hardware o política de respaldo por deducción. Preparado con apoyo externo de IA.

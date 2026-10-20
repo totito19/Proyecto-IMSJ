@@ -1,20 +1,32 @@
 <?php
 // Configuración PHP nativa: el entorno del proceso tiene precedencia sobre .env.
 declare(strict_types=1);
-foreach (is_file(__DIR__ . '/.env') ? file(__DIR__ . '/.env', FILE_IGNORE_NEW_LINES) : [] as $line) {
+foreach (
+    is_file(__DIR__ . '/.env') ? file(__DIR__ . '/.env', FILE_IGNORE_NEW_LINES) : []
+    as $line
+) {
     $line = trim($line);
-    if ($line === '' || str_starts_with($line, '#') || !str_contains($line, '=')) continue;
+    if ($line === '' || str_starts_with($line, '#') || !str_contains($line, '=')) {
+        continue;
+    }
     [$key, $value] = explode('=', $line, 2);
     $key = trim($key);
-    if (!preg_match('/^[A-Z_][A-Z0-9_]*$/D', $key) || getenv($key) !== false) continue;
+    if (!preg_match('/^[A-Z_][A-Z0-9_]*$/D', $key) || getenv($key) !== false) {
+        continue;
+    }
     $value = trim($value);
-    if (strlen($value) >= 2 && (($value[0] === '"' && str_ends_with($value, '"')) || ($value[0] === "'" && str_ends_with($value, "'")))) {
+    if (
+        strlen($value) >= 2 &&
+        (($value[0] === '"' && str_ends_with($value, '"')) ||
+            ($value[0] === "'" && str_ends_with($value, "'")))
+    ) {
         $value = substr($value, 1, -1);
     }
     putenv($key . '=' . $value);
 }
 /** Lee una variable sin interpretar ni ejecutar el contenido del archivo. */
-function envValue(string $key, string $default = ''): string {
+function envValue(string $key, string $default = ''): string
+{
     $value = getenv($key);
     return $value === false ? $default : $value;
 }

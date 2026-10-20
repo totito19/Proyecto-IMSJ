@@ -6,12 +6,14 @@
   const kind = root.dataset.contenido;
   const status = document.getElementById('contenido-status');
 
+  /** Muestra un mensaje de carga o error y oculta el área cuando queda vacío. */
   function setStatus(message = '', error = false) {
     status.textContent = message;
     status.hidden = !message;
     status.classList.toggle('is-error', error);
   }
 
+  /** Crea una tarjeta de material usando nodos DOM para evitar HTML sin escapar. */
   function materialCard(item) {
     const article = document.createElement('article');
     article.className = 'card card-plain';
@@ -32,6 +34,7 @@
     return article;
   }
 
+  /** Crea el bloque desplegable de una pregunta frecuente publicada. */
   function questionCard(item) {
     const article = document.createElement('article');
     article.className = 'card card-plain';
@@ -49,17 +52,24 @@
     return article;
   }
 
+  /** Decide el endpoint según la página y presenta el contenido publicado. */
   async function load() {
     setStatus(kind === 'materiales' ? 'Cargando materiales...' : 'Cargando preguntas...');
     try {
       const payload = await ImsjApi.request(`/portal/${kind}`);
       const items = Array.isArray(payload[kind]) ? payload[kind] : [];
       root.replaceChildren(...items.map(kind === 'materiales' ? materialCard : questionCard));
-      setStatus(items.length ? '' : (kind === 'materiales' ? 'No hay materiales publicados.' : 'No hay preguntas frecuentes publicadas.'));
+      setStatus(
+        items.length
+          ? ''
+          : kind === 'materiales'
+            ? 'No hay materiales publicados.'
+            : 'No hay preguntas frecuentes publicadas.',
+      );
     } catch (error) {
       root.replaceChildren();
       setStatus(error.message, true);
     }
   }
   load();
-}());
+})();

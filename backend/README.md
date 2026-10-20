@@ -1,6 +1,6 @@
 # Backend IMSJ en PHP nativo
 
-Reescrito desde cero el 05/10/2026 por solicitud del grupo, con el recorrido explícito de [api-simple](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-simple). PHP 8.5, PDO y MySQL 8.4; sin paquetes externos. La versión de demo del 13/10/2026 conserva las rutas existentes y suma tres rutas de consultas, para un total de 45 endpoints. El crédito y la responsabilidad del proyecto corresponden a Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales. Implementación y documentación preparadas con apoyo externo de IA; revisión interna de Juan Robaina pendiente.
+Reescrito desde cero el 05/10/2026 por solicitud del grupo, con el recorrido explícito de [api-simple](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-simple). PHP 8.5, PDO y MySQL 8.4; sin paquetes externos. La versión del 13/10/2026 conserva las rutas existentes y suma tres rutas de consultas, para un total de 45 endpoints. **Estado consolidado al 15/10/2026: CC-01–CC-05, Listos.** El crédito y la responsabilidad del proyecto corresponden a Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales. Implementación y documentación preparadas con apoyo externo de IA.
 
 ## Organización y recorrido
 
@@ -94,14 +94,10 @@ Los usuarios, hashes bcrypt, identificadores, relaciones, historial y rutas rela
 - Edición acepta PUT JSON/multipart y POST multipart con `_method=PUT`, como envía el panel actual. El límite global de formulario es 24 MB; con un archivo por material y hasta seis imágenes de noticia alcanza para los límites del contrato.
 - Reservas: transacción con bloqueo de franja, fecha válida, propiedad, duplicación y capacidad. Auditoría administrativa se confirma en la misma transacción que los datos; un fallo revierte la operación y limpia archivos nuevos.
 
-La demo incorpora consultas, Directora y gráficos del test. No incorpora categorías, respuestas/notificaciones para consultas ni reglas nuevas de agenda. La implementación no equivale a aceptación del cliente; CC-01 conserva definiciones pendientes y agenda/reservas continúan como alcance académico.
+La versión incorpora el simulador, consultas, Directora, flujo de aprobación y gráficos del test. No incorpora categorías, respuestas/notificaciones para consultas ni reglas nuevas de agenda porque no forman parte de CC-01–CC-05. Agenda y reservas continúan como alcance académico.
 
 ## Verificación
 
 `php scripts/verificar.php` comprueba sintaxis. La suite `tests/integracion.py` requiere Python 3 estándar y cliente MySQL únicamente para pruebas. Necesita dos procesos PHP contra **la misma base vacía** cuyo nombre empiece por `imsj_test_`; se niega a trabajar sobre una base con tablas. Definir `DB_*`, `IMSJ_TEST_MYSQL`, `IMSJ_TEST_URL` y `IMSJ_TEST_URL_2`; iniciar los dos servidores con el entorno de prueba y ejecutar `python tests/integracion.py`. No apuntarla a datos del equipo. El resultado conserva datos de prueba para inspección.
 
-<<<<<<< HEAD
-La [evidencia](../docs_auxiliares/evidencias/verificacion.md) registra resultados HTTP/MySQL y límites. Para la demo del 13/10/2026 se comprobó un arranque Docker aislado, 25 verificaciones HTTP de los tres cambios y un recorrido visual del portal y del panel; la revisión del equipo y la aceptación institucional siguen pendientes.
-=======
-La [evidencia](../docs/verificacion.md) registra resultados HTTP/MySQL y límites. Para la demo del 13/10/2026 se comprobó un arranque Docker aislado, 41 verificaciones HTTP de los tres cambios y un recorrido visual del portal y del panel; la revisión del equipo y la aceptación institucional siguen pendientes.
->>>>>>> 05c1012151497996a5829dc8edf6c69f40868916
+La [evidencia](../docs_auxiliares/evidencias/verificacion.md) registra resultados HTTP/MySQL y límites. Para la versión del 13/10/2026 se comprobó un arranque Docker aislado, 41 verificaciones HTTP de CC-02–CC-04 y un recorrido visual del portal y del panel.

@@ -1,11 +1,11 @@
-/* ═══════════════════════════════════════════════════════════════════════════
-   login.js — pantalla de ingreso.
-   Sin backend: valida el formulario, muestra el estado "Verificando..."
-   (900 ms, igual que el prototipo) y redirige a la agenda.
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ARCHIVO LEGADO, NO CARGADO POR EL PANEL ACTUAL.
+ *
+ * frontend-imsj/index.html redirige al login público conectado con la API.
+ * Este formulario simulado se conserva temporalmente junto con data.js.
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
-  const form   = document.getElementById('login-form');
+  const form = document.getElementById('login-form');
   const submit = document.getElementById('login-submit');
   if (!form) return;
 
@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     submit.disabled = true;
     submit.textContent = 'Verificando...';
 
-    setTimeout(() => { window.location.href = 'agenda.html'; }, 900);
+    setTimeout(() => {
+      window.location.href = 'agenda.html';
+    }, 900);
   });
 });

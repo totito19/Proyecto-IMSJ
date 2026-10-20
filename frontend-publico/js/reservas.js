@@ -5,17 +5,22 @@
   const status = document.getElementById('reservas-status');
   if (!root || !window.ImsjApi) return;
 
+  /** Actualiza el mensaje informativo y su apariencia de error. */
   function setStatus(message = '', error = false) {
     status.textContent = message;
     status.hidden = !message;
     status.classList.toggle('is-error', error);
   }
 
+  /** Convierte una fecha ISO en día/mes/año sin alterar su zona horaria. */
   function formatDate(value) {
-    const [year, month, day] = String(value || '').slice(0, 10).split('-');
+    const [year, month, day] = String(value || '')
+      .slice(0, 10)
+      .split('-');
     return day && month && year ? `${day}/${month}/${year}` : value;
   }
 
+  /** Verifica la sesión y carga únicamente las reservas de la cuenta autenticada. */
   async function load() {
     const user = ImsjApi.currentUser();
     if (!user || user.rol !== 'PUBLICO_GENERAL') {
@@ -31,19 +36,22 @@
     try {
       const payload = await ImsjApi.request('/reservas/mias');
       const items = Array.isArray(payload.reservas) ? payload.reservas : [];
-      root.replaceChildren(...items.map((item) => {
-        const article = document.createElement('article');
-        article.className = 'card card-plain';
-        const body = document.createElement('div');
-        body.className = 'card-body';
-        const title = document.createElement('h3');
-        title.textContent = `${formatDate(item.fecha)} · ${String(item.hora_inicio).slice(0, 5)}`;
-        const detail = document.createElement('p');
-        detail.textContent = `${String(item.tipo_tramite).replaceAll('_', ' ')} · Reserva #${item.reserva_id}`;
-        body.append(title, detail);
-        article.append(body);
-        return article;
-      }));
+      // Se crean nodos DOM y textContent para no interpretar datos de la API como HTML.
+      root.replaceChildren(
+        ...items.map((item) => {
+          const article = document.createElement('article');
+          article.className = 'card card-plain';
+          const body = document.createElement('div');
+          body.className = 'card-body';
+          const title = document.createElement('h3');
+          title.textContent = `${formatDate(item.fecha)} · ${String(item.hora_inicio).slice(0, 5)}`;
+          const detail = document.createElement('p');
+          detail.textContent = `${String(item.tipo_tramite).replaceAll('_', ' ')} · Reserva #${item.reserva_id}`;
+          body.append(title, detail);
+          article.append(body);
+          return article;
+        }),
+      );
       setStatus(items.length ? '' : 'No tenés reservas registradas.');
     } catch (error) {
       root.replaceChildren();
@@ -51,4 +59,4 @@
     }
   }
   load();
-}());
+})();

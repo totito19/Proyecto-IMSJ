@@ -5,14 +5,22 @@
 
 /* ── Utilidades ──────────────────────────────────────────────────────────── */
 
-const $  = (sel, root = document) => root.querySelector(sel);
+const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
 /** Escapa texto antes de inyectarlo como HTML. */
 function esc(value) {
-  return String(value ?? '').replace(/[&<>"']/g, (c) => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
-  }[c]));
+  return String(value ?? '').replace(
+    /[&<>"']/g,
+    (c) =>
+      ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+      })[c],
+  );
 }
 
 /** dd/mm/aaaa a partir de un <input type="date"> (aaaa-mm-dd). */
@@ -35,22 +43,23 @@ function today() {
 /* ── Badge ───────────────────────────────────────────────────────────────── */
 
 const BADGES = {
-  confirmada:            { label: 'Confirmada',          cls: 'badge--emerald' },
-  pendiente:             { label: 'Pendiente',           cls: 'badge--amber' },
-  aprobado:              { label: 'Aprobado',            cls: 'badge--blue' },
-  cancelada:             { label: 'Cancelada',           cls: 'badge--red' },
-  urgente:               { label: 'Urgente',             cls: 'badge--urgent' },
-  publicada:             { label: 'Publicada',           cls: 'badge--emerald' },
-  borrador:              { label: 'Borrador',            cls: 'badge--slate' },
-  activo:                { label: 'Activo',              cls: 'badge--emerald' },
-  inactivo:              { label: 'Inactivo',            cls: 'badge--slate' },
-  visible:               { label: 'Visible',             cls: 'badge--emerald' },
-  oculta:                { label: 'Oculta',              cls: 'badge--slate' },
-  prueba:                { label: 'Prueba de manejo',    cls: 'badge--violet' },
-  'renovacion-normal':   { label: 'Renovación Normal',   cls: 'badge--blue' },
-  'renovacion-urgente':  { label: 'Renovación Urgente',  cls: 'badge--red' },
+  confirmada: { label: 'Confirmada', cls: 'badge--emerald' },
+  pendiente: { label: 'Pendiente', cls: 'badge--amber' },
+  aprobado: { label: 'Aprobado', cls: 'badge--blue' },
+  cancelada: { label: 'Cancelada', cls: 'badge--red' },
+  urgente: { label: 'Urgente', cls: 'badge--urgent' },
+  publicada: { label: 'Publicada', cls: 'badge--emerald' },
+  borrador: { label: 'Borrador', cls: 'badge--slate' },
+  activo: { label: 'Activo', cls: 'badge--emerald' },
+  inactivo: { label: 'Inactivo', cls: 'badge--slate' },
+  visible: { label: 'Visible', cls: 'badge--emerald' },
+  oculta: { label: 'Oculta', cls: 'badge--slate' },
+  prueba: { label: 'Prueba de manejo', cls: 'badge--violet' },
+  'renovacion-normal': { label: 'Renovación Normal', cls: 'badge--blue' },
+  'renovacion-urgente': { label: 'Renovación Urgente', cls: 'badge--red' },
 };
 
+/** Genera la etiqueta visual correspondiente a un estado conocido. */
 function badge(estado) {
   const item = BADGES[estado] || { label: estado, cls: 'badge--slate' };
   return `<span class="badge ${item.cls}">${esc(item.label)}</span>`;
@@ -58,6 +67,7 @@ function badge(estado) {
 
 /* ── Botón de acción de fila ─────────────────────────────────────────────── */
 
+/** Construye un botón reutilizable con icono, título, clase y atributos data. */
 function actionBtn(iconName, title, opts = {}) {
   const danger = opts.danger ? ' action-btn--danger' : '';
   const labeled = opts.labeled ? ' action-btn--labeled' : '';
@@ -72,6 +82,7 @@ function actionBtn(iconName, title, opts = {}) {
 
 /* ── Modal ───────────────────────────────────────────────────────────────── */
 
+/** API mínima para abrir, cerrar e inicializar todos los diálogos del panel. */
 const Modal = {
   open(id) {
     const el = document.getElementById(id);
@@ -109,9 +120,10 @@ const Modal = {
 
 /* ── Sidebar responsive ──────────────────────────────────────────────────── */
 
+/** Conecta el botón móvil, el fondo y el cierre de la navegación lateral. */
 function initSidebar() {
-  const sidebar  = $('.sidebar');
-  const burger   = $('.topbar__burger');
+  const sidebar = $('.sidebar');
+  const burger = $('.topbar__burger');
   const backdrop = $('.sidebar__backdrop');
   if (!sidebar || !burger) return;
 
@@ -123,11 +135,14 @@ function initSidebar() {
 
   burger.addEventListener('click', () => toggle(!sidebar.classList.contains('is-open')));
   if (backdrop) backdrop.addEventListener('click', () => toggle(false));
-  window.addEventListener('resize', () => { if (window.innerWidth > 900) toggle(false); });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) toggle(false);
+  });
 }
 
 /* ── Cerrar sesión ───────────────────────────────────────────────────────── */
 
+/** Revoca la sesión mediante la API y devuelve al usuario al ingreso público. */
 function initLogout() {
   const link = $('[data-logout]');
   if (!link) return;
@@ -147,6 +162,7 @@ function initLogout() {
 /* ── Buscador de la barra superior ───────────────────────────────────────── */
 /* Filtra en vivo las filas de la tabla o las tarjetas visibles en la página. */
 
+/** Normaliza el buscador y comunica cada texto nuevo al módulo de la pantalla. */
 function initSearch(onSearch) {
   const input = $('#topbar-search');
   if (!input) return;
@@ -158,6 +174,7 @@ function initSearch(onSearch) {
 
 /* ── Navegación, identidad e historial ─────────────────────────────────── */
 
+/** Marca el enlace de la página actual y evita recargas sobre la misma vista. */
 function initAdminNavigation() {
   const nav = $('.sidebar__nav');
   if (!nav) return;
@@ -185,6 +202,7 @@ function initAdminNavigation() {
   hydrateIcons(nav);
 }
 
+/** Muestra nombre, rol e iniciales del usuario autenticado en la barra lateral. */
 function initUserProfile() {
   const usuario = window.ImsjApi?.currentUser();
   if (!usuario) return;
@@ -205,44 +223,52 @@ function initUserProfile() {
   if (role) role.textContent = usuario.rol === 'DIRECTORA' ? 'Directora' : 'Personal IMSJ';
 }
 
+/** Convierte el nombre técnico de una entidad en una etiqueta comprensible. */
 function historyElementLabel(type) {
-  return ({
-    FranjaDisponibilidad: 'franja',
-    MaterialEstudio: 'material',
-    Noticia: 'noticia',
-    PreguntaFrecuente: 'pregunta frecuente',
-    PreguntaPrueba: 'pregunta de prueba',
-    Consulta: 'consulta',
-    User: 'integrante del personal',
-  })[type] || type;
+  return (
+    {
+      FranjaDisponibilidad: 'franja',
+      MaterialEstudio: 'material',
+      Noticia: 'noticia',
+      PreguntaFrecuente: 'pregunta frecuente',
+      PreguntaPrueba: 'pregunta de prueba',
+      Consulta: 'consulta',
+      User: 'integrante del personal',
+    }[type] || type
+  );
 }
 
+/** Traduce las acciones de auditoría a expresiones destinadas al usuario. */
 function historyActionLabel(action) {
-  return ({
-    ACTUALIZAR: 'actualizó',
-    APROBAR: 'aprobó',
-    CREAR: 'creó',
-    DESACTIVAR: 'quitó',
-    DESPUBLICAR: 'ocultó',
-    ELIMINAR: 'eliminó',
-    ENVIAR_REVISION: 'envió a revisión',
-    LEER: 'leyó',
-    PUBLICAR: 'publicó',
-    REACTIVAR: 'volvió a habilitar',
-    VOLVER_BORRADOR: 'volvió a borrador',
-  })[action] || action.toLowerCase();
+  return (
+    {
+      ACTUALIZAR: 'actualizó',
+      APROBAR: 'aprobó',
+      CREAR: 'creó',
+      DESACTIVAR: 'quitó',
+      DESPUBLICAR: 'ocultó',
+      ELIMINAR: 'eliminó',
+      ENVIAR_REVISION: 'envió a revisión',
+      LEER: 'leyó',
+      PUBLICAR: 'publicó',
+      REACTIVAR: 'volvió a habilitar',
+      VOLVER_BORRADOR: 'volvió a borrador',
+    }[action] || action.toLowerCase()
+  );
 }
 
+/** Convierte el historial recibido en elementos seguros de la lista lateral. */
 function renderHistory(acciones) {
   if (!acciones.length) return '<p class="history__empty">Todavía no hay acciones registradas.</p>';
 
-  return acciones.map((item) => {
-    const actor = item.usuario?.nombre || item.usuario?.cedula || 'Usuario desconocido';
-    const when = new Date(item.fecha_hora).toLocaleString('es-UY', {
-      dateStyle: 'short',
-      timeStyle: 'short',
-    });
-    return `<article class="history__item">
+  return acciones
+    .map((item) => {
+      const actor = item.usuario?.nombre || item.usuario?.cedula || 'Usuario desconocido';
+      const when = new Date(item.fecha_hora).toLocaleString('es-UY', {
+        dateStyle: 'short',
+        timeStyle: 'short',
+      });
+      return `<article class="history__item">
       <span class="history__marker"></span>
       <div>
         <p><strong>${esc(actor)}</strong> ${esc(historyActionLabel(item.accion))}
@@ -250,9 +276,11 @@ function renderHistory(acciones) {
         <time datetime="${esc(item.fecha_hora)}">${esc(when)}</time>
       </div>
     </article>`;
-  }).join('');
+    })
+    .join('');
 }
 
+/** Carga el historial al abrir el panel y administra estados de carga o error. */
 function initHistory() {
   const bell = $('.bell');
   const topbarRight = $('.topbar__right');
@@ -282,6 +310,7 @@ function initHistory() {
     bell.setAttribute('aria-expanded', 'false');
   };
 
+  /** Abre el panel, consulta las veinte acciones recientes y actualiza la campana. */
   async function open() {
     popover.hidden = false;
     bell.setAttribute('aria-expanded', 'true');
@@ -292,7 +321,8 @@ function initHistory() {
       const dot = $('.bell__dot', bell);
       if (dot) dot.hidden = true;
     } catch (error) {
-      $('.history__body', popover).innerHTML = `<p class="history__empty history__empty--error">${esc(error.message)}</p>`;
+      $('.history__body', popover).innerHTML =
+        `<p class="history__empty history__empty--error">${esc(error.message)}</p>`;
     }
   }
 
@@ -308,6 +338,7 @@ function initHistory() {
 
 /* ── Arranque común de cada página ───────────────────────────────────────── */
 
+/** Inicializa una vez todos los componentes compartidos del panel. */
 function initShell() {
   hydrateIcons();
   initAdminNavigation();

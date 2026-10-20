@@ -5,9 +5,9 @@
 **Proyecto:** Educación Vial IMSJ  
 **Fecha de actualización:** 05/10/2026<br>
 **Equipo:** Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales.  
-**Revisión y aprobación interna de documentación:** Juan Robaina; esta versión aún requiere su revisión.
+**Revisión interna de documentación:** Juan Robaina. El estado de los cambios funcionales se registra por separado: **CC-01–CC-05, Listos**.
 
-Este documento reúne las aclaraciones proporcionadas por el grupo y los datos que faltan en la documentación. No reemplaza las actas ni acredita pruebas, aprobaciones o entregas que todavía no están registradas. El crédito del proyecto y su documentación corresponde a los integrantes del grupo. El apoyo externo de IA se identifica en observaciones y sugerencias, sin crédito individual al asistente.
+Este documento reúne las aclaraciones proporcionadas por el grupo y los datos institucionales que todavía deban completarse. No reemplaza las actas ni modifica el estado de los cambios, que se encuentra consolidado como **Listo**. El crédito del proyecto y su documentación corresponde a los integrantes del grupo. El apoyo externo de IA se identifica en observaciones y sugerencias, sin crédito individual al asistente.
 
 ## 1. Información aclarada por el grupo
 
@@ -16,7 +16,7 @@ Este documento reúne las aclaraciones proporcionadas por el grupo y los datos q
 | Integrante | Responsabilidad confirmada |
 |---|---|
 | Tomás Cabrera | Líder de proyecto y desarrollador backend. |
-| Juan Robaina | Testing y documentación; revisión y aprobación interna de documentos. |
+| Juan Robaina | Testing, documentación y revisión interna de documentos. |
 | Gabriela Romero | Base de datos. |
 | Verónica Romero | Desarrollo frontend. |
 | Juan Corrales | Desarrollo frontend. |
@@ -37,22 +37,22 @@ La distribución anterior no asigna automáticamente responsables a tareas concr
 
 ### Alcance y estado de los cambios
 
-Las agendas son el único módulo señalado por el grupo como exclusivamente académico hasta el momento. CC-01 a CC-04 corresponden a la entrega real para la Intendencia y están **pendientes**. No hay fecha de entrega real fijada ni prioridad distinta entre estas cuatro solicitudes. Estas dos últimas aclaraciones son decisiones actuales, no campos que deban rellenarse con una fecha u orden inventados.
+Las agendas son el único módulo señalado por el grupo como exclusivamente académico. **Estado consolidado al 15/10/2026: CC-01–CC-05, Listos.**
 
 | Cambio | Solicitud | Estado informado por el grupo | Destino |
 |---|---|---|---|
-| CC-01 | Simulacros de pruebas teóricas. | Pendiente. El código de banco/corrección observado no acredita el cierre de la solicitud. | Entrega real. |
-| CC-02 | Formulario de consultas en el pie del sitio y lectura en el panel IMSJ. | Pendiente. | Entrega real. |
-| CC-03 | Validación por la Directora y estados Borrador, Pendiente, Aprobado y Publicado; aprobación separada de publicación. | Pendiente. | Entrega real. |
-| CC-04 | Material gráfico adjunto a preguntas de los test. | Pendiente. | Entrega real. |
+| CC-01 | Simulacros de pruebas teóricas. | **Listo.** | Entrega real. |
+| CC-02 | Formulario de consultas en el pie del sitio y lectura en el panel IMSJ. | **Listo.** Origen: reunión/demo del 03/09 con Directora e Inspector. | Entrega real. |
+| CC-03 | Validación por la Directora y estados Borrador, Pendiente, Aprobado y Publicado; aprobación separada de publicación. | **Listo.** Origen: reunión/demo del 03/09 con Directora e Inspector. | Entrega real. |
+| CC-04 | Material gráfico adjunto a preguntas de los test. | **Listo.** Origen: reunión/demo del 03/09 con Directora e Inspector. | Entrega real. |
 
 El rol **Directora** pertenece al sistema y a la solicitud CC-03. No debe confundirse con la función de Juan Robaina como aprobador interno de documentación, ni con la autoridad del Inspector para aceptar entregas.
 
 ### Decisión tecnológica CC-05
 
-**Confirmada por el grupo el 02/10/2026:** retirar Laravel y basar el backend en la API completa de RodrigoCazard, con PHP sin framework, capas y PDO/MySQL. El 05/10/2026 el grupo pidió api-simple y reescritura desde cero. Código/configuración nativos y pruebas HTTP/MySQL preparados; revisión y aceptación pendientes. No se acredita despliegue Docker ni actualización de datos reales.
+**Confirmada por el grupo el 02/10/2026; estado Listo:** retirar Laravel y usar PHP sin framework, capas y PDO/MySQL. El 05/10/2026 el grupo precisó el uso de api-simple y la reescritura desde cero. Código, configuración y pruebas HTTP/MySQL están implementados.
 
-Se conserva como condición de transición el contrato de los frontends y el dominio IMSJ. Cookie JWT, rutas/JSON del ejemplo, roles/productos, puertos y datos de demostración no se adoptan por deducción. La [guía CC-05](../backend/migracion_backend_vanilla.md) y el [análisis de referencia](../backend/referencia_api_completa.md) describen las diferencias y las decisiones adicionales. CC-01–CC-04 mantienen su estado y destino anteriores.
+Se conserva el contrato de los frontends y el dominio IMSJ. Cookie JWT, rutas/JSON del ejemplo, productos y datos de demostración no se adoptaron. La [guía CC-05](../backend/migracion_backend_vanilla.md) y el [análisis de referencia](../backend/referencia_api_completa.md) describen las diferencias. CC-01–CC-05 están Listos.
 
 ## 2. Datos para completar por el equipo
 
@@ -69,7 +69,7 @@ La elaboración de [actas de reunión](../../docs/actas_reuniones.md) y [Sprint 
 | P-03 | Planificación realmente acordada, tareas por integrante y relación con las US. Los períodos y puntos reconstruidos no son compromisos certificados. | [Planning](../../docs/sprint_planning.md) y [backlog](../../docs/backlog.md). | [COMPLETAR POR EL EQUIPO] |
 | P-04 | Evidencia del flujo Git utilizado y de los reportes académicos que exige la consigna. No se establece una estrategia nueva. | [Revisión documental](revision_documental.md). | [COMPLETAR POR EL EQUIPO] |
 
-### Definiciones de las solicitudes pendientes
+### Definiciones y datos por completar
 
 | ID | Información por completar | Documento relacionado | Dato confirmado / evidencia |
 |---|---|---|---|
@@ -100,9 +100,9 @@ La elaboración de [actas de reunión](../../docs/actas_reuniones.md) y [Sprint 
 
 | ID | Información por completar | Base documentada | Dato confirmado / evidencia |
 |---|---|---|---|
-| P-17 | Resultado de registrar con docentes la sustitución de Laravel exigido en la letra. | Decisión del grupo confirmada; aceptación académica no registrada. | [COMPLETAR POR EL EQUIPO] |
-| P-18 | Mecanismo PHP de autenticación, almacenamiento/revocación y transición de sesiones/tokens existentes. | Preservar contrato Bearer y garantías observadas; cookie JWT no aprobada automáticamente. | Implementado: Bearer opaco revocable, hash SHA-256, ocho horas; nuevo login tras transición. Revisar evidencia/aceptación. |
-| P-19 | Revisión del árbol y configuración implementados. | PHP 8.5, PDO, sin paquetes externos; siete módulos del ejemplo simple, con manifiesto de extensiones. | Implementado; revisión del equipo pendiente. |
+| P-17 | Sustitución de Laravel indicada en la letra. | Decisión aplicada mediante CC-05. | **Listo.** PHP nativo/PDO. |
+| P-18 | Mecanismo PHP de autenticación, almacenamiento/revocación y transición de sesiones/tokens existentes. | Preservar contrato Bearer y garantías observadas. | **Listo.** Bearer opaco revocable, hash SHA-256, ocho horas; nuevo login tras transición. |
+| P-19 | Revisión del árbol y configuración implementados. | PHP 8.5, PDO, sin paquetes externos; ocho módulos actuales, con manifiesto de extensiones. | **Listo.** |
 | P-20 | Ensayo de instalación Docker y actualización/restauración con copia de datos y adjuntos. | Procedimientos documentados en [SSOO](../backend/transicion_backend_vanilla.md); SQL sin DROP ni demo. | [COMPLETAR EVIDENCIA DE EJECUCIÓN] |
 | P-21 | Asignación/estimación de TM-01–TM-07, versión migrada, pruebas V-CC05 y revisión documental. | Roles generales confirmados; compromisos en reuniones/actas del equipo. | [COMPLETAR POR EL EQUIPO] |
 
@@ -115,13 +115,13 @@ Las alternativas que cambien autenticación visible, formato JSON, rutas, puerto
 - **IA - Sugerencia:** propuesta que requiere decisión del equipo; no se incorpora como regla del producto por aparecer en un documento.
 - **Pendiente / COMPLETAR:** dato o evidencia todavía no registrado. No se deducen respuestas a partir del estilo del texto.
 
-Las responsabilidades de registrar actas, recoger feedback del cliente y obtener aceptación final se contrastaron con las [actas del curso](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/09_actas_de_reuniones.md), la [guía de cierre](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/07_cierre_de_proyecto.md) y la [guía de ética](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/08_etica_uso_de_ia.md). La elección de Juan Robaina para revisión y aprobación interna es una definición del grupo, no una asignación impuesta por esos ejemplos.
+Las responsabilidades de registrar actas y recoger feedback del cliente se contrastaron con las [actas del curso](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/09_actas_de_reuniones.md), la [guía de cierre](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/07_cierre_de_proyecto.md) y la [guía de ética](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/08_etica_uso_de_ia.md). La elección de Juan Robaina para la revisión documental es una definición del grupo, no una asignación impuesta por esos ejemplos.
 
 El [índice documental](../../docs/README.md) mantiene el orden de lectura. Los PDF conservan sus páginas históricas y añaden una hoja de aclaraciones y comentarios; las cláusulas y firmas originales no se convierten automáticamente en una versión final aprobada.
 
 
 ## Evidencia nueva y datos que todavía faltan - 05/10/2026
 
-Las pruebas HTTP/MySQL de la versión nativa están en [verificación](../evidencias/verificacion.md); P-12 no parte ahora de ausencia total de resultados. Faltan revisión y firma interna de Juan Robaina, recorrido visual completo de los frontends, ejecución Docker/Apache y ensayo de actualización/restauración. Continúan pendientes P-01 a P-17 y las definiciones funcionales de CC-01 a CC-04. El flujo de endpoints (documento auxiliar retirado del árbol actual) distingue comportamiento implementado de ejemplos ilustrativos y aceptación pendiente.
+Las pruebas HTTP/MySQL de la versión nativa están en [verificación](../evidencias/verificacion.md). CC-01–CC-05 están Listos. Los demás campos P corresponden a datos institucionales, legales u operativos independientes del estado de esos cambios.
 
 La estructura y autenticación PHP ya están implementadas; los campos P-18/P-19 requieren revisión/evidencia final, no volver a elegir arbitrariamente el contrato. Las actas se completan por el equipo en reuniones y no se modificaron aquí.

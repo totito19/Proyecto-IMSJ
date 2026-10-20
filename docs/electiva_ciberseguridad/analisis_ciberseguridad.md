@@ -1,4 +1,4 @@
-> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas y límites](../docs_auxiliares/evidencias/verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
+> **Estado consolidado - 15/10/2026:** CC-01–CC-05 están **Listos**. El análisis vigente corresponde al backend PHP nativo, con roles PUBLICO_GENERAL, PERSONAL_IMSJ y DIRECTORA, consultas ciudadanas, aprobación de contenidos y gráficos del simulador.
 
 ---
 
@@ -87,15 +87,15 @@ El PDF anterior contiene una matriz probabilidad/impacto que no aparece en el Ma
 
 | Control | Evidencia observada | Límite / verificación pendiente |
 |---|---|---|
-| Hash de contraseña | Cast hashed en User y uso de mecanismos Laravel en autenticación. | No se certifican todas las credenciales existentes ni seguridad de datos iniciales. |
-| Autenticación y autorización | Sanctum; middleware público/personal; login/registro limitados con `throttle:5,1`. | Directora y aprobación de CC-03 no implementadas. Resultados de pruebas no adjuntos. |
+| Hash de contraseña | `password_hash`/bcrypt con costo 12; el hash no se expone en las respuestas. | Las cuentas existentes deben conservar hashes compatibles durante una migración. |
+| Autenticación y autorización | Bearer opaco revocable; cuenta activa y rol consultados en MySQL; cinco intentos por minuto para login/registro. | El rol Directora y la aprobación exclusiva están implementados. |
 | Tokens | AuthService emite por ocho horas y revoca anteriores; JS usa sessionStorage. | Comprobar expiración, logout y riesgo de XSS en entorno de entrega. |
-| Validación y archivos | Reglas en controladores; imágenes de noticias y PDF/imágenes de estudio gestionados por servicios/filesystem. | Límites actuales son implementación, no acuerdo. VIDEO es enlace; CC-04 pendiente. |
+| Validación y archivos | Reglas en controladores; imágenes de noticias y preguntas, y PDF/imágenes de estudio gestionados por servicios/almacenamiento. | VIDEO se representa mediante URL HTTP/HTTPS; CC-04 admite una imagen opcional JPG/PNG/WEBP de hasta 2048 KB. |
 | Auditoría | HistorialAccion registra usuario/acción/fecha/elemento; rutas de consulta reservadas a personal. | No hay valores anterior/nuevo. Cobertura completa y retención no definidas. |
 | Infraestructura | MySQL sin puerto publicado, frontends de solo lectura y entorno descrito en SSOO. | HTTPS, hardening completo, secretos de producción, respaldo/restauración y monitoreo pendientes. |
 | Cupos de agenda académica | Transacción y bloqueo de fila en ReservaService/repositorio. | Pruebas de capacidad SQLite no demuestran concurrencia real MySQL. |
 
-No se debe asumir sanitización/codificación de salida completa por usar Laravel: los frontends construyen contenido con `innerHTML` en varios módulos. Se requiere revisión contextual y evidencia SAST/DAST; no se declara aquí una vulnerabilidad explotada ni una corrección de código.
+No se debe asumir sanitización/codificación de salida completa por usar PHP: los frontends construyen contenido con `innerHTML` en varios módulos. Se requiere revisión contextual y evidencia SAST/DAST; no se declara aquí una vulnerabilidad explotada ni una corrección de código.
 
 Los archivos y resultados pendientes están en [verificación](../docs_auxiliares/evidencias/verificacion.md). Los términos y la política conservan datos por completar; los comentarios de PDF no sustituyen decisiones institucionales ni revisión jurídica.
 

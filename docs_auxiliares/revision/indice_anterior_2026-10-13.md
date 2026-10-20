@@ -1,10 +1,10 @@
-> Índice anterior conservado como antecedente del 13/10/2026. Para la documentación actual, consultar [el índice de entrega](../../docs/README.md).
+> **Índice histórico archivado.** Refleja estados anteriores al 13/10/2026. Estado vigente al 15/10/2026: **CC-01–CC-05, Listos**. Para la documentación actual, consultar [el índice de entrega](../../docs/README.md) y el [control de cambios](../../docs/control_cambios.md).
 
 ## Documentación vigente del backend - 05/10/2026
 
 Backend reescrito en PHP nativo con api-simple. Para esta versión, leer [arranque y estructura](../../backend/README.md), [referencia simple](../backend/referencia_api_simple.md), flujos de los 42 endpoints (documento auxiliar retirado del árbol actual) y su PDF (documento auxiliar retirado del árbol actual), [API](../backend/api.md), [arquitectura](../../docs/arquitectura_propuesta.md), [transición](../backend/migracion_backend_vanilla.md), [SSOO](../../docs/ssoo/README.md) y [evidencia](../evidencias/verificacion.md). [Control de cambios](../../docs/control_cambios.md) y [pendientes para completar](aclaraciones_y_pendientes.md) distinguen implementación de revisión/aceptación.
 
-Los apartados fechados el 02/10 y el análisis de api-completa se conservan como antecedentes. Los cuatro PDF previos mantienen su contenido/identidad; el nuevo PDF documenta la implementación actual. Crédito del equipo, apoyo externo de IA declarado y revisión de Juan Robaina pendiente. Actas y PNG no se modifican.
+Los apartados fechados el 02/10 y el análisis de api-completa se conservan como antecedentes. Los cuatro PDF previos mantienen su contenido/identidad; el nuevo PDF documenta la implementación actual. Crédito del equipo y apoyo externo de IA declarado. Actas y PNG no se modifican.
 
 ---
 
@@ -69,7 +69,7 @@ Las aclaraciones proporcionadas por el equipo el 02/10/2026 están reunidas en [
 | Integrante | Rol / área confirmada |
 |---|---|
 | Tomás Cabrera | Líder de proyecto y desarrollador backend. |
-| Juan Robaina | Testing y documentación; revisión y aprobación interna de documentos. |
+| Juan Robaina | Testing, documentación y revisión interna de documentos. |
 | Gabriela Romero | Base de datos. |
 | Verónica Romero | Desarrollo frontend. |
 | Juan Corrales | Desarrollo frontend. |
@@ -78,7 +78,7 @@ Las aclaraciones proporcionadas por el equipo el 02/10/2026 están reunidas en [
 |---|---|
 | Coordinación y avances | Se realizan en reuniones y se registran en las actas, a cargo del equipo. |
 | Referente y aceptación del cliente | Inspector de Tránsito de la Intendencia, conocido como Nacho, con autoridad para aceptar entregas y aprobar cambios de alcance. Sus aprobaciones y solicitudes se registran en las actas. |
-| Validación de documentos | Juan Robaina revisa y aprueba internamente. La revisión de esta actualización aún está pendiente; no equivale a aceptación del cliente ni a firma de todos los integrantes. |
+| Revisión de documentos | Juan Robaina realiza la revisión documental interna. El estado funcional vigente se consulta en el control de cambios. |
 | CC-01 a CC-04 | Pendientes para la entrega real, sin fecha fijada y sin prioridad distinta entre las cuatro solicitudes. |
 | CC-05 | Backend PHP sin Laravel decidido por el grupo; documentación actualizada, implementación pendiente. La letra pide Laravel y su diferencia académica se registrará con docentes. |
 | Alcance académico | Las agendas son el único módulo señalado como exclusivamente académico hasta el momento. |

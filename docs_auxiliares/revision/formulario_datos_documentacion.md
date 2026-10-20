@@ -8,7 +8,7 @@
 
 Sustituye `[RESPUESTA]` por el dato confirmado. Puedes escribir **Pendiente**, **No existe registro** o **No aplica**, indicando el motivo cuando corresponda. Si prefieres responder en párrafos, conserva los identificadores de las preguntas.
 
-Cuando una respuesta sea una aprobación, una decisión de reunión o un resultado de prueba, añade su fecha y la referencia al acta, archivo o evidencia. Una ruta o enlace es suficiente para localizar material que ya exista. No incluyas contraseñas, tokens ni copias de datos personales reales.
+Cuando una respuesta sea una decisión de reunión o un resultado de prueba, añade su fecha y la referencia al acta, archivo o evidencia. Una ruta o enlace es suficiente para localizar material que ya exista. No incluyas contraseñas, tokens ni copias de datos personales reales.
 
 Puedes completar el formulario por etapas. Los contactos institucionales que se agregarán después pueden continuar pendientes. Las respuestas funcionales permitirán documentar lo acordado; cualquier modificación adicional de código se tratará como una tarea separada.
 
@@ -23,7 +23,7 @@ No hace falta volver a responder estos datos. Si alguno cambió, indícalo en el
 | Integrante | Función confirmada |
 |---|---|
 | Tomás Cabrera | Liderazgo del proyecto y backend. |
-| Juan Robaina | Testing, documentación y revisión/aprobación interna documental. |
+| Juan Robaina | Testing, documentación y revisión interna documental. |
 | Gabriela Romero | Base de datos. |
 | Verónica Romero | Frontend. |
 | Juan Corrales | Frontend. |
@@ -33,7 +33,7 @@ No hace falta volver a responder estos datos. Si alguno cambió, indícalo en el
 - Agenda y reservas pertenecen al alcance académico; CC-01–CC-04 corresponden a la entrega real. No hay fecha de entrega real fijada ni prioridad distinta entre esas solicitudes.
 - La administración y el mantenimiento posteriores corresponden a la Intendencia, por ahora.
 - El backend actual es PHP nativo, con PDO/MySQL y Apache. Nginx fue retirado. La versión documentada del 13/10 tiene ocho módulos y 45 rutas.
-- CC-02, CC-03 y CC-04 tienen implementación de demo registrada el 13/10. Eso no acredita aceptación del cliente. CC-01 conserva definiciones pendientes.
+- CC-01–CC-05 están Listos. CC-02–CC-04 surgieron de la reunión/demo del 03/09 con la Directora y el Inspector de Tránsito.
 - El crédito de los documentos y del proyecto corresponde a los cinco integrantes del grupo. El uso de IA debe quedar declarado con su revisión humana real.
 
 Los detalles verificables del código —rutas, clases, puertos, campos y límites implementados— se tomarán del proyecto. Las preguntas siguientes solicitan decisiones, datos institucionales, referencias y preferencias que el código no puede acreditar.
@@ -67,24 +67,22 @@ Documentar una regla no acredita que esté implementada. Si una respuesta propon
 
 | ID | Información solicitada | Respuesta |
 |---|---|---|
-| E-01 | CC-01: cantidad y selección de preguntas, duración si corresponde, criterio de resultado/aprobación, presentación del resultado y responsable del banco. Indicar qué está acordado y qué falta decidir. | [RESPUESTA] |
-| E-02 | CC-02: confirmación o cambios acordados respecto de los campos nombre, correo y mensaje y del acceso administrativo a la bandeja. La conservación de consultas se responde en D. | [RESPUESTA] |
-| E-03 | CC-03: si la aprobación de Directora abarca solo noticias o también otros contenidos; quién envía, aprueba y publica; tratamiento de rechazo y edición posterior. La demo aplica el flujo a noticias. | [RESPUESTA] |
-| E-04 | CC-04: acuerdo sobre obligatoriedad, cantidad, formatos y límites de imágenes. La demo admite una imagen opcional por pregunta. Indicar si el comportamiento actual fue aceptado o sigue en revisión. | [RESPUESTA] |
+| E-01 | CC-01: simulador. | **Listo:** hasta diez preguntas aleatorias, sin temporizador ni umbral; corrección con total y aciertos. |
+| E-02 | CC-02: consultas. | **Listo:** nombre, correo y mensaje; bandeja de personal y marcado como leído. |
+| E-03 | CC-03: aprobación de contenidos. | **Listo:** noticias, materiales y FAQ; solo Directora aprueba, personal publica y editar devuelve a borrador. |
+| E-04 | CC-04: imágenes del simulador. | **Listo:** una imagen opcional JPG/PNG/WEBP de hasta 2048 KB. |
 | E-05 | Categorías de FAQ y enlaces útiles: lista o tratamiento acordado, o «Pendiente». Indicar también si se acordó subir videos o usar enlaces; el sistema actual usa enlaces para VIDEO. | [RESPUESTA] |
 | E-06 | Separación concreta entre entrega real y académica: qué se incluirá, ocultará o presentará por separado. | [RESPUESTA] |
 
-### Estado y aceptación de los cambios
+### Estado de los cambios
 
-La implementación de demo de CC-02–CC-04 ya está registrada. Completar la revisión/aceptación que efectivamente exista; no repetir esa implementación como si fuera una aprobación del cliente.
-
-| Cambio | Estado que debe documentarse | Revisión/aceptación: persona, fecha, versión y referencia |
-|---|---|---|
-| CC-01 — Simulacros | [RESPUESTA] | [RESPUESTA] |
-| CC-02 — Consultas | [RESPUESTA] | [RESPUESTA] |
-| CC-03 — Aprobación por Directora | [RESPUESTA] | [RESPUESTA] |
-| CC-04 — Imágenes del simulador | [RESPUESTA] | [RESPUESTA] |
-| CC-05 — Backend PHP nativo | [RESPUESTA] | [RESPUESTA] |
+| Cambio | Estado |
+|---|---|
+| CC-01 — Simulacros | **Listo** |
+| CC-02 — Consultas | **Listo** |
+| CC-03 — Aprobación por Directora | **Listo** |
+| CC-04 — Imágenes del simulador | **Listo** |
+| CC-05 — Backend PHP nativo | **Listo** |
 
 ## F. Relevamiento y registros del equipo
 
@@ -120,28 +118,17 @@ Para cambios por historia, puedes repetir esta fila:
 |---|---|---|---|
 | [RESPUESTA] | [RESPUESTA] | [RESPUESTA] | [RESPUESTA] |
 
-## H. Revisión documental, firmas y uso de IA
+## H. Revisión documental y uso de IA
 
 | ID | Información solicitada | Respuesta |
 |---|---|---|
-| H-01 | Revisión interna de Juan Robaina: documentos/versiones revisados, fecha, resultado y referencia, o «Pendiente». | [RESPUESTA] |
-| H-02 | Notas editoriales de sugerencia/suposición: indicar cuáles ya fueron resueltas y dónde está la decisión. Para las restantes, elegir si continúan visibles en el borrador o se mantienen como pendientes en el material auxiliar. La declaración de IA permanece entre los entregables. | [RESPUESTA] |
-| H-03 | Registro histórico de IA que falte: herramienta, actividad, fecha/período, integrantes que participaron y revisión humana. Incluir los aportes posteriores al 05/08/2026; la declaración original no cubre por sí sola todo el trabajo posterior. | [RESPUESTA] |
-| H-04 | Tratamiento de firmas en los PDF: espacio para firma posterior o firmas reales ya disponibles y autorizadas. Indicar la versión a la que corresponde cada conformidad. | [RESPUESTA] |
-
-Las actividades asistidas posteriores incluyen documentación, implementación y pruebas según los registros actuales. Indicar qué revisó y comprendió el equipo y qué correcciones aceptó. No se considerará «todo revisado» sin la confirmación correspondiente.
-
-| Integrante | Estado de conformidad con la declaración actual | Fecha y evidencia, si existe |
-|---|---|---|
-| Tomás Cabrera | [RESPUESTA] | [RESPUESTA] |
-| Juan Robaina | [RESPUESTA] | [RESPUESTA] |
-| Gabriela Romero | [RESPUESTA] | [RESPUESTA] |
-| Verónica Romero | [RESPUESTA] | [RESPUESTA] |
-| Juan Corrales | [RESPUESTA] | [RESPUESTA] |
+| H-01 | Revisión interna de Juan Robaina: documentos/versiones revisados, fecha, resultado y referencia. | [RESPUESTA] |
+| H-02 | Notas editoriales de sugerencia/suposición: indicar cuáles ya fueron resueltas y dónde está la decisión. La declaración de IA permanece entre los entregables. | [RESPUESTA] |
+| H-03 | Registro histórico de IA que falte: herramienta, actividad, fecha/período, integrantes que participaron y revisión humana. Incluir los aportes posteriores al 05/08/2026. | [RESPUESTA] |
 
 ## I. Seguridad y pruebas
 
-Las 25 comprobaciones de demo del 13/10 y la evidencia anterior ya están [registradas](../evidencias/verificacion.md). Solicito resultados adicionales y la procedencia de los entregables pendientes. Si una prueba no se ejecutó, responder «Pendiente»; las capturas o resultados no se recrearán como si fueran evidencia real.
+Las 41 comprobaciones de demo del 13/10 y la evidencia anterior ya están [registradas](../evidencias/verificacion.md). Los cinco cambios controlados figuran como **Listos**. Para validaciones adicionales fuera de ese alcance, debe registrarse el resultado real sin recrear capturas o evidencia.
 
 | Entregable o validación | Estado y versión evaluada | Fecha/responsable y ubicación de evidencia |
 |---|---|---|
@@ -179,15 +166,15 @@ El manual describirá pantallas y operaciones reales de la versión indicada en 
 | K-02 | Capturas o guía de estilo ya aprobadas para el manual, si existen. Si no hay capturas, indicarlo; podrán prepararse con datos ficticios de la versión correspondiente. | [RESPUESTA] |
 | K-03 | Instrucciones institucionales fuera de la aplicación que deban explicarse: acceso inicial, solicitud de cuentas, soporte o capacitación. Solo las que estén acordadas. | [RESPUESTA] |
 
-## L. Cierre y organización de los PDF
+## L. Estado y organización de los PDF
 
-El acta de cierre sigue siendo responsabilidad del equipo. Si la entrega o aceptación aún no ocurrieron, se mantendrán pendientes; este formulario no las declara realizadas.
+El acta y la organización del paquete final siguen siendo responsabilidad del equipo. El estado funcional ya consolidado es **CC-01–CC-05: Listos**.
 
 | ID | Información solicitada | Respuesta |
 |---|---|---|
-| L-01 | Si ya hubo entrega o aceptación: fecha, versión, entregables, observaciones y referencia al acta elaborada por el equipo. Si no, responder «Pendiente». | [RESPUESTA] |
+| L-01 | Fecha, versión, entregables, observaciones y referencia al acta elaborada por el equipo. | [RESPUESTA] |
 | L-02 | Paquete de PDF deseado: por documento, por asignatura o ambos. Indicar qué documentos deben convertirse además de los cuatro PDF existentes. | [RESPUESTA] |
-| L-03 | Estado que debe figurar en cada salida: borrador, para revisión o versión final con aprobación registrada. | [RESPUESTA] |
+| L-03 | Estado que debe figurar en cada salida: borrador, para revisión o versión final. | [RESPUESTA] |
 | L-04 | Pauta requerida para las versiones históricas: archivo separado, anexos o referencias. Se conservará la trazabilidad del proyecto. | [RESPUESTA] |
 
 ### Selección de documentos

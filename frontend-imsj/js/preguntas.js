@@ -1,37 +1,62 @@
+/** Preguntas frecuentes y recorrido Borrador -> Pendiente -> Aprobado -> Publicado. */
+
 let preguntas = [];
 let queryPreguntas = '';
 
+/** Devuelve las preguntas frecuentes que coinciden con el texto buscado. */
 function preguntasFiltradas() {
   if (!queryPreguntas) return preguntas;
   return preguntas.filter((item) =>
-    [item.pregunta, item.respuesta, item.estado].join(' ').toLowerCase().includes(queryPreguntas));
+    [item.pregunta, item.respuesta, item.estado].join(' ').toLowerCase().includes(queryPreguntas),
+  );
 }
 
+/** Convierte el estado de negocio a la variante visual del badge. */
 function estadoPreguntaVista(estado) {
-  return ({ BORRADOR: 'borrador', PENDIENTE: 'pendiente', APROBADO: 'aprobado', PUBLICADO: 'publicada' })[estado] || 'borrador';
+  return (
+    { BORRADOR: 'borrador', PENDIENTE: 'pendiente', APROBADO: 'aprobado', PUBLICADO: 'publicada' }[
+      estado
+    ] || 'borrador'
+  );
 }
 
+/** Determina la próxima transición editorial disponible para la pregunta. */
 function accionFlujoPregunta(item) {
   const directora = ImsjApi.currentUser()?.rol === 'DIRECTORA';
   if (item.estado === 'BORRADOR') {
-    return actionBtn('send', 'Enviar a revisión', { labeled: true, data: { accion: 'estado', estado: 'PENDIENTE', id: item.id } });
+    return actionBtn('send', 'Enviar a revisión', {
+      labeled: true,
+      data: { accion: 'estado', estado: 'PENDIENTE', id: item.id },
+    });
   }
   if (item.estado === 'PENDIENTE' && directora) {
-    return actionBtn('check-circle', 'Aprobar', { labeled: true, data: { accion: 'estado', estado: 'APROBADO', id: item.id } });
+    return actionBtn('check-circle', 'Aprobar', {
+      labeled: true,
+      data: { accion: 'estado', estado: 'APROBADO', id: item.id },
+    });
   }
   if (item.estado === 'PENDIENTE') return '<span class="self-label">Pendiente de Directora</span>';
   if (item.estado === 'APROBADO') {
-    return actionBtn('eye', 'Publicar', { labeled: true, data: { accion: 'estado', estado: 'PUBLICADO', id: item.id } });
+    return actionBtn('eye', 'Publicar', {
+      labeled: true,
+      data: { accion: 'estado', estado: 'PUBLICADO', id: item.id },
+    });
   }
   if (item.estado === 'PUBLICADO') {
-    return actionBtn('eye-off', 'Retirar', { labeled: true, data: { accion: 'estado', estado: 'BORRADOR', id: item.id } });
+    return actionBtn('eye-off', 'Retirar', {
+      labeled: true,
+      data: { accion: 'estado', estado: 'BORRADOR', id: item.id },
+    });
   }
   return '';
 }
 
+/** Construye la tabla con contenido escapado y acciones autorizadas. */
 function renderPreguntas() {
   const data = preguntasFiltradas();
-  $('#tbody-preguntas').innerHTML = data.map((item, index) => `
+  $('#tbody-preguntas').innerHTML = data
+    .map(
+      (item, index) => `
     <tr>
       <td class="col-num">${String(index + 1).padStart(2, '0')}</td>
       <td><div class="cell-question">${esc(item.pregunta)}</div></td>
@@ -42,21 +67,27 @@ function renderPreguntas() {
         ${accionFlujoPregunta(item)}
         ${actionBtn('trash-2', 'Eliminar', { danger: true, data: { accion: 'eliminar', id: item.id } })}
       </div></td>
-    </tr>`).join('');
+    </tr>`,
+    )
+    .join('');
   $('#empty-preguntas').hidden = data.length > 0;
   $('#contador-preguntas').textContent = preguntas.length;
   hydrateIcons($('#tbody-preguntas'));
 }
 
+/** Prepara el modal para una pregunta nueva o para editar una existente. */
 function abrirFormularioPregunta(item) {
   $('#form-pregunta').reset();
-  $('#modal-pregunta-title').textContent = item ? 'Editar pregunta frecuente' : 'Nueva pregunta frecuente';
+  $('#modal-pregunta-title').textContent = item
+    ? 'Editar pregunta frecuente'
+    : 'Nueva pregunta frecuente';
   $('#p-id').value = item ? item.id : '';
   $('#p-pregunta').value = item ? item.pregunta : '';
   $('#p-respuesta').value = item ? item.respuesta : '';
   Modal.open('modal-pregunta');
 }
 
+/** Carga desde la API todas las preguntas frecuentes del panel. */
 async function cargarPreguntas() {
   try {
     const payload = await ImsjApi.request('/preguntas');
@@ -67,6 +98,7 @@ async function cargarPreguntas() {
   }
 }
 
+/** Envía un alta o una edición según exista un id en el formulario. */
 async function guardarPregunta(event) {
   event.preventDefault();
   if (!event.currentTarget.reportValidity()) return;
@@ -86,10 +118,13 @@ async function guardarPregunta(event) {
   }
 }
 
+// Inicializa formulario, búsqueda y acciones delegadas de la tabla.
 document.addEventListener('DOMContentLoaded', () => {
   const usuario = ImsjApi.currentUser();
   if (!ImsjApi.isStaff(usuario)) {
-    window.location.assign(`/frontend-publico/login.html?return=${encodeURIComponent(window.location.pathname)}`);
+    window.location.assign(
+      `/frontend-publico/login.html?return=${encodeURIComponent(window.location.pathname)}`,
+    );
     return;
   }
   $('#btn-nueva-pregunta').addEventListener('click', () => abrirFormularioPregunta(null));
@@ -106,7 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       if (button.dataset.accion === 'estado') {
         await ImsjApi.request(`/preguntas/${item.id}/estado`, {
-          method: 'PATCH', body: { estado: button.dataset.estado },
+          method: 'PATCH',
+          body: { estado: button.dataset.estado },
         });
       }
       if (button.dataset.accion === 'eliminar') {
@@ -118,6 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
       alert(error.message);
     }
   });
-  initSearch((query) => { queryPreguntas = query; renderPreguntas(); });
+  initSearch((query) => {
+    queryPreguntas = query;
+    renderPreguntas();
+  });
   cargarPreguntas();
 });

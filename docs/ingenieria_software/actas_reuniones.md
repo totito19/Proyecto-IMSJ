@@ -187,7 +187,7 @@ Le mostramos el sistema al cliente para comprobar que hayamos podido comprender 
 | Redactor y validación de asistentes | No registrados. |
 | Evidencia original / adjuntos | No se incluyó referencia en el acta. |
 
-**IA — Relación documental:** CC-02–CC-04 tienen fecha 03/09 en [control de cambios](control_cambios.md). El registro posterior no sustituye feedback literal, versión demostrada, aceptación o decisión en esta acta. No se identifica automáticamente al inspector con el referente de la entrevista inicial.
+**Relación documental actualizada:** CC-02–CC-04 tienen origen en la reunión/demo del 03/09 con la Directora y el Inspector de Tránsito y estado Listo. El detalle técnico se encuentra en [control de cambios](control_cambios.md).
 
 ---
 

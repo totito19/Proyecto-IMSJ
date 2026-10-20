@@ -1,4 +1,4 @@
-> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas y límites](../docs_auxiliares/evidencias/verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
+> **Estado consolidado - 15/10/2026:** CC-01–CC-05 están **Listos**. El backend actual es PHP nativo/PDO y la versión incorpora simulador, consultas, Directora, aprobación diferenciada y gráficos de preguntas.
 
 ---
 
@@ -250,9 +250,9 @@ que aumenten el costo o retrasen la entrega.
 15. Prevención de doble reserva de agenda.
 16. Confirmación visual de agenda para el ciudadano.
 
-Las solicitudes CC-01–CC-04 se consultan en [control de cambios](control_cambios.md). El grupo las confirmó como pendientes para la entrega real, sin fecha fijada ni prioridad distinta entre ellas; no se presentan como alcance inicial ni como funciones terminadas. La agenda es el único módulo señalado como exclusivamente académico hasta ahora.
+Las solicitudes CC-01–CC-04 se consultan en [control de cambios](control_cambios.md) y están Listas. CC-02–CC-04 se originaron en la reunión/demo del 03/09 con la Directora y el Inspector de Tránsito. La agenda es el único módulo señalado como exclusivamente académico.
 
-**Aclaración del grupo — 02/10/2026:** la coordinación y el seguimiento se realizan en reuniones. Juan Robaina revisa y aprueba la documentación internamente; la aceptación del cliente corresponde al Inspector de Tránsito y se registra en las actas a cargo del equipo. La Intendencia administrará y mantendrá el sistema por ahora. Roles y campos pendientes: [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
+**Aclaración del grupo — actualizada al 15/10/2026:** la coordinación y el seguimiento se realizan en reuniones; Juan Robaina se encarga del testing y la revisión documental. CC-02–CC-04 surgieron de la reunión/demo con la Directora y el Inspector de Tránsito. **Estado consolidado: CC-01–CC-05, Listos.** La Intendencia administrará y mantendrá el sistema por ahora. Otros datos institucionales por completar se separan en [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
 
 ---
 
@@ -302,4 +302,4 @@ Las necesidades posteriores se muestran separadas y como borradores trazados a s
 
 Por decisión explícita del grupo, el destino del backend es PHP sin Laravel, por capas y con PDO/MySQL a partir de `api-completa` de RodrigoCazard. La [migración](../docs_auxiliares/backend/migracion_backend_vanilla.md), la [comparación de referencia](../docs_auxiliares/backend/referencia_api_completa.md) y el [control de cambios](control_cambios.md) describen esta actualización posterior al relevamiento; no se la atribuye a la entrevista inicial.
 
-La implementación presente todavía utiliza Laravel. Se conserva el dominio, el contrato de los frontends y los destinos acordados: agenda académica y CC-01–CC-04 pendientes para entrega real. La letra académica indica Laravel, por lo que el registro de aceptación de la diferencia con docentes sigue pendiente. Las propuestas de cookie JWT, formatos/rutas del ejemplo o cambios de datos no quedan aprobadas automáticamente.
+La implementación presente utiliza PHP nativo, PDO y MySQL, siguiendo el recorrido de api-simple. Se conserva el dominio y el contrato de los frontends; agenda sigue siendo académica y CC-01–CC-05 están Listos. No se adoptaron las rutas de productos, cookies JWT ni formatos ajenos al dominio IMSJ.

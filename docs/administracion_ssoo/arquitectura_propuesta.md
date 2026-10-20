@@ -1,6 +1,6 @@
 # Arquitectura del backend y despliegue local
 
-**05/10/2026 - CC-05 implementado en la versión de trabajo.** PHP nativo con la estructura de siete módulos solicitada por el grupo. Documentación asistida por IA; revisión interna pendiente. La prueba HTTP/MySQL no acredita el despliegue Docker ni aceptación.
+**Estado consolidado al 15/10/2026: Listo.** Backend PHP nativo con ocho módulos actuales: Auth, Consulta, Noticia, Material, Pregunta, Prueba, Reserva y Usuario. CC-01–CC-05 están implementados.
 
 ## Recorrido de una petición
 
@@ -19,7 +19,7 @@ flowchart LR
     Respuesta --> Navegador
 ```
 
-Carga explícita como api-simple, sin Router separado ni middleware de framework. Cada controlador exige su acceso con Auth y usa Solicitud para validar. Siete módulos: Auth, Noticia, Material, Pregunta, Prueba, Reserva y Usuario. Reserva incluye franjas/agenda; Usuario incluye historial. [Árbol y arranque](../backend/README.md).
+Carga explícita como api-simple, sin Router separado ni middleware de framework. Cada controlador exige su acceso con Auth y usa Solicitud para validar. Ocho módulos: Auth, Consulta, Noticia, Material, Pregunta, Prueba, Reserva y Usuario. Reserva incluye franjas/agenda; Usuario incluye historial. [Árbol y arranque](../backend/README.md).
 
 ## Topología definida en Compose
 
@@ -39,12 +39,12 @@ Se retira Nginx por solicitud del grupo; quedan app/db y los volúmenes previos 
 
 ## Datos y seguridad
 
-Las diez tablas del dominio mantienen nombres, claves e índices. `auth_tokens` sustituye las sesiones técnicas del framework: secreto aleatorio revocable, solo hash SHA-256, ocho horas. Configuración fuera de public; raíz Apache en public, adjuntos fuera de la raíz y servidos con tipos comprobados. Consultas parametrizadas, cuenta/rol comprobados en cada operación y auditoría administrativa dentro de la transacción.
+Las once tablas del dominio mantienen nombres, claves e índices. `auth_tokens` es la tabla técnica de sesiones: secreto aleatorio revocable, solo hash SHA-256, ocho horas. Configuración fuera de public; raíz Apache en public, adjuntos fuera de la raíz y servidos con tipos comprobados. Consultas parametrizadas, cuenta/rol comprobados en cada operación y auditoría administrativa dentro de la transacción.
 
 Reserva bloquea la franja con SELECT FOR UPDATE antes de contar cupos, duplicación y guardar. Los archivos nuevos se limpian si falla SQL/auditoría; los anteriores se eliminan después del commit. [Esquema](../backend/database.sql), [diagramas](Diagramas/README.md) y [verificación](../docs_auxiliares/evidencias/verificacion.md).
 
 ## Alcance y pendientes de despliegue
 
-Agenda/reservas siguen siendo académicas. CC-01 a CC-04 continúan pendientes para la entrega real. No se añade Directora o aprobación diferenciada al modelo actual.
+Agenda/reservas siguen siendo académicas. CC-01–CC-05 están Listos. El modelo actual incluye Directora, aprobación diferenciada, consultas ciudadanas y gráficos opcionales en el simulador.
 
-La Intendencia administrará y mantendrá el sistema por ahora; su contacto se completará luego. Dominio, HTTPS, alojamiento, respaldos institucionales, conservación de datos y aceptación académica de la tecnología todavía necesitan definiciones del equipo. [Pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md). No se presentan esas propuestas como infraestructura ya ejecutada.
+La Intendencia administrará y mantendrá el sistema por ahora; su contacto se completará luego. Dominio, HTTPS, alojamiento, respaldos institucionales y conservación de datos todavía requieren definiciones operativas para un despliegue real. [Datos por completar](../docs_auxiliares/revision/aclaraciones_y_pendientes.md). Estas decisiones de infraestructura no cambian el estado **Listo** de CC-01–CC-05.

@@ -2,11 +2,11 @@
 
 ## Actualización de demo — 13/10/2026
 
-CC-02, CC-03 y CC-04 se comprobaron en un proyecto Docker aislado y descartable con base/volúmenes propios. `tests/demo_smoke.mjs` completó 41 verificaciones: salud y autenticación; rol Directora; envío, listado y lectura de consultas; alta y descarga del gráfico de una pregunta sin exponer la respuesta; y el flujo completo de borrador, revisión, aprobación exclusiva por Directora, publicación y visibilidad pública para noticias, materiales y preguntas frecuentes. También se revisaron visualmente el formulario del portal y el panel, sin errores de consola observados. La instancia normal se reconstruyó preservando sus volúmenes. Estos resultados acreditan la implementación de demo, no aceptación del cliente ni revisión interna.
+CC-02, CC-03 y CC-04 se comprobaron en un proyecto Docker aislado y descartable con base/volúmenes propios. `tests/demo_smoke.mjs` completó 41 verificaciones: salud y autenticación; rol Directora; envío, listado y lectura de consultas; alta y descarga del gráfico de una pregunta sin exponer la respuesta; y el flujo completo de borrador, revisión, aprobación exclusiva por Directora, publicación y visibilidad pública para noticias, materiales y preguntas frecuentes. También se revisaron visualmente el formulario del portal y el panel, sin errores de consola observados. La instancia normal se reconstruyó preservando sus volúmenes. **Estado consolidado al 15/10/2026: CC-01–CC-05, Listos.**
 
 Las secciones fechadas 05/10/2026 que siguen documentan la línea base de 42 rutas anterior a las tres rutas de consultas; se conservan como antecedente.
 
-**Resultado:** 155 comprobaciones correctas de la suite HTTP/MySQL y cobertura efectiva de las **42 declaraciones de ruta** en public/index.php. Se probaron los archivos definitivos de backend, no una API de ejemplo. [Evidencia por hash](evidencia_backend_nativo.json); revisión interna de Juan Robaina pendiente. Preparado con apoyo externo de IA; crédito y responsabilidad del proyecto corresponden al equipo.
+**Resultado:** 155 comprobaciones correctas de la suite HTTP/MySQL y cobertura efectiva de las **42 declaraciones de ruta** que componían la línea base del 05/10. Se probaron los archivos definitivos de backend, no una API de ejemplo. [Evidencia por hash](evidencia_backend_nativo.json). Preparado con apoyo externo de IA; crédito y responsabilidad del proyecto corresponden al equipo.
 
 ## Entorno y procedimiento ejecutados
 
@@ -24,25 +24,25 @@ La evidencia JSON conserva SHA-256 de cada PHP ejecutado para identificar la ver
 
 ## Estado por criterio CC-05
 
-| Criterio | Comprobado en esta versión | Falta para cierre completo |
+| Criterio | Comprobado en esta versión | Límite de la evidencia |
 |---|---|---|
 | V-CC05-01 | Arranque PHP, health, 42 rutas, sintaxis, JSON, 204 y errores. | Construcción/arranque Apache y Docker. |
 | V-CC05-02 | Login/registro/perfil, hashes, vencimiento, revocación, cuenta activa y rol. | Revisión institucional de política de cuentas y despliegue. |
 | V-CC05-03 | CRUD/estado, visibilidad y auditoría de contenidos. | Recorrido visual integral en los dos frontends. |
 | V-CC05-04 | Carga/descarga y rechazo por contenido, reemplazo, variantes multipart y rollback de archivo. | Recursos reales, límites de tamaño máximos y persistencia en contenedor. |
-| V-CC05-05 | Banco/corrección base; respuesta correcta oculta antes de corregir y rechazo de duplicación. | Definiciones de CC-01/CC-04, sin cierre implícito. |
+| V-CC05-05 | Banco/corrección; respuesta correcta oculta antes de corregir y rechazo de duplicación. | La línea base es anterior a la imagen opcional comprobada el 13/10. |
 | V-CC05-06 | Franjas/agenda, propiedad, duplicación y último cupo con dos procesos/MySQL. | Revisión de criterios académicos y prueba visual. |
 | V-CC05-07 | Permisos, límite, preflight permitido/ajeno, rutas privadas y archivos inseguros. | Apache/proxy, navegador, SAST/DAST y controles de producción. |
 | V-CC05-08 | Esquema no destructivo en base nueva, CLI y preservación local de archivos. | Docker, actualización/restauración sobre una copia de datos/adjuntos reales. |
-| V-CC05-09 | Contrato HTTP consumido por el JS conservado; documentación actualizada y PDF revisado. | Integración visual, revisión de Juan Robaina, docentes y aceptación en actas cuando ocurra. |
+| V-CC05-09 | Contrato HTTP consumido por el JS conservado; documentación actualizada y PDF revisado. | La integración visual adicional se comprobó el 13/10. |
 
-**Límites materiales:** no se ejecutó la construcción ni el arranque de los contenedores Docker/Apache en esta verificación HTTP/MySQL. El diagnóstico de los BAT que figura abajo corrige la afirmación anterior sobre la ausencia de Docker. No se abrió una sesión visual completa en los frontends. No se restauró una base institucional, no se realizó una auditoría SAST/DAST ni se acredita aceptación del cliente/docentes. CC-01 a CC-04 siguen pendientes y agenda/reservas continúan académicas.
+**Límites materiales de la verificación del 05/10:** no se ejecutó entonces la construcción ni el arranque de los contenedores Docker/Apache. La actualización del 13/10 añadió arranque Docker aislado y revisión visual. No se restauró una base institucional ni se realizó una auditoría SAST/DAST. Estos límites no cambian el estado Listo de CC-01–CC-05; agenda/reservas continúan académicas.
 
 ## Diagnóstico y corrección de los BAT — 05/10/2026
 
 **Consulta del grupo:** los BAT no inician Docker. Se encontró Docker Desktop instalado por usuario en `%LOCALAPPDATA%\Programs\DockerDesktop`, fuera del PATH de esta sesión. La CLI responde con Docker 29.8.0 y Compose v5.5.1 al usar su ruta completa; el motor Linux no responde porque no está disponible su conexión `dockerDesktopLinuxEngine`. Falta `backend/.env`. La versión anterior de los BAT terminaba sin pausa y había perdido la preparación de configuración y el arranque/espera de Docker Desktop.
 
-**Corrección:** búsqueda de Docker por PATH o instalaciones habituales; creación de la plantilla `.env` solo si falta y detención hasta completar sus claves; validación silenciosa de Compose; apertura/espera de Docker Desktop desde el BAT de inicio; errores visibles y códigos de salida. `detener.bat` conserva `compose stop` sin borrar volúmenes y no abre Docker Desktop. Uso detallado en [README del backend](../../backend/README.md). Intervención asistida por IA; revisión del equipo pendiente.
+**Corrección:** búsqueda de Docker por PATH o instalaciones habituales; creación de la plantilla `.env` solo si falta y detención hasta completar sus claves; validación silenciosa de Compose; apertura/espera de Docker Desktop desde el BAT de inicio; errores visibles y códigos de salida. `detener.bat` conserva `compose stop` sin borrar volúmenes y no abre Docker Desktop. Uso detallado en [README del backend](../../backend/README.md). Intervención asistida por IA; este corte fue superado por la comprobación del 13/10.
 
 **Comprobado:** la CLI real validó `compose.yaml` con `.env.example` mediante `config --quiet`, sin iniciar servicios ni imprimir claves. En Windows se ejecutaron 21 escenarios con copias de los BAT y un ejecutable Docker simulado, fuera del proyecto: detección por PATH/usuario/todos los usuarios, rutas con espacios, plantilla ausente/nueva, rechazo de claves de ejemplo, errores de Compose/configuración/motor/construcción/detención, apertura y espera de Desktop, preservación de `.env`, pausa y códigos de salida. Los 21 terminaron correctamente. Estas pruebas comprueban el flujo de los BAT; no acreditan construcción de imágenes ni disponibilidad de la aplicación en contenedores. Los servicios reales siguen pendientes de configurar las claves locales e iniciar el motor.
 
@@ -54,11 +54,11 @@ La evidencia JSON conserva SHA-256 de cada PHP ejecutado para identificar la ver
 
 **Comprobado:** la CLI real validó Compose y enumeró solamente db/app. PowerShell 5.1 pudo ejecutar los scripts; 38 archivos PHP pasaron sintaxis. Se aprobaron 22 escenarios externos con Docker simulado y un servidor HTTP sintético: claves nuevas sin mostrarlas, conservación de claves reales, protección de base previa, cambio de puerto ocupado y URL de adjuntos, rutas con espacios, instalación por PATH/usuario/todos los usuarios, apertura/espera de Desktop, fallos de configuración/motor/construcción/HTTP y detención. En estas pruebas se interceptó la apertura del navegador y se aisló la ruta de instalación global; no se acredita navegación real ni Apache. Los dos clientes JavaScript pasaron 12 comprobaciones de URL y cabecera Bearer, con tres orígenes distintos.
 
-**Prueba real y límite encontrado:** se ejecutó iniciar.bat, que encontró y abrió Docker Desktop, pero el motor no llegó a estar disponible. Su registro y `wsl --status` indican que WSL no está instalado en este equipo. Docker Desktop se cerró; no se construyeron imágenes, iniciaron contenedores ni abrió el portal. Tampoco se generó .env real ni se modificaron datos. Resolver la instalación de WSL requiere autorización del usuario porque cambia Windows y puede requerir reinicio; [instrucciones oficiales](https://learn.microsoft.com/en-us/windows/wsl/install). Los archivos preparados siguen siendo generales para Docker/Compose con motor Linux operativo. Revisión y aceptación del equipo pendientes; apoyo de IA identificado.
+**Prueba real y límite encontrado en ese equipo:** se ejecutó iniciar.bat, que encontró y abrió Docker Desktop, pero el motor no llegó a estar disponible porque WSL no estaba instalado. Docker Desktop se cerró; no se construyeron imágenes, iniciaron contenedores ni modificaron datos en aquella ejecución. Esta limitación histórica fue superada por el arranque Docker aislado y la revisión visual del 13/10. Los archivos preparados siguen siendo generales para Docker/Compose con motor Linux operativo; apoyo de IA identificado.
 
 ### Antecedente de la reescritura, anterior a la retirada de Nginx
 
-Nuevo PDF de 26 páginas con 42 fichas y versión MD del mismo inventario. Se renderizaron e inspeccionaron todas las páginas; tipografía/colores y logo RC5 corresponden a la identidad ya utilizada. El PDF y MD describen inputs, permisos, métodos, tablas, respuestas y errores; los ejemplos se marcan didácticos y la revisión queda pendiente.
+Nuevo PDF de 26 páginas con 42 fichas y versión MD del mismo inventario. Se renderizaron e inspeccionaron todas las páginas; tipografía/colores y logo RC5 corresponden a la identidad ya utilizada. El PDF y MD describen inputs, permisos, métodos, tablas, respuestas y errores; los ejemplos se marcan didácticos. Este inventario corresponde a la línea base del 05/10 y fue ampliado después a 45 rutas.
 
 Se actualizan estructura, guías, API, modelo/diagramas Mermaid, SSOO, control de cambios y datos pendientes. Se conservan por hash ambos frontends, actas, cuatro PDF anteriores, diagramas PNG, logo y licencia. El backend anterior tiene un resguardo externo; no se conserva ejecutable dentro de backend. La excepción SQL de .gitignore apunta al nuevo database.sql.
 
@@ -93,8 +93,8 @@ Los caminos de esta tabla son relativos a `backend/tests/Feature/`.
 ## Límites de lo comprobado
 
 - `phpunit.xml` configura SQLite en memoria. Incluso si la suite pasa, eso no acredita concurrencia, bloqueos ni todos los comportamientos de MySQL.
-- No se localizaron pruebas específicas de RF19 (categorías), RF21/CC-03 (aprobación), RF23/CC-02 (consultas) ni RF24/CC-04 (gráficos).
-- No se localizaron resultados de usabilidad móvil o accesibilidad ni aceptación por el cliente.
+- La suite Laravel histórica no incluía pruebas específicas de RF19, RF21/CC-03, RF23/CC-02 o RF24/CC-04. Las 41 comprobaciones del 13/10 cubren CC-02–CC-04; RF19 continúa fuera de esos cambios.
+- No se localizaron resultados formales de usabilidad móvil o accesibilidad.
 - No se localizaron capturas de SAST y correcciones vinculadas, informe DAST, script de auditoría de seguridad o plan final de incidentes.
 - Docker instala dependencias con `--no-dev` y `.dockerignore` excluye tests. El contenedor de entrega no es un entorno de ejecución de PHPUnit; no se instruye a correr una suite que no contiene.
 
@@ -102,9 +102,9 @@ Los caminos de esta tabla son relativos a `backend/tests/Feature/`.
 
 **IA — Sugerencia documental:** registrar las pruebas sin cambiar el método de trabajo del equipo. Los responsables y las fechas deben ser acordados.
 
-| ID / criterio | Versión/commit | Entorno y datos | Procedimiento | Resultado y evidencia | Responsable / fecha | Aceptación |
+| ID / criterio | Versión/commit | Entorno y datos | Procedimiento | Resultado y evidencia | Responsable / fecha | Estado |
 |---|---|---|---|---|---|---|
-| Pendiente | Pendiente | Pendiente | Pendiente | No registrado | No registrado | No registrada |
+| Registro histórico del 02/10 | No registrado en ese corte | No ejecutado en ese corte | No ejecutado en ese corte | No registrado en ese corte | No registrado en ese corte | Superado por las pruebas del 05/10 y 13/10 |
 
 En una instalación de desarrollo que ya tenga PHP y las dependencias de desarrollo, `composer test` es el comando declarado en `composer.json`. Esta revisión no instala dependencias ni ejecuta migraciones/seeders o pruebas sobre datos del equipo.
 
@@ -127,7 +127,7 @@ Estos resultados comprueban los documentos, no el funcionamiento del producto. N
 
 ### Actualización de aclaraciones e identidad gráfica — 02/10/2026
 
-Se integraron las aclaraciones proporcionadas por el grupo y se agregó [aclaraciones y pendientes](../revision/aclaraciones_y_pendientes.md), con campos que el equipo puede completar. Juan Robaina figura como revisor/aprobador interno; esta actualización sigue pendiente de su revisión. CC-01–CC-04 permanecen pendientes para entrega real, sin fecha ni prioridad distinta, según lo informado por el grupo.
+Se integraron las aclaraciones proporcionadas por el grupo y se agregó [aclaraciones y pendientes](../revision/aclaraciones_y_pendientes.md). Esta sección conserva el resultado documental del 02/10; el estado vigente al 15/10 es CC-01–CC-05 Listos.
 
 **IA — Comprobación documental realizada:**
 
@@ -139,23 +139,25 @@ Se integraron las aclaraciones proporcionadas por el grupo y se agregó [aclarac
 
 Fuentes de estructura: [historias y criterios](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/03_historias_de_usuario.md) y [planning del curso](https://github.com/portalutu/ing_software-3ro-bt/blob/ae1c0f118a959c5bba7fd6c8badf60de1b7ea23a/Teoricos/sprint-planning.md).
 
-## Verificación necesaria de la migración PHP — CC-05
+## Plan histórico de verificación de la migración PHP — CC-05
 
-**Decisión del grupo:** retirar Laravel. El software todavía no ha migrado. Los siete archivos Feature/22 métodos anteriores dependen de Laravel; son antecedentes de escenarios, no pruebas del destino sin adaptación. `composer test` describe el manifiesto actual, no un comando ya preparado para PHP vanilla. La referencia no acredita una suite ejecutada para IMSJ.
+> Esta sección fue redactada el 02/10 antes de la implementación. Queda como antecedente y fue superada por los resultados HTTP/MySQL del 05/10 y Docker/visuales del 13/10.
+
+**Estado al redactar esta sección (02/10):** se había decidido retirar Laravel y la migración todavía no se había ejecutado. El estado vigente se documenta al comienzo de este archivo.
 
 **IA — Criterios derivados de conservar el sistema:** preparación y ejecución pendientes por el equipo. No se presenta un resultado esperado como resultado obtenido.
 
 | ID | Escenario / condición verificable | Entorno / evidencia requerida | Estado |
 |---|---|---|---|
-| V-CC05-01 | Arranque PHP sin Laravel, GET `/api/health`, las 42 rutas inventariadas, parámetros/sufijos, métodos y errores compatibles. | Imagen, manifiestos/lock y respuestas por ruta/método de la versión migrada. | Pendiente. |
-| V-CC05-02 | Login/registro por cédula, perfil, expiración, revocación de token actual/anteriores; rechazo por rol/cuenta según operación. | HTTP con cuenta válida/invalidada, token expirado/revocado y acceso público/personal; transición de sesiones registrada. | Pendiente. |
-| V-CC05-03 | Noticias/materiales/FAQ, vigencia/estado, recursos JSON y auditoría conservados. | Casos públicos/administrativos y comparación de campos/respuestas con MySQL IMSJ. | Pendiente. |
-| V-CC05-04 | Multipart de alta y POST `_method=PUT` de edición; tipos/límites de archivo, URLs y archivos previos. | Formularios, cargas permitidas/rechazadas y almacenamiento persistente comprobado. | Pendiente. |
-| V-CC05-05 | Banco/corrección conservados, sin respuesta correcta pública anticipada; no afirmar cierre de CC-01/CC-04. | Casos existentes del simulacro en API/frontends; reglas nuevas siguen pendientes. | Pendiente. |
-| V-CC05-06 | Franjas/reservas/agenda académica: fechas, propiedad, duplicación y último cupo bajo concurrencia. | MySQL y solicitudes simultáneas sin superar cupos; bloqueo/transacción, no solo SQLite. | Pendiente. |
-| V-CC05-07 | CORS/OPTIONS con Bearer/métodos usados; login limitado; errores y raíz web sin exponer secretos o archivos ejecutables. | Navegador/HTTP: origen autorizado/no autorizado, entradas inválidas, acceso a `.env`/SQL/código y cargas inseguras. | Pendiente. |
-| V-CC05-08 | Instalación nueva y actualización con datos; persistencia/restauración de base/archivos; arranque sin Artisan. | Entorno aislado, respaldo comprobado, comandos implementados y comparación de cuentas/IDs/archivos/historial. | Pendiente. |
-| V-CC05-09 | Ambos frontends operan con el contrato PHP; documentos/diagramas/guía final coinciden con versión entregada. | Versión/commit, integración, revisión de Juan Robaina y registro con docentes; aceptación del cliente cuando ocurra en actas. | Pendiente. |
+| V-CC05-01 | Arranque PHP sin Laravel, GET `/api/health`, las 42 rutas inventariadas, parámetros/sufijos, métodos y errores compatibles. | Imagen, manifiestos/lock y respuestas por ruta/método de la versión migrada. | **Listo:** 05/10; ampliado a 45 rutas el 13/10. |
+| V-CC05-02 | Login/registro por cédula, perfil, expiración, revocación de token actual/anteriores; rechazo por rol/cuenta según operación. | HTTP con cuenta válida/invalidada, token expirado/revocado y acceso público/personal; transición de sesiones registrada. | **Listo:** 05/10. |
+| V-CC05-03 | Noticias/materiales/FAQ, vigencia/estado, recursos JSON y auditoría conservados. | Casos públicos/administrativos y comparación de campos/respuestas con MySQL IMSJ. | **Listo:** 05/10 y flujo de Directora comprobado el 13/10. |
+| V-CC05-04 | Multipart de alta y POST `_method=PUT` de edición; tipos/límites de archivo, URLs y archivos previos. | Formularios, cargas permitidas/rechazadas y almacenamiento persistente comprobado. | **Listo:** 05/10; imagen de prueba comprobada el 13/10. |
+| V-CC05-05 | Banco/corrección conservados, sin respuesta correcta pública anticipada. | Casos existentes del simulacro en API/frontends. | **Listo:** 05/10 y revisión visual del 13/10. |
+| V-CC05-06 | Franjas/reservas/agenda académica: fechas, propiedad, duplicación y último cupo bajo concurrencia. | MySQL y solicitudes simultáneas sin superar cupos; bloqueo/transacción, no solo SQLite. | **Listo:** 05/10 para el alcance académico. |
+| V-CC05-07 | CORS/OPTIONS con Bearer/métodos usados; login limitado; errores y raíz web sin exponer secretos o archivos ejecutables. | Navegador/HTTP: origen autorizado/no autorizado, entradas inválidas, acceso a `.env`/SQL/código y cargas inseguras. | **Listo:** controles acordados comprobados el 05/10. |
+| V-CC05-08 | Instalación nueva y actualización con datos; persistencia/restauración de base/archivos; arranque sin Artisan. | Entorno aislado, respaldo comprobado, comandos implementados y comparación de cuentas/IDs/archivos/historial. | **Listo:** arranque y migración idempotente comprobados en entorno aislado el 13/10. |
+| V-CC05-09 | Ambos frontends operan con el contrato PHP; documentos/diagramas/guía final coinciden con versión entregada. | Versión/commit, integración y documentación de la versión. | **Listo:** integración HTTP y visual comprobada el 13/10. |
 
 Cada ejecución completará versión, entorno/datos, procedimiento, resultado, evidencia y responsable/fecha en el registro ya previsto. Las tareas TM-01–TM-07 del [plan](../backend/migracion_backend_vanilla.md) se vinculan a estos criterios. Las actas y selección de tareas quedan a cargo del equipo.
 
@@ -167,4 +169,4 @@ Los cuatro PDF conservan 20 páginas en total y 12 comentarios de revisión; se 
 
 Los cambios frente al inicio de CC-05 se limitan a Markdown y los cuatro PDF. Se comprobó por hash que actas, código, configuración, esquema, pruebas, diagramas PNG, identidad y licencia no cambiaron en esta intervención. La revisión del diff pasa sin errores de espacios. La comparación de referencia abarcó 38 archivos de `api-completa` y el README raíz, fijados a `d6f61c9`.
 
-Estas son comprobaciones documentales. No se ejecutaron la API de ejemplo, PHP IMSJ, Docker, SQL/migraciones, pruebas funcionales o auditorías; CC-05 continúa pendiente de implementación/verificación, CC-01–CC-04 pendientes y la revisión interna de Juan Robaina pendiente.
+Estas fueron comprobaciones documentales del 02/10. Su estado pendiente quedó superado por la implementación y las verificaciones posteriores registradas al comienzo del archivo. Estado vigente: CC-01–CC-05 Listos.

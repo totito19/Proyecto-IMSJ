@@ -1,6 +1,6 @@
 # Administración de Sistemas Operativos
 
-**Actualización - 05/10/2026, CC-05.** Documentación del backend PHP nativo implementado, con api-simple como referencia. Crédito/responsabilidad del grupo; apoyo externo de IA declarado. Revisión de Juan Robaina pendiente.
+**Estado consolidado - 15/10/2026, CC-05 Listo.** Documentación del backend PHP nativo implementado, con api-simple como referencia. Crédito/responsabilidad del grupo; apoyo externo de IA declarado.
 
 1. [Justificación tecnológica](justificacion-tecnologica.md).
 2. [Inventario de infraestructura](documentacion-infraestructura.md).

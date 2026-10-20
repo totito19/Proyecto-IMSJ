@@ -1,3 +1,5 @@
+/** Administración de fechas, horarios y cupos disponibles para reservas. */
+
 const TIPO_BADGE = {
   PRUEBA_MANEJO: 'prueba',
   RENOVACION_NORMAL: 'renovacion-normal',
@@ -7,23 +9,30 @@ const TIPO_BADGE = {
 let franjas = [];
 let queryFranjas = '';
 
+/** Devuelve únicamente las franjas que coinciden con tipo y texto de búsqueda. */
 function franjasFiltradas() {
   const tipo = $('#filtro-tipo').value;
   return franjas.filter((franja) => {
     const coincideTipo = tipo === 'todos' || franja.tipo === tipo;
-    const coincideTexto = !queryFranjas ||
+    const coincideTexto =
+      !queryFranjas ||
       [franja.fecha, franja.hora_inicio, franja.hora_fin, franja.tipo]
-        .join(' ').toLowerCase().includes(queryFranjas);
+        .join(' ')
+        .toLowerCase()
+        .includes(queryFranjas);
     return coincideTipo && coincideTexto;
   });
 }
 
+/** Construye las filas de la tabla y refleja si existen resultados visibles. */
 function renderFranjas() {
   const data = franjasFiltradas();
-  $('#tbody-franjas').innerHTML = data.map((franja) => {
-    const disponibles = Number(franja.cupos_disponibles);
-    const clase = disponibles === 0 ? 'avail--none' : disponibles <= 1 ? 'avail--low' : 'avail--ok';
-    return `
+  $('#tbody-franjas').innerHTML = data
+    .map((franja) => {
+      const disponibles = Number(franja.cupos_disponibles);
+      const clase =
+        disponibles === 0 ? 'avail--none' : disponibles <= 1 ? 'avail--low' : 'avail--ok';
+      return `
       <tr>
         <td class="strong">${formatDate(franja.fecha)}</td>
         <td class="code">${esc(franja.hora_inicio)} – ${esc(franja.hora_fin)}</td>
@@ -36,12 +45,14 @@ function renderFranjas() {
           ${actionBtn('trash-2', 'Eliminar', { danger: true, data: { accion: 'eliminar', id: franja.id } })}
         </div></td>
       </tr>`;
-  }).join('');
+    })
+    .join('');
   $('#empty-franjas').hidden = data.length > 0;
   $('#contador-franjas').textContent = franjas.length;
   hydrateIcons($('#tbody-franjas'));
 }
 
+/** Prepara el formulario para crear una franja o editar la recibida. */
 function abrirFormularioFranja(franja) {
   $('#form-franja').reset();
   $('#modal-franja-title').textContent = franja ? 'Editar franja' : 'Nueva franja';
@@ -54,6 +65,7 @@ function abrirFormularioFranja(franja) {
   Modal.open('modal-franja');
 }
 
+/** Consulta a la API todas las franjas disponibles para el panel. */
 async function cargarFranjas() {
   try {
     const payload = await ImsjApi.request('/franjas');
@@ -64,6 +76,7 @@ async function cargarFranjas() {
   }
 }
 
+/** Valida el formulario y envía un POST o PUT según exista identificador. */
 async function guardarFranja(event) {
   event.preventDefault();
   if (!event.currentTarget.reportValidity()) return;
@@ -90,10 +103,13 @@ async function guardarFranja(event) {
   }
 }
 
+// Conecta filtros, formulario y botones de fila después de cargar la página.
 document.addEventListener('DOMContentLoaded', () => {
   const usuario = ImsjApi.currentUser();
   if (!ImsjApi.isStaff(usuario)) {
-    window.location.assign(`/frontend-publico/login.html?return=${encodeURIComponent(window.location.pathname)}`);
+    window.location.assign(
+      `/frontend-publico/login.html?return=${encodeURIComponent(window.location.pathname)}`,
+    );
     return;
   }
   $('#f-fecha').min = new Date().toISOString().slice(0, 10);
@@ -115,6 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
-  initSearch((query) => { queryFranjas = query; renderFranjas(); });
+  initSearch((query) => {
+    queryFranjas = query;
+    renderFranjas();
+  });
   cargarFranjas();
 });

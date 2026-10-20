@@ -1,6 +1,6 @@
 # Sprint Review — IMSJ
 
-> **Revisión asistida por IA — 02/10/2026:** se conserva la reconstrucción del 08/09. Estos balances no sustituyen actas de reuniones efectivas con el cliente. Los campos y vínculos añadidos son observaciones documentales; aceptación humana pendiente.
+> **Revisión asistida por IA — 02/10/2026:** se conserva la reconstrucción del 08/09 como antecedente. Estos balances no sustituyen las actas de reuniones efectivas. Estado vigente al 15/10/2026: **CC-01–CC-05, Listos**.
 
 **Reconstrucción retrospectiva para revisión del equipo · 08/09/2026.**
 
@@ -56,19 +56,19 @@ Los puntos terminados requieren verificar el cumplimiento y las pruebas de cada 
 - Se añadieron el simulacro, el banco de preguntas, la administración de personal y la consulta del historial.
 - Se agregaron archivos para iniciar y detener el sistema local con Docker.
 
-**Pendiente de documentar al cierre:** qué versión se mostró, qué US cumplieron criterios, resultados de pruebas y feedback/aceptación. La existencia de API y Docker no acredita que se ejecutaran exitosamente durante una demo.
+**Actualización de estado al 15/10/2026:** CC-01–CC-05 están Listos. Los detalles históricos de cada demostración se conservan en las actas y la evidencia técnica en el registro de verificación.
 
 **Evidencia documental actual:** [API](../docs_auxiliares/backend/api.md), [verificación](../docs_auxiliares/evidencias/verificacion.md), `backend/routes/api.php`, migraciones y archivos Feature; los documentos originales citan commits de períodos anteriores y esta vista actual corresponde a `df581ab`, no necesariamente al cierre del 03/09.
 
-La [acta R-05](actas_reuniones.md#r-05--03092026) registra una demo el 03/09 con Directora e Inspector, sin detalle de versión ni resultado. CC-02–CC-04 registran pedidos de esa fecha; no se los presenta como aprobados o resueltos. CC-01 tiene evidencia de código, sin aceptación registrada.
+La [acta R-05](actas_reuniones.md#r-05--03092026) registra la reunión/demo del 03/09 con Directora e Inspector, origen de CC-02–CC-04. Estado vigente: CC-01–CC-05 Listos.
 
-## Campos de Review que siguen pendientes
+## Campos históricos no registrados
 
 | Período reconstruido | Fecha efectiva de Review / participantes | Incremento demostrado / versión | Feedback, resultado y puntos terminados | Impacto de backlog |
 |---|---|---|---|---|
 | 1 | No registrados. | El balance de commits no prueba una demo. | No registrados. | No registrado por US. |
 | 2 | No registrados. | El balance de commits no prueba una demo. | No registrados. | No registrado por US. |
-| 3 | No registrados. | El balance de commits no prueba una demo. | No registrados. | CC-01 registrado; ubicación histórica de la decisión pendiente. |
+| 3 | No registrados. | El balance de commits no prueba una demo. | No registrados. | CC-01 registrado; estado vigente **Listo**. |
 | 4 | R-05 registra demo, sin confirmar que fuera Review del sprint. | No registrado en detalle. | No registrados; total terminado «Por verificar». | CC-02–CC-04; US30/US32/US33 son borradores derivados. |
 
 **IA — Sugerencia:** completar cada Review con fuente, fecha, asistentes, funcionalidades mostradas, comentarios fieles del cliente, resultado y efectos en backlog/control de cambios. No usar citas del ejemplo ni reconstruir aprobaciones a partir de commits.

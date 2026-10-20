@@ -1,49 +1,80 @@
+/** Catálogo administrativo de materiales de estudio y su flujo de publicación. */
+
 const ICONO_TIPO = { PDF: 'file-text', IMAGEN: 'image', VIDEO: 'video' };
 
 let materiales = [];
 let queryMateriales = '';
 
+/** Impide usar la pantalla sin una sesión de personal o Directora. */
 function asegurarPersonal() {
   const usuario = ImsjApi.currentUser();
   if (!ImsjApi.isStaff(usuario)) {
-    window.location.assign(`/frontend-publico/login.html?return=${encodeURIComponent(window.location.pathname)}`);
+    window.location.assign(
+      `/frontend-publico/login.html?return=${encodeURIComponent(window.location.pathname)}`,
+    );
     return false;
   }
   return true;
 }
 
+/** Filtra materiales por nombre, tipo, estado y ubicación del recurso. */
 function materialesFiltrados() {
   if (!queryMateriales) return materiales;
   return materiales.filter((material) =>
     [material.nombre, material.tipo, material.estado]
-      .join(' ').toLowerCase().includes(queryMateriales));
+      .join(' ')
+      .toLowerCase()
+      .includes(queryMateriales),
+  );
 }
 
+/** Traduce el estado de la API a la variante visual utilizada por badge(). */
 function estadoMaterialVista(estado) {
-  return ({ BORRADOR: 'borrador', PENDIENTE: 'pendiente', APROBADO: 'aprobado', PUBLICADO: 'publicada' })[estado] || 'borrador';
+  return (
+    { BORRADOR: 'borrador', PENDIENTE: 'pendiente', APROBADO: 'aprobado', PUBLICADO: 'publicada' }[
+      estado
+    ] || 'borrador'
+  );
 }
 
+/** Decide qué transición editorial puede ofrecerse para el estado y rol actuales. */
 function accionFlujoMaterial(material) {
   const directora = ImsjApi.currentUser()?.rol === 'DIRECTORA';
   if (material.estado === 'BORRADOR') {
-    return actionBtn('send', 'Enviar a revisión', { labeled: true, data: { accion: 'estado', estado: 'PENDIENTE', id: material.id } });
+    return actionBtn('send', 'Enviar a revisión', {
+      labeled: true,
+      data: { accion: 'estado', estado: 'PENDIENTE', id: material.id },
+    });
   }
   if (material.estado === 'PENDIENTE' && directora) {
-    return actionBtn('check-circle', 'Aprobar', { labeled: true, data: { accion: 'estado', estado: 'APROBADO', id: material.id } });
+    return actionBtn('check-circle', 'Aprobar', {
+      labeled: true,
+      data: { accion: 'estado', estado: 'APROBADO', id: material.id },
+    });
   }
-  if (material.estado === 'PENDIENTE') return '<span class="self-label">Pendiente de Directora</span>';
+  if (material.estado === 'PENDIENTE')
+    return '<span class="self-label">Pendiente de Directora</span>';
   if (material.estado === 'APROBADO') {
-    return actionBtn('eye', 'Publicar', { labeled: true, data: { accion: 'estado', estado: 'PUBLICADO', id: material.id } });
+    return actionBtn('eye', 'Publicar', {
+      labeled: true,
+      data: { accion: 'estado', estado: 'PUBLICADO', id: material.id },
+    });
   }
   if (material.estado === 'PUBLICADO') {
-    return actionBtn('eye-off', 'Retirar', { labeled: true, data: { accion: 'estado', estado: 'BORRADOR', id: material.id } });
+    return actionBtn('eye-off', 'Retirar', {
+      labeled: true,
+      data: { accion: 'estado', estado: 'BORRADOR', id: material.id },
+    });
   }
   return '';
 }
 
+/** Genera las filas del catálogo administrativo con sus acciones permitidas. */
 function renderMateriales() {
   const data = materialesFiltrados();
-  $('#lista-materiales').innerHTML = data.map((material) => `
+  $('#lista-materiales').innerHTML = data
+    .map(
+      (material) => `
     <article class="material">
       <div class="material__icon">${icon(ICONO_TIPO[material.tipo] || 'file-text', 14)}</div>
       <div class="material__body">
@@ -58,12 +89,15 @@ function renderMateriales() {
           ${actionBtn('trash-2', 'Eliminar', { danger: true, data: { accion: 'eliminar', id: material.id } })}
         </div>
       </div>
-    </article>`).join('');
+    </article>`,
+    )
+    .join('');
   $('#empty-materiales').hidden = data.length > 0;
   $('#contador-materiales').textContent = materiales.length;
   hydrateIcons($('#lista-materiales'));
 }
 
+/** Muestra el campo de archivo o URL según el origen elegido en el formulario. */
 function alternarCampoOrigen() {
   const esVideo = $('#m-tipo').value === 'VIDEO';
   const esNuevo = !$('#m-id').value;
@@ -74,6 +108,7 @@ function alternarCampoOrigen() {
   $('#m-archivo').accept = $('#m-tipo').value === 'PDF' ? '.pdf' : '.jpg,.jpeg,.png,.webp';
 }
 
+/** Abre el modal en modo creación o completa sus campos para editar. */
 function abrirFormularioMaterial(material) {
   $('#form-material').reset();
   $('#modal-material-title').textContent = material ? 'Editar material' : 'Nuevo material';
@@ -81,11 +116,14 @@ function abrirFormularioMaterial(material) {
   $('#m-nombre').value = material ? material.nombre : '';
   $('#m-tipo').value = material ? material.tipo : 'PDF';
   $('#m-url').value = material && material.tipo === 'VIDEO' ? material.ubicacion_recurso : '';
-  $('[data-file-label]', $('#modal-material')).textContent = material ? 'Conservar archivo actual' : 'Seleccionar archivo...';
+  $('[data-file-label]', $('#modal-material')).textContent = material
+    ? 'Conservar archivo actual'
+    : 'Seleccionar archivo...';
   alternarCampoOrigen();
   Modal.open('modal-material');
 }
 
+/** Obtiene desde la API el catálogo completo y lo presenta en la tabla. */
 async function cargarMateriales() {
   try {
     const payload = await ImsjApi.request('/materiales');
@@ -96,6 +134,7 @@ async function cargarMateriales() {
   }
 }
 
+/** Empaqueta texto y archivo en FormData y crea o actualiza el material. */
 async function guardarMaterial(event) {
   event.preventDefault();
   const form = $('#form-material');
@@ -124,6 +163,7 @@ async function guardarMaterial(event) {
   }
 }
 
+// Valida acceso y conecta los eventos principales de la pantalla.
 document.addEventListener('DOMContentLoaded', () => {
   if (!asegurarPersonal()) return;
   $('#btn-nuevo-material').addEventListener('click', () => abrirFormularioMaterial(null));
@@ -133,7 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById(this.dataset.file);
     input.click();
     input.onchange = () => {
-      $('[data-file-label]', this).textContent = input.files[0] ? input.files[0].name : 'Seleccionar archivo...';
+      $('[data-file-label]', this).textContent = input.files[0]
+        ? input.files[0].name
+        : 'Seleccionar archivo...';
     };
   });
   $('#lista-materiales').addEventListener('click', async (event) => {
@@ -148,7 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       if (button.dataset.accion === 'estado') {
         await ImsjApi.request(`/materiales/${material.id}/estado`, {
-          method: 'PATCH', body: { estado: button.dataset.estado },
+          method: 'PATCH',
+          body: { estado: button.dataset.estado },
         });
       }
       if (button.dataset.accion === 'eliminar') {
@@ -160,6 +203,9 @@ document.addEventListener('DOMContentLoaded', () => {
       alert(error.message);
     }
   });
-  initSearch((query) => { queryMateriales = query; renderMateriales(); });
+  initSearch((query) => {
+    queryMateriales = query;
+    renderMateriales();
+  });
   cargarMateriales();
 });

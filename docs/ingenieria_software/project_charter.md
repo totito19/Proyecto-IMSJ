@@ -1,4 +1,4 @@
-> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas y límites](../docs_auxiliares/evidencias/verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
+> **Estado consolidado - 15/10/2026:** CC-01–CC-05 están **Listos**. El backend actual es PHP nativo/PDO; CC-02–CC-04 se trazan a la reunión/demo del 03/09 con la Directora y el Inspector de Tránsito.
 
 ---
 
@@ -67,32 +67,32 @@ Una plataforma integrada mejorará la experiencia del ciudadano y la eficiencia 
 
 El objetivo y los criterios anteriores conservan el alcance inicial de la letra. La exclusión de agenda para el cliente ya consta en este charter y el informe de entrevista. Por tanto, los criterios de reservar y consultar agenda se aplican a la **versión académica**, no a un compromiso actual de instalación en la IMSJ.
 
-| Destino | Alcance documentado | Validación pendiente |
+| Destino | Alcance documentado | Estado / referencia |
 |---|---|---|
-| Cliente IMSJ | Noticias, materiales, preguntas frecuentes y administración; CC-01–CC-04 para entrega real, pendientes según el grupo. Agenda excluida. | Criterios y versión concreta; aceptación por el Inspector de Tránsito registrada en actas. No hay fecha de entrega real fijada. |
+| Cliente IMSJ | Noticias, materiales, preguntas frecuentes, simulador, consultas y administración; CC-01–CC-04 Listos. Agenda excluida. | Versión implementada y trazada en control de cambios. |
 | Egreso académico | Lo anterior más agenda, franjas y reservas de prueba/renovación. | Cumplimiento de letra, costo urgente, diferencias de API, datos y evidencia de pruebas. |
-| Solicitudes posteriores | CC-01–CC-04 corresponden a la entrega real y siguen pendientes, sin prioridad distinta entre ellas. | Ver [control de cambios](control_cambios.md); no se acredita implementación terminada, pruebas ni aceptación. |
+| Solicitudes posteriores | CC-01–CC-04 corresponden a la entrega real y están Listas. | Ver [control de cambios](control_cambios.md) y [verificación](../docs_auxiliares/evidencias/verificacion.md). |
 
 | Dato del charter | Información disponible |
 |---|---|
 | Director / líder del proyecto | Tomás Cabrera, también desarrollador backend, confirmado por el grupo. |
-| Equipo | Tomás Cabrera: liderazgo/backend; Juan Robaina: testing/documentación y revisión/aprobación interna; Gabriela Romero: base de datos; Verónica Romero y Juan Corrales: frontend. |
-| Fecha de inicio aprobada | No registrada. La primera actividad Git no equivale a aprobación del charter. |
-| Duración y esfuerzo | No registrados. Los cuatro períodos y 82 puntos del planning son propuestos, sin capacidad aprobada. |
+| Equipo | Tomás Cabrera: liderazgo/backend; Juan Robaina: testing, documentación y revisión interna; Gabriela Romero: base de datos; Verónica Romero y Juan Corrales: frontend. |
+| Fecha de inicio | Julio de 2026, según aclaración del grupo. |
+| Duración y esfuerzo | No registrados. Los cuatro períodos y 82 puntos del planning no se presentan como medición real de capacidad. |
 | Referente del cliente | Inspector de Tránsito de la Intendencia, conocido como Nacho. Tiene autoridad para aceptar entregas y aprobar cambios de alcance; registro en actas. No se usa un apellido no confirmado. |
 | Fecha de entrega real | No fijada por el grupo. |
 | Administración y mantenimiento posteriores | A cargo de la Intendencia, por ahora; contacto institucional se completará después. |
 | Presupuesto | No registrado; no se traslada el importe del ejemplo TamboTrace. |
 | Aprobación del charter | No se localizó firma o evidencia de aprobación. |
 
-**Aclaraciones del grupo — 02/10/2026:** la coordinación y el seguimiento se realizan en reuniones; las actas quedan a cargo del equipo. Las asignaciones y la autoridad anteriores no certifican aprobaciones históricas. Los datos por completar están en [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
+**Aclaraciones del grupo — actualizadas al 15/10/2026:** la coordinación y el seguimiento se realizan en reuniones; las actas quedan a cargo del equipo. El origen y estado de cada cambio se consultan en el [control de cambios](control_cambios.md): **CC-01–CC-05, Listos**. Los datos institucionales por completar están en [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
 
-**IA — Sugerencia:** reemplazar criterios generales como «documentación completa» o «sin errores» por verificaciones acordadas y evidencia. Los criterios propuestos en [backlog](backlog.md) permiten discutirlo; aún requieren validación humana.
+**IA — Sugerencia:** reemplazar criterios generales como «documentación completa» o «sin errores» por verificaciones acordadas y evidencia. Los criterios de CC-01–CC-05 quedaron incorporados al [backlog](backlog.md) y su estado consolidado es **Listo**.
 
 Fuentes de estructura: [charter del curso](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/01_project_charter.md) y [letra IMSJ](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md). Los cambios posteriores se registran en el control de cambios.
 
 ## Adenda tecnológica del grupo — CC-05, 02/10/2026
 
-Se decide reemplazar Laravel por un backend PHP sin framework, basado en la API completa indicada por el grupo, organizado por capas y conectado a MySQL con PDO. El [control de cambios](control_cambios.md) y la [guía de migración](../docs_auxiliares/backend/migracion_backend_vanilla.md) registran alcance, compatibilidad, datos y cierre. La decisión no modifica el alcance funcional, los roles, la administración posterior por la Intendencia ni el estado pendiente de CC-01–CC-04; agenda solo académica.
+Se reemplazó Laravel por un backend PHP sin framework, siguiendo api-simple, organizado por capas y conectado a MySQL con PDO. El [control de cambios](control_cambios.md) y la [guía de migración](../docs_auxiliares/backend/migracion_backend_vanilla.md) registran alcance, compatibilidad, datos y cierre. CC-01–CC-05 están Listos; agenda continúa como alcance académico.
 
-La documentación del destino está preparada y el código permanece Laravel hasta la migración. Falta revisión documental de Juan Robaina, implementación/pruebas y registro con docentes de la diferencia respecto de la consigna. No se fija fecha o presupuesto ni se acredita aceptación del Inspector; las actas quedan a cargo del equipo.
+El backend PHP nativo, sus pruebas y la documentación están implementados. **Estado: CC-01–CC-05, Listos.** No se fija una fecha o un presupuesto que no estén registrados; las actas conservan el origen histórico de las decisiones.

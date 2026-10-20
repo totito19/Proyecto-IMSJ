@@ -1,14 +1,25 @@
+/** Bandeja administrativa de consultas enviadas desde el portal público. */
+
 let consultas = [];
 let queryConsultas = '';
 
+/** Convierte una fecha ISO del backend al formato corto utilizado en Uruguay. */
 function fechaConsulta(value) {
-  return value ? new Date(value).toLocaleString('es-UY', { dateStyle: 'short', timeStyle: 'short' }) : '—';
+  return value
+    ? new Date(value).toLocaleString('es-UY', { dateStyle: 'short', timeStyle: 'short' })
+    : '—';
 }
 
+/** Filtra las consultas y genera una tarjeta segura para cada resultado visible. */
 function renderConsultas() {
-  const visible = queryConsultas ? consultas.filter((item) =>
-    [item.nombre, item.email, item.mensaje].join(' ').toLowerCase().includes(queryConsultas)) : consultas;
-  $('#lista-consultas').innerHTML = visible.map((item) => `
+  const visible = queryConsultas
+    ? consultas.filter((item) =>
+        [item.nombre, item.email, item.mensaje].join(' ').toLowerCase().includes(queryConsultas),
+      )
+    : consultas;
+  $('#lista-consultas').innerHTML = visible
+    .map(
+      (item) => `
     <details class="consultation${item.leida ? '' : ' consultation--unread'}" data-id="${item.id}">
       <summary>
         <span class="consultation__dot" aria-hidden="true"></span>
@@ -18,13 +29,16 @@ function renderConsultas() {
         <span data-icon="chevron-down" data-size="16"></span>
       </summary>
       <div class="consultation__body"><p>${esc(item.mensaje)}</p><a href="mailto:${esc(item.email)}">Escribir a ${esc(item.email)}</a></div>
-    </details>`).join('');
+    </details>`,
+    )
+    .join('');
   $('#empty-consultas').hidden = visible.length > 0;
   $('#contador-consultas').textContent = consultas.length;
   $('#contador-no-leidas').textContent = consultas.filter((item) => !item.leida).length;
   hydrateIcons($('#lista-consultas'));
 }
 
+/** Recupera la bandeja desde la API; ante un error informa el mensaje al usuario. */
 async function cargarConsultas() {
   try {
     const payload = await ImsjApi.request('/consultas');
@@ -36,25 +50,37 @@ async function cargarConsultas() {
   }
 }
 
+// Inicializa búsqueda y acciones de la bandeja cuando el HTML terminó de cargar.
 document.addEventListener('DOMContentLoaded', () => {
   if (!ImsjApi.isStaff()) {
-    window.location.assign(`/frontend-publico/login.html?return=${encodeURIComponent(window.location.pathname)}`);
+    window.location.assign(
+      `/frontend-publico/login.html?return=${encodeURIComponent(window.location.pathname)}`,
+    );
     return;
   }
-  $('#lista-consultas').addEventListener('toggle', async (event) => {
-    const details = event.target.closest('details[data-id]');
-    if (!details?.open) return;
-    const item = consultas.find((consulta) => consulta.id === Number(details.dataset.id));
-    if (!item || item.leida) return;
-    try {
-      await ImsjApi.request(`/consultas/${item.id}/leida`, { method: 'PATCH' });
-      item.leida = true;
-      details.classList.remove('consultation--unread');
-      $('#contador-no-leidas').textContent = consultas.filter((consulta) => !consulta.leida).length;
-    } catch (error) {
-      alert(error.message);
-    }
-  }, true);
-  initSearch((query) => { queryConsultas = query; renderConsultas(); });
+  $('#lista-consultas').addEventListener(
+    'toggle',
+    async (event) => {
+      const details = event.target.closest('details[data-id]');
+      if (!details?.open) return;
+      const item = consultas.find((consulta) => consulta.id === Number(details.dataset.id));
+      if (!item || item.leida) return;
+      try {
+        await ImsjApi.request(`/consultas/${item.id}/leida`, { method: 'PATCH' });
+        item.leida = true;
+        details.classList.remove('consultation--unread');
+        $('#contador-no-leidas').textContent = consultas.filter(
+          (consulta) => !consulta.leida,
+        ).length;
+      } catch (error) {
+        alert(error.message);
+      }
+    },
+    true,
+  );
+  initSearch((query) => {
+    queryConsultas = query;
+    renderConsultas();
+  });
   cargarConsultas();
 });

@@ -20,10 +20,11 @@ Para iniciar en Windows con Docker/Compose, abrir **[backend/iniciar.bat](backen
 ## Documentación
 
 - [Índice de documentos de entrega](docs/README.md).
+- [Guía para estudiar y defender el código](docs/guia_codigo_y_defensa.md).
 - [Control de cambios](docs/control_cambios.md), [arquitectura](docs/arquitectura_propuesta.md) y [SSOO](docs/ssoo/README.md).
 - [Documentación auxiliar](docs_auxiliares/README.md): contrato de API, referencias, migración y evidencias.
 - [Revisión del 13/10/2026 y pendientes actuales](docs_auxiliares/revision/revision_2026-10-13.md).
 
-CC-02, CC-03 y CC-04 tienen una implementación de demo verificada el 13/10/2026; su revisión y aceptación por el cliente siguen pendientes. CC-01 conserva definiciones funcionales pendientes. Agenda y reservas corresponden al alcance académico. La aceptación académica de PHP nativo frente a la letra que exige Laravel sigue pendiente de registrar con docentes.
+**Estado consolidado al 15/10/2026:** CC-01, CC-02, CC-03, CC-04 y CC-05 están **Listos**. La demo del 03/09 originó CC-02–CC-04 con la Directora y el Inspector de Tránsito; su implementación fue verificada el 13/10/2026. CC-01 conserva el comportamiento implementado del simulador y CC-05 corresponde al backend PHP nativo. Agenda y reservas continúan dentro del alcance académico.
 
-El crédito del proyecto y su documentación corresponde a **Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales**. Implementación/documentación preparadas con apoyo externo de IA; las observaciones y sugerencias no son acuerdos ni aceptación institucional. Juan Robaina revisa y aprueba internamente la documentación; esta versión queda pendiente de su revisión. El Inspector de Tránsito de la Intendencia aprueba o solicita cambios en reuniones; el equipo registra esos hechos en las actas. La administración y el mantenimiento posteriores corresponden a la Intendencia, por ahora.
+El crédito del proyecto y su documentación corresponde a **Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales**. La implementación y la documentación fueron preparadas con apoyo externo de IA. CC-02–CC-04 conservan como origen la reunión/demo con la Directora y el Inspector de Tránsito; su estado actual se expresa directamente como **Listo**, sin crear un apartado separado de aprobaciones. La administración y el mantenimiento posteriores corresponden a la Intendencia, por ahora.

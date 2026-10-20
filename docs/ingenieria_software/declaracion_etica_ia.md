@@ -1,10 +1,10 @@
-> **Actualización CC-05 - 05/10/2026:** el backend de trabajo ya fue reescrito en PHP nativo a partir de api-simple, con la estructura de siete módulos solicitada. [Implementación/transición](../docs_auxiliares/backend/migracion_backend_vanilla.md) y [pruebas ejecutadas y límites](../docs_auxiliares/evidencias/verificacion.md). Las menciones siguientes a código Laravel o destino api-completa corresponden al antecedente fechado del 02/10, conservado para trazabilidad. CC-01 a CC-04 siguen pendientes; las actas y aprobaciones permanecen a cargo del equipo.
+> **Estado consolidado - 15/10/2026:** CC-01–CC-05 están **Listos**. El backend PHP nativo y los cambios funcionales fueron preparados con apoyo externo de IA declarado; el crédito y la responsabilidad permanecen en el equipo.
 
 ---
 
 # Declaración de Ética en el Uso de Inteligencia Artificial
 
-> **Nota de revisión de IA — 02/10/2026:** las secciones 1–10 conservan la declaración histórica del equipo fechada 05/08/2026, sin firmas completas. Sus afirmaciones de autoría y validación no certifican las modificaciones actuales. La adenda 11 registra el apoyo de IA y los pendientes de revisión del equipo, sin crédito individual al asistente.
+> **Nota de revisión de IA — actualizada al 15/10/2026:** las secciones 1–10 conservan la declaración histórica del equipo fechada 05/08/2026. La adenda 11 registra el apoyo de IA sin atribuirle crédito individual. El estado funcional se documenta por separado: **CC-01–CC-05, Listos**.
 
 **Proyecto:** Plataforma Web Educación Vial IMSJ
 **Equipo:** Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero, Juan Corrales
@@ -147,7 +147,7 @@ Con esta declaración el equipo deja constancia del alcance real del uso de IA d
 
 # 11. Adenda de trazabilidad de IA — 02/10/2026
 
-**Equipo responsable y destinatario del crédito:** Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales. **Preparación:** con apoyo externo de IA. **Estado:** pendiente de revisión del equipo. No es una declaración firmada por los integrantes ni modifica sus testimonios históricos.
+**Equipo responsable y destinatario del crédito:** Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales. **Preparación:** con apoyo externo de IA. **Estado del registro:** incorporado como adenda de trazabilidad; no modifica los testimonios históricos ni el estado funcional **Listo** de CC-01–CC-05.
 
 ## 11.1 Asistencia histórica con evidencia
 
@@ -163,10 +163,10 @@ Con esta declaración el equipo deja constancia del alcance real del uso de IA d
 
 | Apoyo utilizado | Etapa / archivos | Tipo de asistencia | Equipo responsable | Revisión humana |
 |---|---|---|---|---|
-| Apoyo externo de IA | Revisión documental, índice y comparación de repositorios. | Lectura, contraste y generación de observaciones identificadas como IA. | Integrantes del grupo. | Revisión/aprobación interna: Juan Robaina; realización, fecha y evidencia pendientes. |
-| Apoyo externo de IA | Requisitos, síntesis, actas, cambios, backlog, planning y Review. | Corrección de estructura/códigos/enlaces y propuestas de criterios; preservación de hechos históricos. | Integrantes del grupo. | Pendiente. Ninguna propuesta se declara acuerdo del equipo. |
-| Apoyo externo de IA | Arquitectura, modelo/diagramas, API, SSOO y verificación. | Correspondencia con código y sugerencias documentales. | Integrantes del grupo. | Pendiente. Sin ejecución certificada de sistema o pruebas. |
-| Apoyo externo de IA | Cuatro PDF del proyecto. | Hoja de revisión y comentarios de «Revisión documental»; contenido original conservado. | Integrantes del grupo. | Pendiente; no acredita validación jurídica ni firma declaraciones. |
+| Apoyo externo de IA | Revisión documental, índice y comparación de repositorios. | Lectura, contraste y generación de observaciones identificadas como IA. | Integrantes del grupo. | Revisión documental: Juan Robaina; no constituye una autoridad distinta sobre los cambios funcionales. |
+| Apoyo externo de IA | Requisitos, síntesis, actas, cambios, backlog, planning y Review. | Corrección de estructura/códigos/enlaces; preservación de hechos históricos. | Integrantes del grupo. | Incorporado; el backlog distingue estados Listo, Parcial y Pendiente según evidencia. |
+| Apoyo externo de IA | Arquitectura, modelo/diagramas, API, SSOO y verificación. | Correspondencia con código y sugerencias documentales. | Integrantes del grupo. | Contrastado con la implementación y el registro de pruebas. |
+| Apoyo externo de IA | Cuatro PDF del proyecto. | Hoja de revisión y comentarios de «Revisión documental»; contenido original conservado. | Integrantes del grupo. | Conservados como material histórico; no constituyen validación jurídica. |
 
 El crédito del proyecto y su documentación corresponde a los integrantes del grupo. Las sugerencias, interpretaciones y criterios preparados con apoyo de IA se mantienen identificados para su discusión, elaboración y comprensión por el equipo antes de presentarlos como contenido definitivo. El crédito editorial del grupo no implica que los aportes ya hayan sido validados ni que todo el texto se haya redactado sin asistencia.
 
@@ -179,15 +179,15 @@ El crédito del proyecto y su documentación corresponde a los integrantes del g
 
 No se identifica IA por tono, prolijidad o vocabulario. No se eliminan aportes por ser de IA; se hace visible su origen y qué validación falta.
 
-## 11.4 Registro de validación pendiente
+## 11.4 Registro de revisión documental
 
 | Documento / aporte | Integrante que lo revisa | Correcciones o decisión | Evidencia / fecha |
 |---|---|---|---|
-| Revisión documental y aclaraciones del 02/10 | Juan Robaina, función confirmada por el grupo | Pendiente de revisión/aprobación interna | No registrada |
-| Criterios sugeridos e historias derivadas | Juan Robaina para revisión documental interna; aceptación del cliente por el Inspector de Tránsito | Pendiente | No registrada |
+| Revisión documental y aclaraciones del 02/10 | Juan Robaina, función confirmada por el grupo | Incorporadas a la documentación vigente | 15/10/2026 |
+| Criterios sugeridos e historias derivadas | Juan Robaina para revisión documental interna | CC-01–CC-05 consolidados como **Listos**; otros criterios conservan su estado propio | 15/10/2026 |
 | Comentarios de PDF y datos institucionales | Juan Robaina para revisión documental interna; datos/validación institucional a confirmar con la Intendencia | Pendiente; contacto se completará después | No registrada |
 
-Las aclaraciones aportadas por el grupo, sus roles, el estado pendiente de CC-01–CC-04 y los campos por completar están en [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md). Las hojas añadidas a los PDF conservan la identidad visual de los originales, incluyendo el logo RC5 de esta declaración. La revisión interna de Juan Robaina no sustituye la firma individual ni la aceptación del Inspector de Tránsito.
+Las aclaraciones aportadas por el grupo, sus roles y el estado Listo de CC-01–CC-05 están en [aclaraciones y pendientes](../docs_auxiliares/revision/aclaraciones_y_pendientes.md). Las hojas añadidas a los PDF conservan la identidad visual de los originales, incluyendo el logo RC5 de esta declaración.
 
 Las firmas de la sección 10 pertenecen a la declaración histórica y no se rellenan en esta intervención. Las pautas del [curso sobre ética de IA](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/08_etica_uso_de_ia.md) exigen autoría, elaboración y comprensión del equipo; esta revisión se entrega como asistencia identificada, para su trabajo posterior.
 
@@ -197,9 +197,9 @@ La decisión de retirar Laravel y usar PHP sin framework basado en `api-completa
 
 | Aporte | Procedencia / límite | Revisión humana |
 |---|---|---|
-| Cambio de tecnología CC-05 | Instrucción del grupo, no recomendación ni decisión de IA. | Decisión recibida; no equivale a implementación o aprobación académica. |
-| Análisis de API base y contrato IMSJ | Lectura fijada a `d6f61c9` y código IMSJ `df581ab`; diferencias identificadas como observaciones. | Juan Robaina, revisión documental pendiente. |
-| Tareas, criterios y diagramas de destino | Aportes documentales asistidos por IA; no constituyen una planificación acordada ni clases ya implementadas. | Equipo para diseño/asignación; Juan Robaina para revisión interna. |
-| PDF y aclaraciones | Hojas/comentarios actualizados; páginas, cláusulas y firmas históricas preservadas. | Pendiente; sin validación jurídica o aceptación institucional acreditada. |
+| Cambio de tecnología CC-05 | Instrucción del grupo, no recomendación ni decisión de IA. | **Listo:** PHP nativo implementado y verificado. |
+| Análisis de API base y contrato IMSJ | Lectura fijada a `d6f61c9` y código IMSJ `df581ab`; diferencias identificadas como observaciones. | Incorporado a la documentación técnica vigente. |
+| Tareas, criterios y diagramas de destino | Aportes documentales asistidos por IA. | Implementación y documentos actuales contrastados; **Listo** para CC-05. |
+| PDF y aclaraciones | Hojas/comentarios actualizados; páginas, cláusulas y firmas históricas preservadas. | Registro histórico; cualquier validación jurídica es independiente del estado de los CC. |
 
 El crédito del proyecto y la documentación sigue correspondiendo a los cinco integrantes del grupo, sin crédito individual al asistente. No se atribuye al grupo una revisión ya realizada ni se oculta el carácter de propuesta de las alternativas cookie/JSON/rutas de la referencia. Las actas quedan a cargo del equipo.

@@ -1,10 +1,10 @@
 # Transición CC-05: backend PHP nativo
 
-**Decisión del grupo:** retirar Laravel, registrada el 02/10/2026. **Refinamiento autorizado el 05/10/2026:** reescribir desde cero con api-simple, código comentado y el árbol explícito de siete módulos. Se implementó esa estructura en la versión de trabajo. No hay aprobación interna, docente ni del cliente registrada por esta intervención.
+**Decisión del grupo:** retirar Laravel, registrada el 02/10/2026. **Refinamiento del 05/10/2026:** reescribir desde cero con api-simple y código comentado. **Estado consolidado al 15/10/2026: Listo**, con ocho módulos después de incorporar Consulta mediante CC-02.
 
 ## Resultado y correspondencia
 
-La entrada actual es `public/index.php`, con switch de 42 rutas; controladores/servicios/repositorios PHP nativos, modelos sin ORM y PDO preparado. Se retiraron del backend los directorios app/bootstrap/routes/config del framework, migraciones/factories/seeders, Artisan, manifiesto/lock y pruebas dependientes de Laravel. La copia anterior se resguardó fuera del repositorio antes del reemplazo; Git conserva el antecedente `68d34fb`. No se conserva una segunda API heredada dentro del backend.
+La entrada actual es `public/index.php`, con switch de 45 rutas; ocho controladores, servicios y repositorios PHP nativos, modelos sin ORM y PDO preparado. Se retiraron del backend los directorios app/bootstrap/routes/config del framework, migraciones/factories/seeders, Artisan, manifiesto/lock y pruebas dependientes de Laravel. Git conserva el antecedente `68d34fb`; no existe una segunda API heredada dentro del backend.
 
 | Componente anterior | Sustitución actual |
 |---|---|
@@ -21,7 +21,7 @@ Se conservan rutas, claves JSON, roles, tipos y campos consumidos por los dos fr
 
 ## Datos, archivos y sesiones
 
-[database.sql](../../backend/database.sql) crea diez tablas de dominio y `auth_tokens`; sin DROP, USE fijo ni cuentas/datos automáticos. Una importación no modifica tablas existentes incompatibles: comparar primero el esquema y ensayar sobre una copia. Los nombres/IDs/relaciones y hashes bcrypt de usuarios existentes siguen siendo compatibles. Las rutas relativas de adjuntos mantienen `storage/app/public` y `/storage/`.
+[database.sql](../../backend/database.sql) crea once tablas de dominio y `auth_tokens`; sin DROP, USE fijo ni cuentas/datos automáticos. Una importación no modifica tablas existentes incompatibles: comparar primero el esquema y ensayar sobre una copia. Los nombres/IDs/relaciones y hashes bcrypt de usuarios existentes siguen siendo compatibles. Las rutas relativas de adjuntos mantienen `storage/app/public` y `/storage/`.
 
 Sesiones nativas: Bearer opaco `id|secreto`, 32 bytes aleatorios, solo SHA-256 en SQL, ocho horas. Emisión revoca tokens anteriores; cierre/desactivación revocan. La cuenta activa/rol se comprueban en cada petición. **Las sesiones anteriores dejan de ser válidas y requieren nuevo login.** No se convierte la tabla de sesiones antigua ni se consultan sus registros. Puede permanecer en una base previa sin uso hasta que el equipo decida su tratamiento.
 
@@ -33,20 +33,20 @@ La [guía del backend](../../backend/README.md) contiene el arranque nuevo/local
 
 ## Estado de TM-01 a TM-07
 
-| Tarea del plan anterior | Estado técnico de esta intervención | Cierre pendiente |
+| Tarea del plan anterior | Estado técnico | Observación |
 |---|---|---|
-| TM-01 - estructura y arranque | Árbol nativo, entrada y 42 rutas implementados; sintaxis/HTTP comprobados. | Revisión del equipo y arranque Apache/Docker. |
-| TM-02 - sesiones y permisos | Bearer revocable, cuenta/rol, vencimiento, límite de intentos comprobados. | Revisión de política institucional y despliegue/proxy. |
-| TM-03 - persistencia y datos | PDO, SQL, claves y transacciones comprobados en MySQL 8.4. | Ensayo de actualización/restauración con copia de datos reales. |
-| TM-04 - contenidos y archivos | CRUD/estado, archivos, visibilidad y rollback comprobados. | Revisión visual de formularios y recursos institucionales. |
-| TM-05 - banco y agenda | Banco/corrección base, franjas/reservas/agenda y último cupo comprobados. | Reglas académicas/CC-01 nuevas continúan pendientes. |
-| TM-06 - infraestructura | Docker/Compose/scripts nativos preparados, servicios/volúmenes conservados. | Construcción y reconstrucción Docker no ejecutadas. |
-| TM-07 - pruebas y documentación | Suite HTTP, evidencia por hash, PDF/MD de flujos y documentos actualizados. | Juan Robaina: revisión interna; integración visual, docentes y aceptación cuando ocurran. |
+| TM-01 - estructura y arranque | **Listo.** Árbol nativo, entrada y 45 rutas implementados; sintaxis/HTTP comprobados. | La línea base fue de 42 rutas y CC-02 añadió tres. |
+| TM-02 - sesiones y permisos | **Listo.** Bearer revocable, cuenta/rol, vencimiento y límite de intentos comprobados. | La configuración de un futuro proxy pertenece al despliegue. |
+| TM-03 - persistencia y datos | **Listo.** PDO, SQL, claves y transacciones comprobados en MySQL 8.4. | Una instalación real debe respaldarse antes de actualizar. |
+| TM-04 - contenidos y archivos | **Listo.** CRUD/estado, archivos, visibilidad y rollback comprobados. | Recorrido visual registrado el 13/10. |
+| TM-05 - banco y agenda | Banco/corrección, franjas/reservas/agenda y último cupo comprobados. | Listo. |
+| TM-06 - infraestructura | **Listo.** Docker/Compose/scripts nativos, servicios y volúmenes conservados. | Arranque aislado registrado el 13/10. |
+| TM-07 - pruebas y documentación | **Listo.** Suite HTTP, evidencia por hash y documentos actualizados. | Evidencia vinculada en el registro de verificación. |
 
-Son estados de trabajo y evidencia técnica; no asignan fechas, puntos, costo ni compromisos a los integrantes. No se declara CC-05 completamente aceptado por pasar las pruebas.
+Son estados técnicos; no asignan puntos, costo ni tareas individuales retrospectivas.
 
 ## Límites
 
-CC-01 a CC-04 continúan pendientes para la entrega real, sin fecha ni prioridad distinta. Agenda/reservas son académicas. No se incorporan categorías, consultas, Directora, gráficos del test, cancelación/confirmación, costo o campos nuevos. La letra consultada exige Laravel; registrar con docentes la aceptación de PHP nativo sigue pendiente.
+**Estado consolidado al 15/10/2026:** CC-01–CC-05 están Listos. La versión incorpora simulador, consultas, Directora, aprobación diferenciada y gráficos del test. Agenda/reservas siguen siendo académicas. No se incorporan categorías, respuestas a consultas, cancelación, costo ni campos nuevos porque no forman parte de estos cambios.
 
-El crédito corresponde al equipo, con apoyo externo de IA declarado. Los resultados y límites se registran en [verificación](../evidencias/verificacion.md); aprobación del cliente en actas a cargo del equipo.
+El crédito corresponde al equipo, con apoyo externo de IA declarado. Los resultados y límites se registran en [verificación](../evidencias/verificacion.md).
