@@ -148,10 +148,7 @@ function initLogout() {
   if (!link) return;
 
   link.addEventListener('click', (event) => {
-    if (!window.ImsjApi) {
-      if (typeof Store !== 'undefined') Store.reset();
-      return;
-    }
+    if (!window.ImsjApi) return;
 
     event.preventDefault();
     ImsjApi.logout();

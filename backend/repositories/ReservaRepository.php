@@ -139,6 +139,14 @@ final class ReservaRepository
             )->fetchAll(),
         );
     }
+    /** Elimina por reserva y propietario para impedir cancelaciones ajenas. */
+    public function cancelar(int $id, int $usuario): bool
+    {
+        return Database::query(
+            'DELETE FROM reservas WHERE id=? AND usuario_id=?',
+            [$id, $usuario],
+        )->rowCount() === 1;
+    }
     /** Consulta el período solicitado y presenta los datos del personal. */
     public function agenda(string $desde, string $hasta): array
     {

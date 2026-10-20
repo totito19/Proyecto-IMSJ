@@ -77,7 +77,7 @@ Sistema web para centralizar información de la sección Tránsito de la Intende
 
 ## Reglas que no se deben completar por suposición
 
-- **Agenda académica:** la letra requiere costo especial urgente; la implementación distingue el trámite, pero no registra costo. No se define precio ni cálculo sin decisión. Los endpoints de cancelación/confirmación de la letra tampoco están implementados.
+- **Agenda académica:** la letra requiere costo especial urgente; la implementación distingue el trámite, pero no registra costo. No se define precio ni cálculo sin decisión. La cancelación ciudadana está implementada; la confirmación sigue pendiente.
 - **Preguntas frecuentes:** la letra prevé enlaces útiles; el esquema actual tiene pregunta, respuesta y estado. Falta confirmar el tratamiento de enlaces.
 - **Usuarios:** hay registro ciudadano y alta/desactivación de personal en código. Su procedencia no está documentada como un cambio controlado; no se atribuye a CC-01–CC-05.
 - **RNF5–RNF6:** «mobile first» y «accesibilidad básica» carecen de dispositivos, medidas y criterios acordados. Los criterios propuestos en el backlog son sugerencias, no estándares adoptados.

@@ -106,6 +106,9 @@ try {
         // GET /api/reservas/mias: acceso ciudadano.
         case $method === 'GET' && $route === 'reservas/mias':
             new ReservaController()->mine();
+        // DELETE /api/reservas/{id}: acceso ciudadano.
+        case $method === 'DELETE' && preg_match('~^reservas/([1-9][0-9]*)$~D', $route, $match):
+            new ReservaController()->cancelar(Solicitud::number($match[1], 'id'));
         // GET /api/historial: acceso personal.
         case $method === 'GET' && $route === 'historial':
             new UsuarioController()->historial();

@@ -47,7 +47,23 @@
           title.textContent = `${formatDate(item.fecha)} · ${String(item.hora_inicio).slice(0, 5)}`;
           const detail = document.createElement('p');
           detail.textContent = `${String(item.tipo_tramite).replaceAll('_', ' ')} · Reserva #${item.reserva_id}`;
-          body.append(title, detail);
+          const cancel = document.createElement('button');
+          cancel.className = 'btn btn-primary';
+          cancel.type = 'button';
+          cancel.textContent = 'Cancelar reserva';
+          cancel.addEventListener('click', async () => {
+            if (!confirm('¿Cancelar esta reserva?')) return;
+            cancel.disabled = true;
+            try {
+              await ImsjApi.request(`/reservas/${item.reserva_id}`, { method: 'DELETE' });
+              article.remove();
+              setStatus(root.children.length ? '' : 'No tenés reservas registradas.');
+            } catch (error) {
+              cancel.disabled = false;
+              setStatus(error.message, true);
+            }
+          });
+          body.append(title, detail, cancel);
           article.append(body);
           return article;
         }),

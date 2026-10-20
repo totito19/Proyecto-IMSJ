@@ -100,6 +100,13 @@ final class ReservaService
     {
         return array_map(fn($r) => $r->toArray(), $this->repo->propias($user->id()));
     }
+    /** Cancela una reserva sin permitir que el ciudadano afecte reservas ajenas. */
+    public function cancelar(int $id, Usuario $user): void
+    {
+        if (!$this->repo->cancelar($id, $user->id())) {
+            throw new ApiException(404, 'Reserva no encontrada.');
+        }
+    }
     /** Consulta el período solicitado y presenta los datos del personal. */
     public function agenda(string $vista, string $fecha): array
     {

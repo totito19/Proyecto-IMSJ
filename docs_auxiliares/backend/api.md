@@ -30,6 +30,7 @@ Errores de campo: `{"message":"Los datos no son válidos.","errors":{"campo":["d
 | POST | `/logout` | autenticado | `AuthController::logout` |
 | POST | `/reservas` | ciudadano | `ReservaController::store` |
 | GET | `/reservas/mias` | ciudadano | `ReservaController::mine` |
+| DELETE | `/reservas/{id}` | ciudadano propietario | `ReservaController::cancelar` |
 | GET | `/historial` | personal | `UsuarioController::historial` |
 | GET | `/consultas` | personal/directora | `ConsultaController::index` |
 | PATCH | `/consultas/{id}/leida` | personal/directora | `ConsultaController::marcarLeida` |
@@ -85,6 +86,6 @@ Además de PUT JSON y multipart nativo, se conserva **POST multipart con `_metho
 
 Noticias, materiales y preguntas frecuentes siguen `BORRADOR → PENDIENTE → APROBADO → PUBLICADO`. El personal puede preparar, enviar a revisión y publicar contenido aprobado; solo Directora puede aprobar. Editar el contenido lo devuelve a borrador. El portal acepta consultas con nombre, correo y mensaje; el panel permite leerlas y marcarlas como leídas. Las preguntas del simulador admiten una imagen opcional que se muestra sin revelar la respuesta correcta.
 
-No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`. Categorías, respuestas/notificaciones para consultas, cancelación, costo urgente y nuevos campos de contacto no forman parte de CC-01–CC-05. Agenda y reservas son académicas.
+No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`. Categorías, respuestas/notificaciones para consultas, costo urgente y nuevos campos de contacto no forman parte de CC-01–CC-05. La cancelación ciudadana se incorporó posteriormente. Agenda y reservas son académicas.
 
 La relación con la [letra académica](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md) y los resultados técnicos se documentan en [verificación](../evidencias/verificacion.md).

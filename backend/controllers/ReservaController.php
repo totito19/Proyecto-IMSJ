@@ -53,6 +53,13 @@ final class ReservaController
         $user = Auth::requireUser('PUBLICO_GENERAL');
         Response::json(['reservas' => $this->service->propias($user)]);
     }
+    /** Cancela únicamente una reserva perteneciente al ciudadano autenticado. */
+    public function cancelar(int $id): never
+    {
+        $user = Auth::requireUser('PUBLICO_GENERAL');
+        $this->service->cancelar($id, $user);
+        Response::empty();
+    }
     /** La consulta de agenda calcula el período y un resumen de urgencias. */
     public function agenda(): never
     {

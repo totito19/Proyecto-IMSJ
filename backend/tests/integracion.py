@@ -182,12 +182,18 @@ call('GET', '/api/franjas', token=staff, fields=['franjas'])
 call('PUT', f'/api/franjas/{slot}', {**franja, 'cupos_totales': 1}, staff, fields=['franja'])
 call('GET', '/api/franjas/disponibles?tipo=PRUEBA_MANEJO', fields=['franjas'])
 call('POST', '/api/reservas', {'franja_disponibilidad_id': slot}, citizen, 201, ['reserva'])
-call('GET', '/api/reservas/mias', token=citizen, fields=['reservas'])
+reserva = call('GET', '/api/reservas/mias', token=citizen, fields=['reservas'])['reservas'][0]
 call('POST', '/api/reservas', {'franja_disponibilidad_id': slot}, citizen, 422)
+call('DELETE', f"/api/reservas/{reserva['reserva_id']}", token=staff, expect=403)
+u2 = call('POST', '/api/register', {**user_data, 'cedula': '55555555'}, expect=201)['token']
+call('DELETE', f"/api/reservas/{reserva['reserva_id']}", token=u2, expect=404)
 call('DELETE', f'/api/franjas/{slot}', token=staff, expect=422)
 call('POST', '/api/franjas', franja, staff, 422)
 for view in ['dia', 'semana', 'mes']:
     call('GET', f'/api/agenda?vista={view}&fecha={future}', token=staff, fields=['reservas', 'resumen'])
+call('DELETE', f"/api/reservas/{reserva['reserva_id']}", token=citizen, expect=204)
+check(not call('GET', '/api/reservas/mias', token=citizen, fields=['reservas'])['reservas'], 'Ciudadano cancela su propia reserva')
+call('DELETE', f"/api/reservas/{reserva['reserva_id']}", token=citizen, expect=404)
 slot2 = call('POST', '/api/franjas', {**franja, 'hora_inicio': '11:00', 'hora_fin': '12:00'}, staff, 201)['franja']['id']
 call('DELETE', f'/api/franjas/{slot2}', token=staff, expect=204)
 call('GET', '/api/agenda?vista=anual', token=staff, expect=422)
@@ -211,7 +217,6 @@ call('GET', '/api/historial?limite=51', token=staff, expect=422)
 check(int(sql('SELECT COUNT(*) FROM historial_acciones;')) >= 15, 'Auditoría persiste modificaciones')
 
 # Dos servidores independientes evitan que el servidor PHP serial oculte carreras.
-u2 = call('POST', '/api/register', {**user_data, 'cedula': '55555555'}, expect=201)['token']
 last = call('POST', '/api/franjas', {**franja, 'hora_inicio': '13:00', 'hora_fin': '14:00', 'cupos_totales': 1}, staff, 201)['franja']['id']
 def concurrent_reserve(base, token):
     req = urllib.request.Request(base + '/api/reservas', json.dumps({'franja_disponibilidad_id': last}).encode(),
