@@ -142,7 +142,7 @@ function initSidebar() {
 
 /* ── Cerrar sesión ───────────────────────────────────────────────────────── */
 
-/** Revoca la sesión mediante la API y devuelve al usuario al ingreso público. */
+/** Revoca la sesión y abre directamente el ingreso del personal, sin página puente. */
 function initLogout() {
   const link = $('[data-logout]');
   if (!link) return;
@@ -152,7 +152,7 @@ function initLogout() {
 
     event.preventDefault();
     ImsjApi.logout();
-    window.location.assign(link.href);
+    window.location.replace('/frontend-publico/login.html#admin');
   });
 }
 
