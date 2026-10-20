@@ -34,13 +34,9 @@ final class ReservaRepository
         // La subconsulta calcula reservas_count para cada franja sin traer cada reserva.
         $sql =
             'SELECT f.*, (SELECT COUNT(*) FROM reservas r WHERE r.franja_disponibilidad_id = f.id) AS reservas_count FROM franjas_disponibilidad f';
-        $where = [];
-        $values = [];
-        if ($publico) {
-            // El ciudadano solo puede elegir fechas actuales o futuras.
-            $where[] = 'f.fecha >= ?';
-            $values[] = date('Y-m-d');
-        }
+        // Las franjas vencidas dejan de mostrarse tanto en el portal como en el panel.
+        $where = ['f.fecha >= ?'];
+        $values = [date('Y-m-d')];
         if ($tipo !== null) {
             // Si eligió un trámite, limita la consulta a ese tipo.
             $where[] = 'f.tipo = ?';
@@ -134,8 +130,8 @@ final class ReservaRepository
             fn($r) => new Reserva($r),
             // Devuelve solo las reservas del usuario autenticado, nunca un id enviado por otro.
             Database::query(
-                'SELECT r.*,f.fecha,f.hora_inicio,f.hora_fin,f.tipo FROM reservas r JOIN franjas_disponibilidad f ON f.id=r.franja_disponibilidad_id WHERE r.usuario_id=? ORDER BY r.created_at DESC,r.id DESC',
-                [$usuario],
+                'SELECT r.*,f.fecha,f.hora_inicio,f.hora_fin,f.tipo FROM reservas r JOIN franjas_disponibilidad f ON f.id=r.franja_disponibilidad_id WHERE r.usuario_id=? AND f.fecha >= ? ORDER BY f.fecha,f.hora_inicio,r.id',
+                [$usuario, date('Y-m-d')],
             )->fetchAll(),
         );
     }
@@ -155,8 +151,8 @@ final class ReservaRepository
             // Une reserva, franja y usuario para que el personal vea horario, trámite y cédula
             // dentro del período inclusivo indicado por BETWEEN.
             Database::query(
-                'SELECT r.*,f.fecha,f.hora_inicio,f.hora_fin,f.tipo,u.cedula FROM reservas r JOIN franjas_disponibilidad f ON f.id=r.franja_disponibilidad_id JOIN usuarios u ON u.id=r.usuario_id WHERE f.fecha BETWEEN ? AND ? ORDER BY f.fecha,f.hora_inicio,r.id',
-                [$desde, $hasta],
+                'SELECT r.*,f.fecha,f.hora_inicio,f.hora_fin,f.tipo,u.cedula FROM reservas r JOIN franjas_disponibilidad f ON f.id=r.franja_disponibilidad_id JOIN usuarios u ON u.id=r.usuario_id WHERE f.fecha BETWEEN ? AND ? AND f.fecha >= ? ORDER BY f.fecha,f.hora_inicio,r.id',
+                [$desde, $hasta, date('Y-m-d')],
             )->fetchAll(),
         );
     }

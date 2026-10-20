@@ -16,7 +16,7 @@ final class ReservaController
             : null;
         Response::json(['franjas' => $this->service->franjas(true, $tipo)]);
     }
-    /** Listado administrativo, incluyendo franjas llenas o vencidas. */
+    /** Listado administrativo de franjas vigentes, incluyendo las que ya están llenas. */
     public function franjas(): never
     {
         Auth::requireUser('PERSONAL_IMSJ');

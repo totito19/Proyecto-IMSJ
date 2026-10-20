@@ -26,7 +26,7 @@ const NOMBRES_TIPO = {
 };
 
 let cursorAgenda = new Date();
-let vistaAgenda = 'dia';
+let vistaAgenda = 'mes';
 let queryAgenda = '';
 let reservasAgenda = [];
 
