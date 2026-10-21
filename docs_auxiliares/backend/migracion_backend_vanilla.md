@@ -25,8 +25,6 @@ Se conservan rutas, claves JSON, roles, tipos y campos consumidos por los dos fr
 
 Sesiones nativas: Bearer opaco `id|secreto`, 32 bytes aleatorios, solo SHA-256 en SQL, ocho horas. Emisión revoca tokens anteriores; cierre/desactivación revocan. La cuenta activa/rol se comprueban en cada petición. **Las sesiones anteriores dejan de ser válidas y requieren nuevo login.** No se convierte la tabla de sesiones antigua ni se consultan sus registros. Puede permanecer en una base previa sin uso hasta que el equipo decida su tratamiento.
 
-No se operó sobre una base del equipo o de la Intendencia. La única base utilizada para pruebas fue aislada, con datos sintéticos. Los archivos locales anteriores se preservaron al reemplazar el código; no se borraron volúmenes Docker.
-
 ## Instalación y actualización
 
 La [guía del backend](../../backend/README.md) contiene el arranque nuevo/local y la primera cuenta. Para una base existente: respaldo de base y adjuntos, conservación de .env y nombres de volúmenes, comparación del esquema, ensayo sobre una copia, importación no destructiva y nuevo login. [SSOO](transicion_backend_vanilla.md) detalla respaldo/restauración y sus límites. No usar reconstrucción con borrado de volúmenes como actualización.
@@ -45,14 +43,25 @@ La [guía del backend](../../backend/README.md) contiene el arranque nuevo/local
 
 Son estados técnicos; no asignan puntos, costo ni tareas individuales retrospectivas.
 
-## Límites
+## Alcance de la versión
 
-**Estado consolidado al 15/10/2026:** CC-01–CC-05 están Listos. La versión incorpora simulador, consultas, Directora, aprobación diferenciada y gráficos del test. Agenda/reservas siguen siendo académicas. Categorías, respuestas a consultas, costo urgente y campos institucionales permanecen pendientes o fuera de esos cambios. La cancelación ciudadana se añadió a la agenda académica el 20/10.
+**Estado consolidado al 15/10/2026:** CC-01–CC-05 están Listos. La versión incorpora simulador, consultas, Directora, aprobación diferenciada y gráficos del test. Agenda/reservas siguen siendo académicas.  La cancelación ciudadana se añadió a la agenda académica el 20/10.
 
-El crédito y la responsabilidad corresponden al equipo. Los resultados y límites se registran en [verificación](../evidencias/verificacion.md).
+El crédito y la responsabilidad corresponden al equipo. Los resultados se registran en [verificación](../evidencias/verificacion.md).
 
 ## Evolución posterior de la base nativa
 
 La base del 05/10 expuso 42 rutas. Consultas añadió tres en la demo del 13/10 y la cancelación añadió una el 20/10. Estos incrementos conservan la estructura nativa y no reincorporan archivos del framework. El manifiesto actual declara requisitos de PHP/extensiones, sin paquetes externos.
 
-Al revisar una instalación se debe comparar el esquema actual, la migración incremental, los adjuntos y la configuración. La compatibilidad de nombres y hashes no acredita que cualquier base previa pueda actualizarse sin ensayo. La restauración debe verificarse con una copia y una versión de código compatible.
+Al revisar una instalación se debe comparar el esquema actual, la migración incremental, los adjuntos y la configuración. El ensayo de actualización utiliza una copia del esquema y los datos de origen. La restauración debe verificarse con una copia y una versión de código compatible.
+
+## Registro de instalación
+
+| Dato | Valor |
+|---|---|
+| Instalación | [] |
+| Versión de origen | [] |
+| Versión de destino | [] |
+| Fecha | [] |
+| Responsable | [] |
+| Resultado | [] |

@@ -8,7 +8,7 @@
 **Fuente indicada por el grupo:** [RodrigoCazard/api-ejemplo-utu — api-completa](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/main/api-completa).
 **Revisión consultada:** `d6f61c999369b754d70bfa0621a154e9a630589a`.
 
-Se leyeron los 38 archivos de `api-completa`, incluido `composer.lock`, y el README de la raíz. Se consultaron como ejemplo; no se copiaron al código de IMSJ ni se ejecutó su API o SQL. La referencia fijada permite separar lo leído de futuras modificaciones de `main`.
+Se leyeron los 38 archivos de `api-completa`, incluido `composer.lock`, y el README de la raíz. El estudio compara el recorrido de capas y el contrato de la referencia con IMSJ. La referencia fijada permite separar lo leído de futuras modificaciones de `main`.
 
 ## 1. Funcionamiento leído en los archivos
 
@@ -43,9 +43,7 @@ El router recibe método y ruta; ejecuta controles y controlador. Este valida y 
 | Parámetros | Único marcador `{id}` reconocido por Router. | `{usuario}`, `{noticia}`, `{material}`, `{pregunta}`, `{franja}` y rutas con sufijo `/estado`. |
 | Archivos | CRUD de productos sin carga de materiales/noticias. | Multipart, validación, persistencia y URLs de imágenes/PDF; POST con `_method=PUT` en edición. |
 | CORS | Origen único configurable, cookies, cabecera Content-Type; GET/POST/PATCH/DELETE/OPTIONS. | Apache sirve frontends y API en el mismo origen/puerto configurable; Bearer/Accept; también PUT y multipart. |
-| Límites HTTP | 60/min por IP para todas las rutas, excepto OPTIONS. | Login/registro con `throttle:5,1`; comportamiento a preservar durante sustitución. |
-
-Copiar la referencia sin adaptación rompería la integración de ambos frontends. La decisión de retirar Laravel permite trasladar su organización por capas; no aprueba automáticamente todas estas diferencias de contrato.
+| Límites HTTP | 60/min por IP para todas las rutas, excepto OPTIONS. | Login/registro con límite de cinco intentos por minuto mediante caché compartida. |
 
 ## 3. Dependencias y requisitos reales
 
@@ -58,27 +56,28 @@ El ejemplo no utiliza Laravel, pero no carece de bibliotecas. El [manifiesto y s
 | `symfony/rate-limiter` | `7.4.*` | `v7.4.16` | Limitación de peticiones. |
 | `symfony/cache` | `7.4.*` | `v7.4.17` | Almacenamiento del limitador. |
 
-Los componentes Symfony 7.4 del lock requieren PHP >=8.2, aunque el manifiesto del ejemplo diga >=8.0. Su plataforma Composer y Docker utilizan 8.3. IMSJ declara PHP 8.5 en su Dockerfile actual: CC-05 no solicita cambiar esa versión ni MySQL 8.4. El lock final se prepara y comprueba para el runtime de IMSJ; no se sustituye mecánicamente por el del ejemplo.
+Los componentes Symfony 7.4 del lock requieren PHP >=8.2, aunque el manifiesto del ejemplo diga >=8.0. Su plataforma Composer y Docker utilizan 8.3. IMSJ declara PHP 8.5 en su Dockerfile actual: CC-05 no solicita cambiar esa versión ni MySQL 8.4. El manifiesto de IMSJ declara PHP y extensiones; la implementación utiliza carga explícita y utilidades nativas.
 
-## 4. Límites que hay que resolver al adaptar
+## 4. Diferencias de implementación
 
-El estudio identificó los siguientes límites del ejemplo, sin ejecutar pruebas de explotación:
+La adaptación utiliza las siguientes decisiones de implementación:
 
-- La verificación JWT utiliza algoritmo HS256 fijado. Borrar la cookie no invalida una copia del token; el ejemplo no incluye revocación en servidor. No acredita las garantías de cierre de sesión y renovación observadas en IMSJ.
+- La verificación JWT utiliza algoritmo HS256 fijado. Borrar la cookie no invalida una copia del token; el ejemplo no incluye revocación en servidor. IMSJ utiliza revocación de sesiones en servidor.
 - El router original trata un método no coincidente como ruta inexistente. Debe documentarse y comprobarse la política HTTP final; no asumir códigos de error del framework solo por copiar el router.
 - El cuerpo JSON inválido puede convertirse en un array vacío en el controlador común. La adaptación debe distinguir entradas inválidas y mantener errores que entiendan los frontends.
 - La API no trae los módulos de archivos, auditoría o reservas de IMSJ. La venta protege stock con un UPDATE condicional; no aporta por sí sola la transacción y bloqueo de franja que necesitan las reservas.
 - El README reconoce límites de producción, CSRF y pruebas/migraciones. La demostración no es evidencia de seguridad o despliegue de IMSJ.
 - Compose trae valores y una clave de demostración. No reutilizar esos secretos, cuentas o nombres de base como configuración institucional. Inicializar SQL al crear un volumen vacío no actualiza una instalación con datos.
-- `.htaccess` bloquea varias extensiones y directorios, pero copiar su raíz web no equivale a revisar toda la exposición. El destino debe mantener los archivos internos fuera del acceso público y comprobarlo.
+- `.htaccess` restringe el acceso web y la implementación IMSJ mantiene los archivos internos fuera de la raíz pública.
 
 ## 5. Qué se toma y qué necesita otra decisión
 
 En el estudio inicial se tomaban como referencia capas, router, PDO, validadores/DTO y configuración/respuestas. El refinamiento posterior adoptó el recorrido simple con validación común en Solicitud y despacho explícito. Se adaptan al dominio y contrato de IMSJ según [migración](migracion_backend_vanilla.md).
 
-**Alternativas declaradas, sin adopción:** cookie JWT, nuevo envoltorio JSON, cambio de rutas/roles, expiración distinta, otro límite global o puertos del ejemplo. Si se elige alguna, el grupo debe aprobarla antes de implementar cambios en frontend, seguridad o datos. Esta actualización no transforma esas alternativas en decisiones.
-
-La referencia técnica se conserva en enlaces y revisión fija. Antes de copiar código, revisar los avisos y permisos de reutilización del repositorio y de las bibliotecas; `composer.json` indica MIT para el proyecto, pero no se localizó un archivo LICENSE independiente en el árbol consultado. Esto queda como comprobación de procedencia, sin modificar la licencia de IMSJ ni inventar titularidad.
+| Dato | Valor |
+|---|---|
+| Licencia indicada en el manifiesto de referencia | MIT |
+| Referencia de permisos de reutilización | [] |
 
 ## Lectura de este antecedente
 

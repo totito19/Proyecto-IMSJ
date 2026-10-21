@@ -1,6 +1,6 @@
 # Clases, atributos y métodos del backend nativo
 
-**Estado consolidado al 15/10/2026: Listo.** Correspondencia con los archivos implementados. El dominio del proyecto se mantiene y la estructura técnica sigue el recorrido de api-simple.
+**Estado consolidado al 21/10/2026: Listo.** Correspondencia con los archivos implementados. El dominio del proyecto se mantiene y la estructura técnica sigue el recorrido de api-simple.
 
 ## Capas y ocho módulos
 
@@ -25,7 +25,7 @@ Los controladores validan y exigen acceso, servicios deciden reglas/transaccione
 | Consulta | nombre, email, mensaje, estado de lectura y marcas de tiempo. Permite recibir consultas públicas y gestionar su lectura sin exponer operaciones internas al portal. |
 | Noticia | título, texto, inicio/fin de vigencia, portada, estado, galería y enlaces. La visibilidad exige publicación y período vigente. Los adjuntos se representan como URL. |
 | Material | nombre, tipo PDF/IMAGEN/VIDEO, ubicación y estado. Archivo para PDF/imagen; URL externa para video. |
-| Pregunta | pregunta, respuesta y estado de publicación. Sin categoría propia o enlaces útiles estructurados; definición pendiente. |
+| Pregunta | pregunta, respuesta y estado de publicación. La representación JSON utiliza pregunta, respuesta y estado. |
 | Prueba | enunciado, imagen opcional, cuatro opciones y respuesta correcta. `toArray(false)` oculta la respuesta antes de corregir; el resultado se calcula con SQL, no con un campo enviado como correcto. |
 | Franja | fecha, inicio/fin, tipo y cupos; añade conteo y cupos disponibles calculados. Horario/tipo único. |
 | Reserva | usuario y franja, fecha/horas/tipo derivados de la franja, creación. `cedula` solo se añade en la consulta del personal; no se toman usuarios arbitrarios del body. |
@@ -44,7 +44,7 @@ Imágenes/enlaces de noticia se conservan como relaciones SQL, serializadas por 
 
 Alta/edición/estado/eliminación administrativa confirma auditoría con sus datos. Archivos nuevos se eliminan si falla la transacción; anteriores se limpian después del commit. Reserva bloquea franja antes de contar cupos y guardar; la combinación usuario/franja también es única en SQL. Gestión de personal conserva al menos un integrante activo e impide quitar el acceso propio.
 
-No hay clases de categoría porque RF19/US29 no forma parte de CC-01–CC-05. Consulta ciudadana, rol Directora, aprobación diferenciada y gráfico del test sí están implementados. CC-01–CC-05 están Listos; agenda continúa como alcance académico. El MER y el pasaje a tablas describen el modelo actual; el UML PNG se conserva como antecedente y se acompaña de una vista de clases nativas en [diagramas](Diagramas/README.md).
+Consulta ciudadana, rol Directora, aprobación diferenciada y gráfico del test sí están implementados. CC-01–CC-05 están Listos; agenda continúa como alcance académico. El MER y el pasaje a tablas describen el modelo actual; el UML PNG se conserva como antecedente y se acompaña de una vista de clases nativas en [diagramas](Diagramas/README.md).
 
 ## Métodos públicos y responsabilidad por capa
 
@@ -67,10 +67,10 @@ La separación evita que una pantalla construya SQL o decida permisos. Por ejemp
 
 La cancelación sigue ese recorrido y utiliza simultáneamente el ID de reserva y el ID de propietario en DELETE. No acepta un usuario arbitrario enviado por el navegador. Las vistas diaria, semanal y mensual calculan intervalos en el servicio y el repositorio limita los resultados a fechas vigentes.
 
-En contenidos, la validación de forma ocurre antes de guardar y el servicio controla estados y auditoría. Las relaciones de galería y enlaces se recuperan dentro de NoticiaRepository. La falta de un controlador propio para esas tablas responde a que pertenecen al caso de uso de una noticia, no a la ausencia de datos relacionados.
+En contenidos, la validación de forma ocurre antes de guardar y el servicio controla estados y auditoría. Las relaciones de galería y enlaces se recuperan dentro de NoticiaRepository. Las imágenes y los enlaces pertenecen a la gestión de una noticia y se operan desde NoticiaRepository.
 
 ## Tratamiento de errores y consistencia
 
-`ApiException` transporta el estado HTTP y los errores recuperables. `Database::transaction()` revierte datos si una operación falla; `Response` termina la petición con JSON o un cuerpo vacío. Los modelos no deciden si una solicitud puede acceder: esa verificación ocurre antes de solicitar los datos.
+`ApiException` transporta el estado HTTP y los errores recuperables. `Database::transaction()` revierte datos si una operación falla; `Response` termina la petición con JSON o un cuerpo vacío. La autorización ocurre antes de solicitar los datos y los modelos preparan la representación de salida.
 
 El almacenamiento de archivos necesita coordinación adicional porque SQL no revierte una copia del sistema de archivos. Los servicios eliminan una carga nueva si falla la transacción y retiran el archivo anterior después de confirmar el reemplazo. Este comportamiento se explica junto a las pruebas de rollback en el registro técnico.

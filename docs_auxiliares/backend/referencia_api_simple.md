@@ -16,14 +16,18 @@
 | No hay limitador en api-simple | Se conserva el límite IMSJ de cinco intentos/minuto, con archivo y `flock`. |
 | SQL de demostración | `database.sql` sin DROP ni datos de ejemplo; primera cuenta mediante CLI explícita. |
 
-Compartir el patrón del ejemplo no significa copiar su contrato o certificar su seguridad. Autenticación revocable, reservas, archivos y auditoría responden al comportamiento IMSJ existente. El contrato vigente identifica rutas, permisos, métodos y efectos por operación.
-
 La estructura actual incluye `public/`, tres clases `core/`, ocho controladores, ocho servicios, ocho repositorios, `models/`, SQL raíz, Composer y Docker. Las franjas/agenda se agrupan en Reserva, el historial en Usuario y las consultas ciudadanas forman el octavo módulo. CC-01–CC-05 están Listos.
 
-Los archivos operativos `scripts/`, `tests/`, almacenamiento y plantillas de entorno permiten crear la primera cuenta, comprobar la implementación y ejecutarla. No añaden endpoints. Composer declara PHP/extensiones; esta versión no requiere paquetes externos ni `vendor/autoload.php`.
+Los archivos operativos `scripts/`, `tests/`, almacenamiento y plantillas de entorno permiten crear la primera cuenta, comprobar la implementación y ejecutarla.  Composer declara PHP/extensiones; esta versión no requiere paquetes externos ni `vendor/autoload.php`.
 
 ## Correspondencia con los recorridos actuales
 
 La referencia aporta la forma de seguir una petición y separar HTTP, negocio y SQL. IMSJ agrega reglas propias: aprobación de Dirección, vigencia, tipos de adjunto, consultas, cupos, propiedad y auditoría. Por ello los modelos, métodos y límites se justifican desde los requisitos de IMSJ y no desde las entidades del ejemplo.
 
 El contrato pasó de 42 rutas en la reescritura a 45 con consultas y 46 con cancelación. Los inventarios y pruebas se relacionan con esas versiones; el ejemplo no determina la cantidad ni las autorizaciones del sistema vial.
+
+## Verificación de la adaptación
+
+La suite integral del 21/10 recorre las 46 rutas y registra 192 comprobaciones. La organización de entrada, controladores, servicios y repositorios conserva el contrato del dominio IMSJ.
+
+[Contrato](api.md) y [verificación](../evidencias/verificacion.md).

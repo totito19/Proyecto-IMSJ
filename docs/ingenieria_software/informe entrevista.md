@@ -1,13 +1,14 @@
-# Reporte de Entrevista de Relevamiento de Requisitos
+# Informe de entrevista
 
-
-**Proyecto:** Educación Vial IMSJ — Portal Vial.
-
-**Actualización documental:** 20/10/2026.
-
-**Referente actual:** Inspector de Tránsito de la Intendencia.
-
-La reunión R-01 registra una entrevista inicial el 09/07/2026 con Tomás Cabrera, Juan Robaina y el Inspector de Tránsito. El presente informe no contiene una identificación original completa; queda por confirmar que sus respuestas correspondan a esa instancia y adjuntar la validación del resumen. Se conserva su contenido como relevamiento disponible, separado de las solicitudes posteriores del 03/09.
+| Dato | Valor |
+|---|---|
+| Proyecto | Educación Vial IMSJ — Portal Vial |
+| Instancia | Entrevista inicial |
+| Fecha | [] |
+| Modalidad y lugar | [] |
+| Entrevistadores | [] |
+| Entrevistado | [] |
+| Registro o adjuntos | [] |
 
 ## Objetivo de la entrevista
 
@@ -15,9 +16,9 @@ El objetivo de la entrevista fue relevar información sobre los requerimientos f
 
 ---
 
-# Desarrollo de la entrevista
+## Desarrollo de la entrevista
 
-## 1. Usuarios administrativos
+### Usuarios administrativos
 
 **Pregunta:** Dentro de los usuarios administrativos, ¿qué roles van a existir?
 
@@ -43,7 +44,7 @@ El objetivo de la entrevista fue relevar información sobre los requerimientos f
 
 ---
 
-# Agenda de trámites
+## Agenda de trámites
 
 **Pregunta:** ¿Cómo es actualmente el proceso para solicitar la licencia de conducir?
 
@@ -51,7 +52,7 @@ El objetivo de la entrevista fue relevar información sobre los requerimientos f
 
 ---
 
-# Preguntas Frecuentes
+## Preguntas frecuentes
 
 **Pregunta:** ¿Las preguntas frecuentes deberán clasificarse por categorías?
 
@@ -65,7 +66,7 @@ El objetivo de la entrevista fue relevar información sobre los requerimientos f
 
 ---
 
-# Material de estudio
+## Materiales de estudio
 
 **Pregunta:** ¿Qué tipos de materiales utilizarán?
 
@@ -89,7 +90,7 @@ Los materiales disponibles en el sistema incluirán:
 
 ---
 
-# Noticias
+## Noticias
 
 **Pregunta:** ¿Cada noticia tendrá una fecha de inicio y una fecha de finalización de vigencia?
 
@@ -121,7 +122,7 @@ Los materiales disponibles en el sistema incluirán:
 
 ---
 
-# Conclusiones
+## Conclusiones
 
 De la entrevista se desprenden los siguientes aspectos relevantes para el desarrollo del sistema:
 
@@ -135,29 +136,33 @@ De la entrevista se desprenden los siguientes aspectos relevantes para el desarr
 * La administración de noticias será realizada por el equipo, pero requerirá la aprobación de la Dirección antes de su publicación.
 * No surgieron nuevos requerimientos adicionales durante la entrevista.
 
-## Aclaraciones para utilizar el relevamiento
+## Requisitos derivados
 
-La frase final significa que el entrevistado no agregó otros pedidos a los discutidos. Categorías, formatos y aprobación de noticias sí aportan precisiones respecto del catálogo inicial: se identifican ahora como RF19, RF20 y RF21 en [Requerimientos](Requerimientos.md).
+| Necesidad | Requisitos |
+|---|---|
+| Identificación de cambios administrativos | RNF3. |
+| Agenda como alcance académico | RF3–RF4, RF11–RF16. |
+| Categorías de preguntas frecuentes | RF19. |
+| PDF, imágenes y videos | RF5, RF17, RF20. |
+| Vigencia de noticias | RF8 y RNF7. |
+| Aprobación de Dirección | RF21. |
 
-Los permisos iguales describen esta instancia inicial. La solicitud posterior CC-03 incorpora validación por Directora; debe consultarse en [control de cambios](control_cambios.md), sin corregir retrospectivamente las respuestas de esta entrevista.
+## Evolución de permisos
 
-## Relación con los requisitos y estado actual
-
-| Hallazgo de la entrevista | Requisitos relacionados | Tratamiento vigente |
+| Instancia | Regla | Fuente |
 |---|---|---|
-| Necesidad de conocer quién modifica contenidos | RNF3 | Hay historial de acciones; cobertura total y retención aún no definidas. |
-| Agenda fuera de la entrega actual al cliente | RF3–RF4, RF11–RF16 | Se mantiene exclusivamente en el alcance académico. |
-| Clasificación de FAQ | RF19 | Pendiente de categorías concretas e implementación. |
-| Materiales en distintos formatos | RF5, RF17, RF20 | PDF e imagen como archivos; videos mediante URL. Falta confirmar esa modalidad operativa. |
-| Vigencia de noticias | RF8, RNF7 | Fechas validadas y filtro público por vigencia. |
-| Aprobación de Dirección | RF21, CC-03 | Solo Directora aprueba; el personal publica después. Se aplica a noticias, materiales y FAQ. |
+| Entrevista inicial | Administración compartida y aprobación de Dirección. | Respuestas de usuarios y noticias. |
+| 03/09/2026 | Aprobación diferenciada por Directora y publicación posterior. | R-05 y CC-03. |
 
-La respuesta histórica que describe permisos iguales no refleja la diferenciación posterior introducida por CC-03. La frase «sin nuevos requerimientos» cierra la entrevista, pero no elimina las precisiones sobre categorías, formatos y aprobación que sí aparecen en sus respuestas.
+## Validación
 
-## Datos de procedencia por completar
-
-El equipo debe confirmar la correspondencia con R-01, la fuente de las respuestas y quién validó el resumen. Las decisiones pendientes sobre categorías, video y operación institucional se reúnen en el [formulario auxiliar](../../docs_auxiliares/revision/formulario_datos_documentacion.md), para evitar duplicar campos vacíos en el informe.
+| Dato | Valor |
+|---|---|
+| Revisor | [] |
+| Fecha | [] |
+| Conformidad del entrevistado | [] |
+| Referencia | [] |
 
 ## Referencias
 
-[Guía de preguntas](Entrevista.md), [actas](actas_reuniones.md), [requisitos](Requerimientos.md), [análisis](analisis_de_requerimientos.md) y [control de cambios](control_cambios.md).
+[Guía de preguntas](Entrevista.md), [requisitos](Requerimientos.md), [control de cambios](control_cambios.md) y [Entrevistas del curso](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/entrevistas.md).

@@ -1,12 +1,12 @@
 # Justificación tecnológica
 
-**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 20/10/2026.
+**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 21/10/2026.
 
 ## Decisión de implementación
 
 El equipo sustituyó Laravel por PHP nativo para facilitar la documentación y la defensa del recorrido del backend. La aclaración del grupo sitúa la decisión el 30/09; el control la registra como CC-05 el 02/10 y la reescritura sigue el ejemplo `api-simple` desde el 05/10. La decisión conserva las necesidades de negocio, los datos y el contrato consumido por los frontends.
 
-El resultado es una entrada explícita, ocho controladores, ocho servicios y ocho repositorios, con modelos y utilidades comunes. Se utiliza la organización de la referencia y se adapta al dominio vial. No se adopta el catálogo de productos, las credenciales ni el contrato JSON del ejemplo.
+El resultado es una entrada explícita, ocho controladores, ocho servicios y ocho repositorios, con modelos y utilidades comunes. Se utiliza la organización de la referencia y se adapta al dominio vial. El contrato y los datos corresponden al dominio de IMSJ.
 
 ## Relación entre tecnologías y necesidades
 
@@ -20,7 +20,7 @@ El resultado es una entrada explícita, ocho controladores, ocho servicios y och
 | HTML, CSS y JavaScript con Fetch | Conservan las interfaces existentes y consumen la API del mismo origen. | Las comprobaciones de interfaz deben complementarse con pruebas móviles y de accesibilidad. |
 | Composer | Declara requisitos de PHP/extensiones y el comando de comprobación. | No hay paquetes externos obligatorios ni se necesita `vendor` para atender peticiones. |
 
-Nginx se retiró por solicitud del grupo. Apache reúne ahora la publicación del portal, panel y API y Compose mantiene únicamente `app` y `db`. No se afirma una mejora medida de rendimiento o seguridad por este cambio.
+Nginx se retiró por solicitud del grupo. Apache reúne ahora la publicación del portal, panel y API y Compose mantiene únicamente `app` y `db`.
 
 ## Autenticación, archivos y persistencia
 
@@ -32,6 +32,16 @@ Los adjuntos utilizan almacenamiento fuera de la raíz pública y se sirven tras
 
 Se conservan los identificadores del catálogo de requisitos, las claves de respuesta, los roles, la compatibilidad multipart y los datos relacionados. La agenda se mantiene en el alcance académico. Categorías, costo urgente, notificaciones y decisiones institucionales no se agregan como consecuencia del cambio de tecnología.
 
-La letra académica menciona Laravel y otras tecnologías distintas de las usadas actualmente. La confirmación docente de la equivalencia debe conservarse como evidencia; el motivo técnico expresado por el equipo no acredita por sí mismo esa aceptación. Tampoco están definidos el alojamiento, dominio, HTTPS y respaldo institucionales.
+La organización por capas conserva el recorrido de entrada, control, servicio, repositorio y respuesta. El despliegue utiliza las restricciones de usuarios y capacidades del Compose actual.
 
-[Arquitectura](arquitectura_propuesta.md), [inventario](documentacion-infraestructura.md), [referencia simple](../../docs_auxiliares/backend/referencia_api_simple.md), [control de cambios](../ingenieria_software/control_cambios.md) y [verificación](../../docs_auxiliares/evidencias/verificacion.md).
+| Dato | Valor |
+|---|---|
+| Referencia de equivalencia docente | [] |
+| Dominio institucional | [] |
+| Alojamiento | [] |
+| HTTPS | [] |
+| Respaldo institucional | [] |
+
+## Referencias
+
+[Arquitectura](arquitectura_propuesta.md), [inventario](documentacion-infraestructura.md), [referencia simple](../../docs_auxiliares/backend/referencia_api_simple.md) y [control de cambios](../ingenieria_software/control_cambios.md).

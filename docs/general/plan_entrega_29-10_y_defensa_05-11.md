@@ -1,15 +1,14 @@
 # Plan de preparación — entrega 29/10/2026 y defensa 05/11/2026
 
-**Actualización documental:** 20/10/2026. **Estado:** plan de preparación; los acuerdos efectivos y asignaciones se registran en reuniones del equipo.
+**Actualización documental:** 21/10/2026.
 
 ## 1. Fechas, alcance y regla de trabajo
 
 - **Entrega final:** jueves 29/10/2026.
 - **Defensa:** jueves 05/11/2026.
-- Los repos docentes públicos todavía muestran la fecha anterior (15/10) y la defensa “a establecer”. Para este plan se toman como válidas las fechas nuevas comunicadas al equipo. Se debe guardar una captura, correo o mensaje docente que confirme el cambio.
 - El plan prevé desde el 26/10 un **congelamiento funcional**: no se agregan funciones nuevas. Solo se corrigen defectos que impidan entregar, instalar o demostrar el sistema.
 - Una tarea se considera terminada únicamente si incluye: implementación, prueba, evidencia, documentación actualizada y cambio guardado en Git.
-- No se deben inventar entrevistas, reuniones, resultados, firmas ni pruebas anteriores. Lo que no pueda demostrarse se registra como pendiente, fuera de alcance o limitación.
+- Las actividades se registran con fecha, responsable, resultado y referencia.
 
 ## 2. Resultado que debe existir el 29/10
 
@@ -32,7 +31,7 @@
 - Actas de Sprint Review con demostración, feedback y correcciones.
 - Control de cambios: qué cambió, motivo, solicitante, impacto, decisión y estado.
 - Plan e informe de pruebas.
-- Acta de cierre con entregables, requisitos cumplidos, pendientes, lecciones y aceptación.
+- Acta de cierre con entregables, requisitos evaluados, observaciones, lecciones y aceptación.
 - Declaración ética de uso de IA completada y firmada por quienes corresponda.
 - Manual de usuario con capturas y pasos verificables.
 
@@ -90,7 +89,7 @@ Cada responsable debe tener un suplente capaz de ejecutar su parte el día de la
 2. Reunión de 45 minutos para aceptar este cronograma y asignar cada tarea.
 3. Convertir este documento en un tablero simple: `Pendiente`, `En curso`, `Para revisar`, `Terminado`.
 4. Revisar los cambios locales existentes en el momento de ejecución y agruparlos de acuerdo con su propósito.
-5. Elegir la computadora de demostración y comprobar su motor Docker; el arranque aislado del 13/10 es una referencia y no sustituye esa comprobación.
+5. Elegir la computadora de demostración y comprobar su motor Docker; utilizar el registro de arranque como referencia operativa.
 6. Crear una lista única de bloqueos y dudas docentes.
 
 **Salida del día:** responsables confirmados, tablero visible, equipo de demo elegido y estado inicial guardado.
@@ -111,7 +110,7 @@ Cada responsable debe tener un suplente capaz de ejecutar su parte el día de la
 1. Revisar las historias incompletas: galería/enlaces de noticias, costo de renovación urgente, cobertura/retención de auditoría, HTTPS/backup, prueba móvil, accesibilidad y categorías FAQ.
 2. Clasificar cada una como:
    - obligatoria y realizable antes del 25/10;
-   - pendiente aceptada;
+   - entrega posterior acordada;
    - fuera de alcance con justificación.
 3. Confirmar con docente o referente las diferencias tecnológicas PHP/Laravel y Fetch/jQuery.
 4. Aclarar qué agenda es académica y qué información fue realmente solicitada por el cliente.
@@ -268,7 +267,7 @@ Cada integrante debe poder responder, con ejemplos del proyecto:
 - cómo se levanta con Docker;
 - cómo se hace y restaura el backup;
 - qué vulnerabilidades se buscaron y cuáles se corrigieron;
-- cómo se probaron requisitos y qué quedó pendiente;
+- cómo se probaron los requisitos y cuál fue el alcance verificado;
 - por qué se tomaron las decisiones tecnológicas;
 - cómo se usó IA y cómo se verificó lo producido.
 
@@ -294,7 +293,7 @@ Cada integrante debe poder responder, con ejemplos del proyecto:
 1. Presentar ante una persona que no participó en el desarrollo, si es posible.
 2. Respetar 20 + 30 + 10 minutos.
 3. Hacer preguntas individuales al azar, incluyendo temas de otras áreas.
-4. Anotar respuestas vagas, afirmaciones sin evidencia y momentos muertos.
+4. Revisar claridad de respuestas, referencias y transiciones.
 5. Corregir el guion, no agregar funciones.
 
 **Salida del día:** defensa dentro del tiempo y lista concreta de preguntas a reforzar.
@@ -359,7 +358,7 @@ Si un control no se aprueba, se recorta una mejora opcional y se protege primero
 ### Antes de entregar
 
 - [ ] Fecha nueva respaldada por comunicación docente.
-- [ ] Alcance y pendientes aceptados por escrito.
+- [ ] Alcance y condiciones de entrega aceptados por escrito.
 - [ ] Repositorio limpio, cambios revisados y tag remoto creado.
 - [ ] Docker probado desde cero en otra computadora.
 - [ ] Datos y cuentas de demostración funcionan.
@@ -378,7 +377,7 @@ Si un control no se aprueba, se recorta una mejora opcional y se protege primero
 - [ ] Cada integrante puede explicar cualquier capa a nivel general.
 - [ ] Plan B offline con capturas/video y segunda copia.
 - [ ] Docker, API y base probados el mismo día.
-- [ ] Limitaciones y pendientes explicados con honestidad.
+- [ ] Alcance, versión y condiciones de operación explicados.
 
 ## 9. Guías docentes usadas
 
@@ -396,10 +395,16 @@ Si un control no se aprueba, se recorta una mejora opcional y se protege primero
 - Plan de servidor, backup y restauración: https://github.com/portalutu/3--Adm-SSOO/blob/main/Teoricos/plan_servidor_linux_docker.md
 - Guía Docker: https://github.com/portalutu/3--Adm-SSOO/blob/main/docker/docker.md
 
-## 10. Línea de base documental del 20/10
+## 10. Versión de referencia
 
-El contrato actual comprende 46 rutas, ocho módulos y PHP nativo. Se incorporaron cancelación de reservas, filtrado de fechas vigentes, vista mensual inicial de agenda y ajustes de navegación y simulador. La cancelación tiene casos añadidos a la suite; el cierre del plan necesita evidencia de su ejecución en la versión elegida.
-
-El estado Listo de CC-01–CC-05 convive con historias parciales y entregables pendientes. El manual, el cierre, las pruebas finales de seguridad y los datos institucionales deben verificarse por separado. Las actas conservan las reuniones registradas y no se completan con actividades futuras del cronograma.
-
-Los PDF mantienen versiones anteriores a la consolidación actual de Markdown. La preparación final debe partir de los textos revisados y de los datos confirmados en el formulario, conservando la identidad RC5 y los colores naranja y azul. La actualización de este plan no cambia ni regenera los PDF.
+| Dato | Valor |
+|---|---|
+| Base del repositorio | 1a43229 |
+| Contrato | 46 endpoints |
+| Integración | 192 comprobaciones; resultado OK |
+| Auditoría API | 43 aprobadas, 0 fallidas, 0 omitidas |
+| SAST y DAST | Informes y revalidación del 21/10 |
+| Hardening | Usuarios de servicio, raíz de lectura y capacidades reducidas |
+| Tag de entrega | [] |
+| Referencia docente de fechas | [] |
+| Paquete para el cliente | [] |

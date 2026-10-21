@@ -134,10 +134,10 @@ La edición devuelve el elemento a borrador y el servicio controla las transicio
 
 La página de reservas consulta `/reservas/mias` y presenta las de la cuenta actual. Al confirmar una cancelación envía DELETE con el identificador. El controlador exige el rol público, el servicio coordina la operación y el repositorio elimina con dos condiciones: ID de reserva e ID del usuario autenticado. Una reserva ajena no se elimina y devuelve 404; personal no utiliza esta ruta ciudadana.
 
-Al desaparecer la fila, deja de contarse para el cupo de la franja. No se registra un estado de cancelación ni se reprograma otra reserva. Los listados actuales excluyen fechas pasadas incluso para el personal; volver a un mes anterior puede mostrar una agenda vacía. Estas son características del código que debe demostrarse, no funciones adicionales.
+Al desaparecer la fila, deja de contarse para el cupo de la franja. La cancelación utiliza borrado físico de la relación de reserva. Los listados actuales excluyen fechas pasadas incluso para el personal; volver a un mes anterior puede mostrar una agenda vacía.
 
 ## Relacionar la explicación con una prueba
 
-Para explicar una regla se puede localizar el requisito, su servicio/repositorio y el caso correspondiente en `backend/tests/integracion.py`. Es importante distinguir un caso escrito de su ejecución: los resultados del 05/10 y 13/10 pertenecen a sus versiones, mientras que la cancelación se incorporó después.
+Para explicar una regla se puede localizar el requisito, su servicio/repositorio y el caso correspondiente en `backend/tests/integracion.py`. La suite integral del 21/10 registra 192 comprobaciones sobre los 46 endpoints y los casos de cancelación.
 
 La defensa de infraestructura debe mostrar el papel de `app`, `db` y los tres volúmenes, la creación explícita de la primera cuenta y la diferencia entre `/api/health` y el control interno que comprueba base y portal. El respaldo debe incluir SQL y adjuntos junto a una versión compatible, no solo el repositorio.

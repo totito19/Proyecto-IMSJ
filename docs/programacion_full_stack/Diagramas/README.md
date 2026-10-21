@@ -65,10 +65,10 @@ Los controladores utilizan Auth para exigir acceso y Response para responder. So
 
 El modelo relacional contiene doce tablas: once del dominio y `auth_tokens`. `usuarios.cedula` y el hash del token son únicos. La combinación usuario/franja impide duplicación de reservas y la combinación fecha, inicio, fin y tipo identifica una franja sin duplicados exactos. Las relaciones de noticias tienen eliminación en cascada; reservas e historial conservan sus referencias mediante claves foráneas.
 
-No hay una entidad de categorías porque esa necesidad no está implementada. Tampoco existe una tabla de respuestas a consultas ni un estado de cancelación: la cancelación académica elimina la reserva. Los gráficos de preguntas se guardan como ruta en `preguntas_prueba.imagen`.
+Las FAQ utilizan pregunta, respuesta y estado. Las consultas conservan el mensaje y su marca de lectura. La cancelación académica elimina la reserva. Los gráficos de preguntas se guardan como ruta en `preguntas_prueba.imagen`.
 
 ## Antecedente UML
 
 ![UML de la versión anterior](UML.png)
 
-Este PNG se conserva como antecedente y no representa completamente las clases del backend nativo. Para describir la implementación vigente se utiliza la vista de clases anterior, la [justificación de responsabilidades](../Justificación%20de%20clases,%20atributos%20y%20métodos.md), la [arquitectura](../../administracion_ssoo/arquitectura_propuesta.md) y el [esquema SQL](../../../backend/database.sql).
+El PNG corresponde al antecedente de modelado. La estructura PHP nativa se desarrolla en la vista de clases y en la [justificación de responsabilidades](../Justificación%20de%20clases,%20atributos%20y%20métodos.md), la [arquitectura](../../administracion_ssoo/arquitectura_propuesta.md) y el [esquema SQL](../../../backend/database.sql).

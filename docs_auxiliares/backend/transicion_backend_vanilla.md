@@ -1,6 +1,6 @@
 # Transición, respaldo y recuperación del backend
 
-**Estado consolidado al 15/10/2026: CC-05 Listo.** No se ejecutó sobre una instalación institucional; un futuro despliegue con datos reales debe ensayar respaldo/restauración sobre una copia.
+**Estado consolidado al 15/10/2026: CC-05 Listo.** La recuperación se realiza sobre una copia aislada del conjunto respaldado.
 
 ## Qué se conserva
 
@@ -22,12 +22,12 @@ docker compose cp app:/var/www/html/storage/app/public ../respaldo/archivos
 docker compose start app
 ```
 
-Conservar además la versión de código y .env en ubicación protegida, con permisos adecuados. No subir el respaldo al repositorio. Si mysqldump falla, no considerar completo el respaldo y corregir el diagnóstico. La coordinación de escrituras incluye otros accesos a MySQL si existen; no se presume que detener app detenga integraciones externas.
+Conservar además la versión de código y .env en ubicación protegida, con permisos adecuados. No subir el respaldo al repositorio. Si mysqldump falla, no considerar completo el respaldo y corregir el diagnóstico. La coordinación de escrituras incluye otros accesos a MySQL si existen; se coordinan también las integraciones externas que escriban en la base.
 
 ## Actualizar con datos
 
 1. Ensayar primero en otra instalación/proyecto Compose con una copia de respaldo. Verificar qué volúmenes son de prueba; no apuntar esa copia a volúmenes institucionales.
-2. Comparar las columnas/FK/índices existentes con database.sql. CREATE TABLE IF NOT EXISTS no altera tablas existentes incompatibles. Cualquier transformación adicional de datos/esquema requiere una propuesta explícita del equipo, no se ejecuta por esta guía.
+2. Comparar las columnas/FK/índices existentes con database.sql. CREATE TABLE IF NOT EXISTS no altera tablas existentes incompatibles. Las transformaciones de datos y esquema se relacionan con su versión de código y registro de cambio.
 3. Con el esquema de dominio compatible, importar database.sql para crear auth_tokens/tablas ausentes, sin borrar datos:
 
 ```powershell
@@ -48,20 +48,26 @@ docker compose stop app
 docker compose cp ../respaldo/base.sql db:/tmp/imsj-restaurar.sql
 docker compose exec -T db sh -c 'MYSQL_PWD="$MYSQL_PASSWORD" mysql -u "$MYSQL_USER" --default-character-set=utf8mb4 "$MYSQL_DATABASE" < /tmp/imsj-restaurar.sql'
 docker compose cp ../respaldo/archivos/. app:/var/www/html/storage/app/public
-docker compose run --rm --user root app chown -R www-data:www-data storage/app/public
+docker compose run --rm --no-deps --user root --cap-add CHOWN app chown -R www-data:www-data storage/app/public
 docker compose start app
 ```
 
 Importar una copia no elimina archivos que sobren de un destino anterior; usar un destino de prueba vacío o un conjunto de archivos revisado, sin inventar limpieza destructiva. Comprobar permisos/propiedad, listados, descargas y coherencia de claves y conteos. Registrar integridad del respaldo, versión compatible y resultados. Si se necesita volver al código anterior, utilizar la versión y respaldo compatibles; restaurar solo código no recupera datos.
 
-## Estado de ejecución y pendientes
-
-En esta intervención se preservaron archivos locales previos al reemplazar el backend y se creó una copia de resguardo del código anterior fuera del proyecto. No se usó una base institucional ni se borraron volúmenes. Las pruebas HTTP usaron PHP/MySQL portable y datos sintéticos. El arranque Docker aislado se comprobó el 13/10. Actualización institucional y restauración de respaldo requieren evidencia específica; [verificación](../evidencias/verificacion.md).
-
-Alojamiento, dominio/HTTPS, referente operativo, frecuencia y conservación de respaldos se completarán cuando la Intendencia/equipo los definan. Esta guía no incorpora servicios externos ni cambia la administración posterior confirmada.
-
 ## Comprobación del conjunto recuperado
 
 Una recuperación se considera comprobada cuando el entorno aislado inicia con la versión elegida, las cuentas conservan sus relaciones, los conteos coinciden con el respaldo, las publicaciones mantienen su estado y los adjuntos pueden descargarse. También se deben comprobar reservas, consultas e historial y realizar un ingreso nuevo con las sesiones de esa versión.
 
-Registrar nombre del respaldo, fecha, integridad, código compatible, destino de prueba, procedimiento y resultado. El arranque Docker de la demo no sustituye esta comprobación: iniciar una base nueva y restaurar un conjunto de datos previo evalúan situaciones distintas. Los comandos anteriores son un procedimiento y no certifican su ejecución institucional.
+Registrar nombre del respaldo, fecha, integridad, código compatible, destino de prueba, procedimiento y resultado.
+## Registro de recuperación
+
+| Dato | Valor |
+|---|---|
+| Respaldo | [] |
+| Fecha de generación | [] |
+| Hash de integridad | [] |
+| Versión de código | [] |
+| Destino | [] |
+| Responsable | [] |
+| Resultado de consultas y archivos | [] |
+| Evidencia | [] |

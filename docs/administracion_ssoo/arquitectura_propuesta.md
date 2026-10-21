@@ -1,6 +1,6 @@
 # Arquitectura del sistema y despliegue local
 
-**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 20/10/2026.
+**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 21/10/2026.
 
 **Base funcional:** backend PHP nativo; ocho módulos y 46 rutas HTTP.
 
@@ -72,8 +72,25 @@ Las sesiones utilizan Bearer opaco y revocable; solo su hash SHA-256 se almacena
 
 Los contenidos siguen Borrador → Pendiente → Aprobado → Publicado. Solo Directora aprueba y la publicación requiere una acción posterior. Editar un contenido aprobado o publicado devuelve su estado a borrador. La API pública excluye los contenidos no publicados y filtra la vigencia de noticias.
 
-## Límites operativos y fuentes
+## Controles del entorno
 
-El entorno publicado en loopback corresponde al uso local. Para operación institucional faltan dominio, HTTPS, alojamiento, administración de cuentas, respaldo y retención. Las vistas de agenda actuales excluyen fechas anteriores al día en curso, también para el personal; esta restricción se documenta sin cambiar el código.
+`app` se ejecuta como `www-data` y `db` como `mysql`. Ambos utilizan raíz de solo lectura y `no-new-privileges`. La aplicación conserva únicamente la capacidad de enlace al puerto HTTP; MySQL utiliza capacidades reducidas. Los volúmenes y rutas temporales proporcionan los espacios de escritura requeridos.
 
-[Configuración Compose](../../backend/compose.yaml), [núcleo y capas](../programacion_full_stack/Justificación%20de%20clases,%20atributos%20y%20métodos.md), [modelo de datos](../programacion_full_stack/Diagramas/README.md), [contrato API](../../docs_auxiliares/backend/api.md) y [evidencia](../../docs_auxiliares/evidencias/verificacion.md).
+Apache configura CSP, protección anti-clickjacking, `nosniff` y respuestas de API con control de caché. Los recursos de iconos utilizados por el portal se sirven localmente. La publicación local se realiza en loopback.
+
+## Parámetros institucionales
+
+| Dato | Valor |
+|---|---|
+| Organismo administrador | Intendencia de San José |
+| Responsable operativo | [] |
+| Alojamiento | [] |
+| Dominio | [] |
+| Certificado HTTPS | [] |
+| Contacto | [] |
+| Frecuencia de respaldo | [] |
+| Conservación de copias | [] |
+
+## Fuentes
+
+[Compose](../../backend/compose.yaml), [capas y clases](../programacion_full_stack/Justificación%20de%20clases,%20atributos%20y%20métodos.md), [modelo](../programacion_full_stack/Diagramas/README.md), [API](../../docs_auxiliares/backend/api.md) y [verificación](../../docs_auxiliares/evidencias/verificacion.md).

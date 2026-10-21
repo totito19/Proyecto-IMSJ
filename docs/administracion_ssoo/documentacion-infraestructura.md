@@ -1,6 +1,6 @@
 # Inventario y operación de infraestructura
 
-**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 20/10/2026.
+**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 21/10/2026.
 
 ## Servicios y datos persistentes
 
@@ -52,7 +52,7 @@ La configuración nativa no utiliza `APP_KEY`, claves JWT ni comandos Artisan. L
 
 En Windows el inicio detecta Docker, abre Desktop cuando corresponde y espera el motor. Prepara `.env` y claves aleatorias solamente para una instalación nueva. Verifica un puerto local disponible, construye e inicia los servicios y espera la salud antes de abrir el navegador.
 
-`GET /api/health` confirma que la entrada PHP responde. El control interno de Compose realiza también consultas sobre usuarios, consultas y el campo de imagen del simulador y abre la página pública por HTTP. Que responda `/health` por sí solo no demuestra que la base y los módulos de negocio funcionen.
+`GET /api/health` confirma que la entrada PHP responde. El control interno de Compose realiza también consultas sobre usuarios, consultas y el campo de imagen del simulador y abre la página pública por HTTP. La salud interna reúne las comprobaciones PHP, MySQL y HTTP del portal.
 
 ## Diagnóstico y persistencia
 
@@ -60,8 +60,37 @@ Desde `backend`, `docker compose ps -a` muestra el estado de los contenedores. `
 
 `detener.bat` utiliza detención sin borrar volúmenes. La recreación de la imagen conserva datos cuando se reutilizan los mismos volúmenes. Un respaldo completo debe relacionar base SQL, adjuntos, configuración protegida y versión del código; copiar solo el código no recupera el estado del servicio.
 
-## Evidencia y operación institucional
+## Hardening
 
-El registro del 13/10 documenta arranque Docker aislado y pruebas visuales. No se ha incorporado un ensayo de restauración de un respaldo institucional. Dominio, HTTPS, proveedor, responsable operativo, frecuencia y conservación de copias continúan en el [formulario de información](../../docs_auxiliares/revision/formulario_datos_documentacion.md).
+| Control | Aplicación |
+|---|---|
+| Usuarios | app: www-data; db: mysql. |
+| Privilegios | no-new-privileges en ambos servicios. |
+| Sistema de archivos | Raíz de solo lectura; volúmenes de datos, adjuntos y caché; tmpfs temporales. |
+| Capacidades | DROP ALL; app agrega NET_BIND_SERVICE. |
+| Cabeceras | CSP, protección anti-clickjacking, nosniff y control de caché. |
+| Exposición | Un puerto HTTP en loopback; MySQL en red interna. |
 
-[Reconstrucción](reconstruccion-infraestructura.md), [backend](../../backend/README.md), [respaldo y transición](../../docs_auxiliares/backend/transicion_backend_vanilla.md) y [verificación](../../docs_auxiliares/evidencias/verificacion.md).
+## Verificación
+
+| Registro | Resultado |
+|---|---|
+| Integración 21/10 | 192 comprobaciones y 46 endpoints. |
+| Auditoría API completa | 43 aprobadas, 0 fallidas, 0 omitidas. |
+| Revalidación de hardening | 41 aprobadas, 0 fallidas, 2 omitidas. |
+| Contenedores | app y db saludables. |
+
+## Parámetros institucionales
+
+| Dato | Valor |
+|---|---|
+| Organismo administrador | Intendencia de San José |
+| Responsable operativo | [] |
+| Alojamiento | [] |
+| Dominio | [] |
+| Certificado HTTPS | [] |
+| Contacto | [] |
+| Frecuencia de respaldo | [] |
+| Conservación de copias | [] |
+
+[Reconstrucción](reconstruccion-infraestructura.md), [respaldo](../../docs_auxiliares/backend/transicion_backend_vanilla.md) y [verificación](../../docs_auxiliares/evidencias/verificacion.md).

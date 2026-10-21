@@ -1,6 +1,6 @@
 # Backend IMSJ en PHP nativo
 
-Reescrito desde cero el 05/10/2026 por solicitud del grupo, con el recorrido explícito de [api-simple](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-simple). PHP 8.5, PDO y MySQL 8.4; sin paquetes externos. La demo del 13/10 sumó tres rutas de consultas y alcanzó 45 endpoints. La cancelación del 20/10 amplía el contrato vigente a 46. **Estado documental al 20/10/2026: CC-01–CC-05, Listos.** El crédito y la responsabilidad del proyecto corresponden a Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales.
+Reescrito desde cero el 05/10/2026 por solicitud del grupo, con el recorrido explícito de [api-simple](https://github.com/RodrigoCazard/api-ejemplo-utu/tree/d6f61c999369b754d70bfa0621a154e9a630589a/api-simple). PHP 8.5, PDO y MySQL 8.4; sin paquetes externos. La demo del 13/10 sumó tres rutas de consultas y alcanzó 45 endpoints. La cancelación del 20/10 amplía el contrato vigente a 46. **Estado documental al 21/10/2026: CC-01–CC-05, Listos.** El crédito y la responsabilidad del proyecto corresponden a Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales.
 
 ## Organización y recorrido
 
@@ -36,14 +36,14 @@ Requiere Docker con Compose y contenedores Linux. En Windows se puede usar [Dock
 3. Crear la primera cuenta de personal con la herramienta CLI. Definir estas variables en la terminal con datos elegidos por el equipo; la contraseña no se imprime:
 
 ```powershell
-$env:INITIAL_ADMIN_CEDULA = '<cedula de 7 u 8 digitos>'
-$env:INITIAL_ADMIN_NOMBRE = '<nombre del integrante autorizado>'
-$env:INITIAL_ADMIN_PASSWORD = '<clave elegida de 6 a 72 bytes>'
+$env:INITIAL_ADMIN_CEDULA = '[]'
+$env:INITIAL_ADMIN_NOMBRE = '[]'
+$env:INITIAL_ADMIN_PASSWORD = '[]'
 docker compose exec -e INITIAL_ADMIN_CEDULA -e INITIAL_ADMIN_NOMBRE -e INITIAL_ADMIN_PASSWORD app php scripts/crear_admin.php
 Remove-Item Env:INITIAL_ADMIN_PASSWORD
 ```
 
-La herramienta se niega a crear la cuenta si ya hay personal activo. Las siguientes cuentas se crean desde el panel con el comportamiento previo de `clave_inicial=imsj1234`; su política institucional definitiva sigue pendiente y no se agrega un endpoint de cambio de contraseña en esta reescritura.
+La herramienta se niega a crear la cuenta si ya hay personal activo. Las siguientes cuentas se crean desde el panel con el comportamiento previo de `clave_inicial=imsj1234`; el valor inicial se entrega en la respuesta de alta del panel.
 
 4. Con el puerto por defecto: portal `http://localhost:8000/frontend-publico/`, panel `http://localhost:8000/frontend-imsj/` y API `http://localhost:8000/api/health`. El BAT muestra las direcciones con el puerto efectivo. `/` redirige al portal. `/api/health` comprueba PHP; el healthcheck interno de Compose comprueba también esquema MySQL y portal. La primera cuenta sigue siendo una acción explícita del equipo.
 
@@ -136,8 +136,20 @@ La [evidencia](../docs_auxiliares/evidencias/verificacion.md) registra resultado
 
 `DELETE /api/reservas/{id}` permite al ciudadano cancelar su reserva. La cuenta se obtiene del token y la eliminación exige coincidencia de reserva y propietario; responde 204 al eliminar y 404 si no existe una reserva propia con ese ID. Personal no puede usar esta operación ciudadana. Al eliminar la fila se libera el cupo y no queda un estado de cancelación.
 
-Los listados de franjas y reservas excluyen fechas anteriores a hoy también en el panel. La agenda abre inicialmente en vista mensual. El cierre de sesión administrativo revoca el token y vuelve al ingreso de personal. Los casos nuevos están en la suite de integración y requieren registrar una ejecución sobre esta versión.
+Los listados de franjas y reservas excluyen fechas anteriores a hoy también en el panel. La agenda abre inicialmente en vista mensual. El cierre de sesión administrativo revoca el token y vuelve al ingreso de personal. La suite integral del 21/10 incluye esos casos y registra 192 comprobaciones sobre los 46 endpoints.
 
 ## Mapa de lectura para mantenimiento
 
 Una operación empieza en `public/index.php`, pasa por el controlador del módulo y su servicio y termina en consultas del repositorio. Para modificar una regla se debe revisar además el modelo de salida, el consumidor JavaScript y el escenario de integración afectado. La [arquitectura](../docs/administracion_ssoo/arquitectura_propuesta.md), la [justificación de clases](../docs/programacion_full_stack/Justificación%20de%20clases,%20atributos%20y%20métodos.md) y el [contrato](../docs_auxiliares/backend/api.md) desarrollan estas relaciones.
+
+## Verificación del 21/10/2026
+
+La suite integral registró 192 comprobaciones, 60 peticiones distintas y 46 endpoints. La auditoría Bash completa registró 43 aprobadas, 0 fallidas y 0 omitidas. El entorno Docker utiliza usuarios de servicio, raíz de solo lectura, `no-new-privileges` y capacidades reducidas.
+
+| Dato | Valor |
+|---|---|
+| Dominio institucional | [] |
+| HTTPS | [] |
+| Política institucional de cuentas | [] |
+| Responsable operativo | [] |
+| Respaldo institucional | [] |

@@ -8,7 +8,7 @@ Base local: `http://localhost:8000/api`. JSON de entrada/salida; archivos median
 
 Roles: `PUBLICO_GENERAL`, `PERSONAL_IMSJ` y `DIRECTORA`. Directora hereda el acceso administrativo y es el único rol que puede aprobar noticias, materiales y preguntas frecuentes pendientes. `Auth` valida hash del token, vigencia de ocho horas, cuenta activa y rol almacenados en MySQL; iniciar sesión revoca sesiones anteriores. Logout y desactivación revocan tokens.
 
-200: consulta/edición/corrección; 201: alta/registro/reserva; 204: eliminación/desactivación/logout, sin cuerpo; 400: JSON mal formado; 401: falta de sesión, token inválido/expirado o cuenta inactiva; 403: rol insuficiente; 404: ruta/recurso inexistente; 413: cuerpo multipart por encima del límite PHP; 422: validación o conflicto de unicidad; 429: más de cinco intentos/minuto para login o registro; 500: fallo interno, sin SQL ni secretos en la respuesta. Ruta y método sin coincidencia en el switch devuelven 404.
+200: consulta/edición/corrección; 201: alta/registro/reserva; 204: eliminación/desactivación/logout, sin cuerpo; 400: JSON mal formado; 401: falta de sesión, token inválido/expirado o cuenta inactiva; 403: rol insuficiente; 404: ruta/recurso inexistente; 413: cuerpo multipart por encima del límite PHP; 422: validación o conflicto de unicidad; 429: más de cinco intentos/minuto para login o registro; 500: fallo interno, sin SQL ni secretos en la respuesta. Apache rechaza métodos no habilitados con 405; una ruta sin coincidencia en el switch devuelve 404.
 
 Errores de campo: `{"message":"Los datos no son válidos.","errors":{"campo":["detalle"]}}`. Un conflicto SQL concurrente puede devolver 422 con `message` sin `errors`. Los clientes aceptan ambas formas. No hay envoltorio `data` o `datos`.
 
@@ -65,16 +65,16 @@ Errores de campo: `{"message":"Los datos no son válidos.","errors":{"campo":["d
 
 `{id}` es un entero positivo. La suma es diez rutas públicas, dos para cualquier cuenta autenticada, tres ciudadanas y 31 del personal: 46 endpoints en total.
 
-## Entradas y límites conservados
+## Entradas y validación
 
-- Cuenta: cédula de siete u ocho dígitos, normalizada; registro con `password` y `password_confirmation`, mínimo seis caracteres. El secreto conserva espacios y admite hasta 72 bytes por bcrypt. Alta de personal: `nombre` hasta 120 y cédula; devuelve `usuario` y `clave_inicial` con el mecanismo previo `imsj1234`. Su política definitiva sigue pendiente.
+- Cuenta: cédula de siete u ocho dígitos, normalizada; registro con `password` y `password_confirmation`, mínimo seis caracteres. El secreto conserva espacios y admite hasta 72 bytes por bcrypt. Alta de personal: `nombre` hasta 120 y cédula; devuelve `usuario` y `clave_inicial` con el mecanismo previo `imsj1234`.
 - Noticias: `titulo` hasta 255, `texto`, `fecha_inicio_vigencia`, `fecha_fin_vigencia` (fin igual/posterior); `imagen_portada` opcional y `galeria[]` hasta cinco JPG/PNG/WEBP de 2048 KB cada una; `enlaces[]` hasta cinco URL HTTP/HTTPS. El portal filtra `PUBLICADO` y vigencia inclusiva.
 - Materiales: `nombre` hasta 255 y `tipo` PDF/IMAGEN/VIDEO. PDF hasta 10240 KB, imagen hasta 5120 KB, video con URL HTTP/HTTPS hasta 2048 caracteres y sin archivo. Alta/cambio de tipo requieren el recurso correspondiente. Edición del mismo tipo permite conservarlo; el estado se cambia mediante una operación separada.
 - FAQ: `pregunta` hasta 255 y `respuesta`; el estado se cambia mediante una operación separada. Prueba: `pregunta` hasta 500, `opcion_a` a `opcion_d` hasta 255, `respuesta_correcta` A/B/C/D. La consulta pública selecciona hasta diez preguntas sin la respuesta; corrección recibe `respuestas` de uno a 20 elementos distintos con `pregunta_id` y `opcion`.
 - Franjas: `fecha` desde hoy, horas HH:MM con fin posterior, `tipo` PRUEBA_MANEJO/RENOVACION_NORMAL/RENOVACION_URGENTE y `cupos_totales` entre uno y 20; horario/tipo único. Reserva: solo `franja_disponibilidad_id`; el usuario se toma del token. No se puede borrar una franja con reservas.
 - Agenda: `vista` dia/semana/mes y `fecha` AAAA-MM-DD; por defecto hoy/día. Semana lunes a domingo; mes completo. Historial: `limite` de uno a 50, por defecto 20.
 
-Textos destinados a columnas TEXT se rechazan si superan 65535 bytes; no se truncan. Fechas civiles: Uruguay; timestamps SQL: UTC. Las cantidades del test son comportamiento conservado, sin afirmar aprobación de criterios de CC-01.
+Textos destinados a columnas TEXT se rechazan si superan 65535 bytes; no se truncan. Fechas civiles: Uruguay; timestamps SQL: UTC. Las cantidades del test son comportamiento conservado, conforme al comportamiento implementado.
 
 ## Formularios, archivos y CORS
 
@@ -86,7 +86,7 @@ Además de PUT JSON y multipart nativo, se conserva **POST multipart con `_metho
 
 Noticias, materiales y preguntas frecuentes siguen `BORRADOR → PENDIENTE → APROBADO → PUBLICADO`. El personal puede preparar, enviar a revisión y publicar contenido aprobado; solo Directora puede aprobar. Editar el contenido lo devuelve a borrador. El portal acepta consultas con nombre, correo y mensaje; el panel permite leerlas y marcarlas como leídas. Las preguntas del simulador admiten una imagen opcional que se muestra sin revelar la respuesta correcta.
 
-No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`. Categorías, respuestas/notificaciones para consultas, costo urgente y nuevos campos de contacto no forman parte de CC-01–CC-05. La cancelación ciudadana se incorporó posteriormente. Agenda y reservas son académicas.
+No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`.  La cancelación ciudadana se incorporó posteriormente. Agenda y reservas son académicas.
 
 La relación con la [letra académica](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md) y los resultados técnicos se documentan en [verificación](../evidencias/verificacion.md).
 
@@ -107,4 +107,12 @@ La cancelación no recibe un ID de usuario en el cuerpo. `Auth` exige `PUBLICO_G
 | Enviar consulta / marcar leída | Campos públicos válidos; personal para gestionar lectura. | Crear la consulta o actualizar su marca de lectura. |
 | Reservar / cancelar | Cuenta ciudadana, cupo/duplicación o propiedad según acción. | Crear o eliminar la relación usuario/franja. |
 
-El [análisis de requisitos](../../docs/ingenieria_software/analisis_de_requerimientos.md) explica el alcance y la [justificación de clases](../../docs/programacion_full_stack/Justificación%20de%20clases,%20atributos%20y%20métodos.md) identifica los métodos de cada capa. Los ejemplos de formato no constituyen datos reales ni resultados de ejecución.
+El [análisis de requisitos](../../docs/ingenieria_software/analisis_de_requerimientos.md) explica el alcance y la [justificación de clases](../../docs/programacion_full_stack/Justificación%20de%20clases,%20atributos%20y%20métodos.md) identifica los métodos de cada capa.
+
+## Parámetros de operación
+
+| Dato | Valor |
+|---|---|
+| Política institucional de cuentas | [] |
+| Conservación de consultas | [] |
+| Dominio y HTTPS | [] |

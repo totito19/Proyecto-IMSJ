@@ -1,110 +1,47 @@
-> **Estado consolidado - 15/10/2026:** CC-01–CC-05 están **Listos**. Este informe conserva observaciones hechas sobre el commit del 02/10; las afirmaciones de trabajo pendiente que aparecen en secciones históricas fueron superadas por la implementación posterior.
+# Registro de revisión documental
 
----
+| Dato | Valor |
+|---|---|
+| Proyecto | Educación Vial IMSJ — Portal Vial |
+| Revisión inicial | 02/10/2026 |
+| Actualización | 21/10/2026 |
+| Revisor | [] |
 
-# Revisión documental del proyecto
+## Matriz de revisión
 
-**Fecha:** 02/10/2026. **Base revisada:** commit `df581ab`.
-**Equipo responsable y destinatario del crédito:** Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales.
-**Estado:** correcciones documentales y observaciones para revisión humana; no constituye aceptación del cliente.
-
-## Comprensión actual del proyecto
-
-Educación Vial IMSJ centraliza noticias, materiales y preguntas frecuentes de la Sección Tránsito de la Intendencia de San José. Tiene dos interfaces estáticas y una API Laravel con MySQL. La agenda se conserva para la evaluación académica y está excluida de la entrega al cliente según el relevamiento y el charter. El código también contiene un simulacro teórico y administración de personal.
-
-La entrevista inicial describe administrativos con iguales permisos y aprobación institucional de noticias. CC-03 registra después un rol Directora y cuatro estados. El código revisado conserva dos roles y dos estados: documentar la solicitud no demuestra que esté implementada.
-
-## Dificultades de incorporación detectadas
-
-Los hallazgos siguientes documentan la revisión de archivos y sus fuentes. No son una transcripción de reuniones ni nuevas decisiones del equipo.
-
-| ID | Dificultad e impacto para incorporarse | Evidencia encontrada | Solución documental aplicada o pendiente |
+| ID | Área | Resultado o referencia | Revisión |
 |---|---|---|---|
-| D-01 | RF3 es ambiguo sin identificar el documento: significa agenda en uno y materiales en otro. | `Requerimientos.md` y sección 11 de `documentacion_proyecto_imsj.md`; también cambian RNF8 y EP3–EP5. | Se conserva la numeración usada por el backlog y la justificación; el documento general remite a ella y conserva una equivalencia de los códigos anteriores. |
-| D-02 | No queda claro qué debe prepararse para el cliente y qué corresponde solo a la evaluación académica. | El charter excluye agenda para IMSJ, pero sus criterios de éxito la incluyen sin distinguir destino; el documento general mezcla ambos alcances. | Se explicitan ambos destinos y se separan las solicitudes posteriores de los compromisos iniciales. Falta confirmar cómo se entregarán técnicamente las dos variantes. |
-| D-03 | Los integrantes están identificados; falta saber a quién acudir para revisar una tarea o resolver un bloqueo. | Hay cinco nombres en actas y declaración; no hay asignaciones de líder, backend, frontend, base/seguridad o pruebas/documentación. | Resuelto mediante aclaración directa del grupo: Tomás lidera/backend; Juan Robaina testing, documentación y revisión interna; Gabriela base de datos; Verónica y Juan Corrales frontend. No se deducen roles de commits. |
-| D-04 | Las actas cuentan qué se conversó, pero no permiten retomar acuerdos ni tareas. | R-01–R-05 tienen discusiones breves, sin decisiones detalladas, responsables, vencimientos ni desacuerdos. Horas 4:15–5:15 sin indicación AM/PM. | Se conservan los registros y se agregan campos explícitos «No registrado». El equipo debe completarlos con evidencia, no recuerdos presentados como certeza. |
-| D-05 | No se puede comprobar cuándo ocurrió la entrevista inicial ni quién validó sus respuestas. | Fecha y entrevistadores en blanco en `informe entrevista.md`; el nombre completo de la síntesis no fue confirmado por el grupo. | Se conserva el informe histórico. El referente actual se identifica por instrucción del grupo como Inspector de Tránsito, conocido como Nacho, sin apellido confirmado. Fecha/participantes y validación de la entrevista quedan para el equipo. |
-| D-06 | El control de cambios no identifica quién decidió, qué documento afecta ni cuándo debe cerrarse. | CC-01–CC-04 estaban solo «Registrado», sin impacto o decisión. | Resuelto: se añadieron origen, impacto, trazabilidad y evidencia; el estado vigente de CC-01–CC-05 es **Listo**. |
-| D-07 | Falta información para considerar terminada una historia y estimar el trabajo restante. | US1–US28 estaban «Pendiente», sin criterios ni puntos; RNF2 no tenía historia propia; faltaban CC-01–CC-04. | Resuelto en el backlog vigente: cada US figura como Lista, Parcial o Pendiente según código/evidencia; los puntos no registrados no se inventan. |
-| D-08 | Los cuatro períodos reconstruidos no acreditan ceremonias Scrum ni velocidad real. | Planning creado el 08/09 con períodos anteriores; Review ya reconoce reconstrucción y termina sin cierre del sprint 4. | Se refuerza la distinción entre reconstrucción y acta; se relacionan tareas con US y se completan los campos del cierre como pendientes. No se inventan participantes, citas, aprobación ni puntos terminados. |
-| D-09 | El modelo conceptual y el UML necesitan una lectura conjunta que explique el sistema actual. | Justificación omite `PreguntaPrueba`, afirma que categorías/aprobación no forman parte del alcance; UML atribuye lógica a controladores, pero existen servicios y repositorios. | Se añade correspondencia conceptual–implementación y una nota de actualización junto a las imágenes. El MER ya incluye preguntas de prueba: no se lo acusa de omitirlas. Faltan tokens y restricciones en esa vista simplificada. |
-| D-10 | Falta claridad sobre las direcciones de API actuales y las operaciones de la consigna que siguen pendientes. | La letra usa `/auth/login`, `/agendas` y cancelación; las rutas actuales usan `/login`, `/reservas` y no incluyen cancelación. | Se documenta la API observada y las diferencias. Costo urgente y enlaces útiles de FAQ requieren decisión; no se agregan funciones al código. |
-| D-11 | La reconstrucción tiene enlaces rotos y promete que basta cambiar un puerto. | Índice SSOO enlaza nombres `01-`, `02-`, `03-` inexistentes; ambos `js/api.js` fijan `localhost:8000`. | Se corrigen enlaces y se aclaran límites de puertos/acceso remoto. La validación de Compose declarada el 02/09 no tiene salida adjunta. |
-| D-12 | Los requisitos de seguridad necesitan distinguirse de las medidas probadas. | Análisis inicial en futuro, PDF con matriz sin método de valoración; existen pruebas, pero no resultados versionados. | Se añaden controles observados, pruebas disponibles y carencias de evidencia. SQLite en memoria no prueba concurrencia real en MySQL. |
-| D-13 | Los PDF parecen entregables institucionales, pero todavía tienen supuestos y campos sin completar. | Política y términos tienen `[COMPLETAR]`; incluyen reservas, aceptación y conservación no cerradas. No existe evidencia de validación jurídica/institucional. | Se añaden notas de revisión documental en los PDF, conservando el texto original y sus fechas. No se inventan contactos, bases jurídicas ni plazos. |
-| D-14 | No estaba identificado qué uso de IA correspondía a cada intervención. | Declaración general; R-04 reconoce ordenar el modelo con IA; planificación retrospectiva sin autoría identificada. | Se conserva la declaración histórica y se distingue del registro actual de herramienta, documento, uso y equipo responsable. El estilo de un texto no se usa como detector de IA. |
-| D-15 | Falta información para reproducir el flujo de contribución y comprobar entregas completas. | Solo se observan `main` y `origin/main` localmente; no hay guía interna de ramas/revisión ni acuses. La consigna pide PR y reportes quincenales. | Se documenta lo exigido y lo que falta confirmar. No se afirma que nunca hubo PR ni se cambia la estrategia de ramas. |
-| D-16 | La titularidad de los derechos sobre el software necesita confirmación. | `LICENSE` nombra «Instituto Municipal de Seguridad y Justicia», distinto de la Intendencia usada por el proyecto. | Se deja pendiente confirmar titular y denominación; no se cambia un aviso legal sin información del equipo. |
+| D-01 | Alcance | Cliente y agenda académica identificados en el charter. | [] |
+| D-02 | Equipo | Roles y referente registrados. | [] |
+| D-03 | Relevamiento | Guía e informe de entrevista. | [] |
+| D-04 | Requisitos | RF1–RF24 y RNF1–RNF10. | [] |
+| D-05 | Historias | US1–US34 con criterios de aceptación. | [] |
+| D-06 | Planificación | Objetivos, trabajo, estimación y selección por sprint. | [] |
+| D-07 | Review | Incremento, demostración, devolución y ajustes. | [] |
+| D-08 | Reuniones | R-01–R-05 con acuerdos y acciones. | [] |
+| D-09 | Cambios | CC-01–CC-05 y modificaciones técnicas. | [] |
+| D-10 | Diseño | Capas, clases, MER y pasaje a tablas. | [] |
+| D-11 | Infraestructura | Compose, reconstrucción, respaldo y hardening. | [] |
+| D-12 | Verificación | 192 comprobaciones y auditoría API 43/43 del 21/10. | [] |
+| D-13 | Datos institucionales | [Ficha documental](formulario_datos_documentacion.md). | [] |
+| D-14 | Uso de herramientas | [Declaración](../../docs/ingenieria_software/declaracion_etica_ia.md). | [] |
 
-## Cómo se usaron los repositorios de referencia
+## Referencias de estructura
 
-Consulta del 02/10/2026, fijada a las revisiones siguientes para poder repetir la comparación:
-
-- `portalutu/proyecto-3ro-bt-2026`: `841e992a88e4be1d38feaa93e10b02d69c31f8cc`.
-- `portalutu/ing_software-3ro-bt`: `ae1c0f118a959c5bba7fd6c8badf60de1b7ea23a`.
-
-| Fuente | Aplicación en este proyecto |
+| Documento | Fuente |
 |---|---|
-| [Letra IMSJ](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md) | Comparar arquitectura, agenda, API, roles de equipo, Git y entregables. Sus tablas sugeridas no se copian como diseño aprobado. |
-| [Requisitos por asignatura](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Lineamientos/requerimientos_por_asignatura.md) | Separar entregables existentes de evidencias y documentos pendientes. |
-| [Charter](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/01_project_charter.md), [actas](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/09_actas_de_reuniones.md) y [cambios](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/06_control_de_cambios.md) | Conservar el charter inicial y registrar las aclaraciones fechadas; añadir acuerdos, pendientes, impactos y decisiones a los registros. |
-| [Historias](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/03_historias_de_usuario.md), [backlog](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/04_backlog_por_sprint.md) y [Review](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/05_sprint_review.md) | Añadir criterios y vínculos entre solicitud, US, sprint y evidencia. No trasladar puntos, velocidad o aprobaciones de TamboTrace. |
-| [Historias de usuario](https://github.com/portalutu/ing_software-3ro-bt/blob/ae1c0f118a959c5bba7fd6c8badf60de1b7ea23a/Teoricos/user-stories.md) y [Sprint Planning](https://github.com/portalutu/ing_software-3ro-bt/blob/ae1c0f118a959c5bba7fd6c8badf60de1b7ea23a/Teoricos/sprint-planning.md) | Relacionar necesidad, criterio, tarea y capacidad. Proponer criterios sin presentarlos como acuerdos existentes. |
-| [Modelado TamboTrace](https://github.com/portalutu/ing_software-3ro-bt/blob/ae1c0f118a959c5bba7fd6c8badf60de1b7ea23a/Practicos/ada-tambotrace.md) | Distinguir derivación conceptual, clases implementadas y relaciones físicas. |
-| [Ética de IA](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/08_etica_uso_de_ia.md) y [estilo Markdown](https://github.com/portalutu/ing_software-3ro-bt/blob/ae1c0f118a959c5bba7fd6c8badf60de1b7ea23a/documentos/manual_estilo_markdown.md) | Identificar asistencia y revisión humana, corregir enlaces, jerarquía y tablas. Las observaciones de esta auditoría no son contenido validado por estudiantes. |
+| Especificación y análisis | [Especificación y modelado](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md) |
+| Entrevista | [Entrevistas](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/entrevistas.md) |
+| Backlog | [Backlog](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/backlog.md) |
+| Historias | [Historias de usuario](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/user-stories.md) |
+| Planning | [Sprint Planning](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/sprint-planning.md) |
+| Review | [Eventos de Scrum](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/scrum-events.md) |
 
-Los ejemplos también contienen inconsistencias: la Review de TamboTrace referencia códigos CC distintos de los del registro, y su sprint 4 sigue sumando 33 puntos después de mencionar recortes. Se toma la estructura, no esos valores ni la afirmación de que resuelven automáticamente la capacidad.
+## Conformidad
 
-## Información pendiente para acoplarse al flujo
-
-**Estado vigente:** roles individuales documentados; Inspector de Tránsito como referente del cliente; administración y mantenimiento posteriores por la Intendencia. Las agendas son exclusivamente académicas y CC-01–CC-05 están Listos.
-
-**Pendiente del equipo:** completar las actas, los datos históricos y las evidencias concretas de pruebas, Git y entregas. Las reglas de los cambios, la configuración de la entrega real y los campos institucionales se reúnen en [aclaraciones y pendientes](aclaraciones_y_pendientes.md). El contacto oficial se añadirá posteriormente. Esta actualización no interviene en las actas.
-
-**Actualización de datos:** al resolver un pendiente, incorporar el dato y su fuente o enlace a evidencia. Solo se registran responsables y fechas si el equipo los acuerda; no se exige inventar una fecha de entrega ni prioridades distintas.
-
-## Correspondencia de entregables
-
-| Entregable de referencia | Situación al revisar |
+| Dato | Valor |
 |---|---|
-| Requisitos, modelado, arquitectura y planificación | Existen; se corrige coherencia y se marcan brechas. |
-| API y testing en Markdown | Se añaden inventario de rutas observadas y matriz de verificación, sin certificar ejecución. |
-| Entrevistas y actas | Existen registros parciales; faltan procedencia, decisiones y validaciones. |
-| Autenticación/criptografía y hardening | Hay código y documentación de infraestructura; falta evidencia de ejecución y revisión completa. |
-| SAST con capturas y correcciones | No se localizaron evidencias en los archivos versionados. |
-| Manual de usuario y acta de cierre | No localizados. Deben describir la versión aceptada; no se fabrica un cierre. |
-| Backup completo Docker + datos, DAST, pruebas de seguridad y respuesta a incidentes | No localizados como entregables completos. |
-| Acuses de recibo y reportes quincenales | No localizados; Git no sustituye esos registros. |
-
-La referencia anuncia tercera entrega el **15/10/2026** y defensa con fecha por establecer ([lineamientos](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Lineamientos/README.md)). La letra IMSJ menciona demo de 15 minutos y los lineamientos una defensa de 60: el equipo debe confirmar con docentes cómo se integran, sin inventar un cronograma.
-
-## Límite de esta intervención
-
-Se corrigen documentos, vínculos y trazabilidad; los PDF reciben comentarios y una hoja de revisión que distingue aclaraciones del grupo de hallazgos documentales y conserva la identidad visual original. Se conservan registros históricos y se evita atribuir nuevas decisiones a reuniones anteriores.
-
-**Fuera de CC-01–CC-05:** categorías, costo urgente, cancelaciones, cambios de API o despliegue, flujo Git, cláusulas legales y licencia requieren una decisión separada si se incorporan. Los datos institucionales restantes mantienen su propio estado.
-
-La revisión documental no determina la validez jurídica de los PDF ni la autoría histórica de textos sin evidencia. Las leyes citadas en ellos no fueron revalidadas en esta intervención.
-
-**Actualización autorizada — 02/10/2026:** se añadió el Markdown de aclaraciones y campos pendientes; se actualizaron las referencias afectadas y las cuatro hojas/comentarios de PDF con la tipografía, tablas y colores originales. Se reutilizó el logo RC5 extraído de la declaración de IA. No se modificaron actas, funciones del sistema ni avisos legales históricos. Estado funcional vigente al 15/10: **CC-01–CC-05, Listos**.
-
-El inventario completo de archivos y el orden de lectura están en [el índice documental](../../docs/README.md). La comprobación final de enlaces, tablas, referencias y PDF se registra en [verificación](../evidencias/verificacion.md).
-
-## Actualización tecnológica solicitada — CC-05, 02/10/2026
-
-El grupo decide retirar Laravel y basar el backend en PHP sin framework a partir de la API completa de RodrigoCazard. La comprensión inicial de este informe conserva el estado Laravel leído en `df581ab`; el destino se actualiza con esta decisión posterior, sin alterar hechos históricos.
-
-**Análisis realizado:** se leyeron los 38 archivos de `api-completa` y el README raíz en `d6f61c999369b754d70bfa0621a154e9a630589a`. Se contrastaron capas, dependencias, rutas, PDO, validación/DTO, JWT/cookie, respuestas, limitador y Docker/SQL con código, frontends y esquema IMSJ. La [comparación completa](../backend/referencia_api_completa.md) documenta diferencias y límites; no se ejecutó ni incorporó el ejemplo al código.
-
-La [guía de migración](../backend/migracion_backend_vanilla.md) y la [transición SSOO](../backend/transicion_backend_vanilla.md) son documentos nuevos. Se actualizan READMEs, índice, control CC-05, arquitectura/diagramas/modelo, API, requisitos, backlog/planning, seguridad, pendientes, registro de IA y hojas/comentarios de PDF. Los diagramas Mermaid muestran el destino; las vistas PNG y responsabilidades Eloquent se conservan como antecedentes.
-
-**Decisión confirmada:** PHP sin Laravel, por capas/PDO. **Estado vigente: Listo.** Código, infraestructura, SQL/procedimientos, sesiones y pruebas V-CC05 fueron implementados posteriormente. **Alternativas sin adopción:** cookie JWT, otro JSON/rutas y datos del ejemplo.
-
-La sustitución no cambia el carácter académico de la agenda. Esta sección describe el alcance de la intervención documental del 02/10; el estado posterior consolidado es CC-01–CC-05 Listos. La [verificación](../evidencias/verificacion.md) registra las pruebas posteriores del producto.
-
-## Seguimiento documental del 20/10/2026
-
-Este informe conserva sus hallazgos y conteos históricos. Los documentos vigentes fueron reorganizados por asignatura y desarrollados para explicar propósito, reglas, responsabilidades y evidencia. Las actas incorporan los datos corregidos por el equipo en R-01 y la relación de R-05 con los cambios de septiembre, sin reconstruir intervenciones ni aprobaciones.
-
-El contrato actual tiene 46 rutas y el MER/pasaje a tablas está actualizado; el UML PNG y los PDF mantienen sus versiones anteriores. Para conocer el estado vigente se utilizan el índice de entrega, el control de cambios y el formulario. El uso de herramientas se registra en su declaración, sin comentarios editoriales repetidos en los documentos.
+| Integrante | [] |
+| Fecha | [] |
+| Resultado | [] |
+| Referencia | [] |

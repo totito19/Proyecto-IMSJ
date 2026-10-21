@@ -1,12 +1,12 @@
 # Reconstrucción de la infraestructura
 
-**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 20/10/2026.
+**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 21/10/2026.
 
 ## Alcance y requisitos previos
 
 Este procedimiento describe una instalación local nueva a partir del repositorio. Se necesita Docker con Compose y contenedores Linux, acceso a Internet para descargar imágenes en el primer inicio y la carpeta completa del proyecto, incluidos ambos frontends. Los comandos se ejecutan desde `backend`.
 
-Una instalación existente debe conservar su configuración y volúmenes y seguir primero la [guía de transición](../../docs_auxiliares/backend/transicion_backend_vanilla.md). Crear un entorno vacío y restaurar un respaldo son operaciones distintas de actualizar contenedores.
+Una instalación existente debe conservar su configuración y volúmenes y seguir primero la [guía de transición](../../docs_auxiliares/backend/transicion_backend_vanilla.md). El procedimiento de transición reúne las operaciones de respaldo, actualización y restauración.
 
 ## Instalación nueva en Windows
 
@@ -16,7 +16,7 @@ Una instalación existente debe conservar su configuración y volúmenes y segui
 4. Crear la primera cuenta de personal mediante `scripts/crear_admin.php`, con las variables `INITIAL_ADMIN_*` indicadas en el [README del backend](../../backend/README.md#instalación-nueva-con-docker). Es una acción explícita, separada del arranque.
 5. Acceder al panel con esa cuenta y comprobar que las listas vacías corresponden a una instalación sin contenido. El SQL inicial no incorpora usuarios ni datos de demostración.
 
-El inicio ejecuta la migración incremental antes de Apache. Se utiliza para incorporar columnas, roles y estados requeridos por la versión actual; no sustituye una migración arbitraria de cualquier base histórica.
+El inicio ejecuta la migración incremental antes de Apache. Se utiliza para incorporar columnas, roles y estados requeridos por la versión actual; sus cambios se comparan con la estructura de la instalación.
 
 ## Inicio manual en otros sistemas
 
@@ -42,7 +42,7 @@ Con el puerto predeterminado se accede al portal en `http://localhost:8000/front
 | Agenda académica | Una franja con cupo admite una reserva propia y su cancelación; se impiden duplicación y cancelación ajena. |
 | Persistencia | Al detener e iniciar los mismos servicios se conservan los registros y adjuntos preparados para la prueba. |
 
-Cada ejecución debe registrar versión del código, entorno, fecha, procedimiento, resultado y evidencia. Esta lista describe la comprobación que debe realizarse; no constituye un informe de una ejecución nueva.
+Cada ejecución debe registrar versión del código, entorno, fecha, procedimiento, resultado y evidencia.
 
 ## Detención, reinicio y diagnóstico
 
@@ -64,10 +64,20 @@ php -d upload_max_filesize=10M -d post_max_size=24M -S 127.0.0.1:8000 -t public 
 php scripts/verificar.php
 ```
 
-Este comando no reproduce los alias de Apache que sirven los frontends. Para recorrer el sistema completo se utiliza Docker o una configuración Apache equivalente con raíz en `public` y los dos alias. Composer no instala dependencias necesarias para responder en esta versión.
+El servidor integrado atiende la API. Para recorrer el sistema completo se utiliza Docker o Apache con raíz en `public` y los dos alias de frontend. Composer no instala dependencias necesarias para responder en esta versión.
 
 ## Recuperación y evidencia disponible
 
 Un respaldo recuperable debe reunir exportación SQL, adjuntos, versión de código y configuración protegida. La restauración se ensaya en un destino aislado, comparando cuentas, relaciones, conteos, permisos y descargas. El procedimiento detallado está en [respaldo y recuperación](../../docs_auxiliares/backend/transicion_backend_vanilla.md).
 
-El registro del 13/10 acredita arranque Docker aislado y revisión visual. No acredita restauración institucional ni despliegue productivo. Las condiciones definitivas de alojamiento, HTTPS, conservación y responsables se completan con la Intendencia.
+## Registro de reconstrucción y recuperación
+
+| Dato | Valor |
+|---|---|
+| Versión | [] |
+| Fecha | [] |
+| Entorno | [] |
+| Responsable | [] |
+| Respaldo utilizado | [] |
+| Resultado | [] |
+| Evidencia | [] |

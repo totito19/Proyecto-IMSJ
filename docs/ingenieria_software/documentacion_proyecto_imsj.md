@@ -1,319 +1,75 @@
-> **Estado consolidado - 15/10/2026:** CC-01–CC-05 están **Listos**. El backend actual es PHP nativo/PDO y la versión incorpora simulador, consultas, Directora, aprobación diferenciada y gráficos de preguntas.
+# Concepción y análisis del proyecto
 
----
+**Producto:** Portal Vial. **Proyecto:** Educación Vial IMSJ. **Fecha:** 21/10/2026.
 
-# Proyecto Educación Vial IMSJ — Concepción del proyecto
+## 1. Contexto
 
+La Sección Tránsito de la Intendencia de San José comunica noticias, materiales de preparación y respuestas sobre sus trámites. El relevamiento identifica la necesidad de reunir esa información y mantenerla mediante una herramienta propia, con un lenguaje comprensible para la ciudadanía y especial atención a adolescentes y aspirantes a conducir.
 
----
+## 2. Necesidad del cliente
 
-## Índice
+La solución centraliza contenidos públicos y su administración. El panel permite preparar noticias, materiales y preguntas frecuentes, controlar vigencia, revisar contenidos y publicarlos. El simulador aporta práctica y el canal de consultas recibe mensajes para su lectura por el personal.
 
-**Parte 1 — Concepción del proyecto**
-1. [Situación inicial del cliente](#1-situación-inicial-del-cliente)
-2. [Necesidad presentada por el cliente](#2-necesidad-presentada-por-el-cliente)
-3. [Primer análisis del equipo: dudas detectadas en la letra](#3-primer-análisis-del-equipo-dudas-detectadas-en-la-letra)
+El trámite institucional de licencia mantiene su canal telefónico dentro del alcance relevado. La agenda web se desarrolla para la entrega académica.
 
-**Parte 2 — Entrevista con el cliente**
-4. [Participantes de la entrevista](#4-participantes-de-la-entrevista)
-5. [Desarrollo de la entrevista](#5-desarrollo-de-la-entrevista)
-6. [Información obtenida](#6-información-obtenida)
+## 3. Relevamiento
 
-**Parte 3 — Alcance del proyecto**
-7. [Nombre de la solución](#7-nombre-de-la-solución)
-8. [Visión del producto](#8-visión-del-producto)
-9. [Alcance incluido](#9-alcance-incluido)
-10. [Alcance excluido](#10-alcance-excluido)
+El equipo preparó preguntas sobre usuarios, permisos, identificación de modificaciones, franjas, cupos, costo urgente, materiales, categorías y noticias. Las respuestas de la entrevista desarrollan formatos educativos, vigencia y aprobación de Dirección.
 
-**Parte 4 — Requerimientos**
-11. [Requerimientos funcionales](#11-requerimientos-funcionales)
-12. [Requerimientos no funcionales](#12-requerimientos-no-funcionales)
-
-**Parte 5 — Épicas**
-13. [Definición de épicas](#13-definición-de-épicas)
-
----
-
-# Parte 1: Concepción del proyecto
-
-## 1. Situación inicial del cliente
-
-**Organismo:** Intendencia Municipal de San José (IMSJ)
-**Área:** Sección Tránsito
-**Referente institucional:** Inspector de Tránsito de la Intendencia, conocido como Nacho. El grupo no confirma un apellido; se usa principalmente el cargo.
-**Público alcanzado:** ciudadanía del departamento de San José, con foco especial en adolescentes
-**Situación relevada:** necesidad de un canal propio para administrar y centralizar información pública
-**Registro actual:** información dispersa en canales no integrados; el trámite de licencia se gestiona
-telefónicamente
-
-La Sección Tránsito comunica al público tres tipos de contenido: noticias y anuncios, materiales de estudio
-para aspirantes a la libreta de conducir, y respuestas a consultas frecuentes. Hoy esa comunicación depende
-de canales dispersos, sin control de vigencia ni una herramienta propia de publicación.
-
----
-
-## 2. Necesidad presentada por el cliente
-
-La letra inicial del proyecto plantea que la IMSJ requiere una aplicación web que centralice:
-
-- la comunicación pública de la Sección Tránsito,
-- la agenda de trámites vinculados a la libreta de conducir,
-- el acceso a materiales de estudio para aspirantes.
-
-La solución propuesta en la letra se compone de **dos interfaces diferenciadas y un backend centralizado**:
-
-| Componente | Para quién | Qué hace |
-|---|---|---|
-| **Frontend público** | Ciudadanía en general | Consultar noticias vigentes, materiales de estudio y preguntas frecuentes |
-| **Frontend IMSJ (dashboard)** | Personal administrativo de Tránsito | Publicar y administrar los contenidos |
-| **Backend (API REST)** | Ambos frontends | Centraliza la lógica de negocio, la autenticación y el acceso a datos |
-
-La separación en dos interfaces está indicada por la letra del proyecto. El público consulta contenidos; en la versión académica también registra reservas. El personal administra contenidos. La autorización efectiva se realiza en la API, no mediante la separación visual.
-
----
-
-## 3. Primer análisis del equipo: dudas detectadas en la letra
-
-Antes de entrevistar al cliente, el equipo identificó que la letra contenía áreas ambiguas o incompletas
-que impedían estimar correctamente el trabajo:
-
-| Área a aclarar | Preguntas iniciales del equipo |
+| Tema | Información del relevamiento |
 |---|---|
-| Usuarios administrativos | ¿Qué roles existirán dentro del panel? ¿Hay funciones exclusivas de algunos usuarios? ¿Se necesita saber quién realizó cada cambio? |
-| Agenda de trámites | ¿Cómo es el proceso actualmente? ¿Quién administra las franjas de disponibilidad? ¿Qué duración y cuántos cupos tiene cada franja? ¿Qué datos del ciudadano son obligatorios? ¿Qué ve el usuario tras agendarse? |
-| Costo del trámite urgente | ¿Es fijo o variable? ¿De qué depende? ¿Quién está autorizado a modificarlo? |
-| Preguntas frecuentes | ¿Necesitan clasificarse por categorías? ¿Quién las administra? |
-| Materiales de estudio | ¿Qué formatos de archivo se manejan? ¿Quién puede administrarlos? |
-| Noticias | ¿Las noticias vencidas siguen siendo consultables o desaparecen? ¿Quién define la vigencia? |
+| Usuarios | Personal administrativo y participación de Dirección. |
+| Auditoría | Identificar qué usuario modifica información. |
+| Agenda | Excluida de la entrega actual al cliente. |
+| FAQ | Clasificación por categorías. |
+| Materiales | PDF, imágenes y videos; lenguaje orientado a adolescentes. |
+| Noticias | Vigencia variable y aprobación de Dirección. |
 
----
+## 4. Visión de la solución
 
-# Parte 2: Entrevista con el cliente
+Dos interfaces diferenciadas utilizan la misma API. El portal ofrece consulta pública y funciones ciudadanas; el panel reúne la operación del personal y la Directora. La API aplica validaciones, roles, reglas y persistencia sobre MySQL.
 
-## 4. Participantes de la entrevista
+## 5. Alcance
 
-| Rol | Participante | Responsabilidad |
-|---|---|---|
-| Cliente / referente institucional | Inspector de Tránsito de la Intendencia | Explica el proceso real. El grupo confirmó además su autoridad para aceptar entregas y aprobar cambios, con registro en actas. |
-|Equipo de desarrollo | Equipo de estudiantes | Releva necesidades y las transforma en requerimientos |
-
----
-
-## 5. Desarrollo de la entrevista
-
-### Sobre usuarios administrativos
-
-**¿Qué roles existirán dentro de los usuarios administrativos?**
-El sistema será administrado por el entrevistado y una compañera de equipo, encargados de gestionar el
-programa.
-
-**¿La Dirección utilizará el sistema?**
-Sí, también tendrá participación dentro del sistema.
-
-**¿Habrá funciones exclusivas para algunos usuarios administrativos?**
-No. No se considera necesario definir distintos niveles de permisos: todos los usuarios administrativos
-tendrán los mismos privilegios.
-
-**¿Necesitan saber quién realizó cada cambio?**
-Sí. El sistema debe registrar qué usuario realizó cada modificación.
-
-### Sobre la agenda de trámites
-
-**¿Cómo es actualmente el proceso para solicitar la licencia de conducir?**
-Se realiza por teléfono. Existe intención de migrarlo a formato web, **pero ese desarrollo no forma parte
-del alcance de esta etapa del proyecto**.
-
-### Sobre preguntas frecuentes
-
-**¿Deberán clasificarse por categorías?**
-Sí, para facilitar la búsqueda de información.
-
-**¿Quién las administrará?**
-Todo el equipo será responsable de crearlas, actualizarlas y gestionarlas.
-
-### Sobre materiales de estudio
-
-**¿Qué tipos de materiales utilizarán?**
-Documentos PDF, imágenes y videos. La intención es adaptar manuales, normativas y leyes a un lenguaje más
-sencillo y comprensible para adolescentes, evitando un enfoque excesivamente técnico.
-
-**¿El objetivo es acercar la información a más personas?**
-Sí, especialmente a los adolescentes. El equipo audiovisual producirá videos explicativos sobre distintas
-situaciones de tránsito.
-
-### Sobre noticias
-
-**¿Cada noticia tendrá fecha de inicio y fin de vigencia?**
-Sí.
-
-**¿Cómo influye la vigencia según el tipo de noticia?**
-Depende del contenido: algunas permanecen publicadas hasta un año, mientras que la mayoría de las noticias
-de tránsito son esporádicas y se mantienen visibles solo el tiempo necesario.
-
-**¿Quién define la fecha de fin de vigencia?**
-El entrevistado será el responsable.
-
-**¿Existen roles definidos para publicar noticias?**
-No hay roles diferenciados: todo el equipo accede a la gestión de noticias. Sin embargo, **las
-publicaciones requieren aprobación de la Dirección antes de hacerse visibles**.
-
-**¿Desean agregar algún requerimiento adicional?**
-Por el momento no se identifican nuevos requerimientos.
-
----
-
-## 6. Información obtenida
-
-| Categoría | Información relevada |
+| Versión | Funciones |
 |---|---|
-| Problema principal | Información dispersa, sin control de vigencia ni herramienta propia de publicación. |
-| Objetivo de negocio | Centralizar la comunicación pública de Tránsito y acercar la educación vial a adolescentes. |
-| Alcance confirmado | Noticias, materiales de estudio y preguntas frecuentes. |
-| Alcance descartado por el cliente | Agenda de trámites: continúa siendo telefónica en esta etapa. |
-| Usuarios | Personal administrativo (sin subniveles de permiso) y Dirección; ciudadanía como consumidora. |
-| Seguridad | Registro de auditoría de modificaciones; diferenciación público / personal IMSJ. |
-| Flujo de trabajo | Las noticias requieren aprobación de la Dirección antes de publicarse. |
-| Formatos de contenido | PDF, imágenes y videos. |
-| Organización de contenidos | Preguntas frecuentes clasificadas por categorías; noticias con vigencia variable. |
-| Enfoque comunicacional | Lenguaje sencillo orientado a adolescentes. |
+| Cliente | Noticias, materiales, FAQ, simulador, gráficos de preguntas, consultas y administración de contenidos. |
+| Académica | Funciones del cliente más franjas, cupos, reservas, cancelación y agenda. |
+| Operación | Docker Compose, Apache/PHP, MySQL y volúmenes de persistencia. |
 
-### Interpretación del relevamiento
+## 6. Organización funcional
 
-El relevamiento aportó tres precisiones de alcance:
-
-1. **Confirmó la exclusión de la agenda con el cliente.** No fue una decisión del equipo: el
-   referente indicó que el trámite sigue siendo telefónico en esta etapa. La exclusión consta en el informe y el charter, aunque falta evidencia de validación institucional del registro.
-
-2. **Aclaró los permisos de la instancia inicial.** El informe expresa permisos administrativos iguales y aprobación de Dirección. La solicitud posterior CC-03 distingue formalmente la aprobación de la publicación; el diseño actual no se interpreta como una respuesta de aquella entrevista.
-
-3. **Descubrió tres requerimientos no previstos:** categorización de preguntas frecuentes, soporte de video
-   en materiales, y aprobación de la Dirección antes de publicar.
-
-Las precisiones se incorporan como RF19–RF21. Confirmar lo ya supuesto también permite reducir incertidumbre; no se mide el valor de la entrevista por la cantidad de requisitos nuevos.
-
-### Temas sin respuesta documentada
-
-
-El registro disponible no define todavía los siguientes aspectos de la entrega institucional:
-
-- **Plazo esperado:** ¿para cuándo necesita la IMSJ una primera versión funcionando?
-- **Infraestructura:** ¿hay servidor propio o se despliega en hosting externo? ¿Qué dispositivos usa el
-  personal?
-- **Entregables de cierre:** ¿esperan manual de usuario, capacitación, usuarios creados?
-
----
-
-# Parte 3: Alcance del proyecto
-
-## 7. Nombre de la solución
-
-**Portal Vial**
-
----
-
-## 8. Visión del producto
-
-La plataforma será una aplicación web responsive que permitirá a la Sección Tránsito de la IMSJ publicar y
-administrar noticias, materiales de estudio y preguntas frecuentes desde un panel propio, y a la ciudadanía
-consultar esa información centralizada desde cualquier dispositivo.
-
-La primera versión se orienta a resolver el circuito de comunicación pública, dejando fuera funcionalidades
-que aumenten el costo o retrasen la entrega.
-
----
-
-## 9. Alcance incluido
-
-1. Gestión de usuarios y control de acceso por rol (público general vs. personal IMSJ).
-2. Publicación y administración de noticias.
-3. Definición de período de vigencia por noticia.
-4. Carga de imagen de portada, galería de imágenes, texto y enlaces útiles en noticias.
-5. Gestión del estado de publicación de una noticia.
-6. Consulta pública de noticias vigentes.
-7. Administración de materiales de estudio (PDF, imágenes y videos).
-8. Consulta pública de materiales de estudio.
-9. Gestión de preguntas frecuentes; la clasificación por categorías está relevada, pero sigue pendiente de implementación.
-10. Consulta pública de preguntas frecuentes.
-11. Historial de acciones administrativas (auditoría de modificaciones).
-12. Interfaz responsive con accesibilidad básica.
-**Solo para la versión académica, según charter y relevamiento:**
-
-13. Interfaz pública para agendarse a trámites de libreta de conducir.
-14. Interfaz administrativa de franjas de disponibilidad.
-15. Prevención de doble reserva de agenda.
-16. Confirmación visual de agenda para el ciudadano.
-
-Las solicitudes CC-01–CC-04 se consultan en [control de cambios](control_cambios.md) y están Listas. CC-02–CC-04 se originaron en la reunión/demo del 03/09 con la Directora y el Inspector de Tránsito. La agenda es el único módulo señalado como exclusivamente académico.
-
-**Aclaración del grupo — actualizada al 15/10/2026:** la coordinación y el seguimiento se realizan en reuniones; Juan Robaina se encarga del testing y la revisión documental. CC-02–CC-04 surgieron de la reunión/demo con la Directora y el Inspector de Tránsito. **Estado consolidado: CC-01–CC-05, Listos.** La Intendencia administrará y mantendrá el sistema por ahora. Otros datos institucionales por completar se separan en [aclaraciones y pendientes](../../docs_auxiliares/revision/aclaraciones_y_pendientes.md).
-
----
-
-## 10. Alcance excluido
-- La agenda queda excluida de la entrega al cliente según el relevamiento; se conserva en la entrega académica para cumplir la letra.
-- No está documentado cómo se separarán técnicamente las versiones ni quién aceptó la entrega definitiva.
-
-
-# Parte 4: Requerimientos del sistema
-
-
-## 11. Requerimientos funcionales
-
-La referencia de códigos es [Requerimientos.md](Requerimientos.md): RF1–RF18 se conservan, y RF19–RF24 identifican precisiones del relevamiento y solicitudes posteriores. Para evitar dos catálogos distintos, esta síntesis remite a ese documento.
-
-### Equivalencia de los códigos anteriores de esta síntesis
-
-Esta tabla conserva trazabilidad con versiones anteriores; no renumera el catálogo original ni las historias US.
-
-| Código anterior en esta síntesis | Código en Requerimientos.md | Función |
+| Grupo | Requisitos | Historias |
 |---|---|---|
-| RF1 | RF1 | Inicio de sesión. |
-| RF2 | RF2 | Consulta de noticias. |
-| RF3 | RF5 | Consulta de materiales. |
-| RF4 | RF6 | Consulta de preguntas frecuentes. |
-| RF5 | RF7 | Administración de noticias. |
-| RF6 | RF8 | Vigencia de noticias. |
-| RF7 | RF9 | Imágenes, texto y enlaces de noticias. |
-| RF8 | RF10 | Estado de noticias. |
-| RF9 | RF17 | Administración de materiales. |
-| RF10 | RF18 | Administración de preguntas frecuentes. |
-| RF11 | RF19 | Categorías de preguntas frecuentes. |
-| RF12 | RF20 | Formatos de materiales. |
-| RF13 | RF21 | Aprobación de noticias por Dirección. |
+| Acceso y permisos | RF1, RNF1 | US1–US2. |
+| Noticias | RF2, RF7–RF10 | US3–US9. |
+| Reservas y agenda | RF3–RF4, RF11–RF16, RNF8–RNF9 | US10–US20. |
+| Materiales | RF5, RF17, RF20 | US21–US22. |
+| FAQ | RF6, RF18–RF19 | US23–US24, US29. |
+| Calidad | RNF2–RNF6 | US25–US28, US34. |
+| Ampliaciones | RF21–RF24 | US30–US33. |
 
-## 12. Requerimientos no funcionales
+## 7. Evolución
 
-Consultar RNF1–RNF10 en [Requerimientos.md](Requerimientos.md). En la versión anterior de esta síntesis, RNF1–RNF7 coincidían; **RNF8 significaba separación de publicaciones y corresponde a RNF10**. RNF8 del catálogo de referencia significa prevención de doble reserva y RNF9, confirmación visual.
+El desarrollo avanzó desde las pantallas y la definición del producto hacia persistencia, integración y funciones de gestión. La demostración del 03/09 originó consultas ciudadanas, aprobación de la Directora y gráficos del simulador.
 
-## 13. Definición de épicas
+El equipo decidió retirar Laravel el 30/09. CC-05 se registró el 02/10 y la reescritura del 05/10 adoptó PHP nativo con el recorrido de api-simple. La demo del 13/10 comprobó las ampliaciones de contenidos y consultas. El 20/10 se incorporó cancelación propia y el 21/10 se completaron la integración de 46 rutas y los ciclos técnicos de seguridad.
 
-Se mantienen EP1–EP7 de [backlog](backlog.md). La versión anterior de esta síntesis llamó EP3 a materiales (ahora EP5), EP4 a preguntas frecuentes (ahora EP6) y EP5 a calidad (ahora EP7). EP1 y EP2 coinciden. Agenda y gestión de agenda conservan EP3 y EP4 en el backlog académico.
+## 8. Configuración del producto
 
-El backlog distingue las historias incorporadas posteriormente, sus fuentes y su estado. Una necesidad relevada puede permanecer pendiente aunque otros cambios relacionados estén Listos.
+| Aspecto | Valor |
+|---|---|
+| Backend | PHP 8.5, PDO, controladores, servicios y repositorios. |
+| Datos | MySQL 8.4; once tablas del dominio y auth_tokens. |
+| Publicación | Borrador, Pendiente, Aprobado y Publicado. |
+| Sesiones | Bearer opaco revocable; ocho horas. |
+| Simulacro | Hasta diez preguntas; corrección con total y aciertos. |
+| Materiales | PDF e imágenes como archivos; video mediante URL. |
+| Categorías FAQ | [] |
+| Costo urgente | [] |
+| Dominio y alojamiento | [] |
+| Contacto institucional | [] |
 
-## 14. Actualización tecnológica — CC-05, 02/10/2026
+## 9. Referencias
 
-Por decisión explícita del grupo, se sustituyó Laravel por PHP nativo, con capas y PDO/MySQL. La referencia inicial fue `api-completa` y el refinamiento del 05/10 adoptó el recorrido de `api-simple` de RodrigoCazard. La [migración](../../docs_auxiliares/backend/migracion_backend_vanilla.md), la [comparación de referencia](../../docs_auxiliares/backend/referencia_api_completa.md) y el [control de cambios](control_cambios.md) describen esta actualización posterior al relevamiento; no se la atribuye a la entrevista inicial.
-
-La implementación presente utiliza PHP nativo, PDO y MySQL, siguiendo el recorrido de api-simple. Se conserva el dominio y el contrato de los frontends; agenda sigue siendo académica y CC-01–CC-05 están Listos. No se adoptaron las rutas de productos, cookies JWT ni formatos ajenos al dominio IMSJ.
-
-## 15. Operación de la versión vigente
-
-El portal presenta noticias vigentes, materiales y preguntas frecuentes publicados. El personal prepara contenidos y los envía a revisión; la Directora los aprueba y el personal realiza la publicación como una acción posterior. Al editar un contenido aprobado o publicado, vuelve a borrador. Esta secuencia reduce la posibilidad de publicar modificaciones que no hayan pasado por revisión.
-
-Las consultas ciudadanas se envían con nombre, correo y mensaje. El panel permite desplegarlas y marcarlas como leídas; no incluye una función de respuesta ni notificaciones. El simulador selecciona hasta diez preguntas, ofrece cuatro opciones y calcula la corrección usando las respuestas almacenadas en el servidor. La solución no se devuelve en la consulta pública inicial.
-
-En la versión académica, el ciudadano elige una franja con cupo y la reserva se vincula a su cuenta. La API comprueba propiedad, duplicación y capacidad. La cancelación elimina únicamente una reserva del propietario. Los listados actuales muestran fechas vigentes y futuras, incluso en la agenda administrativa; no ofrecen una vista de reservas históricas.
-
-## 16. Límites que afectan a la entrega
-
-| Aspecto | Situación concreta | Documento de seguimiento |
-|---|---|---|
-| Noticias completas | La API admite galería y enlaces; las interfaces todavía no cubren ambos recursos. | US6, RF9. |
-| Categorías de FAQ | Necesidad relevada sin catálogo ni implementación. | US29, RF19. |
-| Renovación urgente | Tipo de trámite disponible, sin costo definido. | US12, RF4; alcance académico. |
-| Auditoría | Hay identidad, acción, elemento y fecha; faltan cobertura total y retención acordadas. | US25, RNF3. |
-| Uso móvil y accesibilidad | Hay diseño adaptable y controles semánticos; falta evidencia formal de evaluación. | US27–US28. |
-| Operación institucional | Alojamiento, HTTPS, contactos, respaldos y conservación por definir. | SSOO y formulario auxiliar. |
-
-El catálogo, el backlog y los documentos técnicos describen estas diferencias de forma complementaria. El estado Listo de CC-01–CC-05 no elimina los pendientes que están fuera de esas solicitudes.
+[Charter](project_charter.md), [entrevista](informe%20entrevista.md), [especificación](Requerimientos.md), [casos de uso](analisis_de_requerimientos.md), [backlog](backlog.md), [cambios](control_cambios.md) y [Especificación y modelado del curso](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md).

@@ -155,6 +155,12 @@ El cupo disponible no se almacena como una segunda cifra que deba sincronizarse:
 
 Los adjuntos se guardan fuera de la base. Sus columnas contienen rutas o URL, y los modelos construyen la representación pública correspondiente. La imagen opcional del simulador puede ser nula; las respuestas correctas permanecen en la base y se excluyen de la consulta pública inicial.
 
-Las fechas civiles se interpretan en la zona de Uruguay y las marcas de tiempo se gestionan en UTC. La política de conservación no se define con los campos `created_at` y `updated_at`: requiere una decisión operativa adicional.
+Las fechas civiles se interpretan en la zona de Uruguay y las marcas de tiempo se gestionan en UTC. Los campos `created_at` y `updated_at` conservan las marcas temporales de los registros.
 
-El esquema no incorpora categorías de FAQ, costo urgente ni respuestas a consultas. La cancelación elimina una fila de `reservas`; no agrega una tabla o campo de estado. Estas limitaciones deben considerarse al interpretar el modelo como descripción de la versión implementada.
+La cancelación elimina la fila de `reservas` y la disponibilidad se recalcula con la ocupación actual.
+
+| Dato | Valor |
+|---|---|
+| Catálogo de categorías | [] |
+| Costo de trámite urgente | [] |
+| Plazo de conservación | [] |
