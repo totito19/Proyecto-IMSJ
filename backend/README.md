@@ -33,13 +33,14 @@ Requiere Docker con Compose y contenedores Linux. En Windows se puede usar [Dock
 
 1. Abrir **`iniciar.bat`** con doble clic. Detecta Docker en el PATH o en sus instalaciones habituales y abre Docker Desktop si el motor está apagado, con espera limitada a tres minutos. Genera `.env` desde la plantilla y claves aleatorias locales cuando no hay una base previa; no requiere escribirlas ni las muestra en la consola. Conserva las claves reales de una configuración existente. Si falta configuración pero ya existe el volumen de base, exige recuperar sus claves originales.
 2. El inicio comprueba la configuración, utiliza `APP_PORT=8000` o busca uno libre entre los cien siguientes si está ocupado por otro programa, y guarda el puerto elegido. Construye e inicia **`app` (Apache/PHP) y `db` (MySQL)**; retira el antiguo contenedor Nginx del mismo proyecto sin borrar volúmenes. Antes de iniciar Apache ejecuta `scripts/migrar.php`, una migración idempotente que agrega a instalaciones existentes el rol Directora, los estados de aprobación, la bandeja de consultas y el campo de imagen del simulador sin borrar registros. Espera al healthcheck de API/base/portal y comprueba acceso desde Windows antes de abrir el portal en el navegador predeterminado. MySQL importa `database.sql` solo cuando el volumen está vacío; no carga usuarios o contenido de demostración. La primera ejecución necesita conexión para descargar las imágenes.
-3. Crear la primera cuenta de personal con la herramienta CLI. Definir estas variables en la terminal con datos elegidos por el equipo; la contraseña no se imprime:
+3. Crear la primera cuenta de personal con la herramienta CLI. Definir estas variables en PowerShell con datos elegidos por el equipo; la contraseña se ingresa de forma protegida y se pasa al proceso mediante el entorno:
 
 ```powershell
-$env:INITIAL_ADMIN_CEDULA = '[]'
-$env:INITIAL_ADMIN_NOMBRE = '[]'
-$env:INITIAL_ADMIN_PASSWORD = '[]'
+$env:INITIAL_ADMIN_CEDULA = Read-Host 'Cédula de la primera cuenta'
+$env:INITIAL_ADMIN_NOMBRE = Read-Host 'Nombre de la primera cuenta'
+$env:INITIAL_ADMIN_PASSWORD = [System.Net.NetworkCredential]::new('', (Read-Host 'Contraseña de la primera cuenta' -AsSecureString)).Password
 docker compose exec -e INITIAL_ADMIN_CEDULA -e INITIAL_ADMIN_NOMBRE -e INITIAL_ADMIN_PASSWORD app php scripts/crear_admin.php
+Remove-Item Env:INITIAL_ADMIN_PASSWORD
 Remove-Item Env:INITIAL_ADMIN_PASSWORD
 ```
 
@@ -148,8 +149,8 @@ La suite integral registró 192 comprobaciones, 60 peticiones distintas y 46 end
 
 | Dato | Valor |
 |---|---|
-| Dominio institucional | [] |
-| HTTPS | [] |
-| Política institucional de cuentas | [] |
-| Responsable operativo | [] |
-| Respaldo institucional | [] |
+| Dominio institucional | Demostración en localhost; para producción se requiere dominio administrado por la Intendencia. |
+| HTTPS | HTTP local; TLS y certificado válido requeridos antes de publicación institucional. |
+| Política institucional de cuentas | Condición de operación: cuentas individuales, mínimo privilegio, alta autorizada y revocación al retirar acceso. |
+| Responsable operativo | Equipo RC5 durante la entrega; administración posterior por la Intendencia de San José. |
+| Respaldo institucional | Transferir SQL, adjuntos, configuración protegida y versión compatible; propuesta diaria y previa a cambios. |

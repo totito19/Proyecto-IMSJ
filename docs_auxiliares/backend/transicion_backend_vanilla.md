@@ -63,11 +63,12 @@ Registrar nombre del respaldo, fecha, integridad, código compatible, destino de
 
 | Dato | Valor |
 |---|---|
-| Respaldo | [] |
-| Fecha de generación | [] |
-| Hash de integridad | [] |
-| Versión de código | [] |
-| Destino | [] |
-| Responsable | [] |
-| Resultado de consultas y archivos | [] |
-| Evidencia | [] |
+| Confirmación recibida | 21/10/2026. Esta fecha corresponde a la respuesta del equipo. |
+| Responsable | Equipo RC5; revisión principal del líder y co-líder. |
+| Actividad confirmada | Restauración de un respaldo y prueba del sistema en otra computadora. |
+| Resultado informado | Ambas pruebas satisfactorias, según confirmación conjunta del equipo. |
+| Tipo de evidencia | Declaración del equipo conservada en la consolidación documental. |
+
+La confirmación no identifica el archivo de copia, su hash ni la versión ejecutada. Para cada repetición se debe adjuntar el manifiesto de respaldo con nombre, fecha de generación, SHA-256, commit compatible, destino y resultados de las comprobaciones descritas arriba. Esto distingue el resultado informado de una comprobación técnica detallada.
+
+[Fuente de confirmación](../revision/consolidacion_2026-10-21.md).

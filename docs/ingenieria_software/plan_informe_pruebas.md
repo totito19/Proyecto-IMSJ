@@ -16,7 +16,7 @@ La verificación combina una suite de integración HTTP/MySQL, auditoría Bash d
 | Backend | Tomás Cabrera. |
 | Base de datos | Gabriela Romero. |
 | Frontend | Verónica Romero y Juan Corrales. |
-| Ejecutor y revisor de la ejecución registrada | [] |
+| Ejecutor y revisor de la ejecución registrada | Resultados conservados en archivos de evidencia; revisión principal de líder y co-líder confirmada por el equipo, sin atribuir ejecución individual. |
 | Suite de integración | [integracion.py](../../backend/tests/integracion.py); Python estándar y cliente MySQL. |
 | Runtime registrado | PHP 8.5.11 y MySQL 8.4.11. |
 | Base aislada | `imsj_test_final_20261021`. |
@@ -74,9 +74,9 @@ Con `IMSJ_SECURITY_REQUIRE_FULL=1`, cualquier prueba omitida impide considerar c
 | PT-13 | RNF2; US34 | JSON inválido, validación de campos, archivos disfrazados, entradas SQLi/XSS controladas y respuestas sin error interno en esos escenarios. | Integración y auditoría API. |
 | PT-14 | RNF4; US26 | Acceso privado bloqueado, CORS permitido/ajeno, cabeceras y rate limit. | Auditoría API. |
 | PT-15 | RF9; US6 | Galería y enlaces aceptados por API; formulario administrativo actual con portada y texto. | Integración y [noticias.js](../../frontend-imsj/js/noticias.js). |
-| PT-16 | RF4, RF11–RF12; US11–US12, US15–US16 | Tipos normal y urgente disponibles en código; evaluación de tarifa especial: []. | [Controlador de reservas](../../backend/controllers/ReservaController.php) y [servicio](../../backend/services/ReservaService.php). |
-| PT-17 | RF19; US29 | Clasificación por categorías: []. | [Backlog](backlog.md). |
-| PT-18 | RNF5–RNF6; US27–US28 | Matriz de dispositivos, navegación por teclado y evaluación de accesibilidad: []. | [Ficha de evaluación](../../docs_auxiliares/revision/formulario_datos_documentacion.md). |
+| PT-16 | RF4, RF11–RF12; US11–US12, US15–US16 | Tipos normal y urgente disponibles en código; la versión no calcula ni cobra tarifa especial; RF4/US12 permanece parcial. | [Controlador de reservas](../../backend/controllers/ReservaController.php) y [servicio](../../backend/services/ReservaService.php). |
+| PT-17 | RF19; US29 | Clasificación por categorías no implementada; RF19/US29 permanece pendiente. | [Backlog](backlog.md). |
+| PT-18 | RNF5–RNF6; US27–US28 | Criterio de evaluación: tamaños de pantalla, teclado, foco y etiquetas; la prueba en otra computadora confirmada no acredita una matriz móvil ni auditoría completa de accesibilidad. | [Ficha de evaluación](../../docs_auxiliares/revision/formulario_datos_documentacion.md). |
 
 ## 5. Informe de integración del 21/10
 
@@ -108,10 +108,10 @@ El backlog conserva RF9/US6 como parcial por la interfaz de galería y enlaces; 
 
 | Evaluación de entrega | Registro |
 |---|---|
-| Recorrido manual de la versión final | [] |
-| Restauración de un respaldo completo | [] |
-| Conformidad de revisión del equipo | [] |
-| Aceptación del cliente | [] |
+| Recorrido manual de la versión final | Equipo confirma prueba satisfactoria en otra computadora; el candidato exacto de entrega se comprueba después del congelamiento. |
+| Restauración de un respaldo completo | Resultado satisfactorio confirmado por el equipo el 21/10; véase el registro de recuperación y la consolidación documental. |
+| Conformidad de revisión del equipo | Revisión principal realizada por líder y co-líder, según respuesta del equipo; no equivale a firmas individuales. |
+| Aceptación del cliente | Se formaliza al recibir la versión de entrega, con inventario y observaciones; R-05 acredita la demo y las solicitudes de cambio. |
 
 ## 8. Referencias
 

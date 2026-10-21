@@ -15,7 +15,7 @@
 | MySQL | 8.4.11 |
 | Base de prueba | imsj_test_final_20261021 |
 | Fecha UTC | 2026-10-21T14:47:36.610545+00:00 |
-| Responsable de revisión | [] |
+| Responsable de revisión | Tomás Cabrera (líder) y Juan Robaina (co-líder) |
 
 La suite recorre autenticación, autorización, contenidos, archivos, aprobación, consultas, simulacro, reservas, cancelación, agenda, historial y controles de entrada. El resultado conserva los hashes SHA-256 de los archivos PHP utilizados.
 
@@ -84,11 +84,11 @@ La evidencia de integración identifica 43 archivos PHP mediante hashes. El JSON
 | Dato | Valor |
 |---|---|
 | Commit de referencia | 1a43229 |
-| Tag final | [] |
-| Revisor | [] |
-| Fecha de conformidad | [] |
-| Acta de aceptación | [] |
-| Evidencia de restauración | [] |
+| Tag final | Identificador propuesto: entrega-final-2026-10-29; se creará sobre el candidato definitivo. |
+| Revisor | Tomás Cabrera (líder) y Juan Robaina (co-líder) |
+| Fecha de conformidad | Confirmación de revisión principal recibida el 21/10/2026; no constituye firma ni aceptación final. |
+| Acta de aceptación | Preparación y condiciones en docs/ingenieria_software/acta_cierre.md; recepción al entregar. |
+| Evidencia de restauración | Confirmación conjunta del equipo del 21/10; restauración y prueba en otra computadora satisfactorias, documentadas en consolidacion_2026-10-21.md. |
 
 [Control de cambios](../../docs/ingenieria_software/control_cambios.md), [backlog](../../docs/ingenieria_software/backlog.md) y [entregables de seguridad](../../docs/electiva_ciberseguridad/checklist_ciberseguridad_entrega_final.md).
 

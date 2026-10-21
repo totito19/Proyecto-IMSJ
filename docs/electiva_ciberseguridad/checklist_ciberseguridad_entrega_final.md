@@ -5,24 +5,24 @@
 | Proyecto | Educación Vial IMSJ — Portal Vial |
 | Fecha | 21/10/2026 |
 | Entrega académica | 29/10/2026 |
-| Revisor | [] |
-| Versión de entrega | [] |
+| Revisión principal | Tomás Cabrera (líder) y Juan Robaina (co-líder), según confirmación del equipo. |
+| Versión de referencia | Corte técnico 1a43229; candidato exacto a identificar al entregar. |
 
 ## 1. Entregables
 
 | Bloque | Documento | Evidencia | Revisión |
 |---|---|---|---|
-| Análisis y diseño | [Análisis de ciberseguridad](analisis_ciberseguridad.pdf). | Mapa, escala, justificación y controles. | [] |
-| SAST | [Informe SAST](informe_sast_portal_vial.pdf). | [Resultado inicial](../../sast-report.json) y [revalidación](../../informes-sast-post/semgrep-post.json). | [] |
-| DAST y Nmap | [Informe DAST](informe_dast_portal_vial.pdf). | [ZAP posterior](../../informes-dast-post/zap-report-post.json) y [Nmap](../../informes-dast-post/nmap-post.txt). | [] |
-| Auditoría API | [Informe Bash](informe_auditoria_bash_api_imsj.pdf). | [Ejecución completa](../../output/security-api-final.txt). | [] |
-| Hardening | [Informe de contenedores](informe_hardening_contenedores_imsj.pdf). | [Revalidación](../../output/security-api-hardening.txt) y Compose. | [] |
-| Términos | [Términos y condiciones](Terminos_y_Condiciones_IMSJ_Uruguay.pdf). | [] | [] |
-| Privacidad | [Política de privacidad](Politica_de_Privacidad_IMSJ_Uruguay.pdf). | [] | [] |
-| Hallazgos consolidados | [Registro](registro_hallazgos.md). | JSON de herramientas, revisión del código y auditoría API. | [] |
-| Respuesta a incidentes | [Procedimiento técnico](respuesta_incidentes.md). | Detección, contención, análisis, recuperación y ficha de intervención. | [] |
-| Reflexión ética de las pruebas | [Tratamiento de evidencias y alcance](registro_hallazgos.md#6-tratamiento-de-evidencias-y-alcance-ético). | Alcance local, datos sintéticos, resguardo y clasificación de resultados. | [] |
-| Restauración de respaldo | [Procedimiento](../../docs_auxiliares/backend/transicion_backend_vanilla.md). | [] | [] |
+| Análisis y diseño | [Análisis de ciberseguridad](analisis_ciberseguridad.pdf). | Mapa, escala, justificación y controles. | Documento y referencia presentes; conservar el alcance y observaciones del informe. |
+| SAST | [Informe SAST](informe_sast_portal_vial.pdf). | [Resultado inicial](../../sast-report.json) y [revalidación](../../informes-sast-post/semgrep-post.json). | Documento y referencia presentes; conservar el alcance y observaciones del informe. |
+| DAST y Nmap | [Informe DAST](informe_dast_portal_vial.pdf). | [ZAP posterior](../../informes-dast-post/zap-report-post.json) y [Nmap](../../informes-dast-post/nmap-post.txt). | Documento y referencia presentes; conservar el alcance y observaciones del informe. |
+| Auditoría API | [Informe Bash](informe_auditoria_bash_api_imsj.pdf). | [Ejecución completa](../../output/security-api-final.txt). | Documento y referencia presentes; conservar el alcance y observaciones del informe. |
+| Hardening | [Informe de contenedores](informe_hardening_contenedores_imsj.pdf). | [Revalidación](../../output/security-api-hardening.txt) y Compose. | Documento y referencia presentes; conservar el alcance y observaciones del informe. |
+| Términos | [Términos y condiciones](Terminos_y_Condiciones_IMSJ_Uruguay.pdf). | Texto PDF incluido; revisión institucional requerida antes de publicar. | Documento presente; no acredita aprobación jurídica. |
+| Privacidad | [Política de privacidad](Politica_de_Privacidad_IMSJ_Uruguay.pdf). | Texto PDF incluido; revisión institucional requerida antes de publicar. | Documento presente; no acredita aprobación jurídica. |
+| Hallazgos consolidados | [Registro](registro_hallazgos.md). | JSON de herramientas, revisión del código y auditoría API. | Documento y referencia presentes; conservar el alcance y observaciones del informe. |
+| Respuesta a incidentes | [Procedimiento técnico](respuesta_incidentes.md). | Detección, contención, análisis, recuperación y ficha de intervención. | Documento y referencia presentes; conservar el alcance y observaciones del informe. |
+| Reflexión ética de las pruebas | [Tratamiento de evidencias y alcance](registro_hallazgos.md#6-tratamiento-de-evidencias-y-alcance-ético). | Alcance local, datos sintéticos, resguardo y clasificación de resultados. | Documento y referencia presentes; conservar el alcance y observaciones del informe. |
+| Restauración de respaldo | [Procedimiento](../../docs_auxiliares/backend/transicion_backend_vanilla.md). | Confirmación del equipo recibida el 21/10: resultado satisfactorio. | Evidencia testimonial; véase consolidación documental. |
 
 ## 2. Resultados de ejecución
 
@@ -55,21 +55,21 @@ El JSON de Semgrep conserva seis resultados y un diagnóstico de análisis parci
 
 | Dato | Valor |
 |---|---|
-| Responsable legal | [] |
-| Identificación institucional | [] |
-| Domicilio | [] |
-| Contacto oficial | [] |
-| Proveedores y alojamiento | [] |
-| Conservación de datos | [] |
-| Tratamiento de menores | [] |
-| Dominio y HTTPS | [] |
-| Canal de incidentes | [] |
+| Responsable legal | La operación institucional corresponde a la Intendencia; la identificación del responsable del tratamiento se formaliza antes de publicar. |
+| Identificación institucional | Intendencia de San José — Sección Tránsito. |
+| Domicilio | Los textos de publicación deberán usar el domicilio oficial validado por la Intendencia. |
+| Contacto oficial | Interlocución con la Sección Tránsito a través del Inspector; publicar el canal oficial al habilitar el servicio. |
+| Proveedores y alojamiento | Docker local en el corte académico; la contratación de alojamiento corresponde a la Intendencia. |
+| Conservación de datos | La versión no ejecuta purga automática; la operación requiere una política institucional por finalidad. |
+| Tratamiento de menores | Contenidos educativos consultables sin cuenta; revisar institucionalmente cuentas y formularios antes de habilitar trámites reales. |
+| Dominio y HTTPS | HTTP local en loopback; dominio institucional y HTTPS como requisitos de producción. |
+| Canal de incidentes | Durante el proyecto: coordinación con líder/co-líder; en operación: canal institucional a designar en la transferencia. |
 
 ## 5. Registro de acciones
 
 | Acción | Responsable | Fecha objetivo | Resultado | Referencia |
 |---|---|---|---|---|
-| [] | [] | [] | [] | [] |
+| Revalidar el candidato de entrega y sus evidencias. | Tomás Cabrera y Juan Robaina; apoyo del equipo | Antes de entregar | Condición de cierre; no se presenta como ejecución futura ya realizada. | [Paquete](../general/paquete_entrega.md). |
 
 ## 6. Referencias
 

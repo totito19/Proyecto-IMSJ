@@ -3,10 +3,10 @@
 | Dato | Valor |
 |---|---|
 | Proyecto | Portal Vial — Educación Vial IMSJ |
-| Fecha | [] |
-| Lugar o modalidad | [] |
-| Entrevistadores | [] |
-| Entrevistado | [] |
+| Fecha | 09/07/2026, 16:05–16:45 (R-01). |
+| Lugar o modalidad | Presencial — Polo Educativo Tecnológico (R-01). |
+| Entrevistadores | Tomás Cabrera y Juan Robaina. |
+| Entrevistado | Inspector de Tránsito, referente del cliente. |
 
 ## Objetivo
 

@@ -5,26 +5,26 @@
 | Proyecto | Educación Vial IMSJ — Portal Vial |
 | Revisión inicial | 02/10/2026 |
 | Actualización | 21/10/2026 |
-| Revisor | [] |
+| Revisión principal informada | Tomás Cabrera (líder) y Juan Robaina (co-líder); confirmación del 21/10. |
 
 ## Matriz de revisión
 
 | ID | Área | Resultado o referencia | Revisión |
 |---|---|---|---|
-| D-01 | Alcance | Cliente y agenda académica identificados en el charter. | [] |
-| D-02 | Equipo | Roles y referente registrados. | [] |
-| D-03 | Relevamiento | Guía e informe de entrevista. | [] |
-| D-04 | Requisitos | RF1–RF24 y RNF1–RNF10. | [] |
-| D-05 | Historias | US1–US34 con criterios de aceptación. | [] |
-| D-06 | Planificación | Objetivos, trabajo, estimación y selección por sprint. | [] |
-| D-07 | Review | Incremento, demostración, devolución y ajustes. | [] |
-| D-08 | Reuniones | R-01–R-05 con acuerdos y acciones. | [] |
-| D-09 | Cambios | CC-01–CC-05 y modificaciones técnicas. | [] |
-| D-10 | Diseño | Capas, clases, MER y pasaje a tablas. | [] |
-| D-11 | Infraestructura | Compose, reconstrucción, respaldo y hardening. | [] |
-| D-12 | Verificación | 192 comprobaciones y auditoría API 43/43 del 21/10. | [] |
-| D-13 | Datos institucionales | [Ficha documental](formulario_datos_documentacion.md). | [] |
-| D-14 | Uso de herramientas | [Declaración](../../docs/ingenieria_software/declaracion_etica_ia.md). | [] |
+| D-01 | Alcance | Cliente y agenda académica identificados en el charter. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-02 | Equipo | Roles y referente registrados. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-03 | Relevamiento | Guía e informe de entrevista. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-04 | Requisitos | RF1–RF24 y RNF1–RNF10. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-05 | Historias | US1–US34 con criterios de aceptación. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-06 | Planificación | Objetivos, trabajo, estimación y selección por sprint. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-07 | Review | Incremento, demostración, devolución y ajustes. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-08 | Reuniones | R-01–R-05 con acuerdos y acciones. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-09 | Cambios | CC-01–CC-05 y modificaciones técnicas. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-10 | Diseño | Capas, clases, MER y pasaje a tablas. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-11 | Infraestructura | Compose, reconstrucción, respaldo y hardening. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-12 | Verificación | 192 comprobaciones y auditoría API 43/43 del 21/10. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-13 | Datos institucionales | [Ficha documental](formulario_datos_documentacion.md). | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-14 | Uso de herramientas | [Declaración](../../docs/ingenieria_software/declaracion_etica_ia.md). | Fuera del alcance de esta actualización; se conserva su edición. |
 
 ## Referencias de estructura
 
@@ -37,11 +37,11 @@
 | Planning | [Sprint Planning](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/sprint-planning.md) |
 | Review | [Eventos de Scrum](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/scrum-events.md) |
 
-## Conformidad
+## Registro de revisión interna
 
 | Dato | Valor |
 |---|---|
-| Integrante | [] |
-| Fecha | [] |
-| Resultado | [] |
-| Referencia | [] |
+| Revisores principales | Tomás Cabrera (líder) y Juan Robaina (co-líder). |
+| Fecha de confirmación | 21/10/2026, según respuesta del equipo. |
+| Resultado de esta consolidación | Registros completados con fuentes, estimaciones retrospectivas y condiciones de entrega; estados parciales preservados. |
+| Referencia | [Fuentes y confirmaciones](consolidacion_2026-10-21.md). |

@@ -113,6 +113,6 @@ El [análisis de requisitos](../../docs/ingenieria_software/analisis_de_requerim
 
 | Dato | Valor |
 |---|---|
-| Política institucional de cuentas | [] |
-| Conservación de consultas | [] |
-| Dominio y HTTPS | [] |
+| Política institucional de cuentas | Condición de operación: cuentas individuales, mínimo privilegio, alta autorizada y revocación al retirar acceso. |
+| Conservación de consultas | Persistencia sin purga automática en esta versión; política institucional por finalidad antes de producción. |
+| Dominio y HTTPS | HTTP local en loopback; dominio institucional y HTTPS como requisitos de producción. |

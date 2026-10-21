@@ -22,6 +22,10 @@
 | [Migración](backend/migracion_backend_vanilla.md) | Correspondencia de componentes y datos. |
 | [Respaldo y recuperación](backend/transicion_backend_vanilla.md) | Copia, actualización y restauración. |
 
+## Consolidación actual
+
+[Fuentes y confirmaciones del 21/10](revision/consolidacion_2026-10-21.md), [condiciones de operación](../docs/general/condiciones_operacion.md) y [paquete de entrega](../docs/general/paquete_entrega.md).
+
 ## Evidencia
 
 [Registro de verificación](evidencias/verificacion.md), [base nativa](evidencias/evidencia_backend_nativo.json), [inicio Docker](evidencias/evidencia_inicio_docker.json), [integración del 21/10](../output/integracion-final.json) y [auditoría API completa](../output/security-api-final.txt).

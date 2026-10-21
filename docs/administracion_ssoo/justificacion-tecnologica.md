@@ -36,11 +36,11 @@ La organización por capas conserva el recorrido de entrada, control, servicio, 
 
 | Dato | Valor |
 |---|---|
-| Referencia de equivalencia docente | [] |
-| Dominio institucional | [] |
-| Alojamiento | [] |
-| HTTPS | [] |
-| Respaldo institucional | [] |
+| Referencia de equivalencia docente | La decisión de retirar Laravel corresponde al equipo (30/09; CC-05), con justificación técnica y evidencia; no se presenta como aprobación docente. |
+| Dominio institucional | Demostración en localhost; para producción se requiere dominio administrado por la Intendencia. |
+| Alojamiento | Equipos del grupo con Docker para demostración; infraestructura institucional como condición de despliegue. |
+| HTTPS | HTTP local; TLS y certificado válido requeridos antes de publicación institucional. |
+| Respaldo institucional | Transferir SQL, adjuntos, configuración protegida y versión compatible; propuesta diaria y previa a cambios. |
 
 ## Referencias
 

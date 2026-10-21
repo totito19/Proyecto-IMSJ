@@ -23,9 +23,9 @@
 | B-02 | Versión seleccionada para PDF | Demo del 13/10/2026 |
 | B-03 | Inicio | Julio de 2026 |
 | B-04 | Decisión tecnológica | 30/09/2026; retirar Laravel para facilitar documentación y defensa |
-| B-05 | Referencia docente de equivalencia | [] |
-| B-06 | Duración y esfuerzo | [] |
-| B-07 | Presupuesto | [] |
+| B-05 | Referencia docente de equivalencia | Decisión tecnológica del equipo registrada en B-04 y CC-05; no se atribuye aprobación de equivalencia al docente. |
+| B-06 | Duración y esfuerzo | Julio a octubre de 2026; cinco integrantes. El historial permite reconstruir períodos y entregables, no horas de dedicación. |
+| B-07 | Presupuesto | Entrega académica por trabajo y entregables; no establece cotización comercial ni gasto institucional. |
 
 ## C. Institución
 
@@ -34,10 +34,10 @@
 | C-01 | Administración posterior | Intendencia de San José |
 | C-02 | Presentación institucional | Intendencia de San José y estudiantes del Polo Tecnológico de San José |
 | C-03 | Institución educativa | Polo Tecnológico de San José de Mayo |
-| C-04 | Responsable legal | [] |
-| C-05 | RUT | [] |
-| C-06 | Domicilio institucional | [] |
-| C-07 | Contacto oficial | [] |
+| C-04 | Responsable legal | La operación institucional corresponde a la Intendencia; la identificación del responsable del tratamiento se formaliza antes de publicar. |
+| C-05 | RUT | La identificación tributaria de los textos públicos debe ser validada por la Intendencia antes de su publicación. |
+| C-06 | Domicilio institucional | Publicar el domicilio oficial validado por la Intendencia al habilitar el servicio. |
+| C-07 | Contacto oficial | Interlocución con la Sección Tránsito a través del Inspector; publicar el canal oficial al habilitar el servicio. |
 
 ## E. Producto
 
@@ -47,73 +47,73 @@
 | E-02 | Consultas | Nombre, correo y mensaje; bandeja del personal y marca de leído |
 | E-03 | Aprobación | Noticias, materiales y FAQ; Directora aprueba y personal publica; editar devuelve a borrador |
 | E-04 | Gráficos | Una imagen opcional JPG/PNG/WEBP de hasta 2048 KB |
-| E-05 | Categorías y modalidad de video acordada | [] |
-| E-06 | Paquete de entrega al cliente | [] |
-| E-07 | Costo urgente | [] |
+| E-05 | Categorías y modalidad de video acordada | FAQ sin categorías en la versión actual (RF19 pendiente); video mediante URL HTTP/HTTPS. |
+| E-06 | Paquete de entrega al cliente | Proyecto completo: código, instalación, base, documentación, pruebas y respaldo; véase paquete_entrega.md. |
+| E-07 | Costo urgente | Modalidad académica diferenciada; la versión no calcula ni cobra tarifa especial (RF4/US12 parcial). |
 
 ## F. Relevamiento y reuniones
 
 | ID | Dato | Valor |
 |---|---|---|
-| F-01 | Identificación y validación del informe de entrevista | [] |
-| F-02 | Revisor del informe y referencia | [] |
-| F-03 | Actas y validación de participantes | [] |
-| F-04 | PR y reportes académicos | [] |
+| F-01 | Identificación y validación del informe de entrevista | R-01 del 09/07/2026; presencial, 16:05–16:45, Polo Educativo Tecnológico. |
+| F-02 | Revisor del informe y referencia | Tomás Cabrera y Juan Robaina; revisión principal confirmada por el equipo el 21/10. |
+| F-03 | Actas y validación de participantes | R-01–R-05: conservar la asistencia original; seguimiento completado con documentos y commits. |
+| F-04 | PR y reportes académicos | Trazabilidad por commits del repositorio; fuentes en consolidacion_2026-10-21.md. |
 
 ## G. Planificación
 
 | ID | Dato | Valor |
 |---|---|---|
-| G-01 | Fechas y participantes de planning y Review | [] |
-| G-02 | Capacidad y método de estimación | [] |
-| G-03 | Historias seleccionadas por sprint | [] |
-| G-04 | Tareas y responsables | [] |
+| G-01 | Fechas y participantes de planning y Review | Cuatro períodos del 10/07 al 03/09; extremos como referencia documental, sin atribuir ceremonias. |
+| G-02 | Capacidad y método de estimación | Cinco integrantes; puntos agregados ya documentados y estimaciones retrospectivas por complejidad. |
+| G-03 | Historias seleccionadas por sprint | Historias vinculadas a cada incremento en sprint_planning.md y actas_sprint_review.md. |
+| G-04 | Tareas y responsables | Backend/coordinación: Tomás; testing/documentos: Juan Robaina; datos: Gabriela; frontend: Verónica y Juan Corrales. |
 
 ## H. Revisión documental
 
 | ID | Dato | Valor |
 |---|---|---|
-| H-01 | Documentos revisados por Juan Robaina | [] |
-| H-02 | Decisiones y correcciones | [] |
-| H-03 | Herramientas, actividades y revisión humana | [] |
+| H-01 | Documentos revisados por Juan Robaina | Revisión principal de documentación y testing por co-líder, junto al líder, según confirmación del equipo. |
+| H-02 | Decisiones y correcciones | Reconstrucción desde Git, alcance académico explícito, estados parciales conservados y condiciones de entrega futura. |
+| H-03 | Alcance de esta actualización | La declaración de herramientas conserva su edición anterior por indicación del equipo. |
 
 ## I. Evaluación
 
 | ID | Dato | Valor |
 |---|---|---|
-| I-01 | Revisión de la matriz de riesgos | [] |
+| I-01 | Revisión de la matriz de riesgos | Responsables de tratamiento asignados por área en el charter; no se atribuye una aprobación institucional de riesgos. |
 | I-02 | Procedimiento técnico de incidentes | [Respuesta a incidentes](../../docs/electiva_ciberseguridad/respuesta_incidentes.md). |
-| I-03 | Política institucional de cuentas | [] |
-| I-04 | Prueba móvil y accesibilidad | [] |
+| I-03 | Política institucional de cuentas | Condición de operación: cuentas individuales, mínimo privilegio, alta autorizada y revocación al retirar acceso. |
+| I-04 | Prueba móvil y accesibilidad | La prueba en otra computadora fue satisfactoria según el equipo; no equivale a una matriz móvil ni evaluación integral de accesibilidad. |
 | I-05 | Tratamiento ético de evidencias | [Alcance, datos sintéticos y resguardo](../../docs/electiva_ciberseguridad/registro_hallazgos.md#6-tratamiento-de-evidencias-y-alcance-ético). |
-| I-06 | Registro de ejercicio de incidentes | [] |
+| I-06 | Registro de ejercicio de incidentes | La sección de incidentes es una ficha instructiva para futuras intervenciones; no se presenta como ejercicio ejecutado. |
 
 ## J. Infraestructura
 
 | ID | Dato | Valor |
 |---|---|---|
-| J-01 | Alojamiento, dominio y HTTPS | [] |
-| J-02 | Respaldo y ubicación | [] |
-| J-03 | Restauración, responsable y evidencia | [] |
-| J-04 | Frecuencia y conservación | [] |
+| J-01 | Alojamiento, dominio y HTTPS | Demostración local con Docker; dominio y HTTPS requeridos para habilitación institucional. |
+| J-02 | Respaldo y ubicación | SQL, adjuntos, código y configuración protegida; ubicación separada y acceso restringido como condiciones de transferencia. |
+| J-03 | Restauración, responsable y evidencia | Equipo confirma restauración y segundo equipo satisfactorios; declaración recibida el 21/10 y conservada en consolidación. |
+| J-04 | Frecuencia y conservación | Propuesta a validar: copias diarias y previas a cambios, siete diarias y cuatro semanales. |
 
 ## K. Manual
 
 | ID | Dato | Valor |
 |---|---|---|
 | K-01 | Perfiles y funciones | Visitante, ciudadano, personal y Directora; [manual](../../docs/general/manual_usuario.md). |
-| K-02 | Capturas y presentación | [] |
+| K-02 | Capturas y presentación | Manual Markdown basado en pantallas actuales; capturas del candidato como actividad del cronograma de cierre. |
 | K-03 | Acceso inicial y cuentas | Inicio Docker, primera cuenta CLI y alta posterior desde el panel; [instalación](../../backend/README.md). |
-| K-04 | Soporte y capacitación institucional | [] |
+| K-04 | Soporte y capacitación institucional | Transferencia propuesta sobre cuentas, publicación, consultas y recuperación; no constituye contrato de soporte. |
 
 ## L. Edición y PDF
 
 | ID | Dato | Valor |
 |---|---|---|
-| L-01 | Versión, fecha y entregables | [] |
-| L-02 | Agrupación de documentos | [] |
-| L-03 | Estado de edición | [] |
-| L-04 | Organización de versiones históricas | [] |
+| L-01 | Versión, fecha y entregables | Corte documental previo 258b5e8; técnico 1a43229. Entrega completa prevista 29/10 y defensa 05/11. |
+| L-02 | Agrupación de documentos | Documentación por asignatura en docs; referencias y evidencia en docs_auxiliares; inventario en paquete_entrega.md. |
+| L-03 | Estado de edición | Consolidación Markdown del 21/10; los PDF conservan su edición y requieren revisión contra el candidato al entregar. |
+| L-04 | Organización de versiones históricas | Antecedentes identificados por fecha y commits; conservar la distinción entre demo histórica y versión de entrega. |
 
 ## Horarios de reuniones
 
@@ -132,6 +132,10 @@
 | Integración 21/10 | 192 comprobaciones, 46 endpoints. | [Resultado](../../output/integracion-final.json). |
 | Auditoría API | 43 aprobadas, 0 fallidas, 0 omitidas. | [Resultado](../../output/security-api-final.txt). |
 | SAST, DAST y hardening | Informes y revalidación del 21/10. | [Control de entregables](../../docs/electiva_ciberseguridad/checklist_ciberseguridad_entrega_final.md). |
+
+## Confirmación adicional del equipo — 21/10/2026
+
+Se confirmó restauración y prueba en otra computadora con resultado satisfactorio, entrega y defensa por el equipo completo y revisión principalmente a cargo de líder y co-líder. Fuente: [consolidación documental](consolidacion_2026-10-21.md).
 
 ## Registro de respuestas del equipo
 

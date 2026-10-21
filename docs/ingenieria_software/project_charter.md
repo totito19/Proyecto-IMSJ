@@ -13,8 +13,8 @@
 | Inicio | Julio de 2026 |
 | Entrega académica | 29/10/2026 |
 | Defensa | 05/11/2026 |
-| Entrega al cliente | [] |
-| Presupuesto | [] |
+| Entrega al cliente | Proyecto completo por los cinco integrantes; recepción y aceptación conforme al paquete y al cierre preparados. |
+| Marco de recursos | Trabajo académico del equipo y entorno local; este charter no establece cotización ni compromiso de gasto institucional. |
 | Actualización | 21/10/2026 |
 
 ## 2. Necesidad y justificación
@@ -75,10 +75,10 @@ La administración y el mantenimiento posteriores corresponden a la Intendencia.
 
 | Riesgo | Impacto | Tratamiento | Responsable |
 |---|---|---|---|
-| Cambios de alcance | Diferencias entre la solución y las necesidades del cliente. | Relacionar solicitudes, requisitos, historias y resultados. | [] |
-| Confusión de versiones | Presentar la agenda académica como servicio institucional. | Identificar el destino de cada función y paquete de entrega. | [] |
-| Pérdida de datos | Interrupción de la operación y pérdida de adjuntos. | Respaldo de SQL, archivos, configuración y versión; recuperación ensayada. | [] |
-| Exposición de datos | Acceso o publicación indebidos. | Permisos, revisión de contenidos, controles de archivos y pruebas de seguridad. | [] |
+| Cambios de alcance | Diferencias entre la solución y las necesidades del cliente. | Relacionar solicitudes, requisitos, historias y resultados. | Tomás Cabrera y Juan Robaina. |
+| Confusión de versiones | Presentar la agenda académica como servicio institucional. | Identificar el destino de cada función y paquete de entrega. | Equipo RC5, revisión de líder/co-líder. |
+| Pérdida de datos | Interrupción de la operación y pérdida de adjuntos. | Respaldo de SQL, archivos, configuración y versión; recuperación ensayada. | Gabriela Romero y Tomás Cabrera; comprobación del equipo. |
+| Exposición de datos | Acceso o publicación indebidos. | Permisos, revisión de contenidos, controles de archivos y pruebas de seguridad. | Tomás Cabrera y Juan Robaina; validación de contenidos por Directora. |
 
 ## 8. Criterios de éxito
 
@@ -94,9 +94,9 @@ La administración y el mantenimiento posteriores corresponden a la Intendencia.
 
 | Instancia | Responsable | Fecha | Referencia |
 |---|---|---|---|
-| Revisión interna | Juan Robaina | [] | [] |
-| Conformidad del equipo | [] | [] | [] |
-| Aceptación del cliente | Inspector de Tránsito | [] | [] |
+| Revisión interna | Tomás Cabrera y Juan Robaina | Confirmación recibida el 21/10/2026 | Consolidación documental y commits. |
+| Participación en entrega | Los cinco integrantes de RC5 | Entrega y defensa previstas: 29/10 y 05/11 | Confirmación del equipo del 21/10; no equivale a firmas. |
+| Recepción y aceptación final | Referente autorizado por la Intendencia | Al realizar la entrega | [Condiciones de cierre](acta_cierre.md); R-05 acredita la demo previa. |
 
 ## 10. Referencias
 

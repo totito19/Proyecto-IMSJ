@@ -161,6 +161,6 @@ La cancelación elimina la fila de `reservas` y la disponibilidad se recalcula c
 
 | Dato | Valor |
 |---|---|
-| Catálogo de categorías | [] |
-| Costo de trámite urgente | [] |
-| Plazo de conservación | [] |
+| Catálogo de categorías | RF19/US29 pendiente de implementación; el esquema vigente no incorpora catálogo. |
+| Costo de trámite urgente | Modalidad académica sin cálculo ni cobro de tarifa especial (RF4/US12 parcial). |
+| Plazo de conservación | Condición de operación: política institucional por finalidad; el esquema actual no aplica purga automática. |

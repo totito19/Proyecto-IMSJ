@@ -77,7 +77,7 @@ En el estudio inicial se tomaban como referencia capas, router, PDO, validadores
 | Dato | Valor |
 |---|---|
 | Licencia indicada en el manifiesto de referencia | MIT |
-| Referencia de permisos de reutilización | [] |
+| Referencia de permisos de reutilización | El manifiesto de la revisión de referencia declara MIT; conservar sus avisos si se reutilizan archivos. No equivale a una autorización adicional del autor. |
 
 ## Lectura de este antecedente
 

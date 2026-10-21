@@ -104,13 +104,13 @@ Se sustituyeron el arranque del framework, rutas, ORM y sesiones por carga expl�
 
 ## 5. Decisiones y revisión
 
-| Cambio | Acta o fuente | Responsable de revisión | Fecha | Referencia de decisión |
+| Cambio | Acta o fuente | Revisión principal informada | Fecha de decisión registrada | Referencia de decisión |
 |---|---|---|---|---|
-| CC-01 | Solicitud docente | [] | [] | [] |
-| CC-02 | R-05 | [] | [] | [] |
-| CC-03 | R-05 | [] | [] | [] |
-| CC-04 | R-05 | [] | [] | [] |
-| CC-05 | Decisión del equipo | [] | [] | [] |
+| CC-01 | Solicitud docente | Tomás Cabrera y Juan Robaina; confirmación del 21/10. | 14/08/2026 | Solicitud registrada en este control; implementación del simulacro. |
+| CC-02 | R-05 | Tomás Cabrera y Juan Robaina; confirmación del 21/10. | 03/09/2026 | R-05; implementación ac018b7 y evidencia del 13/10. |
+| CC-03 | R-05 | Tomás Cabrera y Juan Robaina; confirmación del 21/10. | 03/09/2026 | R-05; implementación 05c1012 y pruebas de permisos. |
+| CC-04 | R-05 | Tomás Cabrera y Juan Robaina; confirmación del 21/10. | 03/09/2026 | R-05; evidencia de gráficos del 13/10 y 21/10. |
+| CC-05 | Decisión del equipo | Tomás Cabrera y Juan Robaina; confirmación del 21/10. | 30/09/2026; registro 02/10 | Respuesta B-04 del equipo; commits 68d34fb y d9c254c. |
 
 ## 6. Correspondencia del corte documental
 
@@ -123,6 +123,10 @@ Se sustituyeron el arranque del framework, rutas, ORM y sesiones por carga expl�
 
 La ampliación documental describe el producto y los procedimientos. Los acuerdos de reuniones, las firmas y la aceptación conservan su registro en las actas del equipo.
 
-## 7. Referencias
+## 7. Consolidación posterior del mismo corte
+
+DOC-20261021-C completa registros desde commits y actas, incorpora las confirmaciones del equipo sobre restauración, segundo equipo y revisión principal, y prepara inventario y cierre de la entrega futura. Las estimaciones añadidas son retrospectivas; se mantienen los estados parciales del producto. Fuente: [consolidación](../../docs_auxiliares/revision/consolidacion_2026-10-21.md).
+
+## 8. Referencias
 
 [Actas](actas_reuniones.md), [requisitos](Requerimientos.md), [backlog](backlog.md), [verificación](../../docs_auxiliares/evidencias/verificacion.md), [API](../../docs_auxiliares/backend/api.md) y [Ciclo de vida y gestión de requisitos](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md).

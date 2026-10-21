@@ -16,9 +16,9 @@ Organizar la detección, contención, análisis y recuperación de incidentes qu
 | Interfaces públicas e internas | Verónica Romero y Juan Corrales. |
 | Referente del cliente | Inspector de Tránsito. |
 | Organismo administrador posterior | Intendencia de San José. |
-| Contacto operativo institucional | [] |
-| Canal institucional de incidentes | [] |
-| Aprobación operativa del procedimiento | [] |
+| Contacto operativo institucional | Interlocución con el Inspector durante el proyecto; designación de función técnica al transferir. |
+| Canal institucional de incidentes | Condición de transferencia: canal autorizado por la Intendencia; coordinación de proyecto con líder/co-líder. |
+| Habilitación operativa del procedimiento | Condición de puesta en producción: revisión y adopción por la administración institucional. |
 
 En cada intervención se identifica a la persona que ejecutó la acción, la hora y el resultado. Las decisiones sobre aceptación o cambios del producto se registran en las reuniones del equipo y del referente.
 
@@ -100,24 +100,26 @@ Comprobar antes de reabrir:
 
 Conservar el identificador del respaldo y las evidencias de la validación. La reapertura se registra con fecha, responsable y resultado.
 
-## 8. Registro de incidente
+## 8. Instrucciones para el registro de cada incidente
+
+Esta ficha describe qué registrar ante una intervención; no documenta un incidente ocurrido.
 
 | Campo | Valor |
 |---|---|
-| Identificador | [] |
-| Detección y zona horaria | [] |
-| Versión y entorno | [] |
-| Operación o componente | [] |
-| Impacto y datos afectados | [] |
-| Persona a cargo de la intervención | [] |
-| Evidencia inicial | [] |
-| Contención y hora | [] |
-| Causa identificada | [] |
-| Corrección aplicada | [] |
-| Respaldo y destino de recuperación | [] |
-| Pruebas y resultados | [] |
-| Comunicación y decisión | [] |
-| Reapertura y seguimiento | [] |
+| Identificador | Asignar un código único con fecha y secuencia de intervención. |
+| Detección y zona horaria | Registrar fecha y hora con zona America/Montevideo y el origen del aviso. |
+| Versión y entorno | Registrar commit, proyecto Compose y equipo afectado. |
+| Operación o componente | Identificar portal, panel, endpoint, base o adjunto involucrado. |
+| Impacto y datos afectados | Describir alcance confirmado, cuentas, registros y disponibilidad. |
+| Persona a cargo de la intervención | Identificar a quien ejecuta cada acción, bajo coordinación técnica. |
+| Evidencia inicial | Conservar logs y capturas protegidos antes de modificar el estado. |
+| Contención y hora | Registrar acciones de contención y hora efectiva de cada una. |
+| Causa identificada | Relacionar causa comprobada con evidencia; separar hipótesis de resultados. |
+| Corrección aplicada | Identificar cambio, configuración y versión que corrige la causa. |
+| Respaldo y destino de recuperación | Registrar nombre, SHA-256, commit compatible y destino aislado. |
+| Pruebas y resultados | Anotar casos ejecutados, resultados y archivos de evidencia. |
+| Comunicación y decisión | Registrar interlocutor, decisión y autorización de reapertura cuando corresponda. |
+| Reapertura y seguimiento | Registrar fecha, responsable, comprobaciones posteriores y cierre. |
 
 ## 9. Referencias
 

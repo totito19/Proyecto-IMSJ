@@ -406,6 +406,6 @@ Si un control no se aprueba, se recorta una mejora opcional y se protege primero
 | Auditoría API | 43 aprobadas, 0 fallidas, 0 omitidas |
 | SAST y DAST | Informes y revalidación del 21/10 |
 | Hardening | Usuarios de servicio, raíz de lectura y capacidades reducidas |
-| Tag de entrega | [] |
-| Referencia docente de fechas | [] |
-| Paquete para el cliente | [] |
+| Tag de entrega | Propuesto: entrega-final-2026-10-29, a crear sobre el commit entregado. |
+| Referencia docente de fechas | Cronograma documental vigente; se conserva como planificación de entrega 29/10 y defensa 05/11, sin atribuir una comunicación docente adicional. |
+| Paquete para el cliente | Proyecto completo: código, base, instalación, documentación, pruebas y respaldo; participación de los cinco integrantes. Véase paquete_entrega.md. |

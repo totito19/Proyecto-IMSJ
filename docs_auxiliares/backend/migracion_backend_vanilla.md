@@ -55,13 +55,15 @@ La base del 05/10 expuso 42 rutas. Consultas añadió tres en la demo del 13/10 
 
 Al revisar una instalación se debe comparar el esquema actual, la migración incremental, los adjuntos y la configuración. El ensayo de actualización utiliza una copia del esquema y los datos de origen. La restauración debe verificarse con una copia y una versión de código compatible.
 
-## Registro de instalación
+## Registro de transición y pruebas relacionadas
 
 | Dato | Valor |
 |---|---|
-| Instalación | [] |
-| Versión de origen | [] |
-| Versión de destino | [] |
-| Fecha | [] |
-| Responsable | [] |
-| Resultado | [] |
+| Transición documentada | Backend Laravel a PHP nativo; decisión del 30/09 y registro del 02/10. |
+| Evidencia de código | 68d34fb del 02/10 y d9c254c del 05/10. |
+| Verificación de la base nativa | 155 comprobaciones sobre 42 rutas en el registro del 05/10. |
+| Corte técnico posterior | 1a43229; 192 comprobaciones y 46 endpoints al 21/10. |
+| Responsabilidad por área | Tomás Cabrera: backend; Gabriela Romero: datos; Juan Robaina: revisión y pruebas. |
+| Confirmación de portabilidad y recuperación | El equipo confirmó el 21/10 restauración y prueba en otra computadora satisfactorias. |
+
+La prueba declarada por el equipo no se atribuye a un commit concreto de migración. Su alcance se conserva en la [consolidación](../revision/consolidacion_2026-10-21.md).

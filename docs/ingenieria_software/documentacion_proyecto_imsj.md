@@ -65,10 +65,10 @@ El equipo decidió retirar Laravel el 30/09. CC-05 se registró el 02/10 y la re
 | Sesiones | Bearer opaco revocable; ocho horas. |
 | Simulacro | Hasta diez preguntas; corrección con total y aciertos. |
 | Materiales | PDF e imágenes como archivos; video mediante URL. |
-| Categorías FAQ | [] |
-| Costo urgente | [] |
-| Dominio y alojamiento | [] |
-| Contacto institucional | [] |
+| Categorías FAQ | RF19/US29 permanece pendiente de implementación; la versión permite FAQ sin clasificación. |
+| Costo urgente | Modalidad académica diferenciada; la versión no calcula ni cobra tarifa especial (RF4/US12 parcial). |
+| Dominio y alojamiento | Entorno local de demostración; despliegue institucional sujeto a las condiciones de operación. |
+| Contacto institucional | Sección Tránsito de la Intendencia de San José, por medio del Inspector referente. |
 
 ## 9. Referencias
 

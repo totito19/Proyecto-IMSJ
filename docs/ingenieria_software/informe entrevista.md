@@ -4,11 +4,11 @@
 |---|---|
 | Proyecto | Educación Vial IMSJ — Portal Vial |
 | Instancia | Entrevista inicial |
-| Fecha | [] |
-| Modalidad y lugar | [] |
-| Entrevistadores | [] |
-| Entrevistado | [] |
-| Registro o adjuntos | [] |
+| Fecha | 09/07/2026, 16:05–16:45 (R-01). |
+| Modalidad y lugar | Presencial — Polo Educativo Tecnológico (R-01). |
+| Entrevistadores | Tomás Cabrera y Juan Robaina. |
+| Entrevistado | Inspector de Tránsito, referente del cliente. |
+| Registro o adjuntos | Guía de entrevista y acta R-01; informe incorporado a Git en a9401ad, 23/07/2026. |
 
 ## Objetivo de la entrevista
 
@@ -158,10 +158,10 @@ De la entrevista se desprenden los siguientes aspectos relevantes para el desarr
 
 | Dato | Valor |
 |---|---|
-| Revisor | [] |
-| Fecha | [] |
-| Conformidad del entrevistado | [] |
-| Referencia | [] |
+| Revisor | Tomás Cabrera (líder) y Juan Robaina (co-líder), según confirmación del equipo del 21/10/2026. |
+| Fecha de confirmación de revisión | 21/10/2026; revisión principal informada por el equipo. |
+| Contraste posterior con el cliente | R-05 del 03/09/2026: demostración y solicitudes CC-02–CC-04; no constituye aceptación final. |
+| Referencia | R-01, R-05 y commits 75d050f/a9401ad; véase la consolidación del 21/10. |
 
 ## Referencias
 

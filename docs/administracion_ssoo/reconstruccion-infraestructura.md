@@ -74,10 +74,10 @@ Un respaldo recuperable debe reunir exportación SQL, adjuntos, versión de cód
 
 | Dato | Valor |
 |---|---|
-| Versión | [] |
-| Fecha | [] |
-| Entorno | [] |
-| Responsable | [] |
-| Respaldo utilizado | [] |
-| Resultado | [] |
-| Evidencia | [] |
+| Fecha de confirmación | 21/10/2026; no es una fecha atribuida a la ejecución. |
+| Responsable | Equipo RC5, con revisión principal del líder y co-líder. |
+| Actividades | Restauración de respaldo y prueba en otra computadora. |
+| Resultado informado | Satisfactorio en ambas actividades, según respuesta del equipo. |
+| Evidencia | [Confirmación del equipo](../../docs_auxiliares/revision/consolidacion_2026-10-21.md). |
+
+El candidato exacto de entrega se identifica al congelar su commit. Cada nuevo ensayo debe registrar versión, entorno, respaldo y comprobaciones realizadas, siguiendo el procedimiento de recuperación.

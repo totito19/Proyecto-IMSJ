@@ -45,9 +45,9 @@ Dos interfaces HTML/CSS/JavaScript consumen una API PHP 8.5 con MySQL 8.4. Apach
 | Motor local | Docker con Compose y contenedores Linux |
 | Servicios | app: Apache/PHP; db: MySQL |
 | Puerto local | 8000 por defecto, configurable |
-| Dominio institucional | [] |
-| Alojamiento institucional | [] |
-| Certificado HTTPS | [] |
+| Dominio institucional | Demostración en localhost; para producción se requiere dominio administrado por la Intendencia. |
+| Alojamiento institucional | La transferencia exige infraestructura administrada o autorizada por la Intendencia; el corte evaluado es local. |
+| Certificado HTTPS | Requisito de producción: certificado válido y renovación bajo administración institucional. |
 
 ## 3. Requisitos específicos
 
@@ -97,13 +97,13 @@ Dos interfaces HTML/CSS/JavaScript consumen una API PHP 8.5 con MySQL 8.4. Apach
 
 | Aspecto | Parámetro de aceptación |
 |---|---|
-| Dispositivos y navegadores | [] |
-| Accesibilidad | [] |
-| Tiempo de respuesta | [] |
-| Concurrencia objetivo | [] |
-| Cobertura de auditoría | [] |
-| Conservación de datos | [] |
-| Respaldo y recuperación | [] |
+| Dispositivos y navegadores | Criterio propuesto: escritorio y teléfono, navegadores actuales, sin desbordamiento de recorridos principales; registrar entorno en cada prueba. |
+| Accesibilidad | Criterio: etiquetas, foco visible, teclado, contraste y alternativas de imágenes; US28 conserva evaluación parcial. |
+| Tiempo de respuesta | Criterio funcional: cada recorrido debe completar con respuesta controlada; la evidencia actual no constituye medición de latencia o SLA. |
+| Concurrencia objetivo | Caso verificado: dos solicitudes simultáneas por el último cupo, con una aceptación; no se establece capacidad de producción. |
+| Cobertura de auditoría | Actor, acción, elemento y fecha de operaciones administrativas implementadas; sin comparación completa antes/después. |
+| Conservación de datos | La versión no ejecuta purga automática; la operación requiere una política institucional por finalidad. |
+| Respaldo y recuperación | Equipo confirma restauración y prueba en otra computadora satisfactorias; procedimiento y alcance de la declaración en documentación auxiliar. |
 
 ### 3.3. Reglas del dominio
 
@@ -153,9 +153,9 @@ Cada requisito se relaciona con las historias del backlog, sus criterios y la ev
 
 | Dato | Valor |
 |---|---|
-| Revisor de requisitos | [] |
-| Fecha de revisión | [] |
-| Referencia de conformidad | [] |
+| Revisor de requisitos | Tomás Cabrera (líder) y Juan Robaina (co-líder) |
+| Fecha de revisión | 21/10/2026: fecha de confirmación de la revisión principal por el equipo. |
+| Referencia de conformidad | Revisión interna informada por el equipo; R-01 y R-05 para relevamiento y cambios. La aceptación final se formaliza en la entrega. |
 
 ## 5. Referencias
 

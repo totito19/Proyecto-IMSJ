@@ -172,9 +172,9 @@ La plataforma reúne información vial y su administración en un canal común. 
 | Videos | URL HTTP/HTTPS. |
 | Reservas | Propiedad, fecha, duplicación y cupo validados. |
 | Agenda | Vistas diaria, semanal y mensual de fechas vigentes. |
-| Categorías FAQ | [] |
-| Costo urgente | [] |
-| Retención | [] |
+| Categorías FAQ | RF19/US29 permanece pendiente de implementación; la versión permite FAQ sin clasificación. |
+| Costo urgente | Modalidad académica diferenciada; la versión no calcula ni cobra tarifa especial (RF4/US12 parcial). |
+| Retención | La versión no implementa caducidad automática; la política se establece antes de operación institucional. |
 
 ## 6. Cambios y requisitos
 
@@ -192,9 +192,9 @@ La suite del 21/10 registra 192 comprobaciones, 60 peticiones distintas y 46 dec
 
 | Dato | Valor |
 |---|---|
-| Validación de requisitos | [] |
-| Fecha | [] |
-| Referencia de aceptación | [] |
+| Validación de requisitos | Revisión interna principal de Tomás Cabrera y Juan Robaina; contraste de necesidades en R-01 y R-05. |
+| Fecha | Confirmación de revisión: 21/10/2026; reuniones de cliente: 09/07 y 03/09. |
+| Referencia de aceptación | R-05 y CC-02–CC-04 para solicitudes; condiciones de aceptación final en acta_cierre.md. |
 
 ## 8. Referencias
 

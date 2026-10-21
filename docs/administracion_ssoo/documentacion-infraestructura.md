@@ -85,12 +85,12 @@ Desde `backend`, `docker compose ps -a` muestra el estado de los contenedores. `
 | Dato | Valor |
 |---|---|
 | Organismo administrador | Intendencia de San José |
-| Responsable operativo | [] |
-| Alojamiento | [] |
-| Dominio | [] |
-| Certificado HTTPS | [] |
-| Contacto | [] |
-| Frecuencia de respaldo | [] |
-| Conservación de copias | [] |
+| Responsable operativo | Equipo RC5 durante la entrega; administración posterior por la Intendencia de San José. |
+| Alojamiento | Equipos del grupo con Docker para demostración; infraestructura institucional como condición de despliegue. |
+| Dominio | localhost en demostración; dominio institucional como condición de publicación. |
+| Certificado HTTPS | Requisito de producción: certificado válido y renovación bajo administración institucional. |
+| Contacto | Interlocución del proyecto a través del Inspector de Tránsito; canales institucionales al habilitar el servicio. |
+| Frecuencia de respaldo | Propuesta para operación: copia diaria y previa a actualizaciones; validar en la transferencia. |
+| Conservación de copias | Propuesta inicial: siete copias diarias y cuatro semanales, con acceso restringido y copia separada. |
 
 [Reconstrucción](reconstruccion-infraestructura.md), [respaldo](../../docs_auxiliares/backend/transicion_backend_vanilla.md) y [verificación](../../docs_auxiliares/evidencias/verificacion.md).

@@ -50,10 +50,12 @@
 |---|---|
 | Plan de entrega y defensa | [Cronograma](general/plan_entrega_29-10_y_defensa_05-11.md). |
 | Manual de usuario | [Recorridos del portal y panel](general/manual_usuario.md). |
-| Acta de cierre | [] |
+| Acta de cierre | [Preparación y condiciones de recepción](ingenieria_software/acta_cierre.md). |
 | Respuesta a incidentes | [Procedimiento técnico](electiva_ciberseguridad/respuesta_incidentes.md). |
 | Restauración | [Procedimiento de respaldo y recuperación](../docs_auxiliares/backend/transicion_backend_vanilla.md). |
-| Paquete de entrega al cliente | [] |
+| Paquete de entrega al cliente | [Inventario del proyecto completo](general/paquete_entrega.md). |
+
+[Condiciones de operación y transferencia](general/condiciones_operacion.md). Los documentos de cierre e inventario preparan la entrega futura; no acreditan recepción o aceptación ya realizadas.
 
 ## Referencias y evidencia
 

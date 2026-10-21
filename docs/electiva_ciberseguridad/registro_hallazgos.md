@@ -36,8 +36,8 @@ En HS-03, exec-use identifica la regla de la herramienta. La ubicación del avis
 |---|---|
 | JSON con los seis avisos | [semgrep-post.json](../../informes-sast-post/semgrep-post.json). |
 | Fuente actual identificada por hashes | [integracion-final.json](../../output/integracion-final.json). |
-| Decisión de tratamiento de HS-03 | [] |
-| Revisión humana de clasificación | [] |
+| Tratamiento propuesto de HS-03 | Conservar el verificador CLI con argumentos separados; restringir escritura del código y revisar el aviso al modificar la ejecución de procesos. No se declara corregido ni falso positivo por decisión humana. |
+| Responsabilidad de revisión de clasificación | Líder y co-líder como revisores principales; confirmar cada clasificación al cerrar la evaluación, conservando los avisos originales. |
 
 ## 3. Análisis dinámico
 
