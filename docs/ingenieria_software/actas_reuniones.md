@@ -10,7 +10,7 @@
 | Horario | 16:05–16:45 |
 | Modalidad y lugar | Presencial — Polo Educativo Tecnológico |
 | Tipo | Cliente |
-| Redactor | [] |
+| Redactor | Tomás Cabrera |
 
 ### Participantes
 
@@ -67,17 +67,17 @@ El instrumento de relevamiento reúne preguntas sobre permisos, identificación 
 | Horario | 4:15–5:15 |
 | Modalidad y lugar | Presencial — UTU, hora libre |
 | Tipo | Equipo |
-| Redactor | [] |
+| Redactor | Gabriela Romero |
 
 ### Participantes
 
 | Participante | Rol | Asistencia |
 |---|---|---|
-| Tomás Cabrera | Equipo de desarrollo | Sí |
-| Juan Robaina | Equipo de desarrollo | Sí |
-| Gabriela Romero | Equipo de desarrollo | Sí |
-| Verónica Romero | Equipo de desarrollo | Sí |
-| Juan Corrales | Equipo de desarrollo | Sí |
+| Tomás Cabrera | Líder | Sí |
+| Juan Robaina | Co-Líder | Sí |
+| Gabriela Romero | Desarrolladora | Sí |
+| Verónica Romero | Desarrolladora | Sí |
+| Juan Corrales | Desarrollador | Sí |
 
 ### Objetivo
 
@@ -123,17 +123,17 @@ El charter reúne objetivos, interesados y alcance; el catálogo identifica las 
 | Horario | 4:45–7:00 |
 | Modalidad y lugar | Presencial — UTU, clase de SSOO |
 | Tipo | Equipo |
-| Redactor | [] |
+| Redactor | Juan Robaina |
 
 ### Participantes
 
 | Participante | Rol | Asistencia |
 |---|---|---|
-| Tomás Cabrera | Equipo de desarrollo | Sí |
-| Juan Robaina | Equipo de desarrollo | Sí |
-| Gabriela Romero | Equipo de desarrollo | Sí |
-| Verónica Romero | Equipo de desarrollo | Sí |
-| Juan Corrales | Equipo de desarrollo | Sí |
+| Tomás Cabrera | Líder | Sí |
+| Juan Robaina | Co-lider | Sí |
+| Gabriela Romero | Desarrolladora | No |
+| Verónica Romero | Desarrolladora | Sí |
+| Juan Corrales | Desarrollador | No |
 
 ### Objetivo
 
@@ -179,17 +179,17 @@ La organización del backlog vincula acceso y permisos, consulta y administraci�
 | Horario | 4:10–5:00 |
 | Modalidad y lugar | Virtual — WhatsApp |
 | Tipo | Equipo |
-| Redactor | [] |
+| Redactor | Gabriela Romero |
 
 ### Participantes
 
 | Participante | Rol | Asistencia |
 |---|---|---|
-| Tomás Cabrera | Equipo de desarrollo | Sí |
-| Juan Robaina | Equipo de desarrollo | Sí |
-| Gabriela Romero | Equipo de desarrollo | Sí |
-| Verónica Romero | Equipo de desarrollo | Sí |
-| Juan Corrales | Equipo de desarrollo | Sí |
+| Tomás Cabrera | Líder | Sí |
+| Juan Robaina | Co-lider | Sí |
+| Gabriela Romero | Desarrolladora | Sí |
+| Verónica Romero | Desarrolladora | Sí |
+| Juan Corrales | Desarrollador | Sí |
 
 ### Objetivo
 
@@ -235,17 +235,17 @@ El trabajo de modelado relaciona los datos de usuarios, contenidos, franjas y re
 | Horario | 4:10–5:00 |
 | Modalidad y lugar | Presencial — UTU |
 | Tipo | Cliente |
-| Redactor | [] |
+| Redactor | Gabriela Romero |
 
 ### Participantes
 
 | Participante | Rol | Asistencia |
 |---|---|---|
-| Tomás Cabrera | Equipo de desarrollo | Sí |
-| Juan Robaina | Equipo de desarrollo | Sí |
-| Gabriela Romero | Equipo de desarrollo | Sí |
-| Verónica Romero | Equipo de desarrollo | Sí |
-| Juan Corrales | Equipo de desarrollo | Sí |
+| Tomás Cabrera | Líder | Sí |
+| Juan Robaina | Co-lider | Sí |
+| Gabriela Romero | Desarrollador | Sí |
+| Verónica Romero | Desarrolladora | Sí |
+| Juan Corrales | Desarrollador | Sí |
 | Directora de Tránsito | Cliente | Sí |
 | Inspector de Tránsito | Cliente | Sí |
 
