@@ -33,7 +33,8 @@
 - Plan e informe de pruebas.
 - Acta de cierre con entregables, requisitos evaluados, observaciones, lecciones y aceptación.
 - Declaración ética de uso de IA completada y firmada por quienes corresponda.
-- Manual de usuario con capturas y pasos verificables.
+- [Manual de usuario](manual_usuario.md), con recorridos del portal y panel; capturas del candidato de entrega.
+- [Plan e informe de pruebas](../ingenieria_software/plan_informe_pruebas.md), con matriz de trazabilidad y resultados.
 
 ### Desarrollo Full Stack
 
@@ -58,8 +59,8 @@
 - DAST sobre el sistema local propio mediante OWASP ZAP y revisión de puertos con Nmap.
 - Script Bash de auditoría automática de la API REST.
 - Informe final de hallazgos, prioridad, corrección aplicada y nueva prueba.
-- Plan de respuesta a incidentes.
-- Reflexión ética y límites de las pruebas.
+- [Procedimiento técnico de respuesta a incidentes](../electiva_ciberseguridad/respuesta_incidentes.md).
+- [Registro de hallazgos y tratamiento ético de evidencias](../electiva_ciberseguridad/registro_hallazgos.md).
 
 ### Entrega física
 
@@ -388,8 +389,8 @@ Si un control no se aprueba, se recorta una mejora opcional y se protege primero
 - Cierre de proyecto: https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/docs_docentes/07_cierre_de_proyecto.md
 - Ética de IA: https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/docs_docentes/08_etica_uso_de_ia.md
 - Repositorio de Ingeniería de Software: https://github.com/portalutu/ing_software-3ro-bt
-- Plan de pruebas: https://github.com/portalutu/ing_software-3ro-bt/blob/main/templates/12_test_plan.md
-- Informe final: https://github.com/portalutu/ing_software-3ro-bt/blob/main/templates/13_final_report.md
+- [Plantillas de Ingeniería de Software](https://github.com/portalutu/ing_software-3ro-bt/tree/main/templates).
+- [Especificación, modelado y trazabilidad](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md).
 - Manual de Git: https://github.com/portalutu/ing_software-3ro-bt/blob/main/documentos/manual_git_v2.md
 - Repositorio de Administración de SSOO: https://github.com/portalutu/3--Adm-SSOO
 - Plan de servidor, backup y restauración: https://github.com/portalutu/3--Adm-SSOO/blob/main/Teoricos/plan_servidor_linux_docker.md

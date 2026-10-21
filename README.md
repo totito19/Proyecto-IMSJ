@@ -41,6 +41,7 @@ Los resultados y archivos se consultan en el [registro de verificación](docs_au
 - [Charter](docs/ingenieria_software/project_charter.md), [especificación](docs/ingenieria_software/Requerimientos.md) y [casos de uso](docs/ingenieria_software/analisis_de_requerimientos.md).
 - [Backlog](docs/ingenieria_software/backlog.md), [planning](docs/ingenieria_software/sprint_planning.md), [Review](docs/ingenieria_software/actas_sprint_review.md) y [actas](docs/ingenieria_software/actas_reuniones.md).
 - [Arquitectura](docs/administracion_ssoo/arquitectura_propuesta.md), [modelo](docs/programacion_full_stack/Diagramas/README.md) y [contrato API](docs_auxiliares/backend/api.md).
+- [Manual de usuario](docs/general/manual_usuario.md) y [plan e informe de pruebas](docs/ingenieria_software/plan_informe_pruebas.md).
 - [Material auxiliar](docs_auxiliares/README.md) y [ficha documental](docs_auxiliares/revision/formulario_datos_documentacion.md).
 
 ## Equipo

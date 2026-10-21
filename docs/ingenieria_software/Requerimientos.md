@@ -131,6 +131,22 @@ Dos interfaces HTML/CSS/JavaScript consumen una API PHP 8.5 con MySQL 8.4. Apach
 
 El backend utiliza PHP nativo, PDO y carga explícita de clases, siguiendo el recorrido de api-simple. Se conserva el contrato de los frontends y la identificación RF1–RF24, RNF1–RNF10 y US1–US34. La configuración local publica en loopback y utiliza volúmenes para datos, adjuntos y caché.
 
+### 3.6. Controles de la implementación evaluada
+
+| Área | Comportamiento comprobable | Fuente |
+|---|---|---|
+| Sesiones | Bearer opaco, ocho horas, reemplazo al ingresar y revocación al salir o desactivar la cuenta. | [AuthService](../../backend/services/AuthService.php). |
+| Credenciales | Bcrypt con costo 12; registro ciudadano con confirmación y mínimo de seis caracteres. | [AuthController](../../backend/controllers/AuthController.php) y AuthService. |
+| Intentos | Cinco solicitudes por minuto, por IP y operación, en login, registro y consultas. | [Auth](../../backend/core/Auth.php) y controladores. |
+| Noticias | Portada y hasta cinco imágenes de galería, JPG/PNG/WEBP de 2048 KB; hasta cinco enlaces en API. | [NoticiaController](../../backend/controllers/NoticiaController.php). |
+| Materiales | PDF de 10240 KB, imagen de 5120 KB y video mediante URL HTTP/HTTPS. | [MaterialController](../../backend/controllers/MaterialController.php). |
+| Simulacro | Hasta diez preguntas con cuatro opciones; corrección posterior en servidor. | [Prueba](../../backend/services/PruebaService.php). |
+| Consultas | Nombre hasta 120 caracteres, correo válido y mensaje hasta 2000. | [ConsultaController](../../backend/controllers/ConsultaController.php). |
+| Auditoría | Actor, acción, tipo, elemento y fecha; consulta protegida y escritura transaccional de las acciones administrativas implementadas. | [UsuarioRepository](../../backend/repositories/UsuarioRepository.php). |
+| Reservas | Bloqueo de franja, unicidad ciudadano/franja y propiedad al cancelar. | [ReservaService](../../backend/services/ReservaService.php). |
+
+El formulario de noticias presenta portada y texto; la galería y los enlaces del contrato API mantienen RF9 como parcial en la entrega de interfaz. El [plan e informe de pruebas](plan_informe_pruebas.md) distingue la cobertura del servidor de la evaluación manual de las pantallas.
+
 ## 4. Validación y trazabilidad
 
 Cada requisito se relaciona con las historias del backlog, sus criterios y la evidencia. El resultado integral del 21/10 registra 192 comprobaciones y 46 endpoints; la auditoría API registra 43 aprobadas. La aceptación del producto se registra en reuniones del cliente.
@@ -143,4 +159,4 @@ Cada requisito se relaciona con las historias del backlog, sus criterios y la ev
 
 ## 5. Referencias
 
-[Relevamiento](informe%20entrevista.md), [análisis](analisis_de_requerimientos.md), [backlog](backlog.md), [cambios](control_cambios.md) y [Especificación y modelado del curso](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md).
+[Plan e informe de pruebas](plan_informe_pruebas.md), [manual](../general/manual_usuario.md), [relevamiento](informe%20entrevista.md), [análisis](analisis_de_requerimientos.md), [backlog](backlog.md), [cambios](control_cambios.md) y [Especificación y modelado del curso](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md).

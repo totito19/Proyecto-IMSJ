@@ -17,6 +17,7 @@
 | [Sprint Review](ingenieria_software/actas_sprint_review.md) | Incrementos, demostración, devolución y acciones. |
 | [Actas](ingenieria_software/actas_reuniones.md) | Reuniones R-01–R-05. |
 | [Control de cambios](ingenieria_software/control_cambios.md) | Solicitudes, impacto, implementación y decisiones. |
+| [Plan e informe de pruebas](ingenieria_software/plan_informe_pruebas.md) | Entorno, escenarios, matriz de trazabilidad y resultados de ejecución. |
 | [Declaración de herramientas](ingenieria_software/declaracion_etica_ia.md) | Actividades, responsabilidad y conformidad. |
 
 ## Programación Full Stack
@@ -38,6 +39,8 @@
 - [Informe DAST/Nmap](electiva_ciberseguridad/informe_dast_portal_vial.pdf).
 - [Auditoría Bash de API](electiva_ciberseguridad/informe_auditoria_bash_api_imsj.pdf).
 - [Hardening](electiva_ciberseguridad/informe_hardening_contenedores_imsj.pdf).
+- [Registro consolidado de hallazgos](electiva_ciberseguridad/registro_hallazgos.md).
+- [Respuesta a incidentes](electiva_ciberseguridad/respuesta_incidentes.md).
 - [Términos y condiciones](electiva_ciberseguridad/Terminos_y_Condiciones_IMSJ_Uruguay.pdf).
 - [Política de privacidad](electiva_ciberseguridad/Politica_de_Privacidad_IMSJ_Uruguay.pdf).
 
@@ -46,10 +49,10 @@
 | Documento o registro | Referencia |
 |---|---|
 | Plan de entrega y defensa | [Cronograma](general/plan_entrega_29-10_y_defensa_05-11.md). |
-| Manual de usuario | [] |
+| Manual de usuario | [Recorridos del portal y panel](general/manual_usuario.md). |
 | Acta de cierre | [] |
-| Respuesta a incidentes | [] |
-| Restauración | [] |
+| Respuesta a incidentes | [Procedimiento técnico](electiva_ciberseguridad/respuesta_incidentes.md). |
+| Restauración | [Procedimiento de respaldo y recuperación](../docs_auxiliares/backend/transicion_backend_vanilla.md). |
 | Paquete de entrega al cliente | [] |
 
 ## Referencias y evidencia

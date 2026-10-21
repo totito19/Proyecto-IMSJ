@@ -100,6 +100,7 @@ Se sustituyeron el arranque del framework, rutas, ORM y sesiones por carga expl�
 | DOC-20261013 | 13/10/2026 | Separación de material auxiliar e índices de consulta. |
 | DOC-20261020 | 20/10/2026 | Desarrollo de Markdown y correspondencia con el backend nativo. |
 | DOC-20261021 | 21/10/2026 | Homogeneización de estructuras con los teóricos del curso y actualización de datos y evidencias. |
+| DOC-20261021-B | 21/10/2026 | Manual de usuario, plan e informe de pruebas, registro consolidado de hallazgos y procedimiento técnico de incidentes; trazabilidad de ampliaciones y actualización de índices. |
 
 ## 5. Decisiones y revisión
 
@@ -111,6 +112,17 @@ Se sustituyeron el arranque del framework, rutas, ORM y sesiones por carga expl�
 | CC-04 | R-05 | [] | [] | [] |
 | CC-05 | Decisión del equipo | [] | [] | [] |
 
-## 6. Referencias
+## 6. Correspondencia del corte documental
+
+| Documento | Fuente de contenido | Cobertura |
+|---|---|---|
+| [Manual de usuario](../general/manual_usuario.md) | Pantallas y clientes JavaScript vigentes. | Portal, cuentas, panel, aprobación y agenda académica. |
+| [Plan e informe de pruebas](plan_informe_pruebas.md) | Suite HTTP/MySQL y resultados guardados. | Escenarios, entorno, matriz y resultados. |
+| [Hallazgos de seguridad](../electiva_ciberseguridad/registro_hallazgos.md) | JSON y terminal de herramientas, auditoría API y fuente actual. | Avisos, controles y alcance de evaluación. |
+| [Respuesta a incidentes](../electiva_ciberseguridad/respuesta_incidentes.md) | Infraestructura, permisos y herramientas operativas del proyecto. | Procedimiento técnico y registro de intervención. |
+
+La ampliación documental describe el producto y los procedimientos. Los acuerdos de reuniones, las firmas y la aceptación conservan su registro en las actas del equipo.
+
+## 7. Referencias
 
 [Actas](actas_reuniones.md), [requisitos](Requerimientos.md), [backlog](backlog.md), [verificación](../../docs_auxiliares/evidencias/verificacion.md), [API](../../docs_auxiliares/backend/api.md) y [Ciclo de vida y gestión de requisitos](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md).

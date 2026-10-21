@@ -36,15 +36,18 @@
 | P-10 | Versión PDF seleccionada | Demo del 13/10/2026. | B-02 del formulario. |
 | P-11 | Dominio, alojamiento y contacto | [] | [] |
 | P-12 | Pruebas técnicas | 192 comprobaciones de integración; auditoría API 43/43; SAST/DAST y hardening. | [Verificación](../evidencias/verificacion.md). |
-| P-13 | Restauración, manual y cierre | [] | [] |
+| P-13 | Manual y procedimientos | Manual del portal/panel y procedimiento técnico de recuperación. | [Manual](../../docs/general/manual_usuario.md) y [restauración](../backend/transicion_backend_vanilla.md). |
 | P-14 | Identificación legal y domicilio | [] | [] |
 | P-15 | Referencia de titularidad | [] | [Licencia](../../LICENSE). |
 | P-16 | Revisión y conformidad del equipo | [] | [Declaración](../../docs/ingenieria_software/declaracion_etica_ia.md). |
 | P-17 | Decisión tecnológica | PHP nativo; decisión 30/09 y registro CC-05 del 02/10. | Formulario y cambios. |
 | P-18 | Sesiones | Bearer opaco revocable; SHA-256; ocho horas. | Auth. |
 | P-19 | Estructura | Ocho módulos y 46 rutas. | [Contrato API](../backend/api.md). |
-| P-20 | Reconstrucción y recuperación | [] | [Procedimiento](../backend/transicion_backend_vanilla.md). |
-| P-21 | Estimación y responsable por tarea | [] | [] |
+| P-20 | Reconstrucción y recuperación | Instalación nueva, conservación de volúmenes, respaldo SQL/adjuntos y restauración aislada. | [Reconstrucción](../../docs/administracion_ssoo/reconstruccion-infraestructura.md) y [recuperación](../backend/transicion_backend_vanilla.md). |
+| P-21 | Estimación y responsable por tarea | [] | [Planning](../../docs/ingenieria_software/sprint_planning.md). |
+| P-22 | Ejecución de restauración y cierre | [] | [Registro de recuperación](../backend/transicion_backend_vanilla.md#registro-de-recuperación) y actas. |
+| P-23 | Escenarios de pruebas | Matriz PT-01–PT-18 con requisitos, historias y fuentes. | [Plan e informe](../../docs/ingenieria_software/plan_informe_pruebas.md). |
+| P-24 | Seguridad y operación | Hallazgos consolidados y procedimiento técnico de incidentes. | [Hallazgos](../../docs/electiva_ciberseguridad/registro_hallazgos.md) y [procedimiento](../../docs/electiva_ciberseguridad/respuesta_incidentes.md). |
 
 ## Parámetros institucionales
 

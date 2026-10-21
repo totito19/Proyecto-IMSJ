@@ -13,7 +13,7 @@
 | A-01 | Equipo | RC5 |
 | A-02 | Colores | Naranja y azul |
 | A-03 | Logo | [RC5](../../docs/general/identidad/rc5.png) |
-| A-04 | Tipografía | [] |
+| A-04 | Tipografía implementada | Portal: Segoe UI y alternativas del sistema. Panel: Inter y DM Mono, con alternativas CSS. |
 
 ## B. Datos generales
 
@@ -82,10 +82,11 @@
 | ID | Dato | Valor |
 |---|---|---|
 | I-01 | Revisión de la matriz de riesgos | [] |
-| I-02 | Plan de incidentes y ejercicio | [] |
+| I-02 | Procedimiento técnico de incidentes | [Respuesta a incidentes](../../docs/electiva_ciberseguridad/respuesta_incidentes.md). |
 | I-03 | Política institucional de cuentas | [] |
 | I-04 | Prueba móvil y accesibilidad | [] |
-| I-05 | Reflexión ética de seguridad | [] |
+| I-05 | Tratamiento ético de evidencias | [Alcance, datos sintéticos y resguardo](../../docs/electiva_ciberseguridad/registro_hallazgos.md#6-tratamiento-de-evidencias-y-alcance-ético). |
+| I-06 | Registro de ejercicio de incidentes | [] |
 
 ## J. Infraestructura
 
@@ -100,9 +101,10 @@
 
 | ID | Dato | Valor |
 |---|---|---|
-| K-01 | Perfiles y funciones | [] |
+| K-01 | Perfiles y funciones | Visitante, ciudadano, personal y Directora; [manual](../../docs/general/manual_usuario.md). |
 | K-02 | Capturas y presentación | [] |
-| K-03 | Acceso inicial, cuentas, soporte y capacitación | [] |
+| K-03 | Acceso inicial y cuentas | Inicio Docker, primera cuenta CLI y alta posterior desde el panel; [instalación](../../backend/README.md). |
+| K-04 | Soporte y capacitación institucional | [] |
 
 ## L. Edición y PDF
 
@@ -118,10 +120,10 @@
 | Reunión | Fecha | Horario | Referencia |
 |---|---|---|---|
 | R-01 | 09/07/2026 | 16:05–16:45 | Acta R-01 |
-| R-02 | 22/07/2026 | 4:15–5:15 | [] |
-| R-03 | 28/07/2026 | 4:45–7:00 | [] |
-| R-04 | 11/08/2026 | 4:10–5:00 | [] |
-| R-05 | 03/09/2026 | 4:10–5:00 | [] |
+| R-02 | 22/07/2026 | 4:15–5:15 | [Acta R-02](../../docs/ingenieria_software/actas_reuniones.md) |
+| R-03 | 28/07/2026 | 4:45–7:00 | [Acta R-03](../../docs/ingenieria_software/actas_reuniones.md) |
+| R-04 | 11/08/2026 | 4:10–5:00 | [Acta R-04](../../docs/ingenieria_software/actas_reuniones.md) |
+| R-05 | 03/09/2026 | 4:10–5:00 | [Acta R-05](../../docs/ingenieria_software/actas_reuniones.md) |
 
 ## Resultados técnicos
 

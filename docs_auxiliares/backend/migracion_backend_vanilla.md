@@ -1,6 +1,6 @@
 # Transición CC-05: backend PHP nativo
 
-**Decisión del grupo:** retirar Laravel, registrada el 02/10/2026. **Refinamiento del 05/10/2026:** reescribir desde cero con api-simple y código comentado. **Estado consolidado al 15/10/2026: Listo**, con ocho módulos después de incorporar Consulta mediante CC-02.
+**Decisión del grupo:** retirar Laravel el 30/09/2026, registrada en CC-05 el 02/10/2026. **Refinamiento del 05/10/2026:** reescribir desde cero con api-simple y código comentado. **Estado consolidado al 21/10/2026: Listo**, con ocho módulos después de incorporar Consulta mediante CC-02.
 
 ## Resultado y correspondencia
 
@@ -33,7 +33,7 @@ La [guía del backend](../../backend/README.md) contiene el arranque nuevo/local
 
 | Tarea del plan anterior | Estado técnico | Observación |
 |---|---|---|
-| TM-01 - estructura y arranque | **Listo.** Árbol nativo, entrada y 46 rutas implementados; sintaxis/HTTP comprobados. | La línea base fue de 42 rutas y CC-02 añadió tres. |
+| TM-01 - estructura y arranque | **Listo.** Árbol nativo, entrada y 46 rutas implementados; sintaxis/HTTP comprobados. | La línea base fue de 42 rutas; CC-02 añadió tres y la cancelación propia añadió una. |
 | TM-02 - sesiones y permisos | **Listo.** Bearer revocable, cuenta/rol, vencimiento y límite de intentos comprobados. | La configuración de un futuro proxy pertenece al despliegue. |
 | TM-03 - persistencia y datos | **Listo.** PDO, SQL, claves y transacciones comprobados en MySQL 8.4. | Una instalación real debe respaldarse antes de actualizar. |
 | TM-04 - contenidos y archivos | **Listo.** CRUD/estado, archivos, visibilidad y rollback comprobados. | Recorrido visual registrado el 13/10. |
@@ -41,11 +41,11 @@ La [guía del backend](../../backend/README.md) contiene el arranque nuevo/local
 | TM-06 - infraestructura | **Listo.** Docker/Compose/scripts nativos, servicios y volúmenes conservados. | Arranque aislado registrado el 13/10. |
 | TM-07 - pruebas y documentación | **Listo.** Suite HTTP, evidencia por hash y documentos actualizados. | Evidencia vinculada en el registro de verificación. |
 
-Son estados técnicos; no asignan puntos, costo ni tareas individuales retrospectivas.
+Las estimaciones y asignaciones se relacionan con la [planificación de sprints](../../docs/ingenieria_software/sprint_planning.md); los resultados técnicos se conservan en el registro de verificación.
 
 ## Alcance de la versión
 
-**Estado consolidado al 15/10/2026:** CC-01–CC-05 están Listos. La versión incorpora simulador, consultas, Directora, aprobación diferenciada y gráficos del test. Agenda/reservas siguen siendo académicas.  La cancelación ciudadana se añadió a la agenda académica el 20/10.
+**Estado consolidado al 21/10/2026:** CC-01–CC-05 están Listos. La versión incorpora simulador, consultas, Directora, aprobación diferenciada y gráficos del test. Agenda/reservas siguen siendo académicas.  La cancelación ciudadana se añadió a la agenda académica el 20/10.
 
 El crédito y la responsabilidad corresponden al equipo. Los resultados se registran en [verificación](../evidencias/verificacion.md).
 

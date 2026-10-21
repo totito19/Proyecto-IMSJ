@@ -3,7 +3,7 @@
 | Dato | Valor |
 |---|---|
 | Proyecto | Educación Vial IMSJ — Portal Vial |
-| Responsable del producto | [] |
+| Referente del cliente | Inspector de Tránsito |
 | Revisión documental | Juan Robaina |
 | Fecha | 21/10/2026 |
 
@@ -22,6 +22,8 @@ Centralizar la información de Tránsito y su administración, ofrecer materiale
 | EP5 | Materiales de estudio | RF5, RF17, RF20. |
 | EP6 | Preguntas frecuentes | RF6, RF18–RF19. |
 | EP7 | Calidad transversal | RNF2–RNF6. |
+| EP8 | Práctica de pruebas teóricas | RF22, RF24; CC-01, CC-04. |
+| EP9 | Consultas ciudadanas | RF23; CC-02. |
 
 ## Historias de usuario
 
@@ -96,9 +98,9 @@ Centralizar la información de Tránsito y su administración, ofrecer materiale
 | US28 | EP7 | Los recorridos utilizan etiquetas, foco y controles semánticos; evaluación: []. |
 | US29 | EP6 | Las categorías del catálogo [] permiten clasificar y consultar las preguntas. |
 | US30 | EP2 / EP5 / EP6 | Solo Directora aprueba; publicar es posterior y editar devuelve a borrador. |
-| US31 | [] | Hasta diez preguntas aleatorias, cuatro opciones y corrección posterior con total y aciertos. |
-| US32 | [] | Nombre, correo y mensaje llegan a la bandeja; el personal puede leer y marcar la consulta. |
-| US33 | [] | Una imagen opcional JPG/PNG/WEBP de hasta 2048 KB puede asociarse y mostrarse en el simulacro. |
+| US31 | EP8 | Hasta diez preguntas aleatorias, cuatro opciones y corrección posterior con total y aciertos. |
+| US32 | EP9 | Nombre, correo y mensaje llegan a la bandeja; el personal puede leer y marcar la consulta. |
+| US33 | EP8 | Una imagen opcional JPG/PNG/WEBP de hasta 2048 KB puede asociarse y mostrarse en el simulacro. |
 | US34 | EP7 | El servidor rechaza datos inválidos y devuelve un error controlado; las transacciones conservan consistencia. |
 
 ## Trabajo técnico
@@ -134,6 +136,12 @@ La cancelación propia se integra al circuito académico de reservas. El usuario
 | Integración del 21/10 | 192 comprobaciones; 46 endpoints. | [Resultado integral](../../output/integracion-final.json). |
 | Auditoría Bash del 21/10 | 43 aprobadas, 0 fallidas, 0 omitidas. | [Resultado API](../../output/security-api-final.txt). |
 | Concurrencia | Último cupo: 201 y 422. | [Registro de verificación](../../docs_auxiliares/evidencias/verificacion.md). |
+
+## Dependencias del incremento
+
+La aprobación de US30 atraviesa noticias, materiales y FAQ y utiliza el rol Directora. US33 amplía el banco de US31 con una imagen por pregunta. US32 utiliza un envío público y una lectura protegida, con persistencia de la marca de leído. Estas relaciones permiten comprobar cada ampliación tanto en la API como en su pantalla.
+
+La matriz de [pruebas](plan_informe_pruebas.md) relaciona las historias con escenarios y resultados. Los estados Lista, Parcial y Pendiente describen el alcance del producto al corte documental; la columna de estimación conserva la estimación de la historia y se vincula con la planificación del sprint.
 
 ## Referencias
 

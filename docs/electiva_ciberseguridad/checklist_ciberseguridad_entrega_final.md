@@ -19,10 +19,10 @@
 | Hardening | [Informe de contenedores](informe_hardening_contenedores_imsj.pdf). | [Revalidación](../../output/security-api-hardening.txt) y Compose. | [] |
 | Términos | [Términos y condiciones](Terminos_y_Condiciones_IMSJ_Uruguay.pdf). | [] | [] |
 | Privacidad | [Política de privacidad](Politica_de_Privacidad_IMSJ_Uruguay.pdf). | [] | [] |
-| Hallazgos consolidados | [] | [] | [] |
-| Respuesta a incidentes | [] | [] | [] |
-| Reflexión ética de las pruebas | [] | [] | [] |
-| Restauración de respaldo | [] | [] | [] |
+| Hallazgos consolidados | [Registro](registro_hallazgos.md). | JSON de herramientas, revisión del código y auditoría API. | [] |
+| Respuesta a incidentes | [Procedimiento técnico](respuesta_incidentes.md). | Detección, contención, análisis, recuperación y ficha de intervención. | [] |
+| Reflexión ética de las pruebas | [Tratamiento de evidencias y alcance](registro_hallazgos.md#6-tratamiento-de-evidencias-y-alcance-ético). | Alcance local, datos sintéticos, resguardo y clasificación de resultados. | [] |
+| Restauración de respaldo | [Procedimiento](../../docs_auxiliares/backend/transicion_backend_vanilla.md). | [] | [] |
 
 ## 2. Resultados de ejecución
 
@@ -37,6 +37,8 @@
 | Auditoría tras hardening | 21/10/2026 | Configuración endurecida. | 41 aprobadas, 0 fallidas, 2 omitidas. |
 | ZAP posterior | 21/10/2026 | Baseline del portal público. | 0 FAIL, 4 WARN y 63 PASS. |
 | Nmap | 21/10/2026 | Publicación local. | 8000/tcp para Apache HTTP; MySQL interno. |
+
+El JSON de Semgrep conserva seis resultados y un diagnóstico de análisis parcial. El registro consolidado relaciona cada aviso con la fuente actual; la regla exec-use señala la llamada proc_open del verificador CLI y se analiza junto con el origen de sus argumentos y las condiciones de ejecución.
 
 ## 3. Controles comprobados
 

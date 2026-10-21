@@ -43,6 +43,8 @@ La ejecución completa comprueba token inválido, vencido y revocado; permisos; 
 | ZAP | Baseline del portal público; revalidación: 0 FAIL, 4 WARN, 63 PASS. | [Resultado posterior](../../informes-dast-post/zap-report-post.json). |
 | Nmap | 8000/tcp para Apache; MySQL en red interna. | [Resultado](../../informes-dast-post/nmap-post.txt). |
 
+El [registro consolidado](../../docs/electiva_ciberseguridad/registro_hallazgos.md) relaciona los avisos con la fuente actual. La regla exec-use señala la llamada proc_open del verificador CLI; el análisis considera el arreglo de argumentos, su origen y la restricción de ejecución CLI.
+
 El registro documental de clasificación y correcciones se encuentra en los informes de [SAST](../../docs/electiva_ciberseguridad/informe_sast_portal_vial.pdf) y [DAST](../../docs/electiva_ciberseguridad/informe_dast_portal_vial.pdf).
 
 ## 4. Hardening
@@ -60,7 +62,7 @@ La aplicación utiliza `www-data`, raíz de lectura, `no-new-privileges`, capaci
 | 13/10/2026 | Proyecto Docker aislado y demo de contenidos. | 41 comprobaciones HTTP; consultas, Directora y gráficos; revisión visual. | Control de cambios y registro de demo. |
 | 20/10/2026 | Documentación Markdown. | 39 archivos; 370 enlaces y anclas; 130 tablas; preservación de 120 archivos no Markdown. | DOC-20261020. |
 
-## 6. Registro documental del 21/10
+## 6. Primera revisión documental del 21/10
 
 | Dato | Valor |
 |---|---|
@@ -71,7 +73,13 @@ La aplicación utiliza `www-data`, raíz de lectura, `no-new-privileges`, capaci
 | Archivos de implementación e informes conservados | 309 |
 | Resultado de validación | OK |
 
-## 7. Referencias de entrega
+## 7. Correspondencia de evidencia y producto
+
+El [plan e informe de pruebas](../../docs/ingenieria_software/plan_informe_pruebas.md) desarrolla los escenarios y su relación con RF, RNF, US y CC. El [manual de usuario](../../docs/general/manual_usuario.md) describe las acciones presentes en las interfaces públicas e internas.
+
+La evidencia de integración identifica 43 archivos PHP mediante hashes. El JSON informa 192 aserciones, 60 combinaciones distintas de método y ruta y 46 declaraciones de endpoint cubiertas. El caso de último cupo utiliza dos solicitudes simultáneas contra una misma franja.
+
+## 8. Referencias de entrega
 
 | Dato | Valor |
 |---|---|
@@ -83,3 +91,9 @@ La aplicación utiliza `www-data`, raíz de lectura, `no-new-privileges`, capaci
 | Evidencia de restauración | [] |
 
 [Control de cambios](../../docs/ingenieria_software/control_cambios.md), [backlog](../../docs/ingenieria_software/backlog.md) y [entregables de seguridad](../../docs/electiva_ciberseguridad/checklist_ciberseguridad_entrega_final.md).
+
+## 9. Ampliación documental del 21/10
+
+DOC-20261021-B incorpora el manual de usuario, el plan e informe de pruebas, el registro consolidado de hallazgos y el procedimiento técnico de incidentes. Se actualizaron requisitos, trazabilidad, referencias, fichas e índices con las fuentes del repositorio.
+
+La revisión comprende 42 Markdown y comprueba enlaces locales, anclas, tablas, bloques de código e identificadores RF, RNF y US. Los 309 archivos de implementación e informes conservan sus hashes, al igual que los 43 PHP identificados por la integración. Las actas y las respuestas de entrevista conservan su contenido.
