@@ -575,6 +575,7 @@ svg { display: block; flex-shrink: 0; }
   margin-left: auto;
   flex-wrap: wrap;
 }
+.toolbar__filters--flush { margin-left: 0; }
 
 .toolbar__filters > svg { color: var(--slate-400); }
 

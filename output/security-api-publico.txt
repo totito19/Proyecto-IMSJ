@@ -1,0 +1,42 @@
+Auditoría de seguridad API IMSJ
+Objetivo autorizado: http://127.0.0.1:8000
+Fecha UTC: 2026-10-21T14:18:49Z
+
+[OK]   API disponible → HTTP 200
+[OK]   Healthcheck devuelve estado ok
+[OK]   API aplica nosniff
+[OK]   API evita caché de respuestas
+[OK]   Protección anti-clickjacking activa
+[OK]   Content-Security-Policy activa
+[OK]   El encabezado Server no revela una versión exacta
+[OK]   Ruta protegida sin token → HTTP 401
+[OK]   Token Bearer inválido → HTTP 401
+[OK]   JSON mal formado → HTTP 400
+[OK]   Ruta inexistente → HTTP 404
+[OK]   Método no admitido → HTTP 405
+[OK]   Preflight desde origen permitido → HTTP 204
+[OK]   CORS devuelve únicamente el origen permitido
+[OK]   Preflight desde origen ajeno → HTTP 403
+[OK]   CORS no autoriza el origen ajeno
+[OK]   Recurso privado bloqueado: /.env → HTTP 404
+[OK]   Recurso privado bloqueado: /config.php → HTTP 404
+[OK]   Recurso privado bloqueado: /backend/database.sql → HTTP 404
+[OK]   Recurso privado bloqueado: /storage/../config.php → HTTP 404
+[OK]   Login con cuenta de prueba → HTTP 200
+[OK]   El token tiene formato opaco id|secreto
+[OK]   La API informa el rol autenticado: PUBLICO_GENERAL
+[OK]   El login no expone contraseña ni hashes
+[OK]   Token válido accede al perfil → HTTP 200
+[OK]   Rol PUBLICO_GENERAL no accede al panel → HTTP 403
+[OMITE] Carga maliciosa: requiere una cuenta PERSONAL_IMSJ o DIRECTORA
+[OK]   El rechazo 403 del panel acredita rol insuficiente
+[OMITE] Prueba de ID ajeno: proporcionar OTHER_TOKEN y FOREIGN_RESERVATION_ID descartables
+[OK]   Logout revoca el token actual → HTTP 204
+[OK]   Token revocado es rechazado → HTTP 401
+[OMITE] Token expirado: proporcionar IMSJ_SECURITY_EXPIRED_TOKEN creado en la base descartable
+[OK]   Entrada SQLi controlada no causa error interno → HTTP 422
+[OK]   Entrada XSS controlada no se refleja ni causa error interno → HTTP 422
+[OK]   La respuesta no refleja el payload XSS
+[OMITE] Límite 429: definir IMSJ_SECURITY_RATE_LIMIT=1; bloquea el login de esta IP durante un minuto
+
+Resumen: 32 aprobadas, 0 fallidas, 4 omitidas.

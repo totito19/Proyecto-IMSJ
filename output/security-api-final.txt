@@ -1,0 +1,49 @@
+Auditoría de seguridad API IMSJ
+Objetivo autorizado: http://127.0.0.1:8000
+Fecha UTC: 2026-10-21T14:42:08Z
+
+[OK]   API disponible → HTTP 200
+[OK]   Healthcheck devuelve estado ok
+[OK]   API aplica nosniff
+[OK]   API evita caché de respuestas
+[OK]   Protección anti-clickjacking activa
+[OK]   Content-Security-Policy activa
+[OK]   El encabezado Server no revela una versión exacta
+[OK]   Ruta protegida sin token → HTTP 401
+[OK]   Token Bearer inválido → HTTP 401
+[OK]   JSON mal formado → HTTP 400
+[OK]   Ruta inexistente → HTTP 404
+[OK]   Método no admitido → HTTP 405
+[OK]   Preflight desde origen permitido → HTTP 204
+[OK]   CORS devuelve únicamente el origen permitido
+[OK]   Preflight desde origen ajeno → HTTP 403
+[OK]   CORS no autoriza el origen ajeno
+[OK]   Recurso privado bloqueado: /.env → HTTP 404
+[OK]   Recurso privado bloqueado: /config.php → HTTP 404
+[OK]   Recurso privado bloqueado: /backend/database.sql → HTTP 404
+[OK]   Recurso privado bloqueado: /storage/../config.php → HTTP 404
+[OK]   Login con cuenta de prueba → HTTP 200
+[OK]   El token tiene formato opaco id|secreto
+[OK]   La API informa el rol autenticado: PERSONAL_IMSJ
+[OK]   El login no expone contraseña ni hashes
+[OK]   Token válido accede al perfil → HTTP 200
+[OK]   Archivo PHP disfrazado de PDF → HTTP 422
+[OK]   Crear FAQ descartable para probar permisos → HTTP 201
+[OK]   Enviar FAQ descartable a revisión → HTTP 200
+[OK]   Rol PERSONAL_IMSJ no puede aprobar → HTTP 403
+[OK]   Eliminar FAQ descartable → HTTP 204
+[OK]   Un usuario no cancela una reserva ajena → HTTP 404
+[OK]   Logout revoca el token actual → HTTP 204
+[OK]   Token revocado es rechazado → HTTP 401
+[OK]   Token expirado es rechazado → HTTP 401
+[OK]   Entrada SQLi controlada no causa error interno → HTTP 422
+[OK]   Entrada XSS controlada no se refleja ni causa error interno → HTTP 422
+[OK]   La respuesta no refleja el payload XSS
+[OK]   Intento de login controlado 1 → HTTP 422
+[OK]   Intento de login controlado 2 → HTTP 422
+[OK]   Intento de login controlado 3 → HTTP 422
+[OK]   Intento de login controlado 4 → HTTP 422
+[OK]   Intento de login controlado 5 → HTTP 429
+[OK]   El límite de intentos devuelve 429
+
+Resumen: 43 aprobadas, 0 fallidas, 0 omitidas.

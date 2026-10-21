@@ -36,12 +36,18 @@ Los documentos se organizan por asignatura y se complementan con material de con
 
 - [Análisis de seguridad](electiva_ciberseguridad/analisis_ciberseguridad.md): activos, amenazas, controles implementados y evidencia pendiente.
 - [Checklist de cierre](electiva_ciberseguridad/checklist_ciberseguridad_entrega_final.md): actividades de evaluación y condiciones para reunir su evidencia.
+- [Informe de auditoría Bash de la API](electiva_ciberseguridad/informe_auditoria_bash_api_imsj.pdf): alcance, metodología, resultados por rol, ejecución estricta y capturas de evidencia.
+- [Informe de hardening de contenedores](electiva_ciberseguridad/informe_hardening_contenedores_imsj.pdf): usuarios no privilegiados, capacidades mínimas, raíz de solo lectura, revalidación y requisito HTTPS.
 
 ## PDF existentes
 
 | Archivo | Estado frente a los Markdown actuales |
 |---|---|
-| [Análisis de ciberseguridad](electiva_ciberseguridad/analisis_ciberseguridad.pdf) | Versión anterior; requiere actualizar contenido y revisión de riesgos. |
+| [Análisis de ciberseguridad](electiva_ciberseguridad/analisis_ciberseguridad.pdf) | Versión actualizada para PHP nativo; conserva el mapa de riesgos e incorpora su criterio de escala. |
+| [Informe SAST](electiva_ciberseguridad/informe_sast_portal_vial.pdf) | Informe formal del análisis estático y su revalidación. |
+| [Informe DAST](electiva_ciberseguridad/informe_dast_portal_vial.pdf) | Informe formal de ZAP/Nmap, alcance, resultados y revalidación. |
+| [Informe de auditoría Bash de la API](electiva_ciberseguridad/informe_auditoria_bash_api_imsj.pdf) | Informe formal con 43 pruebas aprobadas, 0 fallidas, 0 omitidas y cuatro capturas de evidencia. |
+| [Informe de hardening de contenedores](electiva_ciberseguridad/informe_hardening_contenedores_imsj.pdf) | Informe formal con configuración efectiva, cinco capturas, regresión de 41 pruebas sin fallos y requisito HTTPS de producción. |
 | [Declaración de uso de herramientas](ingenieria_software/declaracion_etica_ia.pdf) | Versión anterior; no incorpora el registro Markdown del 20/10. |
 | [Política de privacidad](electiva_ciberseguridad/Politica_de_Privacidad_IMSJ_Uruguay.pdf) | Borrador con datos y decisiones institucionales pendientes. |
 | [Términos y condiciones](electiva_ciberseguridad/Terminos_y_Condiciones_IMSJ_Uruguay.pdf) | Borrador sujeto a alcance y condiciones institucionales definitivos. |
@@ -52,4 +58,4 @@ La actualización de los Markdown no cambia los PDF. Su preparación posterior d
 
 El [plan para la entrega y defensa](general/plan_entrega_29-10_y_defensa_05-11.md) organiza actividades futuras y no acredita reuniones ni tareas ejecutadas. Las [referencias y evidencias](../docs_auxiliares/README.md) y el [formulario](../docs_auxiliares/revision/formulario_datos_documentacion.md) reúnen fuentes y datos pendientes.
 
-El manual de usuario y el acta de cierre todavía no tienen un documento propio. También faltan los informes finales de SAST/DAST, auditoría API, respuesta a incidentes y restauración documentada. Las actas y las conformidades se completan con registros efectivos del equipo y del cliente.
+El manual de usuario y el acta de cierre todavía no tienen un documento propio. En ciberseguridad quedan pendientes el informe de respuesta a incidentes y la restauración documentada. Las actas y las conformidades se completan con registros efectivos del equipo y del cliente.

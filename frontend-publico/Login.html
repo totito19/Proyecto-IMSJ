@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="forms-wrap" id="forms-wrap">
-                    <form class="mode-form active" data-mode="login" id="form-ciudadano-login" novalidate>
+                    <form class="mode-form active" data-mode="login" id="form-ciudadano-login" method="post" action="/api/login" novalidate>
                         <div class="field">
                             <label for="ciu-cedula">Cédula</label>
                             <input class="input" id="ciu-cedula" name="cedula" type="text"
@@ -45,7 +45,7 @@
                         <p class="field-error" id="citizen-login-error" role="alert"></p>
                     </form>
 
-                    <form class="mode-form" data-mode="registro" id="form-ciudadano-registro" novalidate>
+                    <form class="mode-form" data-mode="registro" id="form-ciudadano-registro" method="post" action="/api/register" novalidate>
                         <div class="field">
                             <label for="reg-cedula">Cédula</label>
                             <input class="input" id="reg-cedula" name="cedula" type="text"
@@ -68,7 +68,7 @@
             </div>
 
             <div class="role-panel" data-role="admin">
-                <form id="form-admin-login" novalidate>
+                <form id="form-admin-login" method="post" action="/api/login" novalidate>
                     <div class="field">
                         <label for="adm-cedula">Cédula</label>
                         <input class="input" id="adm-cedula" name="cedula" type="text"

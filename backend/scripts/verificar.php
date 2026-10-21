@@ -19,7 +19,26 @@ foreach (
     ) {
         continue;
     }
-    passthru(escapeshellarg(PHP_BINARY) . ' -l ' . escapeshellarg($file->getPathname()), $status);
+    $pipes = [];
+    $process = proc_open(
+        [PHP_BINARY, '-l', $file->getPathname()],
+        [1 => ['pipe', 'w'], 2 => ['pipe', 'w']],
+        $pipes,
+    );
+    if (!is_resource($process)) {
+        fwrite(STDERR, "No se pudo comprobar {$file->getPathname()}\n");
+        $failed = true;
+        continue;
+    }
+    $output = stream_get_contents($pipes[1]);
+    $error = stream_get_contents($pipes[2]);
+    fclose($pipes[1]);
+    fclose($pipes[2]);
+    $status = proc_close($process);
+    echo $output;
+    if ($error !== '') {
+        fwrite(STDERR, $error);
+    }
     $failed = $failed || $status !== 0;
     $count++;
 }

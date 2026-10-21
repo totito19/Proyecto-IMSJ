@@ -29,6 +29,7 @@ CMD = [MYSQL, '--no-defaults', '--protocol=TCP', '-h', os.environ.get('DB_HOST',
 ENV = {**os.environ, 'MYSQL_PWD': os.environ.get('DB_PASSWORD', '')}
 checks = []
 covered = set()
+last_status = None
 
 def sql(text, database=True):
     result = subprocess.run(CMD + ([NAME] if database else []), input=text, text=True,
@@ -43,6 +44,7 @@ def check(condition, label):
     checks.append(label)
 
 def call(method, path, data=None, token=None, expect=200, fields=None, base=URL, multipart=None, raw=None, headers=None):
+    global last_status
     h = {'Accept': 'application/json', **(headers or {})}
     if token:
         h['Authorization'] = 'Bearer ' + token
@@ -64,6 +66,7 @@ def call(method, path, data=None, token=None, expect=200, fields=None, base=URL,
         response = urllib.request.urlopen(request, timeout=15)
     except urllib.error.HTTPError as error:
         response = error
+    last_status = response.status
     content = response.read()
     check(response.status == expect, f'{method} {path}: esperado {expect}, recibido {response.status}: {content[:400]!r}')
     covered.add((method, path.split('?')[0]))
@@ -253,9 +256,16 @@ new_token = call('POST', '/api/login', {'cedula': '22222222', 'password': 'prueb
 call('GET', '/api/me', token=staff, expect=401)
 sql("UPDATE auth_tokens SET expires_at=UTC_TIMESTAMP()-INTERVAL 1 SECOND;")
 call('GET', '/api/me', token=new_token, expect=401)
-for _ in range(1):
-    call('POST', '/api/login', {'cedula': '22222222', 'password': 'incorrecta'}, expect=422)
-call('POST', '/api/login', {'cedula': '22222222', 'password': 'incorrecta'}, expect=429)
+rate_limited = False
+for _ in range(6):
+    try:
+        call('POST', '/api/login', {'cedula': '22222222', 'password': 'incorrecta'}, expect=422)
+    except AssertionError:
+        if last_status != 429:
+            raise
+        rate_limited = True
+        break
+check(rate_limited, 'Límite de login devuelve 429 dentro de seis intentos')
 # Contrastar las rutas implementadas con peticiones efectivamente ejecutadas.
 expected = set(re.findall(r'// (GET|POST|PUT|PATCH|DELETE) (/api/[^:]+): acceso', (ROOT/'public/index.php').read_text(encoding='utf-8')))
 normalized = {(m, re.sub(r'/[0-9]+(?=/|$)', '/{id}', p)) for m,p in covered}

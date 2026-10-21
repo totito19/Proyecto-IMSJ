@@ -2,6 +2,18 @@
 services:
   app:
     build: .
+    user: www-data
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /run/apache2
+      - /var/lock/apache2
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
     ports:
       - "127.0.0.1:${APP_PORT:-8000}:80"
     environment:
@@ -29,6 +41,15 @@ services:
       start_period: 10s
   db:
     image: mysql:8.4
+    user: mysql
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/run/mysqld
+    cap_drop:
+      - ALL
     environment:
       MYSQL_DATABASE: ${DB_DATABASE:-imsj}
       MYSQL_USER: ${DB_USERNAME:-imsj}
