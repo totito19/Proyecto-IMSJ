@@ -44,3 +44,6 @@ logs/
 # Build
 dist/
 build/
+
+# Archivos temporales locales
+/tmp/

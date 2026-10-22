@@ -151,6 +151,7 @@ call('POST', '/api/noticias', {k: v for k, v in news.items() if k != 'enlaces'},
      multipart=[('imagen_portada', 'imagen.png', b'<?php echo 1;', 'image/png')])
 call('POST', '/api/noticias', {**news, 'fecha_fin_vigencia': '2000-01-01'}, staff, 422)
 
+call('POST', '/api/portal/consultas', {'nombre': 'María Pérez', 'email': 'maria@example.org', 'mensaje': 'x' * 151}, expect=422)
 consulta = call('POST', '/api/portal/consultas', {'nombre': 'María Pérez', 'email': 'maria@example.org', 'mensaje': 'Necesito información sobre educación vial.'}, expect=201, fields=['consulta'])['consulta']
 inbox = call('GET', '/api/consultas', token=staff, fields=['consultas'])['consultas']
 check(inbox[0]['id'] == consulta['id'] and not inbox[0]['leida'], 'Consulta pública llega sin leer al panel')
@@ -201,6 +202,8 @@ slot2 = call('POST', '/api/franjas', {**franja, 'hora_inicio': '11:00', 'hora_fi
 call('DELETE', f'/api/franjas/{slot2}', token=staff, expect=204)
 call('GET', '/api/agenda?vista=anual', token=staff, expect=422)
 
+call('POST', '/api/usuarios-admin', {'nombre': 'Personal 123', 'cedula': '44444444', 'rol': 'PERSONAL_IMSJ'}, staff, 422)
+call('POST', '/api/usuarios-admin', {'nombre': 'Segundo personal', 'cedula': 'abc44444444', 'rol': 'PERSONAL_IMSJ'}, staff, 422)
 created = call('POST', '/api/usuarios-admin', {'nombre': 'Segundo personal', 'cedula': '44444444', 'rol': 'PERSONAL_IMSJ'}, staff, 201, ['usuario', 'clave_inicial'])
 check(set(created['usuario']) == {'id', 'nombre', 'cedula', 'rol'}, 'Alta de personal devuelve identidad y rol')
 admin = created['usuario']['id']

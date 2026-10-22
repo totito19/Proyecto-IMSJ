@@ -75,6 +75,12 @@ final class NoticiaController
         if ($datos['fecha_fin_vigencia'] < $datos['fecha_inicio_vigencia']) {
             Response::invalid('fecha_fin_vigencia', 'El fin debe ser igual o posterior al inicio.');
         }
+        if ($datos['fecha_fin_vigencia'] < date('Y-m-d')) {
+            Response::invalid(
+                'fecha_fin_vigencia',
+                'La vigencia no puede ser anterior a la fecha actual.',
+            );
+        }
         if (array_key_exists('enlaces', $d)) {
             if (
                 !is_array($d['enlaces']) ||

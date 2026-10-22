@@ -301,7 +301,6 @@ button{ font-family:inherit; }
 .btn-accent{
     background:var(--color-accent);
     color:#fff;
-    box-shadow:0 10px 22px rgba(255,122,48,.35);
 }
 
 .btn-accent:hover{ background:var(--color-accent-dark); transform:translateY(-1px); }
@@ -789,6 +788,7 @@ button{ font-family:inherit; }
 .footer-contact__form label{ display:grid; gap:6px; color:#fff; font-size:13px; font-weight:700; }
 .footer-contact__form input,.footer-contact__form textarea{ width:100%; padding:11px 12px; border:1px solid rgba(255,255,255,.25); border-radius:var(--radius-sm); background:#fff; color:var(--color-text); font:inherit; }
 .footer-contact__form textarea{ resize:vertical; }
+.footer-contact__hint{ color:#c7cdf5; font-size:12px; font-weight:400; text-align:right; }
 .footer-contact__form input:focus,.footer-contact__form textarea:focus{ outline:3px solid rgba(255,122,48,.28); border-color:var(--color-accent); }
 .footer-contact__message,.footer-contact__submit{ grid-column:1/-1; }
 .footer-contact__submit{ display:flex; align-items:center; justify-content:space-between; gap:16px; }

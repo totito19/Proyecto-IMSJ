@@ -65,11 +65,18 @@ document.addEventListener('DOMContentLoaded', () => {
             <form id="form-consulta" class="footer-contact__form">
                 <label>Nombre<input name="nombre" maxlength="120" autocomplete="name" required></label>
                 <label>Correo electrónico<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
-                <label class="footer-contact__message">Consulta<textarea name="mensaje" maxlength="2000" rows="4" required></textarea></label>
+                <label class="footer-contact__message">Consulta<textarea name="mensaje" maxlength="150" rows="4" aria-describedby="consulta-limite" required></textarea><small class="footer-contact__hint" id="consulta-limite">0/150 caracteres</small></label>
                 <div class="footer-contact__submit"><p id="consulta-status" role="status"></p><button class="btn btn-accent" type="submit">Enviar consulta</button></div>
             </form>`;
     const bottom = footerContainer.querySelector('.footer-bottom');
     footerContainer.insertBefore(contact, bottom || footerContainer.firstChild);
+
+    const message = contact.querySelector('textarea[name="mensaje"]');
+    const messageLimit = contact.querySelector('#consulta-limite');
+    const updateMessageLimit = () => {
+      messageLimit.textContent = `${message.value.length}/150 caracteres`;
+    };
+    message.addEventListener('input', updateMessageLimit);
 
     // Convierte el formulario en JSON y deja que el cliente común gestione errores HTTP.
     contact.querySelector('form').addEventListener('submit', async (event) => {
@@ -87,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
           body: Object.fromEntries(new FormData(form).entries()),
         });
         form.reset();
+        updateMessageLimit();
         status.className = 'is-success';
         status.textContent = 'Consulta enviada correctamente.';
       } catch (error) {

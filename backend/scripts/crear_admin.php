@@ -10,7 +10,7 @@ require dirname(__DIR__) . '/core/Database.php';
 require dirname(__DIR__) . '/core/Response.php';
 require dirname(__DIR__) . '/models/Solicitud.php';
 $cedula = Solicitud::cedula(['cedula' => getenv('INITIAL_ADMIN_CEDULA') ?: '']);
-$nombre = Solicitud::text(['nombre' => getenv('INITIAL_ADMIN_NOMBRE') ?: ''], 'nombre', 120);
+$nombre = Solicitud::nombre(['nombre' => getenv('INITIAL_ADMIN_NOMBRE') ?: '']);
 $password = getenv('INITIAL_ADMIN_PASSWORD') ?: '';
 if (mb_strlen($password) < 6 || strlen($password) > 72) {
     throw new RuntimeException(

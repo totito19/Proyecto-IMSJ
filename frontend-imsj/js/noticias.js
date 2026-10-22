@@ -26,6 +26,33 @@ function mostrarEstado(message = '', isError = false) {
   status.style.color = isError ? '#b91c1c' : '';
 }
 
+/** Muestra los errores de guardado dentro del modal, donde permanecen visibles. */
+function mostrarErrorFormulario(message = '') {
+  const error = $('#n-form-error');
+  error.textContent = message;
+  error.hidden = !message;
+}
+
+/** Devuelve la fecha civil local sin el desplazamiento que produce toISOString(). */
+function fechaLocalHoy() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+/** Pide confirmación antes de ejecutar una transición editorial. */
+function confirmarCambioEstado(noticia, estado) {
+  const messages = {
+    PENDIENTE: `¿Enviar la noticia "${noticia.titulo}" a revisión?`,
+    APROBADO: `¿Aprobar la noticia "${noticia.titulo}"?`,
+    PUBLICADO: `¿Publicar la noticia "${noticia.titulo}" en el portal?`,
+    BORRADOR: `¿Retirar la noticia "${noticia.titulo}" del portal?`,
+  };
+  return confirm(messages[estado] || '¿Confirmar esta acción?');
+}
+
 /** Aplica la búsqueda sobre título, texto y estado sin volver a consultar la API. */
 function noticiasFiltradas() {
   if (!queryNoticias) return noticias;
@@ -110,12 +137,16 @@ async function cargarNoticias() {
 /** Reinicia el formulario o lo completa con la noticia que se desea editar. */
 function abrirFormulario(noticia = null) {
   noticiaEnEdicion = noticia;
+  const today = fechaLocalHoy();
   $('#modal-noticia-title').textContent = noticia ? 'Editar noticia' : 'Nueva noticia';
   $('#btn-guardar-noticia').textContent = noticia ? 'Guardar cambios' : 'Guardar borrador';
   $('#n-titulo').value = noticia?.titulo || '';
   $('#n-cuerpo').value = noticia?.texto || '';
   $('#n-vigencia').value = noticia?.fecha_fin_vigencia || '';
+  $('#n-vigencia').min = today;
+  $('#n-vigencia').setCustomValidity('');
   $('#n-portada').value = '';
+  mostrarErrorFormulario();
   $('#n-flujo-nota').textContent =
     noticia && noticia.estado !== 'BORRADOR'
       ? 'Al editar, la noticia vuelve a Borrador y debe aprobarse otra vez.'
@@ -128,20 +159,29 @@ function abrirFormulario(noticia = null) {
 async function guardarNoticia(event) {
   event.preventDefault();
   const form = $('#form-noticia');
+  const vigencia = $('#n-vigencia');
+  vigencia.setCustomValidity('');
+  if (vigencia.value && vigencia.value < fechaLocalHoy()) {
+    const message = 'La vigencia no puede ser anterior a la fecha actual.';
+    vigencia.setCustomValidity(message);
+    mostrarErrorFormulario(message);
+  }
   if (!form.reportValidity()) return;
   const button = $('#btn-guardar-noticia');
+  const buttonLabel = button.textContent;
   const data = new FormData();
   const cover = $('#n-portada').files[0];
   data.append('titulo', $('#n-titulo').value.trim());
   data.append('texto', $('#n-cuerpo').value.trim());
   data.append(
     'fecha_inicio_vigencia',
-    noticiaEnEdicion?.fecha_inicio_vigencia || new Date().toISOString().slice(0, 10),
+    noticiaEnEdicion?.fecha_inicio_vigencia || fechaLocalHoy(),
   );
-  data.append('fecha_fin_vigencia', $('#n-vigencia').value);
+  data.append('fecha_fin_vigencia', vigencia.value);
   if (cover) data.append('imagen_portada', cover);
   button.disabled = true;
-  mostrarEstado('Guardando noticia...');
+  button.textContent = 'Guardando...';
+  mostrarErrorFormulario();
   try {
     if (noticiaEnEdicion) {
       data.append('_method', 'PUT');
@@ -154,9 +194,10 @@ async function guardarNoticia(event) {
     noticiaEnEdicion = null;
     await cargarNoticias();
   } catch (error) {
-    mostrarEstado(error.message, true);
+    mostrarErrorFormulario(error.message);
   } finally {
     button.disabled = false;
+    button.textContent = buttonLabel;
   }
 }
 
@@ -172,6 +213,7 @@ async function manejarAccion(event) {
   }
   try {
     if (button.dataset.accion === 'estado') {
+      if (!confirmarCambioEstado(noticia, button.dataset.estado)) return;
       await ImsjApi.request(`/noticias/${noticia.id}/estado`, {
         method: 'PATCH',
         body: { estado: button.dataset.estado },
@@ -195,6 +237,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   $('#btn-nueva-noticia').addEventListener('click', () => abrirFormulario());
   $('#form-noticia').addEventListener('submit', guardarNoticia);
+  $('#n-vigencia').addEventListener('input', (event) => {
+    event.currentTarget.setCustomValidity('');
+    mostrarErrorFormulario();
+  });
   $('#tbody-noticias').addEventListener('click', manejarAccion);
   $('[data-file]', $('#modal-noticia')).addEventListener('click', function () {
     const input = document.getElementById(this.dataset.file);

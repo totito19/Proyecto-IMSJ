@@ -37,6 +37,17 @@ function estadoMaterialVista(estado) {
   );
 }
 
+/** Confirma las acciones editoriales que cambian la visibilidad del material. */
+function confirmarCambioEstadoMaterial(material, estado) {
+  const messages = {
+    PENDIENTE: `¿Enviar "${material.nombre}" a revisión?`,
+    APROBADO: `¿Aprobar el material "${material.nombre}"?`,
+    PUBLICADO: `¿Publicar el material "${material.nombre}" en el portal?`,
+    BORRADOR: `¿Retirar el material "${material.nombre}" del portal?`,
+  };
+  return confirm(messages[estado] || '¿Confirmar esta acción?');
+}
+
 /** Decide qué transición editorial puede ofrecerse para el estado y rol actuales. */
 function accionFlujoMaterial(material) {
   const directora = ImsjApi.currentUser()?.rol === 'DIRECTORA';
@@ -189,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     try {
       if (button.dataset.accion === 'estado') {
+        if (!confirmarCambioEstadoMaterial(material, button.dataset.estado)) return;
         await ImsjApi.request(`/materiales/${material.id}/estado`, {
           method: 'PATCH',
           body: { estado: button.dataset.estado },

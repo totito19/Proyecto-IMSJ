@@ -62,6 +62,17 @@ final class Solicitud
         }
         return $value;
     }
+    public static function nombre(array $data, string $key = 'nombre', int $max = 120): string
+    {
+        $value = self::text($data, $key, $max);
+        if (!preg_match("/^[\\p{L}\\p{M} .'-]+$/uD", $value) || !preg_match('/\\p{L}/u', $value)) {
+            Response::invalid(
+                $key,
+                'El nombre solo puede contener letras, espacios, puntos, apóstrofes y guiones.',
+            );
+        }
+        return $value;
+    }
     public static function number(
         mixed $value,
         string $key,
@@ -115,8 +126,12 @@ final class Solicitud
         if (!isset($data['cedula']) || !is_string($data['cedula'])) {
             Response::invalid('cedula', 'Ingrese una cédula.');
         }
-        // Normaliza puntos, guiones y espacios para comparar y guardar solo dígitos.
-        $value = preg_replace('/\D/', '', $data['cedula']);
+        // Admite la presentación habitual, pero rechaza letras y símbolos antes de normalizar.
+        $raw = trim($data['cedula']);
+        if (!preg_match('/^[-0-9. ]+$/D', $raw)) {
+            Response::invalid('cedula', 'La cédula solo puede contener números, puntos y guiones.');
+        }
+        $value = preg_replace('/\D/', '', $raw);
         if (!preg_match('/^\d{7,8}$/D', $value)) {
             Response::invalid('cedula', 'La cédula debe tener entre 7 y 8 dígitos.');
         }

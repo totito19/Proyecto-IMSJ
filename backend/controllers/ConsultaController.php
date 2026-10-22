@@ -15,7 +15,7 @@ final class ConsultaController
         $consulta = $this->service->crear([
             'nombre' => Solicitud::text($datos, 'nombre', 120),
             'email' => Solicitud::email($datos['email'] ?? null),
-            'mensaje' => Solicitud::text($datos, 'mensaje', 2000),
+            'mensaje' => Solicitud::text($datos, 'mensaje', 150),
         ]);
         Response::json(['consulta' => ['id' => $consulta->toArray()['id']]], 201);
     }

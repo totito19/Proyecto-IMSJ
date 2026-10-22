@@ -24,7 +24,7 @@ final class UsuarioController
             'DIRECTORA',
         ]);
         $user = $this->service->crear(
-            Solicitud::text($d, 'nombre', 120),
+            Solicitud::nombre($d),
             Solicitud::cedula($d),
             $rol,
             $actor,

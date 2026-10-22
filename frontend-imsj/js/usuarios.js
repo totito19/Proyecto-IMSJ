@@ -64,6 +64,19 @@ async function guardarUsuario(event) {
   // currentTarget deja de estar disponible después del primer await.
   // Conservar el formulario evita que el reset intente ejecutarse sobre null.
   const form = event.currentTarget;
+  const nameInput = $('#u-nombre');
+  const documentInput = $('#u-cedula');
+  const name = nameInput.value.trim();
+  const document = documentInput.value.trim();
+  const documentDigits = document.replace(/\D/g, '');
+  nameInput.setCustomValidity('');
+  documentInput.setCustomValidity('');
+  if (!/^[\p{L}\p{M} .'-]+$/u.test(name) || !/\p{L}/u.test(name)) {
+    nameInput.setCustomValidity('El nombre solo puede contener letras, espacios, puntos, apóstrofes y guiones.');
+  }
+  if (!/^[-0-9. ]+$/.test(document) || !/^\d{7,8}$/.test(documentDigits)) {
+    documentInput.setCustomValidity('La cédula debe tener 7 u 8 dígitos; solo puede incluir puntos y guiones.');
+  }
   if (!form.reportValidity()) return;
 
   const submitButton = form.querySelector('[type="submit"]');
@@ -72,8 +85,8 @@ async function guardarUsuario(event) {
     const payload = await ImsjApi.request('/usuarios-admin', {
       method: 'POST',
       body: {
-        nombre: $('#u-nombre').value.trim(),
-        cedula: $('#u-cedula').value.trim(),
+        nombre: name,
+        cedula: document,
         rol: $('#u-rol').value,
       },
     });
@@ -99,6 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   $('#btn-nuevo-usuario').addEventListener('click', () => Modal.open('modal-usuario'));
+  $('#u-nombre').addEventListener('input', (event) => event.currentTarget.setCustomValidity(''));
+  $('#u-cedula').addEventListener('input', (event) => event.currentTarget.setCustomValidity(''));
   $('#form-usuario').addEventListener('submit', guardarUsuario);
   $('#tbody-usuarios').addEventListener('click', async (event) => {
     const button = event.target.closest('[data-accion="quitar"]');

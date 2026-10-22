@@ -20,6 +20,17 @@ function estadoPreguntaVista(estado) {
   );
 }
 
+/** Confirma las transiciones editoriales antes de modificar la publicación. */
+function confirmarCambioEstadoPregunta(item, estado) {
+  const messages = {
+    PENDIENTE: '¿Enviar esta pregunta frecuente a revisión?',
+    APROBADO: '¿Aprobar esta pregunta frecuente?',
+    PUBLICADO: '¿Publicar esta pregunta frecuente en el portal?',
+    BORRADOR: '¿Retirar esta pregunta frecuente del portal?',
+  };
+  return confirm(messages[estado] || '¿Confirmar esta acción?');
+}
+
 /** Determina la próxima transición editorial disponible para la pregunta. */
 function accionFlujoPregunta(item) {
   const directora = ImsjApi.currentUser()?.rol === 'DIRECTORA';
@@ -140,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     try {
       if (button.dataset.accion === 'estado') {
+        if (!confirmarCambioEstadoPregunta(item, button.dataset.estado)) return;
         await ImsjApi.request(`/preguntas/${item.id}/estado`, {
           method: 'PATCH',
           body: { estado: button.dataset.estado },

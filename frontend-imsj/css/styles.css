@@ -848,6 +848,15 @@ textarea.input.h-28 { height: 112px; }
 
 .form-body { display: flex; flex-direction: column; gap: 16px; }
 
+.form-error {
+  padding: 10px 12px;
+  border: 1px solid var(--red-200);
+  border-radius: var(--radius);
+  background: var(--red-50);
+  color: var(--red-700);
+  font-size: 13px;
+}
+
 .form-foot {
   display: flex;
   justify-content: flex-end;
