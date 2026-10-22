@@ -1,96 +1,119 @@
-# Arquitectura del sistema y despliegue local
+# Arquitectura propuesta de infraestructura
 
-**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 21/10/2026.
+**Proyecto:** Educación Vial IMSJ - Portal Vial
 
-**Base funcional:** backend PHP nativo; ocho módulos y 46 rutas HTTP.
+**Servidor:** Ubuntu Server 24.04 LTS, 6 vCPU, 8 GB RAM y 50 GB SSD/NVMe
 
-## Componentes y responsabilidades
+## 1. Vista general
 
-El sistema utiliza dos interfaces HTML/CSS/JavaScript: el portal público para la ciudadanía y el panel para personal y Directora. Ambas consumen una API común con PHP 8.5 y persistencia MySQL 8.4. El código de los frontends no accede directamente a la base de datos.
+```mermaid
+flowchart TB
+    Admin[Equipo administrador] -->|SSH 22| UFW[UFW]
+    Admin -->|Cockpit 9090| UFW
+    Usuarios[Usuarios autorizados] -->|HTTP 8000| UFW
+
+    UFW --> Host[Ubuntu Server 24.04 LTS]
+    Host --> Docker[Docker Engine y Compose v2]
+    Host --> Cockpit[Cockpit]
+    Host --> Backup[Backup Bash y cron]
+
+    Docker --> App[app: Apache y PHP 8.5]
+    App --> DB[db: MySQL 8.4]
+    App --- Portal[frontend-publico]
+    App --- Panel[frontend-imsj]
+
+    DB --- DBData[(db_data)]
+    App --- Uploads[(app_uploads)]
+    App --- Cache[(cache)]
+
+    Backup --> Local[(7 copias locales)]
+    Local -. copia .-> Externo[(medio externo protegido)]
+```
+
+El servidor concentra la administración del sistema operativo y Docker. Los usuarios solo acceden a Apache; MySQL permanece en la red interna de Compose.
+
+## 2. Servidor anfitrión
+
+| Elemento | Definición |
+|---|---|
+| Sistema operativo | Ubuntu Server 24.04 LTS de 64 bits |
+| Recursos | 6 vCPU, 8 GB RAM y 50 GB SSD/NVMe |
+| Nombre sugerido | `srv-imsj` |
+| Red | IP fija configurada mediante Netplan |
+| Administración | OpenSSH y Cockpit |
+| Firewall | UFW con entradas denegadas por defecto |
+| Contenedores | Docker Engine y Docker Compose v2 |
+| Automatización | Bash y cron |
+
+## 3. Componentes Docker
 
 | Componente | Responsabilidad |
 |---|---|
-| Portal público | Consultar contenido publicado y vigente, practicar con simulacros y enviar consultas; operar reservas en la versión académica. |
-| Panel IMSJ | Gestionar contenidos, aprobación, personal, consultas e historial; administrar agenda académica. |
-| `public/index.php` | Cargar clases, resolver CORS y rutas, despachar al controlador y traducir excepciones a respuestas HTTP. |
-| Controladores | Exigir sesión/rol, recibir datos, validar su forma y llamar al servicio. |
-| Servicios | Resolver reglas de negocio, estados, transacciones y coordinación de datos y archivos. |
-| Repositorios | Ejecutar consultas parametrizadas y obtener los registros necesarios. |
-| Modelos y núcleo | Representar la salida, validar entradas y gestionar autenticación, conexión, respuesta y archivos. |
-| MySQL y almacenamiento | Conservar datos relacionados, sesiones, historial y adjuntos. |
+| `app` | Ejecutar Apache, PHP, la API y servir los dos frontends. |
+| `db` | Mantener la base MySQL sin publicar el puerto 3306. |
+| `db_data` | Conservar tablas, cuentas, contenidos, consultas, reservas e historial. |
+| `app_uploads` | Conservar PDF e imágenes cargados. |
+| `cache` | Conservar contadores compartidos de intentos de autenticación. |
 
-## Recorrido de una petición
+Los contenedores utilizan `restart: unless-stopped`, límites de logs y controles de salud. `app` se ejecuta como `www-data`; `db`, como `mysql`. Ambos usan raíz de solo lectura, `no-new-privileges` y capacidades reducidas.
+
+## 4. Red y acceso
+
+| Origen | Destino | Puerto | Regla |
+|---|---|---:|---|
+| Red administrativa | Ubuntu Server | 22/TCP | SSH |
+| Red administrativa | Ubuntu Server | 9090/TCP | Cockpit |
+| Red autorizada | Aplicación | 8000/TCP | Portal, panel y API |
+| `app` | `db` | 3306/TCP | Red interna Docker |
+
+Compose publica la aplicación en `0.0.0.0:8000`. UFW determina qué redes pueden acceder. No se publica MySQL.
+
+Para una demostración controlada se utiliza HTTP. Si el sistema se publica en Internet, se debe colocar un proxy inverso con HTTPS en 443/TCP, mantener la aplicación y MySQL detrás de él y reemplazar las URL de `.env` por el dominio institucional.
+
+## 5. Recorrido de una petición
 
 ```mermaid
 flowchart LR
-    Navegador --> Entrada[public/index.php]
-    Entrada --> Controlador[Controlador: acceso y datos]
-    Controlador --> Servicio[Servicio: reglas y transaccion]
-    Servicio --> Repositorio[Repositorio: SQL preparado]
-    Repositorio --> PDO[Database: PDO]
-    PDO --> MySQL[(MySQL)]
-    Repositorio --> Modelo[Modelo: salida]
-    Modelo --> Servicio
-    Servicio --> Controlador
-    Controlador --> Respuesta[Response: JSON o 204]
+    Navegador --> Apache[Apache]
+    Apache --> Entrada[public/index.php]
+    Entrada --> Controlador
+    Controlador --> Servicio
+    Servicio --> Repositorio
+    Repositorio --> MySQL[(MySQL)]
+    Controlador --> Respuesta[JSON o 204]
     Respuesta --> Navegador
 ```
 
-Por ejemplo, la creación de una reserva recibe una franja y obtiene el usuario desde el token. El servicio inicia una transacción, bloquea la franja, verifica fecha, cupos y duplicación y solicita la inserción al repositorio. La respuesta devuelve los datos de la reserva. Si falla una comprobación no se guarda una reserva parcial.
+Los frontends consumen `/api` desde el mismo origen. Apache publica únicamente la entrada HTTP y los alias de los frontends; el resto del backend permanece fuera de `DocumentRoot`.
 
-Los ocho módulos son Auth, Consulta, Noticia, Material, Pregunta, Prueba, Reserva y Usuario. Reserva incluye franjas y agenda; Usuario incorpora el historial. La carga de clases es explícita y el despacho utiliza `switch`; no depende del arranque, ORM o middleware de Laravel.
+## 6. Persistencia y recuperación
 
-## Topología de ejecución
+El backup diario reúne:
 
-```mermaid
-flowchart LR
-    Ciudadania[Navegador ciudadano] -->|APP_PORT| App[app: Apache y PHP]
-    Personal[Navegador personal] -->|mismo origen| App
-    App --- Portal[frontend-publico: montaje de lectura]
-    App --- Panel[frontend-imsj: montaje de lectura]
-    App -->|db:3306| DB[(db: MySQL 8.4)]
-    DB --- Datos[db_data]
-    App --- Archivos[app_uploads]
-    App --- Cache[cache]
-```
+- dump comprimido de MySQL;
+- adjuntos del volumen `app_uploads`;
+- copia del proyecto;
+- configuración necesaria para reconstruir la instalación;
+- manifiesto, versión y hashes SHA-256.
 
-Compose define únicamente `app` y `db`. Apache sirve la API desde `public/` y las interfaces mediante alias. Se publica `127.0.0.1:APP_PORT`, con 8000 por defecto. El navegador utiliza el origen de la página para construir las llamadas a `/api`, de modo que cambiar el puerto no exige editar JavaScript. MySQL no publica un puerto del host.
+Se mantienen siete copias locales y una copia externa. La restauración se prueba con otro nombre de proyecto Compose y otro puerto para no tocar la instalación principal.
 
-La raíz `/` redirige al portal. El alias de `login.html` resuelve el nombre histórico `Login.html` al ejecutarse sobre Linux. Las carpetas privadas del backend quedan fuera de `DocumentRoot`. Nginx se retiró y no existe un servicio separado de frontend en la configuración actual.
+## 7. Monitoreo
 
-## Persistencia e integridad
-
-`db_data` conserva las tablas; `app_uploads`, los PDF e imágenes; `cache`, los contadores de intentos. Estos volúmenes pertenecen al proyecto Compose elegido. Cambiar el nombre de proyecto puede crear volúmenes diferentes, aunque se ejecute el mismo código.
-
-El esquema contiene once tablas del dominio y la tabla técnica `auth_tokens`. Las claves foráneas relacionan cuentas, reservas, franjas, noticias e historial. Las restricciones únicas evitan cédulas y reservas duplicadas. Las reservas utilizan además bloqueo de fila para verificar el último cupo con concurrencia real.
-
-Los servicios de contenidos registran datos y auditoría en una transacción. Los archivos nuevos se eliminan si falla la operación; los sustituidos se retiran después de confirmar los datos. La cancelación ciudadana elimina la relación de reserva del propietario y libera capacidad; no conserva un estado histórico de cancelación.
-
-## Autenticación y publicación
-
-Las sesiones utilizan Bearer opaco y revocable; solo su hash SHA-256 se almacena en MySQL. El token vence a las ocho horas y cada petición protegida comprueba la cuenta activa y su rol. Los frontends lo guardan en `sessionStorage`.
-
-Los contenidos siguen Borrador → Pendiente → Aprobado → Publicado. Solo Directora aprueba y la publicación requiere una acción posterior. Editar un contenido aprobado o publicado devuelve su estado a borrador. La API pública excluye los contenidos no publicados y filtra la vigencia de noticias.
-
-## Controles del entorno
-
-`app` se ejecuta como `www-data` y `db` como `mysql`. Ambos utilizan raíz de solo lectura y `no-new-privileges`. La aplicación conserva únicamente la capacidad de enlace al puerto HTTP; MySQL utiliza capacidades reducidas. Los volúmenes y rutas temporales proporcionan los espacios de escritura requeridos.
-
-Apache configura CSP, protección anti-clickjacking, `nosniff` y respuestas de API con control de caché. Los recursos de iconos utilizados por el portal se sirven localmente. La publicación local se realiza en loopback.
-
-## Parámetros institucionales
-
-| Dato | Valor |
+| Nivel | Herramientas |
 |---|---|
-| Organismo administrador | Intendencia de San José |
-| Responsable operativo | Equipo RC5 durante la entrega; administración posterior por la Intendencia de San José. |
-| Alojamiento | Equipos del grupo con Docker para demostración; infraestructura institucional como condición de despliegue. |
-| Dominio | localhost en demostración; dominio institucional como condición de publicación. |
-| Certificado HTTPS | Requisito de producción: certificado válido y renovación bajo administración institucional. |
-| Contacto | Interlocución del proyecto a través del Inspector de Tránsito; canales institucionales al habilitar el servicio. |
-| Frecuencia de respaldo | Propuesta para operación: copia diaria y previa a actualizaciones; validar en la transferencia. |
-| Conservación de copias | Propuesta inicial: siete copias diarias y cuatro semanales, con acceso restringido y copia separada. |
+| Host | Cockpit, `uptime`, `free -h`, `df -h`, `ss -tulpn` |
+| Servicios | `systemctl status docker`, `journalctl -u docker` |
+| Contenedores | `docker compose ps`, `docker stats`, `docker compose logs` |
+| Aplicación | `/api/health` y control de salud interno de Compose |
+| Backups | `SHA256SUMS`, manifiesto y prueba de restauración |
 
-## Fuentes
+## 8. Límites
 
-[Compose](../../backend/compose.yaml), [capas y clases](../programacion_full_stack/Justificación%20de%20clases,%20atributos%20y%20métodos.md), [modelo](../programacion_full_stack/Diagramas/README.md), [API](../../docs_auxiliares/backend/api.md) y [verificación](../../docs_auxiliares/evidencias/verificacion.md).
+- Los datos iniciales y su crecimiento son estimaciones y deben reemplazarse por mediciones reales.
+- La instalación de laboratorio no representa una publicación institucional con dominio y HTTPS.
+- El backup no se considera válido hasta completar una restauración aislada.
+
+## Documentos relacionados
+
+[Análisis de requerimientos](analisis-requerimientos.md), [justificación tecnológica](justificacion-tecnologica.md), [infraestructura](documentacion-infraestructura.md) y [reconstrucción](reconstruccion-infraestructura.md).

@@ -25,60 +25,68 @@ backend/
 
 `HTTP → public/index.php → controlador → servicio → repositorio → PDO/MySQL → modelo → Response`. Cada controlador exige el usuario/rol correspondiente. Franjas y agenda se agrupan en Reserva; historial en Usuario. Los comentarios del código explican validación, transacciones, tokens y limpieza de archivos.
 
-El [contrato de API](../docs_auxiliares/backend/api.md) complementa esta guía. Las referencias y los informes técnicos se consultan en [documentación auxiliar](../docs_auxiliares/README.md).
+El [contrato de API](../docs_auxiliares/backend/api.md) complementa esta guía. Los resultados técnicos se consultan en el [registro de verificación](../docs_auxiliares/evidencias/verificacion.md).
 
 ## Instalación nueva con Docker
 
-Requiere Docker con Compose y contenedores Linux. En Windows se puede usar [Docker Desktop](https://docs.docker.com/desktop/setup/install/windows-install/); los BAT utilizan PowerShell incluido en Windows, sin instalar PHP, Composer, MySQL o Python en el equipo. Las rutas se deducen de la carpeta del proyecto y de la instalación de Docker, sin un nombre de usuario o disco particular.
+El entorno de entrega es Ubuntu Server 24.04 LTS con Docker Engine y el complemento Docker Compose. Desde la carpeta `backend`:
 
-1. Abrir **`iniciar.bat`** con doble clic. Detecta Docker en el PATH o en sus instalaciones habituales y abre Docker Desktop si el motor está apagado, con espera limitada a tres minutos. Genera `.env` desde la plantilla y claves aleatorias locales cuando no hay una base previa; no requiere escribirlas ni las muestra en la consola. Conserva las claves reales de una configuración existente. Si falta configuración pero ya existe el volumen de base, exige recuperar sus claves originales.
-2. El inicio comprueba la configuración, utiliza `APP_PORT=8000` o busca uno libre entre los cien siguientes si está ocupado por otro programa, y guarda el puerto elegido. Construye e inicia **`app` (Apache/PHP) y `db` (MySQL)**; retira el antiguo contenedor Nginx del mismo proyecto sin borrar volúmenes. Antes de iniciar Apache ejecuta `scripts/migrar.php`, una migración idempotente que agrega a instalaciones existentes el rol Directora, los estados de aprobación, la bandeja de consultas y el campo de imagen del simulador sin borrar registros. Espera al healthcheck de API/base/portal y comprueba acceso desde Windows antes de abrir el portal en el navegador predeterminado. MySQL importa `database.sql` solo cuando el volumen está vacío; no carga usuarios o contenido de demostración. La primera ejecución necesita conexión para descargar las imágenes.
-3. Crear la primera cuenta de personal con la herramienta CLI. Definir estas variables en PowerShell con datos elegidos por el equipo; la contraseña se ingresa de forma protegida y se pasa al proceso mediante el entorno:
-
-```powershell
-$env:INITIAL_ADMIN_CEDULA = Read-Host 'Cédula de la primera cuenta'
-$env:INITIAL_ADMIN_NOMBRE = Read-Host 'Nombre de la primera cuenta'
-$env:INITIAL_ADMIN_PASSWORD = [System.Net.NetworkCredential]::new('', (Read-Host 'Contraseña de la primera cuenta' -AsSecureString)).Password
-docker compose exec -e INITIAL_ADMIN_CEDULA -e INITIAL_ADMIN_NOMBRE -e INITIAL_ADMIN_PASSWORD app php scripts/crear_admin.php
-Remove-Item Env:INITIAL_ADMIN_PASSWORD
-Remove-Item Env:INITIAL_ADMIN_PASSWORD
+```bash
+cp .env.example .env
+nano .env
+chmod 600 .env
+docker compose config --quiet
+docker compose up -d --build --remove-orphans --wait --wait-timeout 180
+docker compose ps
 ```
 
-La herramienta se niega a crear la cuenta si ya hay personal activo. Las siguientes cuentas se crean desde el panel con el comportamiento previo de `clave_inicial=imsj1234`; el valor inicial se entrega en la respuesta de alta del panel.
+En `.env` se definen claves seguras, la IP del servidor y el puerto de publicación. La primera ejecución necesita conexión para descargar las imágenes. MySQL importa `database.sql` únicamente cuando el volumen está vacío y la aplicación ejecuta las migraciones necesarias sin borrar registros.
 
-4. Con el puerto por defecto: portal `http://localhost:8000/frontend-publico/`, panel `http://localhost:8000/frontend-imsj/` y API `http://localhost:8000/api/health`. El BAT muestra las direcciones con el puerto efectivo. `/` redirige al portal. `/api/health` comprueba PHP; el healthcheck interno de Compose comprueba también esquema MySQL y portal. La primera cuenta sigue siendo una acción explícita del equipo.
+Para crear la primera cuenta de personal:
 
-Apache sirve los frontends mediante alias de solo lectura, además de la API; no hay Nginx ni servicio `frontend`. Los frontends usan la API del mismo origen, por lo que funcionan con el puerto elegido sin editar JavaScript. El alias de ingreso acepta `login.html` y apunta al archivo histórico `Login.html`, respetando mayúsculas en Linux. Se conservan `db_data`, `app_uploads` y `cache`; usar el mismo proyecto Compose al actualizar. `detener.bat` detiene sin borrar datos.
+```bash
+read -r -p 'Cédula de la primera cuenta: ' INITIAL_ADMIN_CEDULA
+read -r -p 'Nombre de la primera cuenta: ' INITIAL_ADMIN_NOMBRE
+read -r -s -p 'Contraseña de la primera cuenta: ' INITIAL_ADMIN_PASSWORD
+echo
+export INITIAL_ADMIN_CEDULA INITIAL_ADMIN_NOMBRE INITIAL_ADMIN_PASSWORD
+docker compose exec \
+  -e INITIAL_ADMIN_CEDULA \
+  -e INITIAL_ADMIN_NOMBRE \
+  -e INITIAL_ADMIN_PASSWORD \
+  app php scripts/crear_admin.php
+unset INITIAL_ADMIN_PASSWORD
+```
+
+La herramienta se niega a crear la cuenta si ya existe personal activo. Las cuentas siguientes se crean desde el panel administrativo.
+
+Con el puerto predeterminado, el portal está en `http://IP_SERVIDOR:8000/frontend-publico/`, el panel en `http://IP_SERVIDOR:8000/frontend-imsj/` y la comprobación de salud en `http://IP_SERVIDOR:8000/api/health`. Para detener los servicios sin borrar datos:
+
+```bash
+docker compose down
+```
+
+Apache sirve los dos frontends y la API. MySQL permanece en la red interna de Compose. Los volúmenes `db_data`, `app_uploads` y `cache` conservan la base, los adjuntos y los datos técnicos.
 
 Los contenedores se ejecutan con hardening activo desde el `compose.yaml` normal. `app` usa `www-data`, raíz de solo lectura, `no-new-privileges`, descarta todas las capacidades y recupera únicamente `NET_BIND_SERVICE`; `db` usa `mysql`, raíz de solo lectura, `no-new-privileges` y no conserva capacidades. Los volúmenes de datos y los `tmpfs` declarados son las únicas rutas de escritura necesarias. El informe y las capturas de revalidación están en `docs/electiva_ciberseguridad/informe_hardening_contenedores_imsj.pdf`.
 
-La configuración local enlaza Apache exclusivamente a `127.0.0.1` y utiliza HTTP para la demostración. Un despliegue real debe terminar el tráfico externo en HTTPS con TLS 1.2 o superior, certificado válido y renovación automática; publicar solo 443/TCP, mantener aplicación y MySQL en red privada, redirigir HTTP a HTTPS y ajustar `APP_URL` y `FRONTEND_ORIGIN` al dominio definitivo. HSTS se habilita únicamente después de comprobar HTTPS en todo el dominio.
+La instalación académica publica Apache en la dirección y el puerto definidos mediante `APP_BIND` y `APP_PORT`; MySQL permanece en la red interna. Para una publicación institucional se requiere HTTPS con certificado válido, renovación automática, redirección desde HTTP y valores definitivos de `APP_URL` y `FRONTEND_ORIGIN`.
 
-Para iniciar manualmente en Windows, Linux o macOS: copiar `.env.example` a `.env`, completar las dos claves y ejecutar desde `backend`:
-
-```text
-docker compose up -d --build --remove-orphans --wait --wait-timeout 180
-```
-
-Abrir la dirección correspondiente a `APP_PORT`. `APP_URL` y `FRONTEND_ORIGIN` se deducen de ese puerto cuando no se definen explícitamente. Un dominio propio requiere sus valores correspondientes; el BAT ajusta únicamente las URL locales.
-
-### Si los BAT no arrancan o se cierran
-
-Ambos dejan el resultado visible al abrirlos con doble clic. En terminal: `iniciar.bat --sin-pausa`, `detener.bat --sin-pausa`; para automatización se puede añadir `--sin-navegador` al inicio. Devuelven 0 al completar la operación y 1 si falla. Delegan en `scripts/docker.ps1` con una política de ejecución limitada a ese proceso, sin modificar la política del sistema.
+### Solución de problemas
 
 - **Base previa y claves ausentes/de ejemplo:** recuperar `DB_PASSWORD` y `DB_ROOT_PASSWORD` originales en `.env`. El inicio no cambia credenciales de una base previa ni borra su volumen para resolver este error.
-- **No se encuentra Docker:** comprobar su instalación. Los BAT admiten `%LOCALAPPDATA%\Programs\DockerDesktop` y `%ProgramFiles%\Docker\Docker`; si se instaló en otra ubicación, añadir su carpeta `resources\bin` al PATH y abrir una terminal nueva.
-- **El motor no responde:** revisar Docker Desktop; un error de WSL, virtualización o de instalación requiere resolver su mensaje. El proyecto usa contenedores Linux. `detener.bat` informa si no puede conectarse y no abre el motor para detenerlo.
-- **WSL no está instalado:** completar el requisito de Windows siguiendo la [guía oficial](https://learn.microsoft.com/en-us/windows/wsl/install), que puede requerir reinicio. El BAT no instala componentes del sistema ni reinicia el equipo automáticamente.
-- **Falla la construcción o el inicio:** revisar el error que permanece en la ventana. Desde `backend`, `docker compose ps -a` muestra el estado y `docker compose logs --tail 80 app db` muestra los errores de los servicios. Si Docker no está en el PATH, usar la ruta completa de `docker.exe` entre comillas.
+- **Docker no está disponible:** comprobar `docker --version`, `docker compose version` y el estado del servicio con `sudo systemctl status docker`.
+- **Falla la construcción o el inicio:** ejecutar `docker compose ps -a` y `docker compose logs --tail 80 app db` desde `backend`.
+- **El portal no responde desde otro equipo:** comprobar `APP_BIND`, `APP_PORT`, la IP definida en `APP_URL` y `FRONTEND_ORIGIN`, y la regla correspondiente de UFW.
+- **MySQL no queda saludable:** revisar las claves de `.env` y los registros con `docker compose logs --tail 80 db`.
 
-La configuración expandida se procesa internamente y no se imprime, porque contiene claves. El inicio usa [`compose up --wait`](https://docs.docker.com/reference/cli/docker/compose/up/) y un healthcheck de solo lectura para abrir la página cuando responde. Los BAT no crean cuentas, no importan SQL sobre bases existentes ni borran volúmenes.
+El [procedimiento de reconstrucción](../docs/administracion_ssoo/reconstruccion-infraestructura.md) contiene la instalación completa del servidor, Docker, firewall, acceso remoto, backup y restauración.
 
 ## Ejecución local sin Docker
 
 PHP 8.5 con `pdo_mysql`, `mbstring` y `fileinfo`, MySQL 8.4 y una base seleccionada. Completar `.env` con `DB_HOST=127.0.0.1`, puerto y usuario real. Importar `database.sql` en esa base usando el cliente MySQL. Si es nueva, completar las variables `INITIAL_ADMIN_*` y ejecutar `php scripts/crear_admin.php`. Luego:
 
-```powershell
+```bash
 php -d upload_max_filesize=10M -d post_max_size=24M -S 127.0.0.1:8000 -t public public/index.php
 ```
 
@@ -99,7 +107,7 @@ Los usuarios, hashes bcrypt, identificadores, relaciones, historial y rutas rela
 - Edición acepta PUT JSON/multipart y POST multipart con `_method=PUT`, como envía el panel actual. El límite global de formulario es 24 MB; con un archivo por material y hasta seis imágenes de noticia alcanza para los límites del contrato.
 - Reservas: transacción con bloqueo de franja, fecha válida, propiedad, duplicación y capacidad. Auditoría administrativa se confirma en la misma transacción que los datos; un fallo revierte la operación y limpia archivos nuevos.
 
-La versión incorpora el simulador, consultas, Directora, flujo de aprobación y gráficos del test. Categorías, respuestas/notificaciones para consultas y costo urgente permanecen fuera del alcance implementado de CC-01–CC-05. La cancelación académica se añadió posteriormente. Agenda y reservas continúan como alcance académico.
+La versión incorpora el simulador, consultas, Directora, flujo de aprobación, gráficos del test, categorías de preguntas frecuentes y modalidades de renovación normal y urgente. La cancelación académica se añadió posteriormente. Agenda y reservas continúan como alcance académico.
 
 ## Verificación
 
@@ -111,7 +119,7 @@ La versión incorpora el simulador, consultas, Directora, flujo de aprobación y
 
 Cuando la API se consulta por `127.0.0.1`, el script usa automáticamente el origen local equivalente `http://localhost:PUERTO`, que coincide con la configuración predeterminada de Compose. Una instalación diferente puede indicar el origen exacto mediante `IMSJ_SECURITY_ALLOWED_ORIGIN`.
 
-Ejecución básica desde Git Bash, WSL o Linux:
+Ejecución básica desde Ubuntu/Linux:
 
 ```bash
 IMSJ_SECURITY_URL=http://127.0.0.1:8000 \

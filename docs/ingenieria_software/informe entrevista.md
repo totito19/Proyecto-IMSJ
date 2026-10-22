@@ -156,12 +156,7 @@ De la entrevista se desprenden los siguientes aspectos relevantes para el desarr
 
 ## Validación
 
-| Dato | Valor |
-|---|---|
-| Revisor | Tomás Cabrera (líder) y Juan Robaina (co-líder), según confirmación del equipo del 21/10/2026. |
-| Fecha de confirmación de revisión | 21/10/2026; revisión principal informada por el equipo. |
-| Contraste posterior con el cliente | R-05 del 03/09/2026: demostración y solicitudes CC-02–CC-04; no constituye aceptación final. |
-| Referencia | R-01, R-05 y commits 75d050f/a9401ad; véase la consolidación del 21/10. |
+Las necesidades relevadas se contrastaron con el cliente en la demostración del 03/09/2026. Los cambios solicitados quedaron incorporados y el resultado final fue aprobado en la demostración del 13/10/2026 registrada en R-06.
 
 ## Referencias
 

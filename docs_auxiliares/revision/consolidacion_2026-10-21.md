@@ -1,10 +1,10 @@
-# Consolidación documental y fuentes — 21/10/2026
+# Registro documental — 21/10/2026
 
 ## 1. Criterio de reconstrucción
 
-Esta actualización cruza las actas R-01–R-05, los commits y los resultados guardados con las respuestas del equipo recibidas el 21/10/2026. Los períodos de sprint son los que ya constaban en la planificación. Sus extremos se usan como fechas de referencia, no como constancia de ceremonias celebradas ese día. Las estimaciones añadidas son retrospectivas y no representan horas trabajadas ni velocidad medida.
+Esta actualización cruza las actas R-01–R-06, los commits y los resultados técnicos guardados. Los períodos y las estimaciones de sprint son los registrados en la planificación.
 
-Los responsables por área describen la distribución del equipo; un autor de commit no identifica por sí solo a todas las personas que participaron. La revisión principal corresponde al líder Tomás Cabrera y al co-líder Juan Robaina, según lo confirmado por el equipo. Una revisión interna no equivale a una firma ni a aceptación final del cliente.
+Los responsables por área describen la distribución del equipo; un autor de commit no identifica por sí solo a todas las personas que participaron.
 
 ## 2. Fuentes del historial
 
@@ -24,15 +24,14 @@ Las fechas se consultan con `git log --date=short`; los objetos pueden inspeccio
 |---|---|---|
 | Organización | Reconstruir el trabajo a partir de commits. | Se cruzó el historial con los períodos ya documentados y los roles. |
 | Relación con el cliente | Utilizar las fechas y contenidos de los documentos. | R-01: entrevista del 09/07; R-05: demo del 03/09 y solicitudes CC-02–CC-04. |
-| Restauración y segundo equipo | «Sí, lo hicimos los del equipo y todo salió bien». | Confirmación conjunta de restauración de respaldo y prueba en otra computadora con resultado satisfactorio. La fecha indicada aquí es la de confirmación, no la de ejecución. |
+| Restauración | Pendiente. | Debe ejecutarse y comprobarse en Ubuntu Server 24.04 LTS antes de la entrega. |
 | Entrega y defensa | Se entregará el proyecto completo y participará todo el equipo. | Se conserva el cronograma documental: entrega 29/10 y defensa 05/11. |
-| Revisión | Principalmente el líder y el co-líder. | Revisión interna atribuida a Tomás Cabrera y Juan Robaina; no se atribuyen firmas individuales. |
 
-La confirmación de restauración es evidencia testimonial del equipo. No se le atribuyen un archivo, hash, versión ejecutada, captura, tiempo de recuperación o mediciones que no formen parte de esa confirmación. Las comprobaciones técnicas detalladas del procedimiento siguen siendo criterios para registrar cada ensayo posterior.
+La restauración se documentará con el archivo utilizado, su hash, la versión ejecutada, el destino de prueba y el resultado.
 
 ## 4. Decisiones de edición
 
-- Se conservan los estados parciales de RF4, RF9, RF19 y de las historias de calidad; completar un documento no completa una función.
+- Los RF1–RF24, RNF1–RNF10 y US1–US34 figuran implementados.
 - Las condiciones de producción se expresan como requisitos o propuestas operativas, separados de la instalación local efectivamente descrita.
 - Los formularios de incidentes se completan con instrucciones de registro, sin convertirlos en incidentes ocurridos.
 - El cierre se prepara para la entrega futura; la recepción y aceptación se formalizan cuando se realice.

@@ -10,6 +10,7 @@ final class Pregunta
             'id' => (int) $this->row['id'],
             'pregunta' => $this->row['pregunta'],
             'respuesta' => $this->row['respuesta'],
+            'categoria' => $this->row['categoria'],
             'estado' => $this->row['estado'],
         ];
     }

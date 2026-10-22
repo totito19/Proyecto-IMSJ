@@ -63,6 +63,11 @@ final class PreguntaController
         return [
             'pregunta' => Solicitud::text($d, 'pregunta', 255),
             'respuesta' => Solicitud::text($d, 'respuesta'),
+            'categoria' => Solicitud::text(
+                ['categoria' => $d['categoria'] ?? 'General'],
+                'categoria',
+                80,
+            ),
         ];
     }
 }

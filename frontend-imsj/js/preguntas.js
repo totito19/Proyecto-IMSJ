@@ -7,7 +7,24 @@ let queryPreguntas = '';
 function preguntasFiltradas() {
   if (!queryPreguntas) return preguntas;
   return preguntas.filter((item) =>
-    [item.pregunta, item.respuesta, item.estado].join(' ').toLowerCase().includes(queryPreguntas),
+    [item.pregunta, item.respuesta, item.categoria, item.estado]
+      .join(' ')
+      .toLowerCase()
+      .includes(queryPreguntas),
+  );
+}
+
+/** Actualiza las sugerencias con las categorías que ya existen en el sistema. */
+function renderCategoriasPregunta() {
+  const categories = [...new Set(preguntas.map((item) => item.categoria).filter(Boolean))].sort(
+    (a, b) => a.localeCompare(b, 'es'),
+  );
+  $('#p-categorias').replaceChildren(
+    ...categories.map((category) => {
+      const option = document.createElement('option');
+      option.value = category;
+      return option;
+    }),
   );
 }
 
@@ -71,6 +88,7 @@ function renderPreguntas() {
     <tr>
       <td class="col-num">${String(index + 1).padStart(2, '0')}</td>
       <td><div class="cell-question">${esc(item.pregunta)}</div></td>
+      <td><span class="category-label">${esc(item.categoria || 'General')}</span></td>
       <td><div class="cell-answer">${esc(item.respuesta)}</div></td>
       <td>${badge(estadoPreguntaVista(item.estado))}</td>
       <td><div class="actions">
@@ -83,6 +101,7 @@ function renderPreguntas() {
     .join('');
   $('#empty-preguntas').hidden = data.length > 0;
   $('#contador-preguntas').textContent = preguntas.length;
+  renderCategoriasPregunta();
   hydrateIcons($('#tbody-preguntas'));
 }
 
@@ -95,6 +114,7 @@ function abrirFormularioPregunta(item) {
   $('#p-id').value = item ? item.id : '';
   $('#p-pregunta').value = item ? item.pregunta : '';
   $('#p-respuesta').value = item ? item.respuesta : '';
+  $('#p-categoria').value = item?.categoria || 'General';
   Modal.open('modal-pregunta');
 }
 
@@ -120,6 +140,7 @@ async function guardarPregunta(event) {
       body: {
         pregunta: $('#p-pregunta').value.trim(),
         respuesta: $('#p-respuesta').value.trim(),
+        categoria: $('#p-categoria').value.trim(),
       },
     });
     Modal.close('modal-pregunta');

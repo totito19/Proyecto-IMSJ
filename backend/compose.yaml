@@ -1,7 +1,8 @@
-# Entorno local: Apache sirve API y frontends; iniciar.bat prepara .env.
+# Despliegue en Ubuntu Server: Apache sirve API y frontends; MySQL queda en la red interna.
 services:
   app:
     build: .
+    restart: unless-stopped
     user: www-data
     security_opt:
       - no-new-privileges:true
@@ -15,11 +16,11 @@ services:
     cap_add:
       - NET_BIND_SERVICE
     ports:
-      - "127.0.0.1:${APP_PORT:-8000}:80"
+      - "${APP_BIND:-0.0.0.0}:${APP_PORT:-8000}:80"
     environment:
-      APP_ENV: ${APP_ENV:-development}
-      APP_URL: ${APP_URL:-http://localhost:${APP_PORT:-8000}}
-      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:${APP_PORT:-8000}}
+      APP_ENV: ${APP_ENV:-production}
+      APP_URL: ${APP_URL:?Definir APP_URL en .env}
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:?Definir FRONTEND_ORIGIN en .env}
       DB_HOST: db
       DB_PORT: 3306
       DB_DATABASE: ${DB_DATABASE:-imsj}
@@ -39,8 +40,14 @@ services:
       timeout: 5s
       retries: 30
       start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
   db:
     image: mysql:8.4
+    restart: unless-stopped
     user: mysql
     security_opt:
       - no-new-privileges:true
@@ -63,6 +70,11 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
 volumes:
   db_data:
   app_uploads:

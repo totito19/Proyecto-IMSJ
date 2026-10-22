@@ -1,12 +1,12 @@
-# Manual de usuario — Portal Vial
+# Manual de usuario - Portal Vial
 
-**Proyecto:** Educación Vial IMSJ. **Equipo:** RC5. **Versión de referencia:** código del 21/10/2026, base `1a43229`.
+**Proyecto:** Educación Vial IMSJ. **Equipo:** RC5.
 
 ## 1. Acceso y navegación
 
 Portal Vial reúne noticias de Tránsito, materiales de estudio, preguntas frecuentes y práctica de pruebas teóricas. Desde el pie de las páginas se pueden enviar consultas al personal de la Intendencia de San José.
 
-En una instalación local con el puerto predeterminado, abrir `http://localhost:8000/frontend-publico/`. La persona que prepara la instalación puede utilizar `backend/iniciar.bat`; cuando el sistema está disponible, el navegador abre el portal. Si el inicio selecciona otro puerto, utilizar la dirección que muestra su ventana.
+El sistema se ejecuta en contenedores Linux mediante Docker Compose. En una instalación local con el puerto predeterminado, abrir `http://localhost:8000/frontend-publico/`. Si se configuró otro puerto o un dominio, utilizar la dirección indicada por el responsable de la instalación.
 
 El menú permite cambiar de sección. En pantallas pequeñas se despliega mediante el botón de menú. Los mensajes de carga, confirmación y error aparecen junto a la operación correspondiente.
 
@@ -101,7 +101,7 @@ La cancelación libera el cupo. Para elegir otro horario se realiza una nueva re
 
 Ingresar desde **Personal IMSJ** o abrir `http://localhost:8000/frontend-imsj/` con una sesión de personal. La barra lateral permite cambiar entre noticias, materiales, FAQ, preguntas del simulador, consultas, usuarios y agenda académica.
 
-La primera cuenta se prepara mediante la [instalación del backend](../../backend/README.md#instalación-nueva-con-docker). Las cuentas siguientes se crean desde la sección de usuarios. El panel comunica la clave inicial al completar el alta.
+La primera cuenta de personal se crea durante la configuración inicial del sistema. Las cuentas siguientes se crean desde la sección de usuarios. El panel comunica la clave inicial al completar el alta.
 
 ### Preparar una noticia
 
@@ -175,8 +175,8 @@ En **Agenda**, seleccionar fecha y vista diaria, semanal o mensual. Las consulta
 | La agenda no ofrece horarios | Revisar trámite, fecha y cupos de las franjas cargadas. |
 | La operación solicita iniciar sesión | Volver a ingresar con el perfil que corresponde. |
 | El video no abre | Comprobar conexión y disponibilidad del sitio del video. |
-| El portal no responde | Comprobar el inicio de Docker y la dirección mostrada por la instalación. |
+| El portal no responde | Comprobar que los servicios de Docker Compose estén activos y que la dirección sea correcta. |
 
 ## 9. Documentos relacionados
 
-[Requisitos](../ingenieria_software/Requerimientos.md), [instalación](../administracion_ssoo/reconstruccion-infraestructura.md) y [plan e informe de pruebas](../ingenieria_software/plan_informe_pruebas.md).
+[Requisitos](Requerimientos.md) y [procedimiento de instalación en Linux con Docker](../administracion_ssoo/reconstruccion-infraestructura.md#inicio-manual-en-otros-sistemas).

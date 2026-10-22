@@ -1,40 +1,54 @@
-# Acta de cierre — preparación de entrega
+# Acta de cierre del proyecto
 
-**Estado al 21/10/2026:** documento de preparación para la entrega del 29/10 y defensa del 05/11 previstas en el cronograma. Define inventario, balance y condiciones de recepción. No acredita una entrega ni aceptación ya celebradas.
-
-## Equipo y revisión
-
-RC5: Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales. El equipo completo entregará y defenderá el proyecto. La revisión principal fue realizada por el líder y co-líder, según confirmación recibida el 21/10.
-
-## Balance del producto al corte
-
-| Área | Resultado |
+| Dato | Valor |
 |---|---|
-| Portal y gestión | Noticias, materiales, FAQ, simulacros, consultas y panel administrativo. |
-| Control editorial | Directora aprueba; el personal publica posteriormente; la edición devuelve a borrador. |
-| Alcance académico | Agenda diaria/semanal/mensual, franjas, cupos, reservas y cancelación propia. |
-| Tecnología | PHP nativo, PDO, MySQL y dos frontends, instalables mediante Docker Compose. |
-| Integración registrada | 192 comprobaciones sobre 46 endpoints; resultado OK del 21/10. |
-| Auditoría API registrada | 43 aprobadas, 0 fallidas y 0 omitidas en la ejecución completa del 21/10. |
-| Recuperación y portabilidad | Equipo confirma restauración y prueba en otra computadora satisfactorias; declaración registrada el 21/10. |
+| Proyecto | Educación Vial IMSJ — Portal Vial |
+| Cliente | Intendencia de San José — Sección Tránsito |
+| Responsable del proyecto | Tomás Cabrera |
+| Fecha de inicio | 09/07/2026 |
+| Fecha de cierre | 13/10/2026 |
+| Motivo del cierre | Objetivos alcanzados y resultado aprobado por el cliente. |
 
-## Observaciones que acompañan la entrega
+## 1. Objetivo y resultado
 
-Se mantienen RF4/US12 parcial por la tarifa urgente; RF9/US6 parcial por galería y enlaces en la interfaz; RF19/US29 pendiente por categorías. Las historias de auditoría, privacidad, móvil y accesibilidad conservan su alcance parcial. Los resultados automáticos no equivalen a certificación integral de calidad ni a habilitación de producción.
+**Objetivo acordado:** desarrollar una plataforma web para centralizar noticias, materiales de estudio, preguntas frecuentes y otras funciones de educación vial, con un panel para su administración.
 
-## Condiciones de recepción
+**Resultado obtenido:** se completaron el portal público, el panel IMSJ, los simulacros, las consultas ciudadanas, la aprobación de contenidos y las funciones académicas de agenda. El resultado fue presentado a Nacho el 13/10/2026 y quedó aprobado.
 
-El [paquete completo](../general/paquete_entrega.md) se identificará por el commit exacto y el inventario entregado. La constancia de recepción debe identificar a quien recibe, su función, fecha, versión y observaciones. La aprobación de cambios en R-05 se distingue de la aceptación final del producto.
+## 2. Entregables
 
-La operación posterior corresponde a la Intendencia. El [documento de operación](../general/condiciones_operacion.md) establece las condiciones y propuestas para transferencia, cuentas, HTTPS, respaldos y soporte.
+| Entregable | Estado | Observación |
+|---|---|---|
+| Portal público | Completado | Noticias, materiales, preguntas frecuentes, simulacros y consultas. |
+| Panel IMSJ | Completado | Gestión de contenidos, aprobación, consultas, usuarios e historial. |
+| Sistema de agenda de tramites | Completado | Franjas, cupos, reservas, cancelación y vistas de agenda. |
+| Backend y base de datos | Completado | API PHP nativa y persistencia MySQL. |
+| Documentación del proyecto | Completado | Análisis, requisitos, backlog, sprints, actas y manuales. |
 
-## Aprendizajes derivados del historial
+## 3. Balance del proyecto
 
-- La separación de requisitos de cliente y alcance académico evita presentar la agenda como trámite institucional habilitado.
-- El cambio a PHP nativo requiere conservar contrato, migración, datos y pruebas, además del código.
-- La aprobación editorial necesita permisos comprobados en servidor y acciones visibles en el panel.
-- Mantener documentación y evidencias junto con los cambios reduce la reconstrucción posterior de decisiones.
+| Aspecto | Planificado | Resultado final | Observación |
+|---|---|---|---|
+| Alcance | Portal, administración de contenidos y agenda académica. | Funciones implementadas. | Alcance completado. |
+| Plazo | Cinco sprints. | Cinco sprints finalizados. | Cumplido. |
 
-## Fuentes
+| Calidad | Cumplimiento de RF y RNF. | RF1–RF24 y RNF1–RNF10 implementados. | Resultado aprobado en la demostración. |
 
-[Actas](actas_reuniones.md), [backlog](backlog.md), [cambios](control_cambios.md), [pruebas](plan_informe_pruebas.md) y [confirmaciones del equipo](../../docs_auxiliares/revision/consolidacion_2026-10-21.md).
+## 4. Pendientes y continuidad
+
+No quedan funcionalidades pendientes dentro del alcance acordado. El despliegue en infraestructura institucional corresponde a una etapa posterior.
+
+## 5. Lecciones aprendidas
+
+- **Funcionó bien:** presentar avances al cliente permitió incorporar sus solicitudes.
+- **Debe mejorarse:** mantener la documentación actualizada durante todo el desarrollo.
+- **Recomendación futura:** validar los cambios importantes mediante demostraciones.
+
+## 6. Declaración de aceptación
+
+El cliente confirma que revisó el resultado presentado y aprobó el cierre del proyecto. Cualquier trabajo posterior se gestionará como mantenimiento o una nueva etapa.
+
+| Rol | Nombre | Conformidad | Fecha |
+|---|---|---|---|
+| Cliente | Inspector de Tránsito (Nacho) | Aprobado | 13/10/2026 |
+

@@ -58,9 +58,11 @@ CREATE TABLE IF NOT EXISTS preguntas_frecuentes (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     pregunta VARCHAR(255) NOT NULL,
     respuesta TEXT NOT NULL,
+    categoria VARCHAR(80) NOT NULL DEFAULT 'General',
     estado ENUM('BORRADOR', 'PENDIENTE', 'APROBADO', 'PUBLICADO') NOT NULL DEFAULT 'BORRADOR',
     created_at TIMESTAMP NULL,
-    updated_at TIMESTAMP NULL
+    updated_at TIMESTAMP NULL,
+    INDEX preguntas_categoria_estado_index (categoria, estado)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS preguntas_prueba (

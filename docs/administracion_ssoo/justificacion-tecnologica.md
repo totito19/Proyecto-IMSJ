@@ -1,47 +1,59 @@
 # Justificación tecnológica
 
-**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 21/10/2026.
+**Proyecto:** Educación Vial IMSJ - Portal Vial
 
-## Decisión de implementación
+## Decisiones de infraestructura
 
-El equipo sustituyó Laravel por PHP nativo para facilitar la documentación y la defensa del recorrido del backend. La aclaración del grupo sitúa la decisión el 30/09; el control la registra como CC-05 el 02/10 y la reescritura sigue el ejemplo `api-simple` desde el 05/10. La decisión conserva las necesidades de negocio, los datos y el contrato consumido por los frontends.
-
-El resultado es una entrada explícita, ocho controladores, ocho servicios y ocho repositorios, con modelos y utilidades comunes. Se utiliza la organización de la referencia y se adapta al dominio vial. El contrato y los datos corresponden al dominio de IMSJ.
-
-## Relación entre tecnologías y necesidades
-
-| Tecnología | Aplicación y motivo | Condición o límite |
+| Tecnología | Justificación | Condición |
 |---|---|---|
-| PHP 8.5 | Procesa las peticiones, validaciones, archivos, reglas y respuestas. La carga explícita facilita seguir una operación desde la entrada. | Requiere PDO MySQL, mbstring y fileinfo. La versión debe respetarse al instalar. |
-| PDO | Mantiene separados el texto SQL y sus parámetros y ofrece transacciones sobre una conexión común. | Los filtros, permisos y reglas deben programarse expresamente; PDO no los define. |
-| MySQL 8.4 / InnoDB | Mantiene relaciones, restricciones únicas y bloqueo de filas para los cupos de reservas. | El esquema debe acompañar al código; crear tablas no actualiza cualquier estructura previa incompatible. |
-| Apache | Sirve la API y las dos interfaces con una raíz pública y alias específicos. Resuelve la entrada única con `mod_rewrite`. | La configuración actual publica en loopback y no incluye HTTPS institucional. |
-| Docker Compose | Reúne servicios, configuración y volúmenes y permite iniciar el entorno sin instalar PHP/MySQL en cada equipo. | El motor Linux debe funcionar; las imágenes necesitan descarga inicial y los volúmenes requieren respaldo. |
-| HTML, CSS y JavaScript con Fetch | Conservan las interfaces existentes y consumen la API del mismo origen. | Las comprobaciones de interfaz deben complementarse con pruebas móviles y de accesibilidad. |
-| Composer | Declara requisitos de PHP/extensiones y el comando de comprobación. | No hay paquetes externos obligatorios ni se necesita `vendor` para atender peticiones. |
+| Ubuntu Server 24.04 LTS | Es la plataforma de servidor solicitada y ofrece soporte prolongado, administración por terminal, Netplan, UFW y systemd. | Debe mantenerse actualizado y administrarse con un usuario `sudo`. |
+| Docker Engine | Aísla la aplicación y la base del sistema anfitrión y permite reconstruir el entorno de forma repetible. | Se instala desde el repositorio oficial de Docker para Ubuntu. |
+| Docker Compose v2 | Define servicios, volúmenes, variables, dependencias y controles de salud en un solo archivo. | La configuración sensible permanece en `.env`, fuera de Git. |
+| Apache y PHP 8.5 | Ejecutan la API PHP y publican el portal y el panel desde el mismo origen. | Solo `public/` y los alias de frontend quedan expuestos. |
+| MySQL 8.4 | Conserva las relaciones, restricciones y transacciones del sistema. | El puerto 3306 permanece dentro de Docker. |
+| Volúmenes Docker | Separan datos, adjuntos y caché del ciclo de vida de los contenedores. | Deben formar parte del backup y de la prueba de restauración. |
+| Netplan | Mantiene una dirección estable para que los clientes localicen el servidor. | La interfaz, IP, gateway y DNS dependen de la red real. |
+| UFW | Limita las conexiones entrantes a los servicios autorizados. | SSH debe permitirse antes de activar el firewall. |
+| OpenSSH | Permite administrar el servidor sin interfaz gráfica. | Se utiliza un usuario administrativo distinto de `root`. |
+| Cockpit | Permite observar servicios, recursos y registros desde una interfaz de administración. | El puerto 9090 se restringe a la red administrativa. |
+| Bash y cron | Automatizan backups diarios y tareas operativas con herramientas nativas de Linux. | Los scripts generan hashes de integridad. |
 
-Nginx se retiró por solicitud del grupo. Apache reúne ahora la publicación del portal, panel y API y Compose mantiene únicamente `app` y `db`.
+## Dimensionamiento
 
-## Autenticación, archivos y persistencia
+La calculadora docente se utilizó con 40 usuarios simultáneos, una aplicación, una base, pequeña producción, 1 GB inicial, 10 % de crecimiento mensual, doce meses, siete backups diarios retenidos, Cockpit y 25 % de margen.
 
-Las sesiones opacas revocables conservan la autenticación de IMSJ: el servidor almacena el hash del secreto, comprueba vencimiento y consulta la cuenta y su rol. Esta solución evita incorporar una dependencia JWT para mantener el contrato actual. El navegador conserva el token en `sessionStorage` y lo envía como Bearer.
+El resultado recomendado es **6 vCPU, 8 GB de RAM y 50 GB SSD/NVMe útiles**. La capacidad debe revisarse con métricas reales de CPU, memoria, disco y crecimiento.
 
-Los adjuntos utilizan almacenamiento fuera de la raíz pública y se sirven tras comprobar ruta y tipo permitido. Base, archivos y caché se mantienen en volúmenes independientes para que el reemplazo de contenedores no implique borrar el estado. Los servicios coordinan archivos y transacciones para evitar referencias incompletas cuando falla una operación.
+## Organización de los servicios
 
-## Compatibilidad y condiciones de entrega
+El despliegue mantiene dos contenedores:
 
-Se conservan los identificadores del catálogo de requisitos, las claves de respuesta, los roles, la compatibilidad multipart y los datos relacionados. La agenda se mantiene en el alcance académico. Categorías, costo urgente, notificaciones y decisiones institucionales no se agregan como consecuencia del cambio de tecnología.
+- `app`: Apache, PHP, API y frontends;
+- `db`: MySQL.
 
-La organización por capas conserva el recorrido de entrada, control, servicio, repositorio y respuesta. El despliegue utiliza las restricciones de usuarios y capacidades del Compose actual.
+Esta separación permite actualizar la aplicación sin reemplazar los datos. MySQL no se expone hacia la red y solo `app` publica el puerto de la aplicación.
 
-| Dato | Valor |
-|---|---|
-| Referencia de equivalencia docente | La decisión de retirar Laravel corresponde al equipo (30/09; CC-05), con justificación técnica y evidencia; no se presenta como aprobación docente. |
-| Dominio institucional | Demostración en localhost; para producción se requiere dominio administrado por la Intendencia. |
-| Alojamiento | Equipos del grupo con Docker para demostración; infraestructura institucional como condición de despliegue. |
-| HTTPS | HTTP local; TLS y certificado válido requeridos antes de publicación institucional. |
-| Respaldo institucional | Transferir SQL, adjuntos, configuración protegida y versión compatible; propuesta diaria y previa a cambios. |
+No se incorpora Portainer porque no es necesario para operar dos servicios y su acceso al socket de Docker amplía privilegios. Cockpit y la terminal permiten realizar las tareas administrativas requeridas.
+
+## Disponibilidad y operación
+
+`restart: unless-stopped` permite recuperar los servicios después de reiniciar Ubuntu. Los healthchecks verifican aplicación y base; los logs se rotan para evitar crecimiento indefinido. La persistencia depende de los volúmenes, no de los contenedores.
+
+## Backup y recuperación
+
+El backup incluye código, dump MySQL, adjuntos, configuración protegida, manifiesto y hashes. Se ejecuta una vez por día, conserva siete copias locales y requiere una copia externa. La restauración se prueba sobre una instalación aislada.
+
+Copiar únicamente el repositorio no recupera los datos. Copiar únicamente un volumen MySQL mientras está escribiendo tampoco sustituye un dump lógico consistente.
+
+## Seguridad
+
+- Administración mediante usuario `sudo`, no mediante uso habitual de `root`.
+- UFW con denegación de entradas por defecto.
+- MySQL sin puerto publicado.
+- Contraseñas únicamente en `.env` protegido.
+- Contenedores con usuarios de servicio, raíz de solo lectura y capacidades reducidas.
+- HTTPS obligatorio antes de una publicación en Internet.
 
 ## Referencias
 
-[Arquitectura](arquitectura_propuesta.md), [inventario](documentacion-infraestructura.md), [referencia simple](../../docs_auxiliares/backend/referencia_api_simple.md) y [control de cambios](../ingenieria_software/control_cambios.md).
+[Análisis](analisis-requerimientos.md), [arquitectura](arquitectura_propuesta.md), [inventario](documentacion-infraestructura.md) y [reconstrucción](reconstruccion-infraestructura.md).

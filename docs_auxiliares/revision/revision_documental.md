@@ -5,7 +5,6 @@
 | Proyecto | Educación Vial IMSJ — Portal Vial |
 | Revisión inicial | 02/10/2026 |
 | Actualización | 21/10/2026 |
-| Revisión principal informada | Tomás Cabrera (líder) y Juan Robaina (co-líder); confirmación del 21/10. |
 
 ## Matriz de revisión
 
@@ -18,7 +17,7 @@
 | D-05 | Historias | US1–US34 con criterios de aceptación. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
 | D-06 | Planificación | Objetivos, trabajo, estimación y selección por sprint. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
 | D-07 | Review | Incremento, demostración, devolución y ajustes. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
-| D-08 | Reuniones | R-01–R-05 con acuerdos y acciones. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-08 | Reuniones | R-01–R-06 con acuerdos y resultados. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
 | D-09 | Cambios | CC-01–CC-05 y modificaciones técnicas. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
 | D-10 | Diseño | Capas, clases, MER y pasaje a tablas. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
 | D-11 | Infraestructura | Compose, reconstrucción, respaldo y hardening. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
@@ -37,11 +36,6 @@
 | Planning | [Sprint Planning](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/sprint-planning.md) |
 | Review | [Eventos de Scrum](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/scrum-events.md) |
 
-## Registro de revisión interna
+## Estado
 
-| Dato | Valor |
-|---|---|
-| Revisores principales | Tomás Cabrera (líder) y Juan Robaina (co-líder). |
-| Fecha de confirmación | 21/10/2026, según respuesta del equipo. |
-| Resultado de esta consolidación | Registros completados con fuentes, estimaciones retrospectivas y condiciones de entrega; estados parciales preservados. |
-| Referencia | [Fuentes y confirmaciones](consolidacion_2026-10-21.md). |
+Los requisitos y las historias del backlog figuran implementados. La instalación y restauración en Ubuntu Server 24.04 LTS permanecen como comprobaciones previas a la entrega.

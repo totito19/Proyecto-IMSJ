@@ -28,18 +28,18 @@ final class PreguntaRepository
     {
         // Crea la pregunta con el estado definido por el servicio, normalmente BORRADOR.
         Database::query(
-            'INSERT INTO preguntas_frecuentes (pregunta, respuesta, estado, created_at, updated_at) VALUES (?, ?, ?, UTC_TIMESTAMP(), UTC_TIMESTAMP())',
-            [$datos['pregunta'], $datos['respuesta'], $datos['estado']],
+            'INSERT INTO preguntas_frecuentes (pregunta, respuesta, categoria, estado, created_at, updated_at) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(), UTC_TIMESTAMP())',
+            [$datos['pregunta'], $datos['respuesta'], $datos['categoria'], $datos['estado']],
         );
         return $this->buscar((int) Database::connection()->lastInsertId());
     }
     /** Actualiza los campos del registro identificado y devuelve su estado persistido. */
     public function actualizar(int $id, array $datos): Pregunta
     {
-        // Reemplaza pregunta, respuesta y estado solamente en la fila seleccionada.
+        // Reemplaza los campos editables y el estado solamente en la fila seleccionada.
         Database::query(
-            'UPDATE preguntas_frecuentes SET pregunta = ?, respuesta = ?, estado = ?, updated_at = UTC_TIMESTAMP() WHERE id = ?',
-            [$datos['pregunta'], $datos['respuesta'], $datos['estado'], $id],
+            'UPDATE preguntas_frecuentes SET pregunta = ?, respuesta = ?, categoria = ?, estado = ?, updated_at = UTC_TIMESTAMP() WHERE id = ?',
+            [$datos['pregunta'], $datos['respuesta'], $datos['categoria'], $datos['estado'], $id],
         );
         return $this->buscar($id);
     }

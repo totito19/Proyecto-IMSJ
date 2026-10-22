@@ -1,6 +1,6 @@
 # Condiciones de operación y transferencia
 
-**Corte:** 21/10/2026. Este documento distingue la instalación académica actual de las condiciones propuestas para habilitar un servicio institucional. Las propuestas no acreditan contratación, designación de personas ni aprobación de políticas de la Intendencia.
+**Corte:** 22/10/2026. Este documento distingue la instalación académica actual de las condiciones propuestas para habilitar un servicio institucional. Las propuestas no acreditan contratación, designación de personas ni aprobación de políticas de la Intendencia.
 
 ## Instalación y responsabilidades actuales
 
@@ -9,8 +9,7 @@
 | Producto | Portal Vial, desarrollado por RC5 para la Sección Tránsito de la Intendencia de San José. |
 | Entorno | Docker Compose con Apache/PHP y MySQL; acceso local en loopback, puerto 8000 por defecto. |
 | Coordinación de entrega | Los cinco integrantes entregan y defienden el proyecto completo. |
-| Revisión principal | Tomás Cabrera y Juan Robaina, con la distribución técnica por áreas registrada en el charter. |
-| Administración posterior | Intendencia de San José, conforme a la respuesta del equipo registrada en la ficha documental. |
+| Administración posterior | Intendencia de San José. |
 | Interlocución de proyecto | Inspector de Tránsito como referente; Directora para validación de necesidades y aprobación de contenidos. |
 | Infraestructura de demostración | Equipos del grupo y volúmenes Docker; la documentación no compromete un proveedor comercial. |
 | Presupuesto de esta entrega | Alcance académico expresado en trabajo y entregables; no constituye una cotización comercial ni compromiso de gasto institucional. |
@@ -20,8 +19,6 @@
 - Publicar bajo un dominio administrado por la Intendencia, con certificado válido, renovación y HTTPS. El HTTP local se utiliza para demostración.
 - Designar funciones de administración técnica, alta y baja de cuentas, respaldo y atención de incidentes. Durante el proyecto, el equipo coordina estos asuntos con el Inspector; la asignación institucional corresponde a la Intendencia.
 - Usar cuentas individuales, mínimo privilegio, aprobación exclusiva de Directora y revocación al retirar acceso. La primera cuenta se crea con la herramienta CLI documentada.
-- Publicar la identificación, domicilio y canales oficiales del organismo en los textos institucionales. La entrega académica identifica al organismo por su nombre y sección; no asigna un RUT, domicilio o correo por inferencia.
-- Revisar los textos de términos y privacidad antes de su publicación institucional. La documentación de proyecto no constituye aprobación jurídica ni recepción del servicio.
 - Para público adolescente, ofrecer la consulta de contenidos sin exigir cuenta; limitar los formularios a los datos previstos y revisar institucionalmente el uso de cuentas y el tratamiento de datos antes de habilitar trámites reales.
 
 ## Propuesta de respaldo y conservación
@@ -30,7 +27,7 @@ Como base de operación a validar por la Intendencia, se propone una copia diari
 
 La conservación de consultas, cuentas e historial requiere una decisión institucional por finalidad. La versión actual no implementa una política automática de vencimiento o purga. El período sugerido para respaldos no establece el período de conservación de los datos personales.
 
-El equipo confirmó el 21/10/2026 haber restaurado un respaldo y probado el sistema en otra computadora satisfactoriamente. El [registro de consolidación](../../docs_auxiliares/revision/consolidacion_2026-10-21.md) conserva el alcance de esa confirmación.
+La restauración final debe ejecutarse y comprobarse en Ubuntu Server 24.04 LTS antes de preparar el pendrive de entrega. Hasta contar con esa evidencia no se considera validado el respaldo completo.
 
 ## Soporte y capacitación de transferencia
 
@@ -38,4 +35,4 @@ El paquete incluye manual, instalación, recuperación, contrato API y pruebas. 
 
 ## Referencias
 
-[Paquete de entrega](paquete_entrega.md), [manual](manual_usuario.md), [infraestructura](../administracion_ssoo/documentacion-infraestructura.md) y [ficha del proyecto](../../docs_auxiliares/revision/formulario_datos_documentacion.md).
+[Paquete de entrega](paquete_entrega.md), [manual](../ingenieria_software/manual_usuario.md) e [infraestructura](../administracion_ssoo/documentacion-infraestructura.md).

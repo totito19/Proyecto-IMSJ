@@ -32,6 +32,8 @@
 
 *{ margin:0; padding:0; box-sizing:border-box; }
 
+[hidden]{ display:none !important; }
+
 html{ scroll-behavior:smooth; }
 
 body{
@@ -354,6 +356,27 @@ button{ font-family:inherit; }
 
 .content-status.is-error{ background:#fde2e1; color:#b3261e; }
 
+.content-filter{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:24px;
+}
+
+.content-filter label{ font-weight:700; }
+
+.content-filter select{
+    min-width:220px;
+    padding:10px 36px 10px 12px;
+    border:1px solid var(--color-border);
+    border-radius:var(--radius-sm);
+    background:var(--color-surface);
+    color:var(--color-text);
+    font:inherit;
+}
+
+.content-filter select:focus{ outline:3px solid rgba(50,71,176,.12); border-color:var(--color-primary-light); }
+
 /* ---------- Tarjetas (grid) ---------- */
 
 .card-grid{
@@ -419,6 +442,16 @@ button{ font-family:inherit; }
 }
 
 .card-body p{ color:var(--color-text-muted); font-size:14.5px; flex:1; }
+
+.content-category{
+    align-self:flex-start;
+    padding:4px 10px;
+    border-radius:999px;
+    background:#eef0fc;
+    color:var(--color-primary-dark);
+    font-size:12px;
+    font-weight:800;
+}
 
 .card-link{
     display:inline-flex;
@@ -823,6 +856,8 @@ button{ font-family:inherit; }
 @media (max-width: 620px){
     .card-grid{ grid-template-columns:1fr; }
     .form-card{ padding:26px; }
+    .content-filter{ align-items:stretch; flex-direction:column; }
+    .content-filter select{ width:100%; min-width:0; }
     .footer-contact__form{ grid-template-columns:1fr; }
     .footer-contact__submit{ align-items:stretch; flex-direction:column; }
 }

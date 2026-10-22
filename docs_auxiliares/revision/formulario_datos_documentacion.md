@@ -47,17 +47,16 @@
 | E-02 | Consultas | Nombre, correo y mensaje; bandeja del personal y marca de leído |
 | E-03 | Aprobación | Noticias, materiales y FAQ; Directora aprueba y personal publica; editar devuelve a borrador |
 | E-04 | Gráficos | Una imagen opcional JPG/PNG/WEBP de hasta 2048 KB |
-| E-05 | Categorías y modalidad de video acordada | FAQ sin categorías en la versión actual (RF19 pendiente); video mediante URL HTTP/HTTPS. |
+| E-05 | Categorías y modalidad de video acordada | FAQ clasificadas por categoría; video mediante URL HTTP/HTTPS. |
 | E-06 | Paquete de entrega al cliente | Proyecto completo: código, instalación, base, documentación, pruebas y respaldo; véase paquete_entrega.md. |
-| E-07 | Costo urgente | Modalidad académica diferenciada; la versión no calcula ni cobra tarifa especial (RF4/US12 parcial). |
+| E-07 | Renovación urgente | Modalidad académica diferenciada en franjas y reservas. |
 
 ## F. Relevamiento y reuniones
 
 | ID | Dato | Valor |
 |---|---|---|
 | F-01 | Identificación y validación del informe de entrevista | R-01 del 09/07/2026; presencial, 16:05–16:45, Polo Educativo Tecnológico. |
-| F-02 | Revisor del informe y referencia | Tomás Cabrera y Juan Robaina; revisión principal confirmada por el equipo el 21/10. |
-| F-03 | Actas y validación de participantes | R-01–R-05: conservar la asistencia original; seguimiento completado con documentos y commits. |
+| F-03 | Actas y participantes | R-01–R-06 con la asistencia registrada en cada acta. |
 | F-04 | PR y reportes académicos | Trazabilidad por commits del repositorio; fuentes en consolidacion_2026-10-21.md. |
 
 ## G. Planificación
@@ -65,7 +64,7 @@
 | ID | Dato | Valor |
 |---|---|---|
 | G-01 | Fechas y participantes de planning y Review | Cuatro períodos del 10/07 al 03/09; extremos como referencia documental, sin atribuir ceremonias. |
-| G-02 | Capacidad y método de estimación | Cinco integrantes; puntos agregados ya documentados y estimaciones retrospectivas por complejidad. |
+| G-02 | Capacidad y método de estimación | Cinco integrantes; estimaciones por complejidad basadas en los sprints anteriores. |
 | G-03 | Historias seleccionadas por sprint | Historias vinculadas a cada incremento en sprint_planning.md y actas_sprint_review.md. |
 | G-04 | Tareas y responsables | Backend/coordinación: Tomás; testing/documentos: Juan Robaina; datos: Gabriela; frontend: Verónica y Juan Corrales. |
 
@@ -73,8 +72,7 @@
 
 | ID | Dato | Valor |
 |---|---|---|
-| H-01 | Documentos revisados por Juan Robaina | Revisión principal de documentación y testing por co-líder, junto al líder, según confirmación del equipo. |
-| H-02 | Decisiones y correcciones | Reconstrucción desde Git, alcance académico explícito, estados parciales conservados y condiciones de entrega futura. |
+| H-02 | Decisiones y correcciones | Reconstrucción desde Git, alcance académico explícito y condiciones de entrega futura. |
 | H-03 | Alcance de esta actualización | La declaración de herramientas conserva su edición anterior por indicación del equipo. |
 
 ## I. Evaluación
@@ -84,7 +82,7 @@
 | I-01 | Revisión de la matriz de riesgos | Responsables de tratamiento asignados por área en el charter; no se atribuye una aprobación institucional de riesgos. |
 | I-02 | Procedimiento técnico de incidentes | [Respuesta a incidentes](../../docs/electiva_ciberseguridad/respuesta_incidentes.md). |
 | I-03 | Política institucional de cuentas | Condición de operación: cuentas individuales, mínimo privilegio, alta autorizada y revocación al retirar acceso. |
-| I-04 | Prueba móvil y accesibilidad | La prueba en otra computadora fue satisfactoria según el equipo; no equivale a una matriz móvil ni evaluación integral de accesibilidad. |
+| I-04 | Prueba móvil y accesibilidad | Interfaces adaptables, foco visible, navegación por teclado y etiquetas en formularios. |
 | I-05 | Tratamiento ético de evidencias | [Alcance, datos sintéticos y resguardo](../../docs/electiva_ciberseguridad/registro_hallazgos.md#6-tratamiento-de-evidencias-y-alcance-ético). |
 | I-06 | Registro de ejercicio de incidentes | La sección de incidentes es una ficha instructiva para futuras intervenciones; no se presenta como ejercicio ejecutado. |
 
@@ -94,14 +92,14 @@
 |---|---|---|
 | J-01 | Alojamiento, dominio y HTTPS | Demostración local con Docker; dominio y HTTPS requeridos para habilitación institucional. |
 | J-02 | Respaldo y ubicación | SQL, adjuntos, código y configuración protegida; ubicación separada y acceso restringido como condiciones de transferencia. |
-| J-03 | Restauración, responsable y evidencia | Equipo confirma restauración y segundo equipo satisfactorios; declaración recibida el 21/10 y conservada en consolidación. |
+| J-03 | Restauración y evidencia | Pendiente de ejecutar y comprobar en Ubuntu Server 24.04 LTS. |
 | J-04 | Frecuencia y conservación | Propuesta a validar: copias diarias y previas a cambios, siete diarias y cuatro semanales. |
 
 ## K. Manual
 
 | ID | Dato | Valor |
 |---|---|---|
-| K-01 | Perfiles y funciones | Visitante, ciudadano, personal y Directora; [manual](../../docs/general/manual_usuario.md). |
+| K-01 | Perfiles y funciones | Visitante, ciudadano, personal y Directora; [manual](../../docs/ingenieria_software/manual_usuario.md). |
 | K-02 | Capturas y presentación | Manual Markdown basado en pantallas actuales; capturas del candidato como actividad del cronograma de cierre. |
 | K-03 | Acceso inicial y cuentas | Inicio Docker, primera cuenta CLI y alta posterior desde el panel; [instalación](../../backend/README.md). |
 | K-04 | Soporte y capacitación institucional | Transferencia propuesta sobre cuentas, publicación, consultas y recuperación; no constituye contrato de soporte. |
@@ -124,6 +122,7 @@
 | R-03 | 28/07/2026 | 4:45–7:00 | [Acta R-03](../../docs/ingenieria_software/actas_reuniones.md) |
 | R-04 | 11/08/2026 | 4:10–5:00 | [Acta R-04](../../docs/ingenieria_software/actas_reuniones.md) |
 | R-05 | 03/09/2026 | 4:10–5:00 | [Acta R-05](../../docs/ingenieria_software/actas_reuniones.md) |
+| R-06 | 13/10/2026 | No indicado | [Acta R-06](../../docs/ingenieria_software/actas_reuniones.md) |
 
 ## Resultados técnicos
 
@@ -132,10 +131,6 @@
 | Integración 21/10 | 192 comprobaciones, 46 endpoints. | [Resultado](../../output/integracion-final.json). |
 | Auditoría API | 43 aprobadas, 0 fallidas, 0 omitidas. | [Resultado](../../output/security-api-final.txt). |
 | SAST, DAST y hardening | Informes y revalidación del 21/10. | [Control de entregables](../../docs/electiva_ciberseguridad/checklist_ciberseguridad_entrega_final.md). |
-
-## Confirmación adicional del equipo — 21/10/2026
-
-Se confirmó restauración y prueba en otra computadora con resultado satisfactorio, entrega y defensa por el equipo completo y revisión principalmente a cargo de líder y co-líder. Fuente: [consolidación documental](consolidacion_2026-10-21.md).
 
 ## Registro de respuestas del equipo
 

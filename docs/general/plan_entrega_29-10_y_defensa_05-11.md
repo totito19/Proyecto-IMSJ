@@ -1,6 +1,6 @@
 # Plan de preparación — entrega 29/10/2026 y defensa 05/11/2026
 
-**Actualización documental:** 21/10/2026.
+**Actualización documental:** 22/10/2026.
 
 ## 1. Fechas, alcance y regla de trabajo
 
@@ -33,7 +33,7 @@
 - Plan e informe de pruebas.
 - Acta de cierre con entregables, requisitos evaluados, observaciones, lecciones y aceptación.
 - Declaración ética de uso de IA completada y firmada por quienes corresponda.
-- [Manual de usuario](manual_usuario.md), con recorridos del portal y panel; capturas del candidato de entrega.
+- [Manual de usuario](../ingenieria_software/manual_usuario.md), con recorridos del portal y panel; capturas del candidato de entrega.
 - [Plan e informe de pruebas](../ingenieria_software/plan_informe_pruebas.md), con matriz de trazabilidad y resultados.
 
 ### Desarrollo Full Stack
@@ -236,7 +236,7 @@ IMSJ_ENTREGA_FINAL/
 
 ### Viernes 30/10 — construir el relato
 
-1. Hacer una retrospectiva breve de la entrega.
+1. Confirmar el material entregado y las condiciones autorizadas para la defensa.
 2. Definir una frase de valor: qué problema resuelve el sistema, para quién y qué mejora frente al proceso actual.
 3. Elegir tres beneficios observables, no una lista de tecnologías.
 4. Fijar el guion de la demostración y una base de datos reiniciable.

@@ -10,12 +10,8 @@
 | Cliente | Intendencia de San José — Sección Tránsito |
 | Referente del cliente | Inspector de Tránsito |
 | Líder del proyecto | Tomás Cabrera |
-| Inicio | Julio de 2026 |
 | Entrega académica | 29/10/2026 |
 | Defensa | 05/11/2026 |
-| Entrega al cliente | Proyecto completo por los cinco integrantes; recepción y aceptación conforme al paquete y al cierre preparados. |
-| Marco de recursos | Trabajo académico del equipo y entorno local; este charter no establece cotización ni compromiso de gasto institucional. |
-| Actualización | 21/10/2026 |
 
 ## 2. Necesidad y justificación
 
@@ -34,21 +30,27 @@ Portal Vial centraliza esos contenidos y permite mantenerlos desde un panel admi
 
 ## 4. Alcance
 
-| Entrega | Contenido |
-|---|---|
-| Cliente | Portal público, noticias y vigencia, materiales, FAQ, simulador, gráficos de preguntas, consultas y panel con aprobación y auditoría. |
-| Académica | Funciones de la entrega al cliente y agenda de pruebas de manejo y renovaciones, franjas, cupos, reservas propias, cancelación y consulta por día, semana y mes. |
-| Técnica | Dos frontends, API PHP nativa, esquema MySQL, Docker Compose, herramientas de inicio, suite de integración y auditoría de seguridad. |
-| Documental | Relevamiento, requisitos, backlog, planificación, actas, cambios, diseño, infraestructura, seguridad y declaración de herramientas. |
+### Alcance incluido
 
-La agenda forma parte de la entrega académica. La operación institucional del trámite de licencia mantiene su canal telefónico en el alcance relevado para el cliente.
+- Portal público con noticias, materiales de estudio, preguntas frecuentes, simulador y formulario de consultas.
+- Panel administrativo para gestionar contenidos y leer las consultas recibidas.
+- Aprobación de contenidos por la Directora antes de su publicación.
+- Control de acceso por roles e historial de acciones administrativas.
+- Gráficos asociados a las preguntas del simulador.
+- Versión académica con agenda de pruebas de manejo y renovaciones, franjas, cupos, reservas propias, cancelación y consultas por día, semana y mes.
+- Dos frontends, API PHP nativa, esquema MySQL y entorno Docker Compose.
+- Documentación de relevamiento, requisitos, planificación, diseño, infraestructura, seguridad y pruebas.
+
+### Alcance excluido
+
+- La agenda de trámites no forma parte de la entrega institucional al cliente. Se conserva únicamente en la versión académica del proyecto.
 
 ## 5. Equipo e interesados
 
 | Participante | Responsabilidad |
 |---|---|
 | Tomás Cabrera | Liderazgo y backend. |
-| Juan Robaina | Testing, documentación y revisión documental interna. |
+| Juan Robaina | Testing y documentación. |
 | Gabriela Romero | Base de datos. |
 | Verónica Romero | Frontend. |
 | Juan Corrales | Frontend. |
@@ -57,28 +59,27 @@ La agenda forma parte de la entrega académica. La operación institucional del 
 | Personal de la Intendencia | Administración de contenidos y consultas. |
 | Ciudadanía | Consulta de información, materiales, simulacros y envío de mensajes. |
 
-La administración y el mantenimiento posteriores corresponden a la Intendencia. Las decisiones de reuniones se conservan en las actas y se relacionan con el control de cambios.
+La administración y el mantenimiento posteriores corresponden a la Intendencia.
 
 ## 6. Hitos
 
-| Fecha | Hito | Referencia |
-|---|---|---|
-| 09/07/2026 | Entrevista inicial y relevamiento. | R-01. |
-| 03/09/2026 | Demostración al cliente y solicitudes de consultas, aprobación y gráficos. | R-05; CC-02–CC-04. |
-| 30/09/2026 | Decisión del equipo de retirar Laravel. | Formulario del equipo; registro CC-05 del 02/10. |
-| 05/10/2026 | Reescritura PHP nativa con referencia api-simple. | CC-05. |
-| 13/10/2026 | Demo con consultas, Directora y gráficos; 41 comprobaciones HTTP. | Registro de verificación. |
-| 20/10/2026 | Cancelación propia y ajustes de interfaz. | Control de cambios. |
-| 21/10/2026 | Integración de 46 endpoints y cierre técnico de seguridad. | 192 comprobaciones de integración y auditoría API 43/43. |
+| Fecha | Hito |
+|---|---|
+| 09/07/2026 | Entrevista inicial y relevamiento. |
+| 03/09/2026 | Demostración al cliente y solicitud de ampliaciones. |
+| 30/09/2026 | Decisión del equipo de retirar Laravel. |
+| 05/10/2026 | Reescritura del backend en PHP nativo. |
+| 13/10/2026 | Demostración de los cambios y aprobación del resultado por parte del cliente. |
+
 
 ## 7. Riesgos y tratamiento
 
-| Riesgo | Impacto | Tratamiento | Responsable |
-|---|---|---|---|
-| Cambios de alcance | Diferencias entre la solución y las necesidades del cliente. | Relacionar solicitudes, requisitos, historias y resultados. | Tomás Cabrera y Juan Robaina. |
-| Confusión de versiones | Presentar la agenda académica como servicio institucional. | Identificar el destino de cada función y paquete de entrega. | Equipo RC5, revisión de líder/co-líder. |
-| Pérdida de datos | Interrupción de la operación y pérdida de adjuntos. | Respaldo de SQL, archivos, configuración y versión; recuperación ensayada. | Gabriela Romero y Tomás Cabrera; comprobación del equipo. |
-| Exposición de datos | Acceso o publicación indebidos. | Permisos, revisión de contenidos, controles de archivos y pruebas de seguridad. | Tomás Cabrera y Juan Robaina; validación de contenidos por Directora. |
+| Riesgo | Impacto | Tratamiento |
+|---|---|---|
+| Cambios de alcance | Diferencias entre la solución y las necesidades del cliente. | Registrar las solicitudes y actualizar la documentación afectada. |
+| Confusión de versiones | Presentar la agenda académica como servicio institucional. | Identificar el destino de cada función y paquete de entrega. |
+| Pérdida de datos | Interrupción de la operación y pérdida de adjuntos. | Respaldar la base de datos, los archivos y la configuración. |
+| Exposición de datos | Acceso o publicación indebidos. | Aplicar permisos, revisión de contenidos, controles de archivos y pruebas de seguridad. |
 
 ## 8. Criterios de éxito
 
@@ -89,15 +90,3 @@ La administración y el mantenimiento posteriores corresponden a la Intendencia.
 - La agenda académica respeta propiedad, duplicación y capacidad.
 - El entorno inicia con Docker y conserva datos y archivos entre reinicios.
 - Los requisitos se relacionan con historias, implementación y evidencia.
-
-## 9. Conformidad
-
-| Instancia | Responsable | Fecha | Referencia |
-|---|---|---|---|
-| Revisión interna | Tomás Cabrera y Juan Robaina | Confirmación recibida el 21/10/2026 | Consolidación documental y commits. |
-| Participación en entrega | Los cinco integrantes de RC5 | Entrega y defensa previstas: 29/10 y 05/11 | Confirmación del equipo del 21/10; no equivale a firmas. |
-| Recepción y aceptación final | Referente autorizado por la Intendencia | Al realizar la entrega | [Condiciones de cierre](acta_cierre.md); R-05 acredita la demo previa. |
-
-## 10. Referencias
-
-[Relevamiento](informe%20entrevista.md), [requisitos](Requerimientos.md), [backlog](backlog.md), [actas](actas_reuniones.md), [cambios](control_cambios.md) y [Gestión de proyectos del curso](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/Introducci%C3%B3n%20a%20la%20Gesti%C3%B3n%20de%20Proyectos.md).

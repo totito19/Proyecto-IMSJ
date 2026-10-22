@@ -1,83 +1,320 @@
 # Reconstrucción de la infraestructura
 
-**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 21/10/2026.
+**Proyecto:** Educación Vial IMSJ - Portal Vial
 
-## Alcance y requisitos previos
+**Sistema objetivo:** Ubuntu Server 24.04 LTS
 
-Este procedimiento describe una instalación local nueva a partir del repositorio. Se necesita Docker con Compose y contenedores Linux, acceso a Internet para descargar imágenes en el primer inicio y la carpeta completa del proyecto, incluidos ambos frontends. Los comandos se ejecutan desde `backend`.
+## 1. Preparar el servidor
 
-Una instalación existente debe conservar su configuración y volúmenes y seguir primero la [guía de transición](../../docs_auxiliares/backend/transicion_backend_vanilla.md). El procedimiento de transición reúne las operaciones de respaldo, actualización y restauración.
+Crear una máquina virtual o servidor con:
 
-## Instalación nueva en Windows
+- 6 vCPU;
+- 8 GB de RAM;
+- 50 GB de disco SSD/NVMe;
+- adaptador de red con acceso desde los equipos autorizados;
+- ISO de Ubuntu Server 24.04 LTS.
 
-1. Abrir `backend/iniciar.bat`. La herramienta detecta Docker y abre Desktop si corresponde. Si el motor informa un problema de WSL o virtualización, se debe resolver ese requisito del equipo antes de continuar.
-2. Esperar la preparación de `.env`, la descarga/construcción y la salud de los servicios. Las claves se generan para una base nueva. Si se detecta una base previa sin configuración válida, el inicio se detiene y solicita recuperar las claves originales.
-3. Leer las direcciones mostradas. El puerto es 8000 por defecto; si está ocupado, el inicio busca uno disponible y lo guarda. El navegador se abre cuando el portal responde.
-4. Crear la primera cuenta de personal mediante `scripts/crear_admin.php`, con las variables `INITIAL_ADMIN_*` indicadas en el [README del backend](../../backend/README.md#instalación-nueva-con-docker). Es una acción explícita, separada del arranque.
-5. Acceder al panel con esa cuenta y comprobar que las listas vacías corresponden a una instalación sin contenido. El SQL inicial no incorpora usuarios ni datos de demostración.
+Durante la instalación seleccionar Ubuntu Server, habilitar OpenSSH Server, crear un usuario administrativo distinto de `root` y utilizar el nombre `srv-imsj` o uno equivalente.
 
-El inicio ejecuta la migración incremental antes de Apache. Se utiliza para incorporar columnas, roles y estados requeridos por la versión actual; sus cambios se comparan con la estructura de la instalación.
+## 2. Actualizar Ubuntu
 
-## Inicio manual en otros sistemas
+```bash
+sudo apt update
+sudo apt full-upgrade -y
+sudo timedatectl set-timezone America/Montevideo
+sudo reboot
+```
 
-Copiar `.env.example` a `.env` y definir las credenciales de la instalación. Desde `backend`:
+Después del reinicio:
 
-```text
-docker compose up -d --build --remove-orphans --wait --wait-timeout 180
+```bash
+hostnamectl
+free -h
+df -h
+ip -br address
+ip route
+```
+
+La salida debe identificar Ubuntu 24.04 LTS y los recursos asignados.
+
+## 3. Configurar la IP fija
+
+Identificar la interfaz y los datos entregados por la red:
+
+```bash
+ip -br address
+ip route
+```
+
+Editar el archivo de Netplan disponible en `/etc/netplan/`. Ejemplo:
+
+```yaml
+network:
+  version: 2
+  ethernets:
+    INTERFAZ:
+      dhcp4: false
+      addresses:
+        - IP_SERVIDOR/PREFIJO
+      routes:
+        - to: default
+          via: PUERTA_DE_ENLACE
+      nameservers:
+        addresses:
+          - DNS_1
+          - DNS_2
+```
+
+Validar antes de aplicar, especialmente si la sesión es remota:
+
+```bash
+sudo netplan try
+sudo netplan apply
+ip -br address
+ip route
+```
+
+Los valores de interfaz, IP, prefijo, gateway y DNS deben corresponder a la red real; no se copian literalmente los nombres del ejemplo.
+
+## 4. Configurar SSH y UFW
+
+Instalar las herramientas necesarias:
+
+```bash
+sudo apt install -y openssh-server ufw curl ca-certificates git jq gzip
+sudo systemctl enable --now ssh
+```
+
+Permitir SSH antes de activar el firewall. Sustituir `RED_ADMIN` y `RED_USUARIOS` por las redes reales, por ejemplo una red con formato `192.168.1.0/24`.
+
+```bash
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow from RED_ADMIN to any port 22 proto tcp
+sudo ufw allow from RED_USUARIOS to any port 8000 proto tcp
+sudo ufw allow from RED_ADMIN to any port 9090 proto tcp
+sudo ufw enable
+sudo ufw status verbose
+```
+
+No se abre el puerto 3306 de MySQL.
+
+## 5. Instalar Docker Engine y Compose
+
+Eliminar paquetes incompatibles si estuvieran instalados:
+
+```bash
+for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do
+  sudo apt remove -y "$pkg"
+done
+```
+
+Agregar el repositorio oficial:
+
+```bash
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+  -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+sudo tee /etc/apt/sources.list.d/docker.sources >/dev/null <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo systemctl enable --now docker
+sudo docker run --rm hello-world
+docker compose version
+```
+
+Agregar el usuario administrativo al grupo Docker y volver a iniciar sesión:
+
+```bash
+sudo usermod -aG docker "$USER"
+```
+
+Pertenecer al grupo Docker otorga privilegios administrativos sobre el servidor; no se agrega a usuarios comunes.
+
+## 6. Instalar Cockpit
+
+```bash
+sudo apt install -y cockpit
+sudo systemctl enable --now cockpit.socket
+systemctl is-active cockpit.socket
+```
+
+Cockpit queda disponible en `https://IP_SERVIDOR:9090` únicamente desde la red administrativa permitida en UFW.
+
+## 7. Copiar el proyecto
+
+Crear la ubicación de trabajo y copiar o clonar la versión de entrega:
+
+```bash
+sudo mkdir -p /srv/imsj
+sudo chown "$USER":"$USER" /srv/imsj
+cd /srv/imsj
+git clone URL_DEL_REPOSITORIO Proyecto-IMSJ
+cd Proyecto-IMSJ/backend
+```
+
+Si el proyecto se entrega mediante pendrive, copiar la carpeta completa a `/srv/imsj/Proyecto-IMSJ` conservando ambos frontends y el backend.
+
+## 8. Configurar el entorno
+
+```bash
+cp .env.example .env
+nano .env
+```
+
+Completar como mínimo:
+
+```dotenv
+APP_ENV=production
+APP_BIND=0.0.0.0
+APP_PORT=8000
+APP_URL=http://IP_SERVIDOR:8000
+FRONTEND_ORIGIN=http://IP_SERVIDOR:8000
+DB_DATABASE=imsj
+DB_USERNAME=imsj
+DB_PASSWORD=CLAVE_SEGURA
+DB_ROOT_PASSWORD=OTRA_CLAVE_SEGURA
+```
+
+Aplicar permisos:
+
+```bash
+chmod 600 .env
+docker compose config --quiet
+```
+
+Las claves reales no se guardan en Git ni se muestran en capturas.
+
+## 9. Iniciar el sistema
+
+```bash
+docker compose up -d --build
 docker compose ps
+docker compose logs --tail 100 app db
 ```
 
-Con el puerto predeterminado se accede al portal en `http://localhost:8000/frontend-publico/`, al panel en `http://localhost:8000/frontend-imsj/` y a la comprobación PHP en `http://localhost:8000/api/health`. Si se elige otro puerto, las direcciones deben utilizarlo; los clientes JavaScript siguen el origen de la página.
+Comprobar desde el servidor:
 
-## Comprobaciones posteriores
+```bash
+curl -I http://127.0.0.1:8000/
+curl http://127.0.0.1:8000/api/health
+```
 
-| Comprobación | Resultado esperado |
-|---|---|
-| Contenedores | `app` y `db` aparecen iniciados y saludables. |
-| Portal y API | Responden las páginas y `/api/health`; la salud interna también consulta tablas y columnas esenciales. |
-| Inicio de sesión | La cuenta válida ingresa y una credencial incorrecta es rechazada. |
-| Contenidos | El panel permite preparar contenido y el portal solo presenta lo publicado y vigente. |
-| Aprobación | La Directora puede aprobar y esa acción no publica por sí sola. |
-| Archivos | Una carga permitida puede descargarse y las entradas inválidas se rechazan. |
-| Agenda académica | Una franja con cupo admite una reserva propia y su cancelación; se impiden duplicación y cancelación ajena. |
-| Persistencia | Al detener e iniciar los mismos servicios se conservan los registros y adjuntos preparados para la prueba. |
-
-Cada ejecución debe registrar versión del código, entorno, fecha, procedimiento, resultado y evidencia.
-
-## Detención, reinicio y diagnóstico
-
-`detener.bat` detiene los contenedores conservando volúmenes. El equivalente manual es `docker compose stop`; para volver a iniciar se utiliza `docker compose up -d`. Mantener el nombre de proyecto evita iniciar accidentalmente otra base vacía.
+Desde otra computadora autorizada abrir:
 
 ```text
-docker compose ps -a
-docker compose logs --tail 80 app db
+http://IP_SERVIDOR:8000/frontend-publico/
+http://IP_SERVIDOR:8000/frontend-imsj/
 ```
 
-Los mensajes permiten distinguir fallos de motor, descarga, migración, conexión o HTTP. La creación de la primera cuenta rechaza una base que ya tenga personal activo. Si el portal responde pero el panel no permite ingresar, revisar primero la cuenta y las credenciales, sin volver a importar SQL ni borrar datos.
+## 10. Crear la primera cuenta
 
-## Ejecución local sin Docker
+```bash
+read -r -p "Cédula: " INITIAL_ADMIN_CEDULA
+read -r -p "Nombre: " INITIAL_ADMIN_NOMBRE
+read -r -s -p "Contraseña: " INITIAL_ADMIN_PASSWORD
+echo
+export INITIAL_ADMIN_CEDULA INITIAL_ADMIN_NOMBRE INITIAL_ADMIN_PASSWORD
 
-Se necesitan PHP 8.5 con PDO MySQL, mbstring y fileinfo, MySQL 8.4, el esquema importado en una base seleccionada y las variables de conexión ajustadas. El servidor integrado puede utilizarse para desarrollo de la API:
+docker compose exec \
+  -e INITIAL_ADMIN_CEDULA \
+  -e INITIAL_ADMIN_NOMBRE \
+  -e INITIAL_ADMIN_PASSWORD \
+  app php scripts/crear_admin.php
 
-```text
-php -d upload_max_filesize=10M -d post_max_size=24M -S 127.0.0.1:8000 -t public public/index.php
-php scripts/verificar.php
+unset INITIAL_ADMIN_CEDULA INITIAL_ADMIN_NOMBRE INITIAL_ADMIN_PASSWORD
 ```
 
-El servidor integrado atiende la API. Para recorrer el sistema completo se utiliza Docker o Apache con raíz en `public` y los dos alias de frontend. Composer no instala dependencias necesarias para responder en esta versión.
+Las cuentas siguientes se crean desde el panel.
 
-## Recuperación y evidencia disponible
+## 11. Configurar backups diarios
 
-Un respaldo recuperable debe reunir exportación SQL, adjuntos, versión de código y configuración protegida. La restauración se ensaya en un destino aislado, comparando cuentas, relaciones, conteos, permisos y descargas. El procedimiento detallado está en [respaldo y recuperación](../../docs_auxiliares/backend/transicion_backend_vanilla.md).
+```bash
+sudo mkdir -p /srv/backups/imsj
+sudo chown "$USER":"$USER" /srv/backups/imsj
+cd /srv/imsj/Proyecto-IMSJ/backend
+chmod +x scripts/backup.sh scripts/restore.sh
+./scripts/backup.sh /srv/backups/imsj
+```
 
-## Registro de reconstrucción y recuperación
+Verificar los hashes del backup generado:
 
-| Dato | Valor |
-|---|---|
-| Fecha de confirmación | 21/10/2026; no es una fecha atribuida a la ejecución. |
-| Responsable | Equipo RC5, con revisión principal del líder y co-líder. |
-| Actividades | Restauración de respaldo y prueba en otra computadora. |
-| Resultado informado | Satisfactorio en ambas actividades, según respuesta del equipo. |
-| Evidencia | [Confirmación del equipo](../../docs_auxiliares/revision/consolidacion_2026-10-21.md). |
+```bash
+cd /srv/backups/imsj/backup-FECHA
+sha256sum -c SHA256SUMS
+```
 
-El candidato exacto de entrega se identifica al congelar su commit. Cada nuevo ensayo debe registrar versión, entorno, respaldo y comprobaciones realizadas, siguiendo el procedimiento de recuperación.
+Programar una ejecución diaria a las 02:00:
+
+```bash
+crontab -e
+```
+
+```cron
+0 2 * * * cd /srv/imsj/Proyecto-IMSJ/backend && ./scripts/backup.sh /srv/backups/imsj >> /srv/backups/imsj/backup.log 2>&1
+```
+
+Copiar cada backup válido a un medio externo protegido. La copia externa no debe quedar montada permanentemente con permisos de escritura para todos los usuarios.
+
+## 12. Probar la restauración
+
+La prueba se realiza en otra carpeta y con otro nombre de proyecto Compose para evitar los volúmenes principales.
+
+```bash
+cp -a /srv/imsj/Proyecto-IMSJ /srv/imsj/Proyecto-IMSJ-restauracion
+cd /srv/imsj/Proyecto-IMSJ-restauracion/backend
+```
+
+Editar `.env` y utilizar `APP_PORT=8001`, `APP_URL=http://IP_SERVIDOR:8001` y `FRONTEND_ORIGIN=http://IP_SERVIDOR:8001`. Permitir temporalmente el puerto 8001 solo desde la red administrativa.
+
+```bash
+export COMPOSE_PROJECT_NAME=imsj_restauracion
+IMSJ_RESTORE_CONFIRM=YES ./scripts/restore.sh /srv/backups/imsj/backup-FECHA
+docker compose ps
+curl http://127.0.0.1:8001/api/health
+```
+
+Comprobar cuentas, contenidos, adjuntos, consultas y reservas. Registrar fecha, backup, hash, versión, resultado y responsable. Al terminar, detener el entorno de prueba sin tocar el principal.
+
+## 13. Verificación después de reiniciar
+
+```bash
+sudo reboot
+```
+
+Después del reinicio:
+
+```bash
+systemctl is-active docker
+docker compose -f /srv/imsj/Proyecto-IMSJ/backend/compose.yaml \
+  --env-file /srv/imsj/Proyecto-IMSJ/backend/.env ps
+curl http://127.0.0.1:8000/api/health
+sudo ufw status verbose
+```
+
+Los contenedores deben iniciar automáticamente por su política `restart: unless-stopped`.
+
+## 14. Evidencia de entrega
+
+Guardar capturas o salidas de:
+
+- `cat /etc/os-release` y `hostnamectl`;
+- `ip -br address` e `ip route`;
+- `sudo ufw status verbose`;
+- `docker --version` y `docker compose version`;
+- `docker compose ps`;
+- portal y panel abiertos desde otro equipo;
+- carpeta de backup, manifiesto y validación SHA-256;
+- restauración aislada funcionando.
+
+No declarar la instalación o la restauración como realizadas hasta obtener esta evidencia en Ubuntu Server 24.04 LTS.

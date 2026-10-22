@@ -1,96 +1,157 @@
-# Inventario y operación de infraestructura
+# Documentación de infraestructura
 
-**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 21/10/2026.
+**Proyecto:** Educación Vial IMSJ - Portal Vial
 
-## Servicios y datos persistentes
+**Entorno objetivo:** Ubuntu Server 24.04 LTS
 
-| Elemento | Definición | Información operativa |
+## 1. Inventario del servidor
+
+| Elemento | Configuración |
+|---|---|
+| CPU | 6 vCPU |
+| Memoria | 8 GB RAM |
+| Disco | 50 GB SSD/NVMe |
+| Red | IP fija con Netplan |
+| Administración | OpenSSH y Cockpit |
+| Firewall | UFW |
+| Contenedores | Docker Engine y Docker Compose v2 |
+| Automatización | Bash y cron |
+
+## 2. Archivos operativos
+
+| Archivo | Función |
+|---|---|
+| `backend/Dockerfile` | Construye la imagen Apache/PHP e instala las extensiones necesarias. |
+| `backend/compose.yaml` | Define aplicación, base, volúmenes, reinicio, salud, logs y exposición de red. |
+| `backend/apache.conf` | Configura la API y los alias de los frontends. |
+| `backend/.env.example` | Plantilla sin secretos para crear `.env`. |
+| `backend/database.sql` | Crea el esquema inicial cuando el volumen de MySQL está vacío. |
+| `backend/scripts/migrar.php` | Aplica cambios incrementales de esquema sin borrar datos. |
+| `backend/scripts/crear_admin.php` | Crea la primera cuenta de personal. |
+| `backend/scripts/salud.php` | Comprueba aplicación, base y portal. |
+| `backend/scripts/backup.sh` | Genera backup completo, manifiesto y hashes. |
+| `backend/scripts/restore.sh` | Restaura base y adjuntos en una instalación confirmada. |
+
+## 3. Servicios Docker
+
+| Servicio | Imagen | Usuario | Exposición | Persistencia |
+|---|---|---|---|---|
+| `app` | Construida desde `php:8.5-apache` | `www-data` | `APP_BIND:APP_PORT` hacia 80 | `app_uploads`, `cache` |
+| `db` | `mysql:8.4` | `mysql` | Sin puerto publicado | `db_data` |
+
+Ambos servicios utilizan `restart: unless-stopped`, raíz de solo lectura, `no-new-privileges`, capacidades reducidas y rotación de logs. `app` espera que `db` esté saludable.
+
+## 4. Volúmenes
+
+| Volumen | Contenido | Incluido en backup |
 |---|---|---|
-| `app` | Imagen construida desde `php:8.5-apache`. | Sirve API y frontends; depende de `db` saludable y ejecuta la migración incremental antes de iniciar Apache. |
-| `db` | Imagen `mysql:8.4`. | Usa el puerto interno 3306. Importa `database.sql` únicamente si el volumen de MySQL está vacío. |
-| `db_data` | Montaje en `/var/lib/mysql`. | Conserva usuarios, contenidos, reservas, consultas, historial y tokens. |
-| `app_uploads` | Montaje en `/var/www/html/storage/app/public`. | Conserva adjuntos; el código guarda rutas relativas y construye sus URL. |
-| `cache` | Montaje en `/var/www/html/storage/cache`. | Comparte contadores de intentos de autenticación entre procesos. |
-| Frontends | Montajes de solo lectura en `/var/www/frontend-publico` y `/var/www/frontend-imsj`. | Apache los sirve mediante alias; el contenedor no modifica los archivos de las interfaces. |
+| `db_data` | Datos internos de MySQL | Mediante dump lógico comprimido |
+| `app_uploads` | PDF e imágenes cargados | Sí, como archivo comprimido |
+| `cache` | Contadores temporales de autenticación | No; puede reconstruirse |
 
-Compose publica un único puerto de `app` en `127.0.0.1`. MySQL se comunica con PHP mediante el nombre de servicio `db`. Se deben conservar el directorio o nombre de proyecto Compose y sus volúmenes para actualizar una instalación existente.
+## 5. Variables de configuración
 
-## Archivos de operación
-
-| Archivo del backend | Función |
+| Variable | Uso |
 |---|---|
-| `Dockerfile` | Instala PDO MySQL y mbstring, habilita `mod_rewrite`, copia código y configura permisos de almacenamiento. |
-| `compose.yaml` | Define servicios, variables, red, montajes, dependencias y salud. |
-| `apache.conf` y `public/.htaccess` | Publican únicamente la entrada de API y los alias de interfaces y transmiten las peticiones al punto de entrada. |
-| `.env.example` y `config.php` | Describen variables de instalación; la configuración del proceso tiene precedencia sobre `.env`. |
-| `.dockerignore` | Excluye secretos, almacenamiento local, caché, pruebas y otras dependencias de la imagen. |
-| `iniciar.bat`, `detener.bat`, `scripts/docker.ps1` | Detectan Docker, administran el arranque/detención y mantienen los mensajes de error visibles. |
-| `scripts/migrar.php` | Ajusta tablas y estados necesarios para consultas, Directora y gráficos sin borrar los registros. |
-| `scripts/crear_admin.php` | Crea explícitamente la primera cuenta; rechaza hacerlo si ya existe personal activo. |
-| `scripts/salud.php` | Comprueba MySQL, columnas esenciales y respuesta HTTP de API y portal. |
-| `scripts/verificar.php` | Comprueba sintaxis de PHP sin requerir una conexión SQL. |
+| `APP_ENV` | `production` en el servidor. |
+| `APP_BIND` | `0.0.0.0` para escuchar en las interfaces del servidor. |
+| `APP_PORT` | Puerto publicado, 8000 por defecto. |
+| `APP_URL` | URL completa con IP fija o dominio. |
+| `FRONTEND_ORIGIN` | Origen permitido para el navegador. |
+| `DB_DATABASE` | Nombre de la base. |
+| `DB_USERNAME` | Usuario de aplicación. |
+| `DB_PASSWORD` | Contraseña del usuario de aplicación. |
+| `DB_ROOT_PASSWORD` | Contraseña administrativa de MySQL. |
+| `INITIAL_ADMIN_*` | Datos temporales para crear la primera cuenta. |
 
-PHP registra errores sin mostrarlos al cliente. El contenedor establece `upload_max_filesize=10M` y `post_max_size=24M`. Los límites de cada recurso se validan además en la aplicación: imágenes de noticias/pruebas de hasta 2048 KB, imagen de material de hasta 5120 KB y PDF de hasta 10240 KB.
+`.env` debe pertenecer al administrador y utilizar permisos `600`. No se guarda en Git.
 
-## Variables de configuración
+## 6. Red y firewall
 
-| Variable | Uso y valor de referencia |
-|---|---|
-| `APP_ENV` | Entorno de ejecución; Compose utiliza `development` por defecto. |
-| `APP_PORT` | Puerto local único; 8000 por defecto. El inicio puede elegir y guardar otro disponible. |
-| `APP_URL` | Base de las URL de adjuntos. Debe coincidir con la dirección utilizada por el navegador. |
-| `FRONTEND_ORIGIN` | Lista de orígenes exactos permitidos en CORS. Compose deriva el origen local del puerto cuando no se define otro. |
-| `DB_HOST`, `DB_PORT` | `db:3306` dentro de Compose; host y puerto reales para ejecución externa. |
-| `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` | Base, usuario de aplicación y contraseña de esa instalación. |
-| `DB_ROOT_PASSWORD` | Contraseña administrativa de MySQL. La API no utiliza la cuenta root. |
-| `INITIAL_ADMIN_*` | Nombre, cédula y contraseña proporcionados a la acción CLI de creación inicial. |
-| `UPLOAD_ROOT`, `CACHE_ROOT` | Rutas alternativas para ejecución local; por defecto se utilizan las carpetas `storage`. |
+La IP se configura mediante Netplan con los datos reales de la red. UFW aplica:
 
-La configuración nativa no utiliza `APP_KEY`, claves JWT ni comandos Artisan. La plantilla no reemplaza las credenciales de una base existente. Si se perdió `.env` y existe un volumen previo, el inicio solicita recuperar sus valores originales.
+- denegar conexiones entrantes por defecto;
+- permitir salidas;
+- permitir 22/TCP desde la red administrativa;
+- permitir 8000/TCP desde la red autorizada;
+- permitir 9090/TCP únicamente desde la red administrativa;
+- no permitir 3306/TCP desde el host.
 
-## Secuencia del inicio y control de salud
+El puerto publicado por Compose escucha en `0.0.0.0`, pero la autorización efectiva queda en UFW.
 
-En Windows el inicio detecta Docker, abre Desktop cuando corresponde y espera el motor. Prepara `.env` y claves aleatorias solamente para una instalación nueva. Verifica un puerto local disponible, construye e inicia los servicios y espera la salud antes de abrir el navegador.
+## 7. Operación
 
-`GET /api/health` confirma que la entrada PHP responde. El control interno de Compose realiza también consultas sobre usuarios, consultas y el campo de imagen del simulador y abre la página pública por HTTP. La salud interna reúne las comprobaciones PHP, MySQL y HTTP del portal.
+```bash
+cd /srv/imsj/Proyecto-IMSJ/backend
+docker compose config
+docker compose up -d --build
+docker compose ps
+docker compose logs --tail 100 app db
+```
 
-## Diagnóstico y persistencia
+Para detener sin borrar datos:
 
-Desde `backend`, `docker compose ps -a` muestra el estado de los contenedores. `docker compose logs --tail 80 app db` permite revisar un fallo de migración, conexión o arranque. La salida debe revisarse antes de compartirla para evitar publicar información de la instalación.
+```bash
+docker compose stop
+```
 
-`detener.bat` utiliza detención sin borrar volúmenes. La recreación de la imagen conserva datos cuando se reutilizan los mismos volúmenes. Un respaldo completo debe relacionar base SQL, adjuntos, configuración protegida y versión del código; copiar solo el código no recupera el estado del servicio.
+No se utiliza `docker compose down -v` durante la operación normal porque elimina los volúmenes persistentes.
 
-## Hardening
+## 8. Monitoreo
 
-| Control | Aplicación |
-|---|---|
-| Usuarios | app: www-data; db: mysql. |
-| Privilegios | no-new-privileges en ambos servicios. |
-| Sistema de archivos | Raíz de solo lectura; volúmenes de datos, adjuntos y caché; tmpfs temporales. |
-| Capacidades | DROP ALL; app agrega NET_BIND_SERVICE. |
-| Cabeceras | CSP, protección anti-clickjacking, nosniff y control de caché. |
-| Exposición | Un puerto HTTP en loopback; MySQL en red interna. |
+```bash
+hostnamectl
+ip -br address
+uptime
+free -h
+df -h
+ss -tulpn
+systemctl status docker
+docker compose ps
+docker stats --no-stream
+docker system df
+```
 
-## Verificación
+Cockpit complementa estas comprobaciones desde el puerto 9090 restringido a administración.
 
-| Registro | Resultado |
-|---|---|
-| Integración 21/10 | 192 comprobaciones y 46 endpoints. |
-| Auditoría API completa | 43 aprobadas, 0 fallidas, 0 omitidas. |
-| Revalidación de hardening | 41 aprobadas, 0 fallidas, 2 omitidas. |
-| Contenedores | app y db saludables. |
+## 9. Backup
 
-## Parámetros institucionales
+Ejecución manual:
 
-| Dato | Valor |
-|---|---|
-| Organismo administrador | Intendencia de San José |
-| Responsable operativo | Equipo RC5 durante la entrega; administración posterior por la Intendencia de San José. |
-| Alojamiento | Equipos del grupo con Docker para demostración; infraestructura institucional como condición de despliegue. |
-| Dominio | localhost en demostración; dominio institucional como condición de publicación. |
-| Certificado HTTPS | Requisito de producción: certificado válido y renovación bajo administración institucional. |
-| Contacto | Interlocución del proyecto a través del Inspector de Tránsito; canales institucionales al habilitar el servicio. |
-| Frecuencia de respaldo | Propuesta para operación: copia diaria y previa a actualizaciones; validar en la transferencia. |
-| Conservación de copias | Propuesta inicial: siete copias diarias y cuatro semanales, con acceso restringido y copia separada. |
+```bash
+cd /srv/imsj/Proyecto-IMSJ/backend
+chmod +x scripts/backup.sh scripts/restore.sh
+./scripts/backup.sh /srv/backups/imsj
+```
 
-[Reconstrucción](reconstruccion-infraestructura.md), [respaldo](../../docs_auxiliares/backend/transicion_backend_vanilla.md) y [verificación](../../docs_auxiliares/evidencias/verificacion.md).
+Cada backup contiene:
+
+```text
+backup-AAAA-MM-DD_HH-MM-SS/
+├── base.sql.gz
+├── adjuntos.tar.gz
+├── proyecto.tar.gz
+├── config/
+│   ├── .env
+│   ├── compose.yaml
+│   ├── Dockerfile
+│   └── apache.conf
+├── MANIFIESTO.txt
+└── SHA256SUMS
+```
+
+La carpeta contiene configuración sensible y debe almacenarse con acceso restringido. Además de la copia local se conserva otra copia en un medio externo protegido.
+
+## 10. Restauración
+
+La restauración se realiza sobre una instalación aislada y requiere confirmación explícita:
+
+```bash
+IMSJ_RESTORE_CONFIRM=YES ./scripts/restore.sh /srv/backups/imsj/backup-FECHA
+```
+
+Después se comprueban portal, ingreso, contenidos, adjuntos, consultas, reservas y conteos de la base.
+
+## Documentos relacionados
+
+[Análisis](analisis-requerimientos.md), [arquitectura](arquitectura_propuesta.md), [justificación](justificacion-tecnologica.md) y [reconstrucción](reconstruccion-infraestructura.md).

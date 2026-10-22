@@ -1,55 +1,33 @@
 # Declaración de uso de inteligencia artificial
 
-| Dato | Valor |
+**Proyecto:** Educación Vial IMSJ - Portal Vial
+
+**Equipo:** Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales
+
+## Uso de inteligencia artificial
+
+Durante el proyecto se utilizaron herramientas de inteligencia artificial como apoyo para organizar información, redactar documentación, revisar código y resolver dudas técnicas.
+
+| Área | Uso realizado |
 |---|---|
-| Proyecto | Educación Vial IMSJ — Portal Vial |
-| Equipo | Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales |
-| Declaración inicial | 05/08/2026 |
-| Actualización | 21/10/2026 |
+| Documentación | Organización, redacción y corrección de documentos. |
+| Modelado | Apoyo en la definición de clases, atributos y métodos. |
+| Desarrollo | Apoyo en la implementación, revisión y corrección de código PHP y JavaScript. |
+| Infraestructura | Apoyo en la configuración de Docker, Apache y el entorno Linux. |
+| Pruebas y seguridad | Apoyo en la preparación de pruebas y revisión de resultados. |
 
-## 1. Propósito
+## Responsabilidad del equipo
 
-Registrar las herramientas utilizadas como asistencia en el proyecto, las actividades en que participaron y la responsabilidad sobre los entregables. El crédito del proyecto y la documentación corresponde a los cinco integrantes del grupo.
+Las decisiones sobre alcance, requisitos, tecnología y funcionamiento fueron tomadas por el equipo. Los resultados generados con asistencia de inteligencia artificial fueron revisados y adaptados al proyecto.
 
-## 2. Actividades y herramientas
+El equipo mantiene la responsabilidad sobre el código, la documentación y la presentación final, y puede explicar las decisiones y el funcionamiento del sistema.
 
-| Etapa | Herramienta o asistencia | Actividad | Fuente |
-|---|---|---|---|
-| Documentación inicial | Claude / Claude Code y herramientas conversacionales. | Consultas, borradores, organización y plantillas. | Declaración del 05/08. |
-| Modelado de agosto | Asistencia de IA. | Organización de clases, atributos y métodos. | Acta R-04 del 11/08. |
-| Documentación de octubre | Asistencia externa de IA. | Lectura de referencias, redacción, estructura, enlaces y trazabilidad. | Registros documentales. |
-| Backend PHP nativo | Asistencia externa de IA. | Reescritura, validación, sesiones, persistencia e integración. | CC-05 y archivos de implementación. |
-| Infraestructura | Asistencia externa de IA. | Apache, Compose, herramientas de inicio y hardening. | Configuración y evidencia de operación. |
-| Verificación | Asistencia externa de IA. | Preparación y ejecución de comprobaciones de integración y seguridad. | Registro de verificación e informes del 21/10. |
-| PDF | Asistencia externa de IA. | Preparación y actualización de documentos e informes. | Documentos de Ciberseguridad y declaración. |
+## Firmas
 
-## 3. Responsabilidades
-
-Las decisiones de alcance, la selección de tecnología y la presentación de entregables corresponden al equipo. Los integrantes revisan los resultados, relacionan la documentación con el producto y explican su funcionamiento durante la evaluación.
-
-Tomás Cabrera coordina el proyecto y el backend; Juan Robaina realiza testing, documentación y revisión interna; Gabriela Romero trabaja en la base de datos; Verónica Romero y Juan Corrales desarrollan el frontend. Las decisiones del cliente se registran en las actas con el Inspector de Tránsito.
-
-## 4. Registro de revisión
-
-| Documento o actividad | Integrante | Fecha | Resultado | Referencia |
-|---|---|---|---|---|
-| Relevamiento y requisitos | [] | [] | [] | [] |
-| Backend e integración | [] | [] | [] | [] |
-| Frontend | [] | [] | [] | [] |
-| Base de datos | [] | [] | [] | [] |
-| Infraestructura y seguridad | [] | [] | [] | [] |
-| Documentos y PDF | [] | [] | [] | [] |
-
-## 5. Conformidad
-
-| Integrante | Fecha | Conformidad |
+| Integrante | Firma | Fecha |
 |---|---|---|
-| Tomás Cabrera | [] | [] |
-| Juan Robaina | [] | [] |
-| Gabriela Romero | [] | [] |
-| Verónica Romero | [] | [] |
-| Juan Corrales | [] | [] |
-
-## 6. Referencias
-
-[Acta R-04](actas_reuniones.md#r-04--11082026), [control de cambios](control_cambios.md), [verificación](../../docs_auxiliares/evidencias/verificacion.md) y [pauta docente](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/docs_docentes/08_etica_uso_de_ia.md).
+| Tomás Cabrera |                        |  |                   
+| Juan Robaina |  |  |
+| Gabriela Romero |  |  |
+| Verónica Romero |  |  |
+| Juan Corrales |  |  |

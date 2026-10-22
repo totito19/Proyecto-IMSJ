@@ -37,7 +37,6 @@ En HS-03, exec-use identifica la regla de la herramienta. La ubicación del avis
 | JSON con los seis avisos | [semgrep-post.json](../../informes-sast-post/semgrep-post.json). |
 | Fuente actual identificada por hashes | [integracion-final.json](../../output/integracion-final.json). |
 | Tratamiento propuesto de HS-03 | Conservar el verificador CLI con argumentos separados; restringir escritura del código y revisar el aviso al modificar la ejecución de procesos. No se declara corregido ni falso positivo por decisión humana. |
-| Responsabilidad de revisión de clasificación | Líder y co-líder como revisores principales; confirmar cada clasificación al cerrar la evaluación, conservando los avisos originales. |
 
 ## 3. Análisis dinámico
 
@@ -55,11 +54,11 @@ El resumen de terminal registra **0 FAIL, 4 WARN y 63 PASS**. Esos contadores so
 
 La configuración de [Apache](../../backend/apache.conf) establece `no-store` para HTML y permite caché de una hora para recursos estáticos. La [respuesta de API](../../backend/core/Response.php) establece las cabeceras de sus respuestas. La auditoría Bash comprueba CSP, nosniff, anti-clickjacking y ausencia de caché en API.
 
-La revisión CSRF debe considerar la forma real de enviar credenciales y las operaciones públicas de login, registro y consultas. La coincidencia con una regla de Django o la existencia de un Bearer se analizan junto con ese flujo. El baseline público conserva su propio alcance, distinto de una exploración autenticada del panel.
+La alerta CSRF se interpreta según la forma real de enviar credenciales y las operaciones públicas de login, registro y consultas. La coincidencia con una regla de Django o la existencia de un Bearer se analizan junto con ese flujo. El baseline público conserva su propio alcance, distinto de una exploración autenticada del panel.
 
 ## 4. Exposición y contenedores
 
-Nmap registra Apache HTTP abierto en 8000/tcp en el objetivo local. El archivo muestra ese puerto evaluado. [Compose](../../backend/compose.yaml) publica la aplicación en `127.0.0.1` y mantiene MySQL sin puerto del host.
+Nmap registra Apache HTTP abierto en 8000/tcp en el objetivo local utilizado para la prueba. [Compose](../../backend/compose.yaml) permite definir la dirección y el puerto mediante `APP_BIND` y `APP_PORT`, y mantiene MySQL sin puerto publicado en el host.
 
 | Control | Configuración o prueba |
 |---|---|
@@ -88,14 +87,14 @@ Nmap registra Apache HTTP abierto en 8000/tcp en el objetivo local. El archivo m
 
 La ejecución API final registra 43 aprobadas sin fallos ni omisiones. La integración registra OK para sus 192 comprobaciones. Los controles ejecutados se conservan junto a los avisos automáticos y a las condiciones institucionales del [checklist](checklist_ciberseguridad_entrega_final.md).
 
-## 6. Tratamiento de evidencias y alcance ético
+## 6. Reflexión ética
 
 Las pruebas documentadas apuntan al entorno local del proyecto. La suite de integración exige una base aislada y utiliza registros sintéticos. La auditoría distingue operaciones de lectura y opciones de escritura, y su resultado identifica los escenarios ejecutados y omitidos.
 
 Los registros que se comparten deben conservar fecha, alcance, versión y resultado, evitando publicar secretos o datos de personas reales. La revisión de una alerta debe atender a la ruta de datos y a la posibilidad de reproducirla. El texto del análisis conserva los contadores originales para que otra persona pueda contrastarlos.
 
-Los controles de la aplicación y los procedimientos del organismo se complementan: dominio HTTPS, retención, contacto y operación posterior se registran en la ficha institucional. La aceptación final y las decisiones del cliente se incorporan en las actas del equipo.
+Los controles de la aplicación y los procedimientos del organismo se complementan: dominio HTTPS, retención, contacto y operación posterior deben definirse antes de publicar el sistema.
 
 ## 7. Referencias
 
-[Informe SAST](informe_sast_portal_vial.pdf), [informe DAST](informe_dast_portal_vial.pdf), [auditoría Bash](informe_auditoria_bash_api_imsj.pdf), [hardening](informe_hardening_contenedores_imsj.pdf), [plan e informe de pruebas](../ingenieria_software/plan_informe_pruebas.md) y [respuesta a incidentes](respuesta_incidentes.md).
+[Informe SAST](informe_sast_portal_vial.pdf), [informe DAST](informe_dast_portal_vial.pdf), [auditoría Bash](informe_auditoria_bash_api_imsj.pdf), [hardening](informe_hardening_contenedores_imsj.pdf), [plan e informe de pruebas](../ingenieria_software/plan_informe_pruebas.md), [respuesta a incidentes](respuesta_incidentes.md) y [reflexión ética](reflexion_etica.md).

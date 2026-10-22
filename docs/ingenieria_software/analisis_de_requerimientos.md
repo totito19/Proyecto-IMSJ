@@ -1,201 +1,78 @@
-# Análisis de requisitos y casos de uso
+# Análisis del proyecto
 
-**Proyecto:** Educación Vial IMSJ — Portal Vial. **Versión:** 21/10/2026.
+## 1. Problema
 
-## 1. Problema y objetivos
+La Sección Tránsito necesita centralizar noticias, materiales de estudio y preguntas frecuentes en un canal accesible para la ciudadanía. También necesita administrar los contenidos, controlar su vigencia, registrar las modificaciones y aprobar la información antes de publicarla.
 
-La plataforma reúne información vial y su administración en un canal común. La ciudadanía consulta contenidos y practica con simulacros; el personal prepara información y la Directora revisa antes de publicar. El proyecto académico agrega la gestión de reservas y cupos.
+## 2. Solución
 
-## 2. Interesados
+Portal Vial ofrece un portal público y un panel administrativo conectados a una misma API. La ciudadanía consulta contenidos, utiliza el simulador y envía consultas. El personal gestiona la información y la Directora aprueba los contenidos antes de su publicación.
 
-| Interesado | Necesidad | Expectativa |
+La versión académica incorpora además la agenda de trámites, franjas, cupos, reservas y cancelaciones.
+
+## 3. Alcance
+
+### Incluido
+
+- Noticias, materiales de estudio y preguntas frecuentes.
+- Simulacros de pruebas teóricas con material gráfico.
+- Consultas ciudadanas y bandeja de lectura.
+- Panel administrativo, roles, aprobación de contenidos e historial.
+- Agenda, franjas, cupos y reservas en la versión académica.
+
+### Excluido
+
+- La agenda web no forma parte de la entrega institucional al cliente.
+
+## 4. Requerimientos
+
+El sistema cuenta con 24 requerimientos funcionales y 10 requerimientos no funcionales, todos implementados.
+
+| Grupo | Contenido |
+|---|---|
+| Funcionales | Acceso, noticias, materiales, preguntas frecuentes, simulacros, consultas, aprobación de contenidos y agenda académica. |
+| No funcionales | Roles, validación, auditoría, protección de datos, adaptación móvil, accesibilidad, vigencia y control de reservas. |
+
+El detalle completo se mantiene en [Requerimientos.md](Requerimientos.md).
+
+## 5. Actores
+
+| Actor | Funciones principales |
+|---|---|
+| Ciudadanía | Consultar contenidos, utilizar simulacros y enviar consultas. |
+| Ciudadano registrado | Reservar y cancelar trámites de la versión académica. |
+| Personal IMSJ | Gestionar contenidos, consultas, usuarios, historial y agenda. |
+| Directora | Revisar y aprobar contenidos antes de su publicación. |
+
+## 6. Casos de uso principales
+
+| Caso de uso | Actor |
+|---|---|
+| Iniciar y cerrar sesión. | Usuarios registrados |
+| Consultar noticias, materiales y preguntas frecuentes. | Ciudadanía |
+| Administrar contenidos. | Personal IMSJ |
+| Aprobar y publicar contenidos. | Directora y personal IMSJ |
+| Resolver simulacros. | Ciudadanía |
+| Enviar y leer consultas. | Ciudadanía y personal IMSJ |
+| Crear y administrar franjas. | Personal IMSJ |
+| Reservar y cancelar trámites académicos. | Ciudadano registrado |
+| Consultar la agenda diaria, semanal y mensual. | Personal IMSJ |
+| Consultar el historial de acciones. | Personal IMSJ |
+
+## 7. Arquitectura
+
+El sistema se ejecuta con Docker Compose sobre contenedores Linux. Apache sirve los dos frontends y la API PHP; MySQL almacena los datos. Los frontends se comunican únicamente con la API y no acceden directamente a la base de datos.
+
+| Componente | Tecnología | Responsabilidad |
 |---|---|---|
-| Intendencia de San José | Administrar la información y los datos de su servicio. | Canal de comunicación y operación de contenidos. |
-| Inspector de Tránsito | Representar las necesidades del cliente. | Validar entregas y cambios en reuniones. |
-| Directora | Revisar contenidos. | Separación entre aprobación y publicación. |
-| Personal | Mantener información y consultar actividad. | Operaciones con permisos y trazabilidad. |
-| Ciudadanía | Acceder a información comprensible. | Noticias vigentes, materiales, práctica y consultas. |
-| Equipo RC5 | Desarrollar y entregar el proyecto. | Implementación, pruebas y documentación relacionadas. |
+| Portal público | HTML, CSS y JavaScript | Interfaz para la ciudadanía. |
+| Panel IMSJ | HTML, CSS y JavaScript | Gestión administrativa. |
+| API | Apache y PHP 8.5 nativo | Validaciones, permisos y reglas del sistema. |
+| Persistencia | MySQL 8.4 | Datos, sesiones, historial y relaciones. |
+| Almacenamiento | Volúmenes Docker | Base de datos, archivos y caché. |
 
-## 3. Actores
+La API se organiza en controladores, servicios y repositorios. Las sesiones utilizan tokens y las operaciones protegidas comprueban la cuenta y su rol.
 
-| Usuario | Interacción |
-|---|---|
-| Ciudadanía | Consulta contenidos, utiliza el simulacro y envía mensajes. |
-| Cuenta pública | Opera sus reservas académicas. |
-| Personal IMSJ | Gestiona contenidos, consultas, agenda, cuentas e historial. |
-| Directora | Acceso administrativo y aprobación de contenidos. |
+**Flujo principal:** navegador → Apache → API PHP → MySQL.
 
-## 4. Casos de uso
-
-### CU01 — Acceder y cerrar sesión
-
-| Dato | Valor |
-|---|---|
-| Actor | Cuenta registrada |
-| Precondición | Credenciales válidas |
-| Flujo principal | Ingresar cédula y contraseña; recibir identidad y token; operar; cerrar sesión. |
-| Alternativas | Credenciales inválidas o límite de intentos. |
-| Postcondición | Token emitido o revocado. |
-| Trazabilidad | RF1; RNF1. |
-
-### CU02 — Consultar noticias
-
-| Dato | Valor |
-|---|---|
-| Actor | Ciudadanía |
-| Precondición | Contenido publicado y vigente |
-| Flujo principal | Abrir noticias; consultar las publicaciones. |
-| Alternativas | Listado vacío. |
-| Postcondición | Noticias presentadas con su contenido. |
-| Trazabilidad | RF2, RF8; RNF7. |
-
-### CU03 — Gestionar una noticia
-
-| Dato | Valor |
-|---|---|
-| Actor | Personal IMSJ |
-| Precondición | Sesión administrativa |
-| Flujo principal | Completar campos, fechas y recursos; guardar el contenido. |
-| Alternativas | Campos, fechas o archivos inválidos. |
-| Postcondición | Noticia y auditoría guardadas. |
-| Trazabilidad | RF7–RF10. |
-
-### CU04 — Aprobar y publicar
-
-| Dato | Valor |
-|---|---|
-| Actor | Personal IMSJ / Directora |
-| Precondición | Contenido en borrador |
-| Flujo principal | Enviar a revisión; aprobar con Directora; publicar. |
-| Alternativas | Rol o transición rechazados. |
-| Postcondición | Contenido publicado. |
-| Trazabilidad | RF21; CC-03. |
-
-### CU05 — Consultar y gestionar materiales
-
-| Dato | Valor |
-|---|---|
-| Actor | Ciudadanía / personal |
-| Precondición | Recurso del tipo seleccionado |
-| Flujo principal | Cargar PDF/imagen o URL de video; aplicar estados; consultar desde el portal. |
-| Alternativas | Tipo, tamaño o URL inválidos. |
-| Postcondición | Recurso disponible según publicación. |
-| Trazabilidad | RF5, RF17, RF20. |
-
-### CU06 — Consultar y gestionar FAQ
-
-| Dato | Valor |
-|---|---|
-| Actor | Ciudadanía / personal |
-| Precondición | Pregunta y respuesta |
-| Flujo principal | Preparar, revisar y publicar una FAQ; consultar sus datos. |
-| Alternativas | Contenido o transición inválidos. |
-| Postcondición | FAQ publicada. |
-| Trazabilidad | RF6, RF18. |
-
-### CU07 — Resolver simulacro
-
-| Dato | Valor |
-|---|---|
-| Actor | Aspirante |
-| Precondición | Preguntas en el banco |
-| Flujo principal | Consultar hasta diez preguntas; responder opciones; enviar y revisar corrección. |
-| Alternativas | ID u opción inválidos o duplicados. |
-| Postcondición | Total, aciertos y detalle de corrección. |
-| Trazabilidad | RF22, RF24. |
-
-### CU08 — Enviar y leer consulta
-
-| Dato | Valor |
-|---|---|
-| Actor | Ciudadanía / personal |
-| Precondición | Nombre, correo y mensaje |
-| Flujo principal | Enviar consulta; abrir bandeja; desplegar y marcar como leída. |
-| Alternativas | Campos inválidos o acceso interno rechazado. |
-| Postcondición | Consulta guardada y lectura actualizada. |
-| Trazabilidad | RF23. |
-
-### CU09 — Crear franja
-
-| Dato | Valor |
-|---|---|
-| Actor | Personal IMSJ |
-| Precondición | Sesión administrativa |
-| Flujo principal | Definir fecha, horario, tipo y cupos; guardar. |
-| Alternativas | Fecha, intervalo, cupo o duplicado inválidos. |
-| Postcondición | Franja disponible. |
-| Trazabilidad | RF11–RF13. |
-
-### CU10 — Reservar y cancelar
-
-| Dato | Valor |
-|---|---|
-| Actor | Cuenta pública |
-| Precondición | Franja disponible |
-| Flujo principal | Elegir franja; confirmar reserva; consultar las propias; confirmar cancelación. |
-| Alternativas | Duplicación, falta de cupo o reserva ajena. |
-| Postcondición | Reserva creada o eliminada. |
-| Trazabilidad | RF3–RF4; RNF8–RNF9. |
-
-### CU11 — Consultar agenda
-
-| Dato | Valor |
-|---|---|
-| Actor | Personal IMSJ |
-| Precondición | Sesión administrativa |
-| Flujo principal | Elegir día, semana o mes; recorrer el período. |
-| Alternativas | Vista o fecha inválida. |
-| Postcondición | Reservas vigentes y resumen del intervalo. |
-| Trazabilidad | RF14–RF16. |
-
-### CU12 — Consultar historial
-
-| Dato | Valor |
-|---|---|
-| Actor | Personal IMSJ |
-| Precondición | Sesión administrativa |
-| Flujo principal | Abrir historial y consultar las acciones registradas. |
-| Alternativas | Acceso o límite inválidos. |
-| Postcondición | Acciones con actor, fecha y elemento. |
-| Trazabilidad | RNF3. |
-
-## 5. Reglas y parámetros
-
-| Elemento | Regla |
-|---|---|
-| Publicación | Borrador → Pendiente → Aprobado → Publicado; Directora aprueba y personal publica. |
-| Edición | Un contenido aprobado/publicado vuelve a borrador. |
-| Noticias | La visibilidad pública utiliza estado y vigencia. |
-| Simulacro | Hasta diez preguntas, cuatro opciones, corrección posterior y gráfico opcional. |
-| Gráficos de prueba | Una imagen JPG/PNG/WEBP de hasta 2048 KB. |
-| Videos | URL HTTP/HTTPS. |
-| Reservas | Propiedad, fecha, duplicación y cupo validados. |
-| Agenda | Vistas diaria, semanal y mensual de fechas vigentes. |
-| Categorías FAQ | RF19/US29 permanece pendiente de implementación; la versión permite FAQ sin clasificación. |
-| Costo urgente | Modalidad académica diferenciada; la versión no calcula ni cobra tarifa especial (RF4/US12 parcial). |
-| Retención | La versión no implementa caducidad automática; la política se establece antes de operación institucional. |
-
-## 6. Cambios y requisitos
-
-| Cambio | Necesidad | Requisitos | Estado |
-|---|---|---|---|
-| CC-01 | Simulacros | RF22 | Listo |
-| CC-02 | Consultas ciudadanas | RF23 | Listo |
-| CC-03 | Aprobación de contenidos | RF21 | Listo |
-| CC-04 | Gráficos de preguntas | RF24 | Listo |
-| CC-05 | Backend PHP nativo | Transversal | Listo |
-
-## 7. Verificación
-
-La suite del 21/10 registra 192 comprobaciones, 60 peticiones distintas y 46 declaraciones de endpoint. La prueba concurrente del último cupo produjo 201 y 422. La auditoría Bash completa registra 43 aprobadas, 0 fallidas y 0 omitidas.
-
-| Dato | Valor |
-|---|---|
-| Validación de requisitos | Revisión interna principal de Tomás Cabrera y Juan Robaina; contraste de necesidades en R-01 y R-05. |
-| Fecha | Confirmación de revisión: 21/10/2026; reuniones de cliente: 09/07 y 03/09. |
-| Referencia de aceptación | R-05 y CC-02–CC-04 para solicitudes; condiciones de aceptación final en acta_cierre.md. |
-
-## 8. Referencias
-
-[Especificación](Requerimientos.md), [backlog](backlog.md), [verificación](../../docs_auxiliares/evidencias/verificacion.md) y [Especificación y modelado del curso](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md).
+La arquitectura detallada se encuentra en [arquitectura_propuesta.md](../administracion_ssoo/arquitectura_propuesta.md) y los modelos en [Diagramas](../programacion_full_stack/Diagramas/README.md).

@@ -116,16 +116,18 @@ result = call('POST', '/api/portal/prueba/corregir', {'respuestas': [{'pregunta_
 check(result['correctas'] == 1, 'Corrección usa respuesta de SQL')
 call('POST', '/api/portal/prueba/corregir', {'respuestas': [{'pregunta_id': qid, 'opcion': 'A'}] * 2}, expect=422)
 
-faq = {'pregunta': '¿Documentación?', 'respuesta': 'Consultar a Tránsito.'}
+faq = {'pregunta': '¿Documentación?', 'respuesta': 'Consultar a Tránsito.', 'categoria': 'Licencias'}
 fid = call('POST', '/api/preguntas', faq, staff, 201, ['pregunta'])['pregunta']['id']
-call('GET', '/api/preguntas', token=staff, fields=['preguntas'])
+faq_list = call('GET', '/api/preguntas', token=staff, fields=['preguntas'])['preguntas']
+check(faq_list[0]['categoria'] == 'Licencias', 'FAQ clasificada por categoría')
 check(not call('GET', '/api/portal/preguntas')['preguntas'], 'FAQ oculta antes de publicación')
 call('PUT', f'/api/preguntas/{fid}', {**faq, 'respuesta': 'Cédula vigente.'}, staff, fields=['pregunta'])
 call('PATCH', f'/api/preguntas/{fid}/estado', {'estado': 'PENDIENTE'}, staff, fields=['pregunta'])
 call('PATCH', f'/api/preguntas/{fid}/estado', {'estado': 'APROBADO'}, staff, expect=403)
 call('PATCH', f'/api/preguntas/{fid}/estado', {'estado': 'APROBADO'}, director, fields=['pregunta'])
 call('PATCH', f'/api/preguntas/{fid}/estado', {'estado': 'PUBLICADO'}, staff, fields=['pregunta'])
-check(len(call('GET', '/api/portal/preguntas')['preguntas']) == 1, 'FAQ publicada visible')
+public_faq = call('GET', '/api/portal/preguntas')['preguntas']
+check(len(public_faq) == 1 and public_faq[0]['categoria'] == 'Licencias', 'FAQ publicada visible por categoría')
 
 today = datetime.date.today().isoformat()
 future = (datetime.date.today() + datetime.timedelta(days=2)).isoformat()

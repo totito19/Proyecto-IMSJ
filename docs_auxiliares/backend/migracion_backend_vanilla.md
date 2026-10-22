@@ -63,7 +63,7 @@ Al revisar una instalación se debe comparar el esquema actual, la migración in
 | Evidencia de código | 68d34fb del 02/10 y d9c254c del 05/10. |
 | Verificación de la base nativa | 155 comprobaciones sobre 42 rutas en el registro del 05/10. |
 | Corte técnico posterior | 1a43229; 192 comprobaciones y 46 endpoints al 21/10. |
-| Responsabilidad por área | Tomás Cabrera: backend; Gabriela Romero: datos; Juan Robaina: revisión y pruebas. |
-| Confirmación de portabilidad y recuperación | El equipo confirmó el 21/10 restauración y prueba en otra computadora satisfactorias. |
+| Responsabilidad por área | Tomás Cabrera: backend; Gabriela Romero: datos; Juan Robaina: pruebas y documentación. |
+| Portabilidad y recuperación | Pendiente de comprobar mediante una restauración aislada en Ubuntu Server 24.04 LTS. |
 
-La prueba declarada por el equipo no se atribuye a un commit concreto de migración. Su alcance se conserva en la [consolidación](../revision/consolidacion_2026-10-21.md).
+La recuperación se considera válida únicamente cuando el backup se restaura y verifica con una versión de código compatible.

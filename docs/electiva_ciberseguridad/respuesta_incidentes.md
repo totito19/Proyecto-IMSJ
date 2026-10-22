@@ -18,7 +18,7 @@ Organizar la detección, contención, análisis y recuperación de incidentes qu
 | Organismo administrador posterior | Intendencia de San José. |
 | Contacto operativo institucional | Interlocución con el Inspector durante el proyecto; designación de función técnica al transferir. |
 | Canal institucional de incidentes | Condición de transferencia: canal autorizado por la Intendencia; coordinación de proyecto con líder/co-líder. |
-| Habilitación operativa del procedimiento | Condición de puesta en producción: revisión y adopción por la administración institucional. |
+| Puesta en producción | La Intendencia definirá el canal y la función técnica responsable de incidentes. |
 
 En cada intervención se identifica a la persona que ejecutó la acción, la hora y el resultado. Las decisiones sobre aceptación o cambios del producto se registran en las reuniones del equipo y del referente.
 
@@ -87,7 +87,7 @@ La auditoría administrativa conserva actor, acción, tipo, elemento y fecha. Pa
 
 ## 7. Recuperación
 
-El [procedimiento de respaldo y restauración](../../docs_auxiliares/backend/transicion_backend_vanilla.md) reúne SQL, adjuntos, configuración protegida y código compatible. La restauración se ensaya en un destino aislado antes de reemplazar una instalación de uso.
+El [procedimiento de reconstrucción y restauración](../administracion_ssoo/reconstruccion-infraestructura.md) utiliza el respaldo del proyecto, la base de datos, los archivos cargados y la configuración protegida. La restauración se ensaya en un destino aislado antes de reemplazar una instalación de uso.
 
 Comprobar antes de reabrir:
 
@@ -123,4 +123,4 @@ Esta ficha describe qué registrar ante una intervención; no documenta un incid
 
 ## 9. Referencias
 
-[Inventario de infraestructura](../administracion_ssoo/documentacion-infraestructura.md), [reconstrucción](../administracion_ssoo/reconstruccion-infraestructura.md), [manual de usuario](../general/manual_usuario.md), [hallazgos](registro_hallazgos.md), [verificación](../../docs_auxiliares/evidencias/verificacion.md) y [entregables de Ciberseguridad](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/Lineamientos/requerimientos_por_asignatura.md#electiva-ciberseguridad).
+[Inventario de infraestructura](../administracion_ssoo/documentacion-infraestructura.md), [reconstrucción](../administracion_ssoo/reconstruccion-infraestructura.md), [manual de usuario](../ingenieria_software/manual_usuario.md), [hallazgos](registro_hallazgos.md), [verificación](../../docs_auxiliares/evidencias/verificacion.md) y [entregables de Ciberseguridad](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/Lineamientos/requerimientos_por_asignatura.md#electiva-ciberseguridad).

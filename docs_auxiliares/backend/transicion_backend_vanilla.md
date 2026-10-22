@@ -8,13 +8,13 @@ Apache/PHP sirve API y frontends; MySQL usa el servicio `db` y se conservan los 
 
 La nueva autenticación no consulta la tabla técnica de tokens anterior. Volver a iniciar sesión después del cambio; no se convierte una sesión heredada ni se crea SECRET_KEY/JWT. La tabla técnica previa puede quedar sin uso en una base existente hasta que el equipo decida su tratamiento. [Transición general](migracion_backend_vanilla.md).
 
-## Preparar respaldo sobre una instalación revisada
+## Preparar respaldo sobre una instalación operativa
 
 Identificar versión, configuración, proyecto Compose y volúmenes antes de operar. La carpeta de respaldo será elegida por el equipo y protegida; contiene datos personales y configuración. Detener escrituras durante el respaldo para coordinar base/adjuntos.
 
-Los siguientes comandos son una guía para el Compose actual. Usan las credenciales de entorno dentro del contenedor y un archivo de salida para evitar que PowerShell cambie la codificación del SQL. Desde backend, con ../respaldo ya creado para esta operación:
+Los siguientes comandos son una guía para el Compose actual. Usan las credenciales de entorno dentro del contenedor y un archivo de salida. Desde `backend`, con `../respaldo` ya creado para esta operación:
 
-```powershell
+```bash
 docker compose stop app
 docker compose exec -T db sh -c 'MYSQL_PWD="$MYSQL_PASSWORD" mysqldump -u "$MYSQL_USER" --single-transaction --no-tablespaces --default-character-set=utf8mb4 "$MYSQL_DATABASE" -r /tmp/imsj-respaldo.sql'
 docker compose cp db:/tmp/imsj-respaldo.sql ../respaldo/base.sql
@@ -30,7 +30,7 @@ Conservar además la versión de código y .env en ubicación protegida, con per
 2. Comparar las columnas/FK/índices existentes con database.sql. CREATE TABLE IF NOT EXISTS no altera tablas existentes incompatibles. Las transformaciones de datos y esquema se relacionan con su versión de código y registro de cambio.
 3. Con el esquema de dominio compatible, importar database.sql para crear auth_tokens/tablas ausentes, sin borrar datos:
 
-```powershell
+```bash
 docker compose cp database.sql db:/tmp/imsj-schema.sql
 docker compose exec -T db sh -c 'MYSQL_PWD="$MYSQL_PASSWORD" mysql -u "$MYSQL_USER" --default-character-set=utf8mb4 "$MYSQL_DATABASE" < /tmp/imsj-schema.sql'
 docker compose up -d --build app
@@ -43,7 +43,7 @@ docker compose up -d --build app
 
 Crear un destino de prueba vacío identificado por el equipo y cargar el respaldo antes de cualquier uso. El usuario MySQL debe poder crear las tablas. No aplicar estos comandos a una base con datos que se necesiten conservar; la restauración reemplaza el estado por el respaldo seleccionado.
 
-```powershell
+```bash
 docker compose stop app
 docker compose cp ../respaldo/base.sql db:/tmp/imsj-restaurar.sql
 docker compose exec -T db sh -c 'MYSQL_PWD="$MYSQL_PASSWORD" mysql -u "$MYSQL_USER" --default-character-set=utf8mb4 "$MYSQL_DATABASE" < /tmp/imsj-restaurar.sql'
@@ -61,14 +61,4 @@ Una recuperación se considera comprobada cuando el entorno aislado inicia con l
 Registrar nombre del respaldo, fecha, integridad, código compatible, destino de prueba, procedimiento y resultado.
 ## Registro de recuperación
 
-| Dato | Valor |
-|---|---|
-| Confirmación recibida | 21/10/2026. Esta fecha corresponde a la respuesta del equipo. |
-| Responsable | Equipo RC5; revisión principal del líder y co-líder. |
-| Actividad confirmada | Restauración de un respaldo y prueba del sistema en otra computadora. |
-| Resultado informado | Ambas pruebas satisfactorias, según confirmación conjunta del equipo. |
-| Tipo de evidencia | Declaración del equipo conservada en la consolidación documental. |
-
-La confirmación no identifica el archivo de copia, su hash ni la versión ejecutada. Para cada repetición se debe adjuntar el manifiesto de respaldo con nombre, fecha de generación, SHA-256, commit compatible, destino y resultados de las comprobaciones descritas arriba. Esto distingue el resultado informado de una comprobación técnica detallada.
-
-[Fuente de confirmación](../revision/consolidacion_2026-10-21.md).
+La comprobación final se registrará después de restaurar el backup en una instancia aislada de Ubuntu Server 24.04 LTS. El registro debe identificar el archivo, su hash, la versión ejecutada, el destino y el resultado.

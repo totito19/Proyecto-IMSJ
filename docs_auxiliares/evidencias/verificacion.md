@@ -75,7 +75,7 @@ La aplicación utiliza `www-data`, raíz de lectura, `no-new-privileges`, capaci
 
 ## 7. Correspondencia de evidencia y producto
 
-El [plan e informe de pruebas](../../docs/ingenieria_software/plan_informe_pruebas.md) desarrolla los escenarios y su relación con RF, RNF, US y CC. El [manual de usuario](../../docs/general/manual_usuario.md) describe las acciones presentes en las interfaces públicas e internas.
+El [plan e informe de pruebas](../../docs/ingenieria_software/plan_informe_pruebas.md) desarrolla los escenarios y su relación con RF, RNF, US y CC. El [manual de usuario](../../docs/ingenieria_software/manual_usuario.md) describe las acciones presentes en las interfaces públicas e internas.
 
 La evidencia de integración identifica 43 archivos PHP mediante hashes. El JSON informa 192 aserciones, 60 combinaciones distintas de método y ruta y 46 declaraciones de endpoint cubiertas. El caso de último cupo utiliza dos solicitudes simultáneas contra una misma franja.
 
@@ -85,15 +85,7 @@ La evidencia de integración identifica 43 archivos PHP mediante hashes. El JSON
 |---|---|
 | Commit de referencia | 1a43229 |
 | Tag final | Identificador propuesto: entrega-final-2026-10-29; se creará sobre el candidato definitivo. |
-| Revisor | Tomás Cabrera (líder) y Juan Robaina (co-líder) |
-| Fecha de conformidad | Confirmación de revisión principal recibida el 21/10/2026; no constituye firma ni aceptación final. |
-| Acta de aceptación | Preparación y condiciones en docs/ingenieria_software/acta_cierre.md; recepción al entregar. |
-| Evidencia de restauración | Confirmación conjunta del equipo del 21/10; restauración y prueba en otra computadora satisfactorias, documentadas en consolidacion_2026-10-21.md. |
+| Acta de aceptación | R-06 y acta de cierre: demostración y aprobación del resultado el 13/10/2026. |
+| Evidencia de restauración | Pendiente de generar mediante una restauración aislada en Ubuntu Server 24.04 LTS. |
 
 [Control de cambios](../../docs/ingenieria_software/control_cambios.md), [backlog](../../docs/ingenieria_software/backlog.md) y [entregables de seguridad](../../docs/electiva_ciberseguridad/checklist_ciberseguridad_entrega_final.md).
-
-## 9. Ampliación documental del 21/10
-
-DOC-20261021-B incorpora el manual de usuario, el plan e informe de pruebas, el registro consolidado de hallazgos y el procedimiento técnico de incidentes. Se actualizaron requisitos, trazabilidad, referencias, fichas e índices con las fuentes del repositorio.
-
-La revisión comprende 42 Markdown y comprueba enlaces locales, anclas, tablas, bloques de código e identificadores RF, RNF y US. Los 309 archivos de implementación e informes conservan sus hashes, al igual que los 43 PHP identificados por la integración. Las actas y las respuestas de entrevista conservan su contenido.

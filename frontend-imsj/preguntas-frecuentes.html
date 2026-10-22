@@ -6,7 +6,7 @@
   <title>Preguntas frecuentes | IMSJ</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" href="img/escudo-san-jose.png">
-  <link rel="stylesheet" href="css/styles.css?v=6">
+  <link rel="stylesheet" href="css/styles.css?v=8">
 </head>
 <body>
 
@@ -81,7 +81,7 @@
         <div class="table-wrap">
           <table class="data">
             <thead>
-              <tr><th class="col-num">#</th><th>Pregunta</th><th>Respuesta</th><th>Estado</th><th>Acciones</th></tr>
+              <tr><th class="col-num">#</th><th>Pregunta</th><th>Categoría</th><th>Respuesta</th><th>Estado</th><th>Acciones</th></tr>
             </thead>
             <tbody id="tbody-preguntas"></tbody>
           </table>
@@ -107,6 +107,12 @@
                 <label for="p-respuesta">Respuesta</label>
                 <textarea class="input h-28" id="p-respuesta" placeholder="Respuesta completa y clara..." required></textarea>
               </div>
+              <div class="field">
+                <label for="p-categoria">Categoría</label>
+                <input class="input" id="p-categoria" list="p-categorias" maxlength="80" placeholder="Ej.: Licencias" required>
+                <datalist id="p-categorias"></datalist>
+                <span class="card__meta">Podés elegir una existente o escribir una nueva.</span>
+              </div>
               <div class="form-foot">
                 <span class="card__meta">Se guardará como Borrador.</span>
                 <button type="button" class="btn btn--ghost" data-modal-close>Cancelar</button>
@@ -123,6 +129,6 @@
 <script src="js/icons.js?v=3"></script>
 <script src="js/api.js?v=6"></script>
 <script src="js/ui.js?v=7"></script>
-<script src="js/preguntas.js?v=7"></script>
+<script src="js/preguntas.js?v=8"></script>
 </body>
 </html>

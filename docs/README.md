@@ -1,6 +1,6 @@
 # Documentación del proyecto
 
-**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 21/10/2026.
+**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 22/10/2026.
 
 ## Ingeniería de Software
 
@@ -9,16 +9,17 @@
 | [Constitución](ingenieria_software/project_charter.md) | Objetivos, alcance, interesados, hitos y evaluación. |
 | [Guía de entrevista](ingenieria_software/Entrevista.md) | Preguntas de relevamiento. |
 | [Informe de entrevista](ingenieria_software/informe%20entrevista.md) | Respuestas, requisitos derivados y validación. |
-| [Concepción](ingenieria_software/documentacion_proyecto_imsj.md) | Contexto, necesidad y organización de la solución. |
 | [Especificación](ingenieria_software/Requerimientos.md) | RF1–RF24, RNF1–RNF10, interfaces y restricciones. |
-| [Casos de uso](ingenieria_software/analisis_de_requerimientos.md) | Actores, condiciones, recorridos y reglas. |
+| [Análisis del proyecto](ingenieria_software/analisis_de_requerimientos.md) | Contexto, actores, requerimientos y arquitectura. |
 | [Product Backlog](ingenieria_software/backlog.md) | US1–US34 y criterios de aceptación. |
+| [Estructura del repositorio](../README.md#estructura-del-repositorio) | Organización de backend, frontends y documentación. |
 | [Sprint Planning](ingenieria_software/sprint_planning.md) | Objetivos, trabajo, estimación, selección y tareas. |
 | [Sprint Review](ingenieria_software/actas_sprint_review.md) | Incrementos, demostración, devolución y acciones. |
-| [Actas](ingenieria_software/actas_reuniones.md) | Reuniones R-01–R-05. |
-| [Control de cambios](ingenieria_software/control_cambios.md) | Solicitudes, impacto, implementación y decisiones. |
+| [Actas](ingenieria_software/actas_reuniones.md) | Reuniones R-01–R-06. |
+| [Control de cambios](ingenieria_software/control_cambios.md) | Cambio, motivo, solicitante y estado. |
 | [Plan e informe de pruebas](ingenieria_software/plan_informe_pruebas.md) | Entorno, escenarios, matriz de trazabilidad y resultados de ejecución. |
 | [Declaración de herramientas](ingenieria_software/declaracion_etica_ia.md) | Actividades, responsabilidad y conformidad. |
+| [Manual de usuario](ingenieria_software/manual_usuario.md) | Recorridos del portal público y del panel administrativo. |
 
 ## Programación Full Stack
 
@@ -29,7 +30,7 @@
 
 ## Administración de Sistemas Operativos
 
-[Índice](administracion_ssoo/README.md), [arquitectura](administracion_ssoo/arquitectura_propuesta.md), [justificación](administracion_ssoo/justificacion-tecnologica.md), [inventario](administracion_ssoo/documentacion-infraestructura.md) y [reconstrucción](administracion_ssoo/reconstruccion-infraestructura.md).
+[Índice](administracion_ssoo/README.md), [análisis](administracion_ssoo/analisis-requerimientos.md), [arquitectura](administracion_ssoo/arquitectura_propuesta.md), [justificación](administracion_ssoo/justificacion-tecnologica.md), [infraestructura](administracion_ssoo/documentacion-infraestructura.md) y [reconstrucción](administracion_ssoo/reconstruccion-infraestructura.md).
 
 ## Electiva Ciberseguridad
 
@@ -43,23 +44,24 @@
 - [Respuesta a incidentes](electiva_ciberseguridad/respuesta_incidentes.md).
 - [Términos y condiciones](electiva_ciberseguridad/Terminos_y_Condiciones_IMSJ_Uruguay.pdf).
 - [Política de privacidad](electiva_ciberseguridad/Politica_de_Privacidad_IMSJ_Uruguay.pdf).
+- [Reflexión ética](electiva_ciberseguridad/reflexion_etica.pdf).
 
 ## Entrega y operación
 
 | Documento o registro | Referencia |
 |---|---|
 | Plan de entrega y defensa | [Cronograma](general/plan_entrega_29-10_y_defensa_05-11.md). |
-| Manual de usuario | [Recorridos del portal y panel](general/manual_usuario.md). |
+| Manual de usuario | [Recorridos del portal y panel](ingenieria_software/manual_usuario.md). |
 | Acta de cierre | [Preparación y condiciones de recepción](ingenieria_software/acta_cierre.md). |
 | Respuesta a incidentes | [Procedimiento técnico](electiva_ciberseguridad/respuesta_incidentes.md). |
-| Restauración | [Procedimiento de respaldo y recuperación](../docs_auxiliares/backend/transicion_backend_vanilla.md). |
+| Restauración | [Procedimiento de backup y recuperación en Ubuntu](administracion_ssoo/reconstruccion-infraestructura.md#11-configurar-backups-diarios). |
 | Paquete de entrega al cliente | [Inventario del proyecto completo](general/paquete_entrega.md). |
 
 [Condiciones de operación y transferencia](general/condiciones_operacion.md). Los documentos de cierre e inventario preparan la entrega futura; no acreditan recepción o aceptación ya realizadas.
 
 ## Referencias y evidencia
 
-[Material auxiliar](../docs_auxiliares/README.md), [contrato API](../docs_auxiliares/backend/api.md), [verificación](../docs_auxiliares/evidencias/verificacion.md) y [ficha documental](../docs_auxiliares/revision/formulario_datos_documentacion.md).
+[Contrato API](../docs_auxiliares/backend/api.md) y [verificación](../docs_auxiliares/evidencias/verificacion.md).
 
 ## Referencias de estructura
 

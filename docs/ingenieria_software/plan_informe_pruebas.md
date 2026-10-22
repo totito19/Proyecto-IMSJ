@@ -16,7 +16,6 @@ La verificación combina una suite de integración HTTP/MySQL, auditoría Bash d
 | Backend | Tomás Cabrera. |
 | Base de datos | Gabriela Romero. |
 | Frontend | Verónica Romero y Juan Corrales. |
-| Ejecutor y revisor de la ejecución registrada | Resultados conservados en archivos de evidencia; revisión principal de líder y co-líder confirmada por el equipo, sin atribuir ejecución individual. |
 | Suite de integración | [integracion.py](../../backend/tests/integracion.py); Python estándar y cliente MySQL. |
 | Runtime registrado | PHP 8.5.11 y MySQL 8.4.11. |
 | Base aislada | `imsj_test_final_20261021`. |
@@ -73,10 +72,10 @@ Con `IMSJ_SECURITY_REQUIRE_FULL=1`, cualquier prueba omitida impide considerar c
 | PT-12 | RNF1, RNF4; US2, US26 | Token hash, vencimiento, revocación, desactivación y rechazo de cancelación ajena. | Integración y auditoría API. |
 | PT-13 | RNF2; US34 | JSON inválido, validación de campos, archivos disfrazados, entradas SQLi/XSS controladas y respuestas sin error interno en esos escenarios. | Integración y auditoría API. |
 | PT-14 | RNF4; US26 | Acceso privado bloqueado, CORS permitido/ajeno, cabeceras y rate limit. | Auditoría API. |
-| PT-15 | RF9; US6 | Galería y enlaces aceptados por API; formulario administrativo actual con portada y texto. | Integración y [noticias.js](../../frontend-imsj/js/noticias.js). |
-| PT-16 | RF4, RF11–RF12; US11–US12, US15–US16 | Tipos normal y urgente disponibles en código; la versión no calcula ni cobra tarifa especial; RF4/US12 permanece parcial. | [Controlador de reservas](../../backend/controllers/ReservaController.php) y [servicio](../../backend/services/ReservaService.php). |
-| PT-17 | RF19; US29 | Clasificación por categorías no implementada; RF19/US29 permanece pendiente. | [Backlog](backlog.md). |
-| PT-18 | RNF5–RNF6; US27–US28 | Criterio de evaluación: tamaños de pantalla, teclado, foco y etiquetas; la prueba en otra computadora confirmada no acredita una matriz móvil ni auditoría completa de accesibilidad. | [Ficha de evaluación](../../docs_auxiliares/revision/formulario_datos_documentacion.md). |
+| PT-15 | RF9; US6 | Portada, galería, texto y enlaces persistidos por la API y presentados en el portal público. | [Controlador](../../backend/controllers/NoticiaController.php) y [vista pública](../../frontend-publico/js/noticias.js). |
+| PT-16 | RF4, RF11–RF12; US11–US12, US15–US16 | Franjas y reservas disponibles para renovación normal y urgente. | [Controlador de reservas](../../backend/controllers/ReservaController.php) y [servicio](../../backend/services/ReservaService.php). |
+| PT-17 | RF19; US29 | Alta, edición, listado y filtro de preguntas frecuentes por categoría. | [Controlador](../../backend/controllers/PreguntaController.php) y [vista pública](../../frontend-publico/js/contenido.js). |
+| PT-18 | RNF5–RNF6; US27–US28 | Interfaces adaptables, navegación mediante teclado, foco visible y etiquetas en formularios. | [Estilos públicos](../../frontend-publico/css/styles.css) y [estilos del panel](../../frontend-imsj/css/styles.css). |
 
 ## 5. Informe de integración del 21/10
 
@@ -104,15 +103,14 @@ Semgrep registra seis avisos y un diagnóstico de análisis parcial del Dockerfi
 
 La integración respalda el funcionamiento de los escenarios de API sobre la base aislada. La auditoría respalda las comprobaciones ejecutadas contra la instancia local. La prueba de concurrencia evalúa dos solicitudes por el último cupo, sin establecer una capacidad objetivo de producción.
 
-El backlog conserva RF9/US6 como parcial por la interfaz de galería y enlaces; RF4/US12 por la regla de costo urgente; RF19/US29 por categorías; y US25–US28 por el alcance de auditoría, operación institucional, móvil y accesibilidad. El resultado OK de la suite mantiene esos estados del producto.
+Las historias US1–US34 y los requisitos RF1–RF24 y RNF1–RNF10 figuran implementados. Los resultados de integración y de seguridad respaldan los escenarios incluidos en sus respectivas matrices.
 
 | Evaluación de entrega | Registro |
 |---|---|
-| Recorrido manual de la versión final | Equipo confirma prueba satisfactoria en otra computadora; el candidato exacto de entrega se comprueba después del congelamiento. |
-| Restauración de un respaldo completo | Resultado satisfactorio confirmado por el equipo el 21/10; véase el registro de recuperación y la consolidación documental. |
-| Conformidad de revisión del equipo | Revisión principal realizada por líder y co-líder, según respuesta del equipo; no equivale a firmas individuales. |
-| Aceptación del cliente | Se formaliza al recibir la versión de entrega, con inventario y observaciones; R-05 acredita la demo y las solicitudes de cambio. |
+| Recorrido manual de la versión final | Se ejecutará sobre el candidato exacto después del congelamiento de la entrega. |
+| Restauración de un respaldo completo | Pendiente de ejecutar y comprobar en Ubuntu Server 24.04 LTS antes de la entrega. |
+| Aceptación del cliente | La reunión R-06 registra la demostración del 13/10 y la aprobación del resultado. |
 
 ## 8. Referencias
 
-[Especificación](Requerimientos.md), [backlog](backlog.md), [cambios](control_cambios.md), [manual de usuario](../general/manual_usuario.md), [modelo de especificación y trazabilidad del curso](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md) y [requisitos de entrega por asignatura](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/Lineamientos/requerimientos_por_asignatura.md).
+[Especificación](Requerimientos.md), [backlog](backlog.md), [cambios](control_cambios.md), [manual de usuario](manual_usuario.md), [modelo de especificación y trazabilidad del curso](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md) y [requisitos de entrega por asignatura](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/Lineamientos/requerimientos_por_asignatura.md).

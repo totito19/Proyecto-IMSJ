@@ -63,6 +63,22 @@ if (!$columns) {
         'ALTER TABLE preguntas_prueba ADD COLUMN imagen VARCHAR(2048) NULL AFTER pregunta';
 }
 
+// Las preguntas existentes quedan en General y las nuevas pueden clasificarse libremente.
+$categoryColumn = Database::query(
+    "SHOW COLUMNS FROM preguntas_frecuentes LIKE 'categoria'",
+)->fetch();
+if (!$categoryColumn) {
+    $statements[] =
+        "ALTER TABLE preguntas_frecuentes ADD COLUMN categoria VARCHAR(80) NOT NULL DEFAULT 'General' AFTER respuesta";
+}
+$categoryIndex = Database::query(
+    "SHOW INDEX FROM preguntas_frecuentes WHERE Key_name = 'preguntas_categoria_estado_index'",
+)->fetch();
+if (!$categoryIndex) {
+    $statements[] =
+        'ALTER TABLE preguntas_frecuentes ADD INDEX preguntas_categoria_estado_index (categoria, estado)';
+}
+
 foreach ($statements as $statement) {
     // Ejecuta cada modificación de esquema o normalización reunida arriba.
     Database::connection()->exec($statement);
