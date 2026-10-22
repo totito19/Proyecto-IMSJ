@@ -1,5 +1,19 @@
 # Sprint Planning
 
+## Puntos de esfuerzo
+
+Los puntos de esfuerzo expresan el tamaño relativo de un trabajo. Consideran la cantidad de tareas, la complejidad técnica, las dependencias con otros componentes y la incertidumbre para implementarlo y verificarlo. Permiten comparar trabajos dentro del proyecto; no equivalen a horas, días ni cantidad de personas.
+
+Las tablas utilizan los siguientes valores:
+
+| Puntos | Esfuerzo relativo | Interpretación |
+|---|---|---|
+| 3 | Bajo | Trabajo acotado y conocido, con pocas dependencias, como actualizar documentación o unificar estilos existentes. |
+| 5 | Medio | Trabajo con varias tareas o componentes relacionados, que requiere coordinación y comprobaciones, como maquetar un conjunto de pantallas o integrar el acceso. |
+| 8 | Alto | Trabajo con mayor complejidad, interacción o incertidumbre, como incorporar operaciones con JavaScript o integrar módulos completos con la API y sus validaciones. |
+
+El total de cada sprint es la suma de los puntos asignados a sus trabajos y representa su carga relativa estimada. Por ejemplo, el Sprint 1 suma **5 + 3 + 3 = 11 puntos**. Estos totales no miden horas efectivamente trabajadas ni demuestran por sí solos que las tareas estén terminadas.
+
 ## Sprint 1 — Maquetación de los frontends
 
 **Período:** 10/07–23/07/2026.
