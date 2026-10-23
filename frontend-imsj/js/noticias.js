@@ -50,7 +50,7 @@ function confirmarCambioEstado(noticia, estado) {
     PUBLICADO: `¿Publicar la noticia "${noticia.titulo}" en el portal?`,
     BORRADOR: `¿Retirar la noticia "${noticia.titulo}" del portal?`,
   };
-  return confirm(messages[estado] || '¿Confirmar esta acción?');
+  return ImsjForms.confirm(messages[estado] || '¿Confirmar esta acción?');
 }
 
 /** Aplica la búsqueda sobre título, texto y estado sin volver a consultar la API. */
@@ -166,7 +166,7 @@ async function guardarNoticia(event) {
     vigencia.setCustomValidity(message);
     mostrarErrorFormulario(message);
   }
-  if (!form.reportValidity()) return;
+  if (!ImsjForms.validate(form)) return;
   const button = $('#btn-guardar-noticia');
   const buttonLabel = button.textContent;
   const data = new FormData();
@@ -213,14 +213,14 @@ async function manejarAccion(event) {
   }
   try {
     if (button.dataset.accion === 'estado') {
-      if (!confirmarCambioEstado(noticia, button.dataset.estado)) return;
+      if (!await confirmarCambioEstado(noticia, button.dataset.estado)) return;
       await ImsjApi.request(`/noticias/${noticia.id}/estado`, {
         method: 'PATCH',
         body: { estado: button.dataset.estado },
       });
     }
     if (button.dataset.accion === 'eliminar') {
-      if (!confirm(`¿Eliminar la noticia "${noticia.titulo}"?`)) return;
+      if (!await ImsjForms.confirm(`¿Eliminar la noticia "${noticia.titulo}"?`)) return;
       await ImsjApi.request(`/noticias/${noticia.id}`, { method: 'DELETE' });
     }
     await cargarNoticias();

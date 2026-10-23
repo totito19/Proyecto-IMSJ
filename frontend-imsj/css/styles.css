@@ -338,6 +338,7 @@ svg { display: block; flex-shrink: 0; }
 .history__close { padding: 6px; border-radius: 6px; color: var(--slate-500); }
 .history__close:hover { background: var(--slate-100); }
 .history__body { max-height: 430px; overflow-y: auto; }
+.history__foot { display: flex; justify-content: flex-end; padding: 12px 16px; border-top: 1px solid var(--slate-100); }
 
 .history__item {
   display: grid;
@@ -1084,6 +1085,7 @@ table.data th.cell-numeric, table.data td.cell-numeric { text-align: right; }
 .audit-status { margin: 0; padding: 16px 24px; }
 .audit-status--error { color: var(--red-700); }
 .audit-pagination { font-size: 13px; }
+#historial-completo { scroll-margin-top: 144px; }
 #historial-completo table, .audit-pagination { font-variant-numeric: tabular-nums; }
 .audit-pagination__controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .audit-pagination__controls .btn { border: 1px solid var(--slate-200); }

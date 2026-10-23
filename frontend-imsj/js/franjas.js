@@ -72,16 +72,16 @@ async function cargarFranjas() {
     franjas = Array.isArray(payload.franjas) ? payload.franjas : [];
     renderFranjas();
   } catch (error) {
-    alert(error.message);
+    ImsjForms.notify(error.message);
   }
 }
 
 /** Valida el formulario y envía un POST o PUT según exista identificador. */
 async function guardarFranja(event) {
   event.preventDefault();
-  if (!event.currentTarget.reportValidity()) return;
+  if (!ImsjForms.validate(event.currentTarget)) return;
   if ($('#f-fin').value <= $('#f-inicio').value) {
-    alert('La hora de fin debe ser posterior a la hora de inicio.');
+    ImsjForms.notify('La hora de fin debe ser posterior a la hora de inicio.');
     return;
   }
   const id = $('#f-id').value;
@@ -99,7 +99,7 @@ async function guardarFranja(event) {
     Modal.close('modal-franja');
     await cargarFranjas();
   } catch (error) {
-    alert(error.message);
+    ImsjForms.notify(error.message);
   }
 }
 
@@ -122,12 +122,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const franja = franjas.find((item) => item.id === Number(button.dataset.id));
     if (!franja) return;
     if (button.dataset.accion === 'editar') abrirFormularioFranja(franja);
-    if (button.dataset.accion === 'eliminar' && confirm('¿Eliminar esta franja?')) {
+    if (button.dataset.accion === 'eliminar' && await ImsjForms.confirm('¿Eliminar esta franja?')) {
       try {
         await ImsjApi.request(`/franjas/${franja.id}`, { method: 'DELETE' });
         await cargarFranjas();
       } catch (error) {
-        alert(error.message);
+        ImsjForms.notify(error.message);
       }
     }
   });

@@ -13,7 +13,7 @@ final class ConsultaController
         Auth::limitAttempts('consulta');
         $datos = Solicitud::body();
         $consulta = $this->service->crear([
-            'nombre' => Solicitud::text($datos, 'nombre', 120),
+            'nombre' => Solicitud::nombre($datos),
             'email' => Solicitud::email($datos['email'] ?? null),
             'mensaje' => Solicitud::text($datos, 'mensaje', 150),
         ]);

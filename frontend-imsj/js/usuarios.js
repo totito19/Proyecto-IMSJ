@@ -54,7 +54,7 @@ async function cargarUsuarios() {
     usuariosAdmin = Array.isArray(payload.usuarios) ? payload.usuarios : [];
     renderUsuarios();
   } catch (error) {
-    alert(error.message);
+    ImsjForms.notify(error.message);
   }
 }
 
@@ -77,7 +77,7 @@ async function guardarUsuario(event) {
   if (!/^[-0-9. ]+$/.test(document) || !/^\d{7,8}$/.test(documentDigits)) {
     documentInput.setCustomValidity('La cédula debe tener 7 u 8 dígitos; solo puede incluir puntos y guiones.');
   }
-  if (!form.reportValidity()) return;
+  if (!ImsjForms.validate(form)) return;
 
   const submitButton = form.querySelector('[type="submit"]');
   submitButton.disabled = true;
@@ -94,9 +94,9 @@ async function guardarUsuario(event) {
     form.reset();
     await cargarUsuarios();
     document.dispatchEvent(new Event('imsj:personal-actualizado'));
-    alert(`Acceso creado para ${payload.usuario.nombre}. Clave inicial: ${payload.clave_inicial}`);
+    ImsjForms.notify(`Acceso creado para ${payload.usuario.nombre}. Clave inicial: ${payload.clave_inicial}`, 'success');
   } catch (error) {
-    alert(error.message);
+    ImsjForms.notify(error.message);
   } finally {
     submitButton.disabled = false;
   }
@@ -122,14 +122,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const item = usuariosAdmin.find(
       (usuarioAdmin) => usuarioAdmin.id === Number(button.dataset.id),
     );
-    if (!item || !confirm(`¿Quitar el acceso de ${item.nombre}?`)) return;
+    if (!item || !await ImsjForms.confirm(`¿Quitar el acceso de ${item.nombre}?`)) return;
 
     try {
       await ImsjApi.request(`/usuarios-admin/${item.id}`, { method: 'DELETE' });
       await cargarUsuarios();
       document.dispatchEvent(new Event('imsj:personal-actualizado'));
     } catch (error) {
-      alert(error.message);
+      ImsjForms.notify(error.message);
     }
   });
   initSearch((query) => {

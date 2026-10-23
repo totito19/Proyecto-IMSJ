@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const until = $('#historial-hasta');
     until.setCustomValidity(from.value && until.value && from.value > until.value
       ? 'La fecha final no puede ser anterior a la inicial.' : '');
-    if (!form.reportValidity()) return;
+    if (!ImsjForms.validate(form)) return;
     filters = new URLSearchParams();
     for (const [key, value] of new FormData(form)) {
       if (value.trim()) filters.set(key, value.trim());

@@ -402,7 +402,8 @@ function initHistory() {
       </div>
       <button type="button" class="history__close" aria-label="Cerrar historial">${icon('x', 16)}</button>
     </div>
-    <div class="history__body"><p class="history__empty">Cargando...</p></div>`;
+    <div class="history__body"><p class="history__empty">Cargando...</p></div>
+    <div class="history__foot"><a class="btn btn--primary history__all" href="usuarios.html#historial-completo">Ver todo</a></div>`;
   topbarRight.appendChild(popover);
 
   const close = () => {
@@ -432,6 +433,7 @@ function initHistory() {
     else close();
   });
   $('.history__close', popover).addEventListener('click', close);
+  $('.history__all', popover).addEventListener('click', close);
   popover.addEventListener('click', (event) => event.stopPropagation());
   document.addEventListener('click', close);
 }

@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
           (consulta) => !consulta.leida,
         ).length;
       } catch (error) {
-        alert(error.message);
+        ImsjForms.notify(error.message);
       }
     },
     true,

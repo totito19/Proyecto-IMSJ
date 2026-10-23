@@ -149,7 +149,7 @@ async function cargarAgenda() {
     reservasAgenda = Array.isArray(payload.reservas) ? payload.reservas : [];
     renderAgenda();
   } catch (error) {
-    alert(error.message);
+    ImsjForms.notify(error.message);
   }
 }
 

@@ -52,7 +52,7 @@
           cancel.type = 'button';
           cancel.textContent = 'Cancelar reserva';
           cancel.addEventListener('click', async () => {
-            if (!confirm('¿Cancelar esta reserva?')) return;
+            if (!await ImsjForms.confirm('¿Cancelar esta reserva?')) return;
             cancel.disabled = true;
             try {
               await ImsjApi.request(`/reservas/${item.reserva_id}`, { method: 'DELETE' });

@@ -132,7 +132,7 @@ function initLogin() {
       analyzePassword(registerPassword);
       validateConfirmation();
     }
-    if (!form.reportValidity()) return;
+    if (!ImsjForms.validate(form)) return;
     button.disabled = true;
     const originalText = button.textContent;
     button.textContent = 'Verificando...';

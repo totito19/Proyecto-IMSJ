@@ -45,7 +45,7 @@ function confirmarCambioEstadoPregunta(item, estado) {
     PUBLICADO: '¿Publicar esta pregunta frecuente en el portal?',
     BORRADOR: '¿Retirar esta pregunta frecuente del portal?',
   };
-  return confirm(messages[estado] || '¿Confirmar esta acción?');
+  return ImsjForms.confirm(messages[estado] || '¿Confirmar esta acción?');
 }
 
 /** Determina la próxima transición editorial disponible para la pregunta. */
@@ -125,14 +125,14 @@ async function cargarPreguntas() {
     preguntas = Array.isArray(payload.preguntas) ? payload.preguntas : [];
     renderPreguntas();
   } catch (error) {
-    alert(error.message);
+    ImsjForms.notify(error.message);
   }
 }
 
 /** Envía un alta o una edición según exista un id en el formulario. */
 async function guardarPregunta(event) {
   event.preventDefault();
-  if (!event.currentTarget.reportValidity()) return;
+  if (!ImsjForms.validate(event.currentTarget)) return;
   const id = $('#p-id').value;
   try {
     await ImsjApi.request(id ? `/preguntas/${id}` : '/preguntas', {
@@ -146,7 +146,7 @@ async function guardarPregunta(event) {
     Modal.close('modal-pregunta');
     await cargarPreguntas();
   } catch (error) {
-    alert(error.message);
+    ImsjForms.notify(error.message);
   }
 }
 
@@ -172,19 +172,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     try {
       if (button.dataset.accion === 'estado') {
-        if (!confirmarCambioEstadoPregunta(item, button.dataset.estado)) return;
+        if (!await confirmarCambioEstadoPregunta(item, button.dataset.estado)) return;
         await ImsjApi.request(`/preguntas/${item.id}/estado`, {
           method: 'PATCH',
           body: { estado: button.dataset.estado },
         });
       }
       if (button.dataset.accion === 'eliminar') {
-        if (!confirm('¿Eliminar esta pregunta frecuente?')) return;
+        if (!await ImsjForms.confirm('¿Eliminar esta pregunta frecuente?')) return;
         await ImsjApi.request(`/preguntas/${item.id}`, { method: 'DELETE' });
       }
       await cargarPreguntas();
     } catch (error) {
-      alert(error.message);
+      ImsjForms.notify(error.message);
     }
   });
   initSearch((query) => {

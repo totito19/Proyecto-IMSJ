@@ -74,7 +74,7 @@ async function cargarSimulacion() {
 /** Reúne las respuestas marcadas, solicita la corrección y muestra el resultado. */
 async function corregirSimulacion(event) {
   event.preventDefault();
-  if (!event.currentTarget.reportValidity()) return;
+  if (!ImsjForms.validate(event.currentTarget)) return;
 
   const respuestas = preguntasSimulacion.map((item) => ({
     pregunta_id: item.id,
@@ -107,7 +107,7 @@ async function corregirSimulacion(event) {
     document.getElementById('btn-nueva-simulacion').hidden = false;
     result.scrollIntoView({ behavior: 'smooth', block: 'center' });
   } catch (error) {
-    alert(error.message);
+    ImsjForms.notify(error.message);
   } finally {
     button.disabled = false;
   }

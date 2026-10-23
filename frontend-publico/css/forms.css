@@ -1,0 +1,25 @@
+/* Estados de formulario comunes; conservan la tipografía y los botones de cada panel. */
+.validation-error { display: block; color: #a92532; font-size: 12px; font-weight: 500; line-height: 1.5; margin-top: 6px; text-align: left; overflow-wrap: anywhere; }
+.validation-summary { margin: 0 0 16px; padding: 12px 14px; border: 1px solid #edc9cd; border-left: 3px solid #b83240; border-radius: 6px; background: #fff5f5; color: #8a2530; font-size: 13px; font-weight: 500; line-height: 1.5; grid-column: 1 / -1; }
+input[aria-invalid="true"]:not([type="radio"]):not([type="checkbox"]), select[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: #b83240; background-color: #fffafa; }
+input[aria-invalid="true"]:focus, select[aria-invalid="true"]:focus, textarea[aria-invalid="true"]:focus { outline: 2px solid #b83240; outline-offset: 2px; box-shadow: none; }
+.footer-contact .validation-error { color: #ffb8bd; }
+.footer-contact input[aria-invalid="true"], .footer-contact textarea[aria-invalid="true"] { border-color: #ffb8bd; }
+.app-notice { position: fixed; z-index: 3000; top: 24px; right: 24px; width: min(420px, calc(100vw - 32px)); display: flex; align-items: flex-start; gap: 16px; padding: 16px 18px; background: #fff; color: #24334b; border: 1px solid #edc9cd; border-left: 4px solid #b83240; border-radius: 8px; box-shadow: 0 8px 28px #19273924; font-family: inherit; }
+.app-notice > div { flex: 1; min-width: 0; }
+.app-notice strong { display: block; margin-bottom: 4px; font-size: 14px; font-weight: 600; }
+.app-notice p { margin: 0; font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; white-space: pre-line; }
+.app-notice button { flex: none; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 4px; background: transparent; color: #526176; cursor: pointer; font: inherit; font-size: 24px; }
+.app-notice button:hover { background: #f0f3f7; }
+.app-notice button:focus-visible { outline: 2px solid #1a56a8; outline-offset: 2px; }
+.app-notice--success { border-color: #bbd9ca; border-left-color: #287549; }
+.app-confirm { width: min(440px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: 24px; border: 1px solid #dce3ec; border-radius: 10px; background: #fff; color: #24334b; font-family: inherit; }
+.app-confirm::backdrop { background: #19273980; }
+.app-confirm h2 { margin: 0 0 12px; font-size: 18px; font-weight: 600; line-height: 1.4; }
+.app-confirm p { margin: 0; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+.app-confirm__actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.app-confirm__actions button { min-height: 42px; padding: 9px 16px; border: 1px solid #dce3ec; border-radius: 6px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.app-confirm__cancel { background: #fff; color: #394b64; }
+.app-confirm__actions .app-confirm__accept { background: #1a56a8; border-color: #1a56a8; color: #fff; }
+.app-confirm__actions button:focus-visible { outline: 2px solid #1a56a8; outline-offset: 3px; }
+@media (max-width: 640px) { .app-notice { top: 16px; right: 16px; } }

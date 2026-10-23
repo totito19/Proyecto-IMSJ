@@ -61,14 +61,14 @@ async function cargarPreguntasPrueba() {
     preguntasPrueba = Array.isArray(payload.preguntas) ? payload.preguntas : [];
     renderPreguntasPrueba();
   } catch (error) {
-    alert(error.message);
+    ImsjForms.notify(error.message);
   }
 }
 
 /** Construye FormData y crea o edita la pregunta, incluida su imagen opcional. */
 async function guardarPreguntaPrueba(event) {
   event.preventDefault();
-  if (!event.currentTarget.reportValidity()) return;
+  if (!ImsjForms.validate(event.currentTarget)) return;
   const id = $('#pp-id').value;
   const data = new FormData();
   data.append('pregunta', $('#pp-pregunta').value.trim());
@@ -88,7 +88,7 @@ async function guardarPreguntaPrueba(event) {
     Modal.close('modal-pregunta-prueba');
     await cargarPreguntasPrueba();
   } catch (error) {
-    alert(error.message);
+    ImsjForms.notify(error.message);
   }
 }
 
@@ -115,12 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const item = preguntasPrueba.find((pregunta) => pregunta.id === Number(button.dataset.id));
     if (!item) return;
     if (button.dataset.accion === 'editar') abrirPreguntaPrueba(item);
-    if (button.dataset.accion === 'eliminar' && confirm('¿Eliminar esta pregunta del banco?')) {
+    if (button.dataset.accion === 'eliminar' && await ImsjForms.confirm('¿Eliminar esta pregunta del banco?')) {
       try {
         await ImsjApi.request(`/preguntas-prueba/${item.id}`, { method: 'DELETE' });
         await cargarPreguntasPrueba();
       } catch (error) {
-        alert(error.message);
+        ImsjForms.notify(error.message);
       }
     }
   });

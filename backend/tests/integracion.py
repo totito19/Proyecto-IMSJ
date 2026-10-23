@@ -153,6 +153,8 @@ call('POST', '/api/noticias', {k: v for k, v in news.items() if k != 'enlaces'},
      multipart=[('imagen_portada', 'imagen.png', b'<?php echo 1;', 'image/png')])
 call('POST', '/api/noticias', {**news, 'fecha_fin_vigencia': '2000-01-01'}, staff, 422)
 
+call('POST', '/api/portal/consultas', {'nombre': '123456', 'email': 'maria@example.org', 'mensaje': 'Consulta de prueba.'}, expect=422)
+call('POST', '/api/portal/consultas', {'nombre': 'María 123', 'email': 'maria@example.org', 'mensaje': 'Consulta de prueba.'}, expect=422)
 call('POST', '/api/portal/consultas', {'nombre': 'María Pérez', 'email': 'maria@example.org', 'mensaje': 'x' * 151}, expect=422)
 consulta = call('POST', '/api/portal/consultas', {'nombre': 'María Pérez', 'email': 'maria@example.org', 'mensaje': 'Necesito información sobre educación vial.'}, expect=201, fields=['consulta'])['consulta']
 inbox = call('GET', '/api/consultas', token=staff, fields=['consultas'])['consultas']

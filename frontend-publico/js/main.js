@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>Enviá tu mensaje a la Sección Tránsito. El personal podrá leerlo desde el panel IMSJ.</p>
             </div>
             <form id="form-consulta" class="footer-contact__form">
-                <label>Nombre<input name="nombre" maxlength="120" autocomplete="name" required></label>
+                <label>Nombre<input name="nombre" maxlength="120" autocomplete="name" data-validate="name" required></label>
                 <label>Correo electrónico<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
                 <label class="footer-contact__message">Consulta<textarea name="mensaje" maxlength="150" rows="4" aria-describedby="consulta-limite" required></textarea><small class="footer-contact__hint" id="consulta-limite">0/150 caracteres</small></label>
                 <div class="footer-contact__submit"><p id="consulta-status" role="status"></p><button class="btn btn-accent" type="submit">Enviar consulta</button></div>
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     contact.querySelector('form').addEventListener('submit', async (event) => {
       event.preventDefault();
       const form = event.currentTarget;
-      if (!form.reportValidity()) return;
+      if (!ImsjForms.validate(form)) return;
       const button = form.querySelector('button[type="submit"]');
       const status = form.querySelector('#consulta-status');
       button.disabled = true;

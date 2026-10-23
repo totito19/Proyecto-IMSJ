@@ -45,7 +45,7 @@ function confirmarCambioEstadoMaterial(material, estado) {
     PUBLICADO: `¿Publicar el material "${material.nombre}" en el portal?`,
     BORRADOR: `¿Retirar el material "${material.nombre}" del portal?`,
   };
-  return confirm(messages[estado] || '¿Confirmar esta acción?');
+  return ImsjForms.confirm(messages[estado] || '¿Confirmar esta acción?');
 }
 
 /** Decide qué transición editorial puede ofrecerse para el estado y rol actuales. */
@@ -141,7 +141,7 @@ async function cargarMateriales() {
     materiales = Array.isArray(payload.materiales) ? payload.materiales : [];
     renderMateriales();
   } catch (error) {
-    alert(error.message);
+    ImsjForms.notify(error.message);
   }
 }
 
@@ -149,7 +149,7 @@ async function cargarMateriales() {
 async function guardarMaterial(event) {
   event.preventDefault();
   const form = $('#form-material');
-  if (!form.reportValidity()) return;
+  if (!ImsjForms.validate(form)) return;
 
   const id = $('#m-id').value;
   const data = new FormData();
@@ -170,7 +170,7 @@ async function guardarMaterial(event) {
     Modal.close('modal-material');
     await cargarMateriales();
   } catch (error) {
-    alert(error.message);
+    ImsjForms.notify(error.message);
   }
 }
 
@@ -200,19 +200,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     try {
       if (button.dataset.accion === 'estado') {
-        if (!confirmarCambioEstadoMaterial(material, button.dataset.estado)) return;
+        if (!await confirmarCambioEstadoMaterial(material, button.dataset.estado)) return;
         await ImsjApi.request(`/materiales/${material.id}/estado`, {
           method: 'PATCH',
           body: { estado: button.dataset.estado },
         });
       }
       if (button.dataset.accion === 'eliminar') {
-        if (!confirm(`¿Eliminar "${material.nombre}"?`)) return;
+        if (!await ImsjForms.confirm(`¿Eliminar "${material.nombre}"?`)) return;
         await ImsjApi.request(`/materiales/${material.id}`, { method: 'DELETE' });
       }
       await cargarMateriales();
     } catch (error) {
-      alert(error.message);
+      ImsjForms.notify(error.message);
     }
   });
   initSearch((query) => {
