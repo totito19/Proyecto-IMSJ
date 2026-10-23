@@ -50,8 +50,9 @@ function confirmarCambioEstadoPregunta(item, estado) {
 
 /** Determina la próxima transición editorial disponible para la pregunta. */
 function accionFlujoPregunta(item) {
-  const directora = ImsjApi.currentUser()?.rol === 'DIRECTORA';
-  if (item.estado === 'BORRADOR' && !directora) {
+  const rol = ImsjApi.currentUser()?.rol;
+  const directora = rol === 'DIRECTORA';
+  if (item.estado === 'BORRADOR' && rol === 'PERSONAL_IMSJ') {
     return actionBtn('send', 'Enviar a revisión', {
       labeled: true,
       data: { accion: 'estado', estado: 'PENDIENTE', id: item.id },
