@@ -2,7 +2,7 @@
 
 **Proyecto:** Educación Vial IMSJ - Portal Vial
 
-**Servidor:** Ubuntu Server 24.04 LTS, 6 vCPU, 8 GB RAM y 50 GB SSD/NVMe
+**Servidor:** Ubuntu Server 26.04 LTS, 2 vCPU, 4 GB RAM y 30 GB SSD/NVMe
 
 ## 1. Vista general
 
@@ -12,7 +12,7 @@ flowchart TB
     Admin -->|Cockpit 9090| UFW
     Usuarios[Usuarios autorizados] -->|HTTP 8000| UFW
 
-    UFW --> Host[Ubuntu Server 24.04 LTS]
+    UFW --> Host[Ubuntu Server 26.04 LTS]
     Host --> Docker[Docker Engine y Compose v2]
     Host --> Cockpit[Cockpit]
     Host --> Backup[Backup Bash y cron]
@@ -26,8 +26,8 @@ flowchart TB
     App --- Uploads[(app_uploads)]
     App --- Cache[(cache)]
 
-    Backup --> Local[(7 copias locales)]
-    Local -. copia .-> Externo[(medio externo protegido)]
+    Backup --> Local[(2 copias locales)]
+    Local -. copia .-> Externo[(7 copias diarias protegidas)]
 ```
 
 El servidor concentra la administración del sistema operativo y Docker. Los usuarios solo acceden a Apache; MySQL permanece en la red interna de Compose.
@@ -36,8 +36,9 @@ El servidor concentra la administración del sistema operativo y Docker. Los usu
 
 | Elemento | Definición |
 |---|---|
-| Sistema operativo | Ubuntu Server 24.04 LTS de 64 bits |
-| Recursos | 6 vCPU, 8 GB RAM y 50 GB SSD/NVMe |
+| Sistema operativo | Ubuntu Server 26.04 LTS de 64 bits |
+| Recursos | 2 vCPU, 4 GB RAM y 30 GB SSD/NVMe |
+| Capacidad de referencia | Objetivo inicial de 90 sesiones simultáneas, sujeto a prueba de carga y ampliación si un recurso supera 70 % sostenido |
 | Nombre sugerido | `srv-imsj` |
 | Red | IP fija configurada mediante Netplan |
 | Administración | OpenSSH y Cockpit |
@@ -73,18 +74,37 @@ Para una demostración controlada se utiliza HTTP. Si el sistema se publica en I
 ## 5. Recorrido de una petición
 
 ```mermaid
-flowchart LR
-    Navegador --> Apache[Apache]
-    Apache --> Entrada[public/index.php]
-    Entrada --> Controlador
-    Controlador --> Servicio
-    Servicio --> Repositorio
-    Repositorio --> MySQL[(MySQL)]
-    Controlador --> Respuesta[JSON o 204]
-    Respuesta --> Navegador
+sequenceDiagram
+    actor Usuario
+    participant Frontend as Navegador / Frontend
+    participant Apache
+    participant Router as public/index.php
+    participant Auth as Autenticación y validación
+    participant Controller as Controlador
+    participant Service as Servicio
+    participant Repository as Repositorio PDO
+    participant DB as MySQL
+
+    Usuario->>Frontend: Ejecuta una acción
+    Frontend->>Apache: Solicitud HTTP a /api
+    Apache->>Router: Reescritura y entrada única
+    Router->>Controller: Despacha método y ruta
+    opt Ruta protegida
+        Controller->>Auth: Verifica sesión, cuenta y rol
+        Auth-->>Controller: Usuario autorizado o error HTTP
+    end
+    Controller->>Controller: Valida los datos de entrada
+    Controller->>Service: Entrega datos validados
+    Service->>Repository: Aplica reglas y solicita persistencia
+    Repository->>DB: Consulta o transacción SQL preparada
+    DB-->>Repository: Filas o resultado
+    Repository-->>Service: Datos del dominio
+    Service-->>Controller: Resultado del caso de uso
+    Controller-->>Frontend: Respuesta JSON o 204
+    Frontend-->>Usuario: Actualiza la interfaz
 ```
 
-Los frontends consumen `/api` desde el mismo origen. Apache publica únicamente la entrada HTTP y los alias de los frontends; el resto del backend permanece fuera de `DocumentRoot`.
+Los frontends consumen `/api` desde el mismo origen. Apache sirve los archivos públicos y dirige las rutas de API a `public/index.php`; el router identifica método y URL y selecciona el controlador. En las operaciones protegidas, el controlador solicita a `Auth` la verificación de sesión, cuenta y rol antes de modificar o exponer datos. El controlador valida la entrada específica, el servicio aplica reglas y transacciones, y el repositorio concentra las consultas PDO preparadas. La respuesta vuelve por esas capas hasta el navegador. Las rutas públicas omiten el paso de autenticación. El resto del backend permanece fuera de `DocumentRoot`.
 
 ## 6. Persistencia y recuperación
 
@@ -96,7 +116,7 @@ El backup diario reúne:
 - configuración necesaria para reconstruir la instalación;
 - manifiesto, versión y hashes SHA-256.
 
-Se mantienen siete copias locales y una copia externa. La restauración se prueba con otro nombre de proyecto Compose y otro puerto para no tocar la instalación principal.
+La VM base conserva dos copias diarias locales y mantiene al menos siete copias diarias en un medio externo protegido. Si la política exige conservar siete backups completos dentro de la VM, el disco se amplía a 40–50 GB. La restauración se prueba con otro nombre de proyecto Compose y otro puerto para no tocar la instalación principal.
 
 ## 7. Monitoreo
 
@@ -111,7 +131,10 @@ Se mantienen siete copias locales y una copia externa. La restauración se prueb
 ## 8. Límites
 
 - Los datos iniciales y su crecimiento son estimaciones y deben reemplazarse por mediciones reales.
-- La instalación de laboratorio no representa una publicación institucional con dominio y HTTPS.
+- La capacidad de 90 usuarios simultáneos es un objetivo de dimensionamiento; debe confirmarse mediante una prueba de carga y observación en Cockpit antes de asumirla como capacidad operativa demostrada.
+- Los 90 usuarios representan sesiones con períodos de lectura, no 90 solicitudes PHP activas permanentemente.
+- Si CPU, memoria o disco superan de forma sostenida el 70 %, se deben ampliar los recursos o revisar la carga antes de la publicación.
+- La instalación en red controlada no representa una publicación institucional con dominio y HTTPS.
 - El backup no se considera válido hasta completar una restauración aislada.
 
 ## Documentos relacionados

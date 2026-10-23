@@ -6,15 +6,15 @@
 
 Portal Vial reúne noticias de Tránsito, materiales de estudio, preguntas frecuentes y práctica de pruebas teóricas. Desde el pie de las páginas se pueden enviar consultas al personal de la Intendencia de San José.
 
-El sistema se ejecuta en contenedores Linux mediante Docker Compose. En una instalación local con el puerto predeterminado, abrir `http://localhost:8000/frontend-publico/`. Si se configuró otro puerto o un dominio, utilizar la dirección indicada por el responsable de la instalación.
+Para ingresar, abrir en el navegador la dirección del Portal Vial proporcionada por el responsable del sistema. La dirección técnica, el dominio y los puertos se configuran durante la instalación y no requieren intervención de los usuarios finales.
 
 El menú permite cambiar de sección. En pantallas pequeñas se despliega mediante el botón de menú. Los mensajes de carga, confirmación y error aparecen junto a la operación correspondiente.
 
 | Perfil | Funciones |
 |---|---|
 | Visitante | Noticias, materiales, FAQ, simulacro y envío de consultas. |
-| Ciudadano con cuenta | Funciones públicas y reservas propias de la versión académica. |
-| Personal IMSJ | Gestión de contenidos, banco de preguntas, consultas, cuentas, historial y agenda académica. |
+| Ciudadano con cuenta | Funciones públicas, consulta de disponibilidad y gestión de reservas propias. |
+| Personal IMSJ | Gestión de contenidos, banco de preguntas, consultas, cuentas, historial y agenda. |
 | Directora | Funciones del personal y aprobación de noticias, materiales y FAQ. |
 
 ## 2. Noticias, materiales y preguntas frecuentes
@@ -72,9 +72,9 @@ La sesión dura hasta ocho horas. Un nuevo ingreso con la misma cuenta reemplaza
 
 Ante el mensaje de demasiados intentos, esperar el intervalo indicado antes de volver a intentar. Las contraseñas distinguen los espacios ingresados.
 
-## 6. Reservas de la versión académica
+## 6. Reservas
 
-Las pantallas de agenda forman parte de la demostración académica. El alcance de entrega al cliente se describe en la [especificación](../ingenieria_software/Requerimientos.md).
+Las pantallas de agenda permiten consultar y reservar franjas disponibles para pruebas de manejo y renovaciones. La reserva organiza la disponibilidad, pero no emite ni renueva por sí misma la libreta de conducir.
 
 ### Reservar un horario
 
@@ -99,7 +99,7 @@ La cancelación libera el cupo. Para elegir otro horario se realiza una nueva re
 
 ## 7. Acceder al panel IMSJ
 
-Ingresar desde **Personal IMSJ** o abrir `http://localhost:8000/frontend-imsj/` con una sesión de personal. La barra lateral permite cambiar entre noticias, materiales, FAQ, preguntas del simulador, consultas, usuarios y agenda académica.
+Ingresar desde **Personal IMSJ** mediante la dirección proporcionada por el responsable del sistema. La barra lateral permite cambiar entre noticias, materiales, FAQ, preguntas del simulador, consultas, usuarios y agenda.
 
 La primera cuenta de personal se crea durante la configuración inicial del sistema. Las cuentas siguientes se crean desde la sección de usuarios. El panel comunica la clave inicial al completar el alta.
 
@@ -158,7 +158,7 @@ En **Usuarios**, completar nombre, cédula y rol para crear acceso. El panel mue
 
 La campana abre **Historial de acciones** y consulta las veinte acciones más recientes. Allí se identifica a la persona, operación, elemento y fecha registrados por el sistema.
 
-### Administrar agenda académica
+### Administrar agenda
 
 En **Franjas de disponibilidad**, cargar fecha, hora de inicio, hora de fin, trámite y cupos. Revisar que el horario final sea posterior al inicial. Una franja con reservas conserva sus relaciones y el sistema impide eliminarla mientras las tenga.
 

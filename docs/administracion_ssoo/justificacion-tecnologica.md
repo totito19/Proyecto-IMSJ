@@ -6,7 +6,7 @@
 
 | Tecnología | Justificación | Condición |
 |---|---|---|
-| Ubuntu Server 24.04 LTS | Es la plataforma de servidor solicitada y ofrece soporte prolongado, administración por terminal, Netplan, UFW y systemd. | Debe mantenerse actualizado y administrarse con un usuario `sudo`. |
+| Ubuntu Server 26.04 LTS | Es la versión LTS vigente, con mantenimiento estándar previsto hasta 2031 y soporte oficial para Docker Engine. Permite administración por terminal mediante Netplan, UFW y systemd. | Debe mantenerse actualizado y administrarse con un usuario `sudo`. |
 | Docker Engine | Aísla la aplicación y la base del sistema anfitrión y permite reconstruir el entorno de forma repetible. | Se instala desde el repositorio oficial de Docker para Ubuntu. |
 | Docker Compose v2 | Define servicios, volúmenes, variables, dependencias y controles de salud en un solo archivo. | La configuración sensible permanece en `.env`, fuera de Git. |
 | Apache y PHP 8.5 | Ejecutan la API PHP y publican el portal y el panel desde el mismo origen. | Solo `public/` y los alias de frontend quedan expuestos. |
@@ -20,9 +20,13 @@
 
 ## Dimensionamiento
 
-La calculadora docente se utilizó con 40 usuarios simultáneos, una aplicación, una base, pequeña producción, 1 GB inicial, 10 % de crecimiento mensual, doce meses, siete backups diarios retenidos, Cockpit y 25 % de margen.
+La estimación considera 90 sesiones simultáneas, una aplicación PHP, una base MySQL, dos contenedores, Cockpit, archivos cargados por el personal y backups diarios. Una sesión abierta no equivale a una solicitud activa de forma permanente: los usuarios alternan solicitudes breves con períodos de lectura.
 
-El resultado recomendado es **6 vCPU, 8 GB de RAM y 50 GB SSD/NVMe útiles**. La capacidad debe revisarse con métricas reales de CPU, memoria, disco y crecimiento.
+El portal sirve principalmente recursos estáticos. PHP y MySQL participan en consultas, autenticación, reservas y operaciones administrativas de corta duración, sin cálculos intensivos. Para esta carga se propone iniciar con **2 vCPU y 4 GB de RAM**, capacidad que incluye el sistema operativo, Docker, Apache/PHP, MySQL, Cockpit y margen para picos transitorios.
+
+Se asignan **30 GB SSD/NVMe** para el sistema, las imágenes Docker, la aplicación, la base, los adjuntos, los logs y las dos copias diarias más recientes. Los videos se almacenan como enlaces externos. Las copias válidas se trasladan a un medio externo protegido; si deben conservarse siete backups completos dentro de la VM, el disco recomendado pasa a **40–50 GB**.
+
+La configuración inicial es **2 vCPU, 4 GB de RAM y 30 GB SSD/NVMe**. Antes de afirmar su capacidad operativa se ejecutará una prueba con 90 sesiones y se medirán solicitudes por segundo, latencia, errores, CPU, memoria e I/O. Un consumo sostenido superior al 70 % activa la revisión o ampliación del recurso afectado.
 
 ## Organización de los servicios
 
@@ -41,7 +45,7 @@ No se incorpora Portainer porque no es necesario para operar dos servicios y su 
 
 ## Backup y recuperación
 
-El backup incluye código, dump MySQL, adjuntos, configuración protegida, manifiesto y hashes. Se ejecuta una vez por día, conserva siete copias locales y requiere una copia externa. La restauración se prueba sobre una instalación aislada.
+El backup incluye código, dump MySQL, adjuntos, configuración protegida, manifiesto y hashes. Se ejecuta una vez por día; la VM base conserva dos días y el medio externo protegido mantiene al menos siete copias diarias. La restauración se prueba sobre una instalación aislada.
 
 Copiar únicamente el repositorio no recupera los datos. Copiar únicamente un volumen MySQL mientras está escribiendo tampoco sustituye un dump lógico consistente.
 

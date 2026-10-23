@@ -65,7 +65,7 @@ Los controladores utilizan Auth para exigir acceso y Response para responder. So
 
 El modelo relacional contiene doce tablas: once del dominio y `auth_tokens`. `usuarios.cedula` y el hash del token son únicos. La combinación usuario/franja impide duplicación de reservas y la combinación fecha, inicio, fin y tipo identifica una franja sin duplicados exactos. Las relaciones de noticias tienen eliminación en cascada; reservas e historial conservan sus referencias mediante claves foráneas.
 
-Las FAQ utilizan pregunta, respuesta y estado. Las consultas conservan el mensaje y su marca de lectura. La cancelación académica elimina la reserva. Los gráficos de preguntas se guardan como ruta en `preguntas_prueba.imagen`.
+Las FAQ utilizan pregunta, respuesta y estado. Las consultas conservan el mensaje y su marca de lectura. La cancelación ciudadana elimina la reserva. Los gráficos de preguntas se guardan como ruta en `preguntas_prueba.imagen`.
 
 ## Antecedente UML
 

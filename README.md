@@ -6,7 +6,7 @@ Plataforma de la Sección Tránsito de la Intendencia de San José, desarrollada
 
 El portal reúne noticias vigentes, materiales de estudio, preguntas frecuentes, simulacros y consultas ciudadanas. El panel permite gestionar contenidos, revisar su aprobación, leer consultas y consultar el historial de acciones. La Directora aprueba y el personal publica mediante acciones diferenciadas.
 
-La versión académica incorpora franjas, cupos, reservas de prueba de manejo y renovación, cancelación propia y agenda diaria, semanal y mensual.
+La solución incorpora franjas, cupos, reservas de prueba de manejo y renovación, cancelación propia y agenda diaria, semanal y mensual.
 
 ## Estructura del repositorio
 
@@ -17,13 +17,13 @@ Proyecto-IMSJ/
 ├── backend/            API, esquema, Docker, herramientas y pruebas
 ├── frontend-publico/   Portal e ingreso
 ├── frontend-imsj/      Panel administrativo
-├── docs/               Documentación por asignatura
+├── docs/               Documentación del proyecto por área
 └── docs_auxiliares/    Referencias, fichas y evidencias
 ```
 
 ## Inicio
 
-El entorno de entrega es Ubuntu Server 24.04 LTS con Docker Engine y Docker Compose. Desde `backend`:
+El entorno de entrega es Ubuntu Server 26.04 LTS con Docker Engine y Docker Compose. Desde `backend`:
 
 ```bash
 cp .env.example .env
@@ -45,7 +45,7 @@ Los resultados y archivos se consultan en el [registro de verificación](docs_au
 
 ## Documentación
 
-- [Índice por asignatura](docs/README.md).
+- [Índice de documentación](docs/README.md).
 - [Charter](docs/ingenieria_software/project_charter.md), [especificación](docs/ingenieria_software/Requerimientos.md) y [casos de uso](docs/ingenieria_software/analisis_de_requerimientos.md).
 - [Backlog](docs/ingenieria_software/backlog.md), [planning](docs/ingenieria_software/sprint_planning.md), [Review](docs/ingenieria_software/actas_sprint_review.md) y [actas](docs/ingenieria_software/actas_reuniones.md).
 - [Arquitectura](docs/administracion_ssoo/arquitectura_propuesta.md), [modelo](docs/programacion_full_stack/Diagramas/README.md) y [contrato API](docs_auxiliares/backend/api.md).

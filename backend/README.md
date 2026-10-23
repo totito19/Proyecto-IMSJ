@@ -29,7 +29,7 @@ El [contrato de API](../docs_auxiliares/backend/api.md) complementa esta guía. 
 
 ## Instalación nueva con Docker
 
-El entorno de entrega es Ubuntu Server 24.04 LTS con Docker Engine y el complemento Docker Compose. Desde la carpeta `backend`:
+El entorno de entrega es Ubuntu Server 26.04 LTS con Docker Engine y el complemento Docker Compose. Desde la carpeta `backend`:
 
 ```bash
 cp .env.example .env
@@ -70,7 +70,7 @@ Apache sirve los dos frontends y la API. MySQL permanece en la red interna de Co
 
 Los contenedores se ejecutan con hardening activo desde el `compose.yaml` normal. `app` usa `www-data`, raíz de solo lectura, `no-new-privileges`, descarta todas las capacidades y recupera únicamente `NET_BIND_SERVICE`; `db` usa `mysql`, raíz de solo lectura, `no-new-privileges` y no conserva capacidades. Los volúmenes de datos y los `tmpfs` declarados son las únicas rutas de escritura necesarias. El informe y las capturas de revalidación están en `docs/electiva_ciberseguridad/informe_hardening_contenedores_imsj.pdf`.
 
-La instalación académica publica Apache en la dirección y el puerto definidos mediante `APP_BIND` y `APP_PORT`; MySQL permanece en la red interna. Para una publicación institucional se requiere HTTPS con certificado válido, renovación automática, redirección desde HTTP y valores definitivos de `APP_URL` y `FRONTEND_ORIGIN`.
+La instalación en red controlada publica Apache en la dirección y el puerto definidos mediante `APP_BIND` y `APP_PORT`; MySQL permanece en la red interna. Para una publicación institucional se requiere HTTPS con certificado válido, renovación automática, redirección desde HTTP y valores definitivos de `APP_URL` y `FRONTEND_ORIGIN`.
 
 ### Solución de problemas
 
@@ -107,7 +107,7 @@ Los usuarios, hashes bcrypt, identificadores, relaciones, historial y rutas rela
 - Edición acepta PUT JSON/multipart y POST multipart con `_method=PUT`, como envía el panel actual. El límite global de formulario es 24 MB; con un archivo por material y hasta seis imágenes de noticia alcanza para los límites del contrato.
 - Reservas: transacción con bloqueo de franja, fecha válida, propiedad, duplicación y capacidad. Auditoría administrativa se confirma en la misma transacción que los datos; un fallo revierte la operación y limpia archivos nuevos.
 
-La versión incorpora el simulador, consultas, Directora, flujo de aprobación, gráficos del test, categorías de preguntas frecuentes y modalidades de renovación normal y urgente. La cancelación académica se añadió posteriormente. Agenda y reservas continúan como alcance académico.
+La versión incorpora el simulador, consultas, Directora, flujo de aprobación, gráficos del test, categorías de preguntas frecuentes, modalidades de renovación normal y urgente y cancelación ciudadana. Agenda y reservas forman parte del alcance entregado.
 
 ## Verificación
 

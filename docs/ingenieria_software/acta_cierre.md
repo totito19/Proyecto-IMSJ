@@ -13,7 +13,7 @@
 
 **Objetivo acordado:** desarrollar una plataforma web para centralizar noticias, materiales de estudio, preguntas frecuentes y otras funciones de educación vial, con un panel para su administración.
 
-**Resultado obtenido:** se completaron el portal público, el panel IMSJ, los simulacros, las consultas ciudadanas, la aprobación de contenidos y las funciones académicas de agenda. El resultado fue presentado a Nacho el 13/10/2026 y quedó aprobado.
+**Resultado obtenido:** se completaron el portal público, el panel IMSJ, los simulacros, las consultas ciudadanas, la aprobación de contenidos y la agenda de trámites. El resultado fue presentado al Inspector de Tránsito el 13/10/2026 y quedó aprobado.
 
 ## 2. Entregables
 
@@ -29,7 +29,7 @@
 
 | Aspecto | Planificado | Resultado final | Observación |
 |---|---|---|---|
-| Alcance | Portal, administración de contenidos y agenda académica. | Funciones implementadas. | Alcance completado. |
+| Alcance | Portal, administración de contenidos y agenda de trámites. | Funciones implementadas. | Alcance completado. |
 | Plazo | Cinco sprints. | Cinco sprints finalizados. | Cumplido. |
 
 | Calidad | Cumplimiento de RF y RNF. | RF1–RF24 y RNF1–RNF10 implementados. | Resultado aprobado en la demostración. |

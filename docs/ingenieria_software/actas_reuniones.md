@@ -114,7 +114,7 @@ Analizar las historias de usuario a partir de las épicas y los requerimientos.
 
 El equipo analizó las historias de usuario tomando como base las épicas y los requerimientos. Se trabajó sobre la relación entre las necesidades del proyecto y las operaciones que utilizan la ciudadanía y el personal de la Intendencia.
 
-La organización del backlog vincula acceso y permisos, consulta y administración de contenidos, agenda académica y condiciones de calidad. Cada historia mantiene un identificador para relacionar su necesidad con los requisitos y las comprobaciones del sistema.
+La organización del backlog vincula acceso y permisos, consulta y administración de contenidos, agenda y condiciones de calidad. Cada historia mantiene un identificador para relacionar su necesidad con los requisitos y las comprobaciones del sistema.
 
 ### Resultado
 

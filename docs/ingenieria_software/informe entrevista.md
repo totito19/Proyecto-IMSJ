@@ -141,7 +141,7 @@ De la entrevista se desprenden los siguientes aspectos relevantes para el desarr
 | Necesidad | Requisitos |
 |---|---|
 | Identificación de cambios administrativos | RNF3. |
-| Agenda como alcance académico | RF3–RF4, RF11–RF16. |
+| Agenda y reservas | RF3–RF4, RF11–RF16. |
 | Categorías de preguntas frecuentes | RF19. |
 | PDF, imágenes y videos | RF5, RF17, RF20. |
 | Vigencia de noticias | RF8 y RNF7. |
@@ -160,4 +160,4 @@ Las necesidades relevadas se contrastaron con el cliente en la demostración del
 
 ## Referencias
 
-[Guía de preguntas](Entrevista.md), [requisitos](Requerimientos.md), [control de cambios](control_cambios.md) y [Entrevistas del curso](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/entrevistas.md).
+[Guía de preguntas](Entrevista.md), [requisitos](Requerimientos.md) y [control de cambios](control_cambios.md).

@@ -61,4 +61,4 @@ Una recuperación se considera comprobada cuando el entorno aislado inicia con l
 Registrar nombre del respaldo, fecha, integridad, código compatible, destino de prueba, procedimiento y resultado.
 ## Registro de recuperación
 
-La comprobación final se registrará después de restaurar el backup en una instancia aislada de Ubuntu Server 24.04 LTS. El registro debe identificar el archivo, su hash, la versión ejecutada, el destino y el resultado.
+La comprobación final se registrará después de restaurar el backup en una instancia aislada de Ubuntu Server 26.04 LTS. El registro debe identificar el archivo, su hash, la versión ejecutada, el destino y el resultado.

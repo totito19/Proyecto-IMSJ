@@ -24,7 +24,7 @@ Las fechas se consultan con `git log --date=short`; los objetos pueden inspeccio
 |---|---|---|
 | Organización | Reconstruir el trabajo a partir de commits. | Se cruzó el historial con los períodos ya documentados y los roles. |
 | Relación con el cliente | Utilizar las fechas y contenidos de los documentos. | R-01: entrevista del 09/07; R-05: demo del 03/09 y solicitudes CC-02–CC-04. |
-| Restauración | Pendiente. | Debe ejecutarse y comprobarse en Ubuntu Server 24.04 LTS antes de la entrega. |
+| Restauración | Pendiente. | Debe ejecutarse y comprobarse en Ubuntu Server 26.04 LTS antes de la entrega. |
 | Entrega y defensa | Se entregará el proyecto completo y participará todo el equipo. | Se conserva el cronograma documental: entrega 29/10 y defensa 05/11. |
 
 La restauración se documentará con el archivo utilizado, su hash, la versión ejecutada, el destino de prueba y el resultado.

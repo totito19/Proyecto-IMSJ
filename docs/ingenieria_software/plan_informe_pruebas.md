@@ -4,7 +4,7 @@
 
 ## 1. Objetivo y alcance
 
-Comprobar que la API aplica el contrato HTTP, persiste los datos esperados, protege las operaciones por cuenta y rol y mantiene la integridad ante errores y concurrencia. El alcance incluye autenticación, noticias, materiales, FAQ, simulacros, consultas, usuarios, historial y agenda académica.
+Comprobar que la API aplica el contrato HTTP, persiste los datos esperados, protege las operaciones por cuenta y rol y mantiene la integridad ante errores y concurrencia. El alcance incluye autenticación, noticias, materiales, FAQ, simulacros, consultas, usuarios, historial y agenda.
 
 La verificación combina una suite de integración HTTP/MySQL, auditoría Bash de seguridad, análisis estático y exploración dinámica del portal local. La matriz relaciona requisitos e historias con escenarios concretos y conserva el alcance de cada resultado.
 
@@ -58,20 +58,20 @@ Con `IMSJ_SECURITY_REQUIRE_FULL=1`, cualquier prueba omitida impide considerar c
 
 | ID | Requisitos / historias | Escenario y resultado comprobado | Evidencia |
 |---|---|---|---|
-| PT-01 | RF1, RNF1; US1–US2 | Login y registro, identidad, rechazo de acceso sin token y de rol público en administración. | Integración y auditoría API. |
-| PT-02 | RF2, RF7–RF10, RNF7, RNF10; US3–US9 | CRUD de noticias, fechas, borradores ocultos y publicación visible; portada, galería y enlaces mediante API. | Integración. |
-| PT-03 | RF21; US30; CC-03 | Personal envía a revisión y recibe 403 al aprobar; Directora aprueba; el personal publica después. | Integración y auditoría API. |
-| PT-04 | RF5, RF17, RF20; US21–US22 | VIDEO por URL, PDF cargado y descargado, actualización multipart y rechazo de falso PDF. | Integración. |
-| PT-05 | RF6, RF18; US23–US24 | Alta y edición de FAQ, ocultamiento previo a publicar y consulta pública posterior. | Integración. |
-| PT-06 | RF22, RF24; US31, US33; CC-01, CC-04 | Pregunta con imagen descargable, respuesta correcta ausente en consulta pública y corrección del servidor; rechazo de respuesta duplicada. | Integración. |
-| PT-07 | RF23; US32; CC-02 | Mensaje público guardado, recepción en bandeja sin leer y marca de lectura persistida. | Integración. |
-| PT-08 | RF3, RF13, RNF8–RNF9; US10, US13–US14, US17 | Franja de prueba de manejo, reserva propia, duplicación rechazada, franja ocupada protegida y cancelación propia 204. | Integración. |
-| PT-09 | RF14–RF16; US18–US20 | Consulta de agenda en vistas día, semana y mes; rechazo de vista anual inválida. | Integración. |
-| PT-10 | RNF8; US13 | Dos solicitudes simultáneas para un único cupo: 201 y 422; exactamente una fila en MySQL. | Integración. |
-| PT-11 | RNF3; US25 | Historial con acciones persistidas; fallo provocado de auditoría revierte el material y elimina el archivo nuevo. | Integración. |
-| PT-12 | RNF1, RNF4; US2, US26 | Token hash, vencimiento, revocación, desactivación y rechazo de cancelación ajena. | Integración y auditoría API. |
-| PT-13 | RNF2; US34 | JSON inválido, validación de campos, archivos disfrazados, entradas SQLi/XSS controladas y respuestas sin error interno en esos escenarios. | Integración y auditoría API. |
-| PT-14 | RNF4; US26 | Acceso privado bloqueado, CORS permitido/ajeno, cabeceras y rate limit. | Auditoría API. |
+| PT-01 | RF1, RNF1; US1–US2 | Login y registro, identidad, rechazo de acceso sin token y de rol público en administración. | [Integración](../../output/integracion-final.json) y [auditoría API](../../output/security-api-final.txt). |
+| PT-02 | RF2, RF7–RF10, RNF7, RNF10; US3–US9 | CRUD de noticias, fechas, borradores ocultos y publicación visible; portada, galería y enlaces mediante API. | [Integración](../../output/integracion-final.json). |
+| PT-03 | RF21; US30; CC-03 | Personal envía a revisión y recibe 403 al aprobar; Directora aprueba; el personal publica después. | [Integración](../../output/integracion-final.json) y [auditoría API](../../output/security-api-final.txt). |
+| PT-04 | RF5, RF17, RF20; US21–US22 | VIDEO por URL, PDF cargado y descargado, actualización multipart y rechazo de falso PDF. | [Integración](../../output/integracion-final.json). |
+| PT-05 | RF6, RF18; US23–US24 | Alta y edición de FAQ, ocultamiento previo a publicar y consulta pública posterior. | [Integración](../../output/integracion-final.json). |
+| PT-06 | RF22, RF24; US31, US33; CC-01, CC-04 | Pregunta con imagen descargable, respuesta correcta ausente en consulta pública y corrección del servidor; rechazo de respuesta duplicada. | [Integración](../../output/integracion-final.json). |
+| PT-07 | RF23; US32; CC-02 | Mensaje público guardado, recepción en bandeja sin leer y marca de lectura persistida. | [Integración](../../output/integracion-final.json). |
+| PT-08 | RF3, RF13, RNF8–RNF9; US10, US13–US14, US17 | Franja de prueba de manejo, reserva propia, duplicación rechazada, franja ocupada protegida y cancelación propia 204. | [Integración](../../output/integracion-final.json). |
+| PT-09 | RF14–RF16; US18–US20 | Consulta de agenda en vistas día, semana y mes; rechazo de vista anual inválida. | [Integración](../../output/integracion-final.json). |
+| PT-10 | RNF8; US13 | Dos solicitudes simultáneas para un único cupo: 201 y 422; exactamente una fila en MySQL. | [Integración](../../output/integracion-final.json). |
+| PT-11 | RNF3; US25 | Historial con acciones persistidas; fallo provocado de auditoría revierte el material y elimina el archivo nuevo. | [Integración](../../output/integracion-final.json). |
+| PT-12 | RNF1, RNF4; US2, US26 | Token hash, vencimiento, revocación, desactivación y rechazo de cancelación ajena. | [Integración](../../output/integracion-final.json) y [auditoría API](../../output/security-api-final.txt). |
+| PT-13 | RNF2; US34 | JSON inválido, validación de campos, archivos disfrazados, entradas SQLi/XSS controladas y respuestas sin error interno en esos escenarios. | [Integración](../../output/integracion-final.json) y [auditoría API](../../output/security-api-final.txt). |
+| PT-14 | RNF4; US26 | Acceso privado bloqueado, CORS permitido/ajeno, cabeceras y rate limit. | [Auditoría API](../../output/security-api-final.txt). |
 | PT-15 | RF9; US6 | Portada, galería, texto y enlaces persistidos por la API y presentados en el portal público. | [Controlador](../../backend/controllers/NoticiaController.php) y [vista pública](../../frontend-publico/js/noticias.js). |
 | PT-16 | RF4, RF11–RF12; US11–US12, US15–US16 | Franjas y reservas disponibles para renovación normal y urgente. | [Controlador de reservas](../../backend/controllers/ReservaController.php) y [servicio](../../backend/services/ReservaService.php). |
 | PT-17 | RF19; US29 | Alta, edición, listado y filtro de preguntas frecuentes por categoría. | [Controlador](../../backend/controllers/PreguntaController.php) y [vista pública](../../frontend-publico/js/contenido.js). |
@@ -101,16 +101,17 @@ Semgrep registra seis avisos y un diagnóstico de análisis parcial del Dockerfi
 
 ## 7. Alcance de las conclusiones
 
-La integración respalda el funcionamiento de los escenarios de API sobre la base aislada. La auditoría respalda las comprobaciones ejecutadas contra la instancia local. La prueba de concurrencia evalúa dos solicitudes por el último cupo, sin establecer una capacidad objetivo de producción.
+La integración respalda el funcionamiento de los escenarios de API sobre la base aislada. La auditoría respalda las comprobaciones ejecutadas contra la instancia local. La prueba de concurrencia evalúa dos solicitudes por el último cupo y no sustituye una prueba de carga. La infraestructura inicial de 2 vCPU, 4 GB de RAM y 30 GB SSD/NVMe se propone para un objetivo de 90 sesiones simultáneas; ese objetivo debe validarse antes de presentarlo como capacidad operativa demostrada.
 
 Las historias US1–US34 y los requisitos RF1–RF24 y RNF1–RNF10 figuran implementados. Los resultados de integración y de seguridad respaldan los escenarios incluidos en sus respectivas matrices.
 
 | Evaluación de entrega | Registro |
 |---|---|
 | Recorrido manual de la versión final | Se ejecutará sobre el candidato exacto después del congelamiento de la entrega. |
-| Restauración de un respaldo completo | Pendiente de ejecutar y comprobar en Ubuntu Server 24.04 LTS antes de la entrega. |
+| Restauración de un respaldo completo | Pendiente de ejecutar y comprobar en Ubuntu Server 26.04 LTS antes de la entrega. |
+| Carga de 90 usuarios simultáneos | Pendiente de ejecutar sobre el entorno objetivo mientras se registran solicitudes por segundo, latencia, errores, CPU, memoria e I/O; revisar recursos ante un consumo sostenido superior al 70 %. |
 | Aceptación del cliente | La reunión R-06 registra la demostración del 13/10 y la aprobación del resultado. |
 
 ## 8. Referencias
 
-[Especificación](Requerimientos.md), [backlog](backlog.md), [cambios](control_cambios.md), [manual de usuario](manual_usuario.md), [modelo de especificación y trazabilidad del curso](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md) y [requisitos de entrega por asignatura](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/Lineamientos/requerimientos_por_asignatura.md).
+[Especificación](Requerimientos.md), [backlog](backlog.md), [control de cambios](control_cambios.md), [manual de usuario](manual_usuario.md), [registro general de verificación](../../docs_auxiliares/evidencias/verificacion.md), [resultado SAST](../../informes-sast-post/semgrep-post.json), [resultado DAST](../../informes-dast-post/zap-report-post.json) y [resultado Nmap](../../informes-dast-post/nmap-post.txt).

@@ -95,7 +95,7 @@ Comprobar antes de reabrir:
 - Portal, API y servicios saludables.
 - Consistencia de relaciones y conteos de datos.
 - Descarga de adjuntos y estado de publicaciones.
-- Consultas y, para la versión académica, franjas y reservas.
+- Consultas, franjas y reservas.
 - Resultado de la prueba que reproduce el incidente y de los escenarios afectados.
 
 Conservar el identificador del respaldo y las evidencias de la validación. La reapertura se registra con fecha, responsable y resultado.
@@ -123,4 +123,4 @@ Esta ficha describe qué registrar ante una intervención; no documenta un incid
 
 ## 9. Referencias
 
-[Inventario de infraestructura](../administracion_ssoo/documentacion-infraestructura.md), [reconstrucción](../administracion_ssoo/reconstruccion-infraestructura.md), [manual de usuario](../ingenieria_software/manual_usuario.md), [hallazgos](registro_hallazgos.md), [verificación](../../docs_auxiliares/evidencias/verificacion.md) y [entregables de Ciberseguridad](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/Lineamientos/requerimientos_por_asignatura.md#electiva-ciberseguridad).
+[Inventario de infraestructura](../administracion_ssoo/documentacion-infraestructura.md), [reconstrucción](../administracion_ssoo/reconstruccion-infraestructura.md), [manual de usuario](../ingenieria_software/manual_usuario.md), [hallazgos](registro_hallazgos.md) y [verificación](../../docs_auxiliares/evidencias/verificacion.md).

@@ -23,17 +23,17 @@
 | B-02 | Versión seleccionada para PDF | Demo del 13/10/2026 |
 | B-03 | Inicio | Julio de 2026 |
 | B-04 | Decisión tecnológica | 30/09/2026; retirar Laravel para facilitar documentación y defensa |
-| B-05 | Referencia docente de equivalencia | Decisión tecnológica del equipo registrada en B-04 y CC-05; no se atribuye aprobación de equivalencia al docente. |
+| B-05 | Fundamento de la decisión tecnológica | Decisión del equipo registrada en B-04 y CC-05; la implementación final utiliza PHP nativo y Fetch. |
 | B-06 | Duración y esfuerzo | Julio a octubre de 2026; cinco integrantes. El historial permite reconstruir períodos y entregables, no horas de dedicación. |
-| B-07 | Presupuesto | Entrega académica por trabajo y entregables; no establece cotización comercial ni gasto institucional. |
+| B-07 | Presupuesto | El trabajo y los entregables no establecen una cotización comercial ni un compromiso de gasto institucional. |
 
 ## C. Institución
 
 | ID | Dato | Valor |
 |---|---|---|
 | C-01 | Administración posterior | Intendencia de San José |
-| C-02 | Presentación institucional | Intendencia de San José y estudiantes del Polo Tecnológico de San José |
-| C-03 | Institución educativa | Polo Tecnológico de San José de Mayo |
+| C-02 | Presentación institucional | Intendencia de San José — Sección Tránsito y equipo RC5. |
+| C-03 | Equipo desarrollador | RC5. |
 | C-04 | Responsable legal | La operación institucional corresponde a la Intendencia; la identificación del responsable del tratamiento se formaliza antes de publicar. |
 | C-05 | RUT | La identificación tributaria de los textos públicos debe ser validada por la Intendencia antes de su publicación. |
 | C-06 | Domicilio institucional | Publicar el domicilio oficial validado por la Intendencia al habilitar el servicio. |
@@ -49,7 +49,7 @@
 | E-04 | Gráficos | Una imagen opcional JPG/PNG/WEBP de hasta 2048 KB |
 | E-05 | Categorías y modalidad de video acordada | FAQ clasificadas por categoría; video mediante URL HTTP/HTTPS. |
 | E-06 | Paquete de entrega al cliente | Proyecto completo: código, instalación, base, documentación, pruebas y respaldo; véase paquete_entrega.md. |
-| E-07 | Renovación urgente | Modalidad académica diferenciada en franjas y reservas. |
+| E-07 | Renovación urgente | Modalidad diferenciada en franjas y reservas. |
 
 ## F. Relevamiento y reuniones
 
@@ -57,7 +57,7 @@
 |---|---|---|
 | F-01 | Identificación y validación del informe de entrevista | R-01 del 09/07/2026; presencial, 16:05–16:45, Polo Educativo Tecnológico. |
 | F-03 | Actas y participantes | R-01–R-06 con la asistencia registrada en cada acta. |
-| F-04 | PR y reportes académicos | Trazabilidad por commits del repositorio; fuentes en consolidacion_2026-10-21.md. |
+| F-04 | Cambios y reportes | Trazabilidad por commits del repositorio; fuentes en consolidacion_2026-10-21.md. |
 
 ## G. Planificación
 
@@ -72,7 +72,7 @@
 
 | ID | Dato | Valor |
 |---|---|---|
-| H-02 | Decisiones y correcciones | Reconstrucción desde Git, alcance académico explícito y condiciones de entrega futura. |
+| H-02 | Decisiones y correcciones | Reconstrucción desde Git, alcance acordado y condiciones de entrega futura. |
 | H-03 | Alcance de esta actualización | La declaración de herramientas conserva su edición anterior por indicación del equipo. |
 
 ## I. Evaluación
@@ -92,7 +92,7 @@
 |---|---|---|
 | J-01 | Alojamiento, dominio y HTTPS | Demostración local con Docker; dominio y HTTPS requeridos para habilitación institucional. |
 | J-02 | Respaldo y ubicación | SQL, adjuntos, código y configuración protegida; ubicación separada y acceso restringido como condiciones de transferencia. |
-| J-03 | Restauración y evidencia | Pendiente de ejecutar y comprobar en Ubuntu Server 24.04 LTS. |
+| J-03 | Restauración y evidencia | Pendiente de ejecutar y comprobar en Ubuntu Server 26.04 LTS. |
 | J-04 | Frecuencia y conservación | Propuesta a validar: copias diarias y previas a cambios, siete diarias y cuatro semanales. |
 
 ## K. Manual
@@ -109,7 +109,7 @@
 | ID | Dato | Valor |
 |---|---|---|
 | L-01 | Versión, fecha y entregables | Corte documental previo 258b5e8; técnico 1a43229. Entrega completa prevista 29/10 y defensa 05/11. |
-| L-02 | Agrupación de documentos | Documentación por asignatura en docs; referencias y evidencia en docs_auxiliares; inventario en paquete_entrega.md. |
+| L-02 | Agrupación de documentos | Documentación por área en docs; referencias y evidencia en docs_auxiliares; inventario en paquete_entrega.md. |
 | L-03 | Estado de edición | Consolidación Markdown del 21/10; los PDF conservan su edición y requieren revisión contra el candidato al entregar. |
 | L-04 | Organización de versiones históricas | Antecedentes identificados por fecha y commits; conservar la distinción entre demo histórica y versión de entrega. |
 
@@ -136,7 +136,7 @@
 
 | ID | Respuesta |
 |---|---|
-| B-01 | [La idea es que para el publico sea Portal Vial, lo otro se usa para referirnos internamente y academicamente] |
+| B-01 | [La identidad pública del producto es Portal Vial; Educación Vial IMSJ identifica el proyecto.] |
 | B-02 | [Usa esa, si] |
 | B-03 | [Julio de 2026] |
 | B-04 | [Miercoles 30 de Setiembre, se retiró laravel para hacer una mejor documentacion y mejor defensa.] |

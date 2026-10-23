@@ -6,8 +6,8 @@
 |---|---|---|
 | EP1 | Acceso y control de roles | RF1, RNF1 |
 | EP2 | Comunicación pública y noticias | RF2, RF7–RF10, RNF7, RNF10 |
-| EP3 | Reservas ciudadanas de la versión académica | RF3–RF4, RNF8–RNF9 |
-| EP4 | Gestión de agenda de la versión académica | RF11–RF16 |
+| EP3 | Reservas ciudadanas | RF3–RF4, RNF8–RNF9 |
+| EP4 | Gestión de agenda | RF11–RF16 |
 | EP5 | Materiales de estudio | RF5, RF17, RF20 |
 | EP6 | Preguntas frecuentes | RF6, RF18–RF19 |
 | EP7 | Calidad y requisitos transversales | RNF2–RNF6 |
@@ -27,9 +27,9 @@
 | US7 | Como personal de IMSJ, quiero gestionar el estado de publicación de una noticia. | RF10 | Implementada |
 | US8 | Como personal de IMSJ, quiero que se gestione automáticamente la vigencia de las noticias. | RNF7 | Implementada |
 | US9 | Como personal de IMSJ, quiero distinguir los contenidos publicados de los no publicados. | RNF10 | Implementada |
-| US10 | Como ciudadano, quiero reservar una prueba de manejo en la versión académica. | RF3 | Implementada |
-| US11 | Como ciudadano, quiero reservar la renovación normal de la libreta en la versión académica. | RF4 | Implementada |
-| US12 | Como ciudadano, quiero reservar la renovación urgente de la libreta en la versión académica. | RF4 | Implementada |
+| US10 | Como ciudadano, quiero reservar una prueba de manejo. | RF3 | Implementada |
+| US11 | Como ciudadano, quiero reservar la renovación normal de la libreta. | RF4 | Implementada |
+| US12 | Como ciudadano, quiero reservar la renovación urgente de la libreta. | RF4 | Implementada |
 | US13 | Como personal de IMSJ, quiero evitar reservas duplicadas y excesos de cupo. | RNF8 | Implementada |
 | US14 | Como ciudadano, quiero recibir una confirmación visual de mi reserva. | RNF9 | Implementada |
 | US15 | Como personal de IMSJ, quiero cargar franjas para trámites normales. | RF11 | Implementada |

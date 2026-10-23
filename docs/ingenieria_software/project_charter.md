@@ -5,13 +5,12 @@
 | Dato | Valor |
 |---|---|
 | Producto | Portal Vial |
-| Proyecto académico | Educación Vial IMSJ |
+| Proyecto | Educación Vial IMSJ |
 | Equipo | RC5 |
 | Cliente | Intendencia de San José — Sección Tránsito |
 | Referente del cliente | Inspector de Tránsito |
 | Líder del proyecto | Tomás Cabrera |
-| Entrega académica | 29/10/2026 |
-| Defensa | 05/11/2026 |
+| Entrega prevista | 29/10/2026 |
 
 ## 2. Necesidad y justificación
 
@@ -37,13 +36,14 @@ Portal Vial centraliza esos contenidos y permite mantenerlos desde un panel admi
 - Aprobación de contenidos por la Directora antes de su publicación.
 - Control de acceso por roles e historial de acciones administrativas.
 - Gráficos asociados a las preguntas del simulador.
-- Versión académica con agenda de pruebas de manejo y renovaciones, franjas, cupos, reservas propias, cancelación y consultas por día, semana y mes.
+- Agenda de pruebas de manejo y renovaciones, franjas, cupos, reservas propias, cancelación y consultas por día, semana y mes.
 - Dos frontends, API PHP nativa, esquema MySQL y entorno Docker Compose.
 - Documentación de relevamiento, requisitos, planificación, diseño, infraestructura, seguridad y pruebas.
 
 ### Alcance excluido
 
-- La agenda de trámites no forma parte de la entrega institucional al cliente. Se conserva únicamente en la versión académica del proyecto.
+- Emisión, renovación o validación legal de la libreta de conducir desde el sistema.
+- Pagos en línea e integración con expedientes institucionales externos.
 
 ## 5. Equipo e interesados
 
@@ -77,7 +77,7 @@ La administración y el mantenimiento posteriores corresponden a la Intendencia.
 | Riesgo | Impacto | Tratamiento |
 |---|---|---|
 | Cambios de alcance | Diferencias entre la solución y las necesidades del cliente. | Registrar las solicitudes y actualizar la documentación afectada. |
-| Confusión de versiones | Presentar la agenda académica como servicio institucional. | Identificar el destino de cada función y paquete de entrega. |
+| Interpretación incorrecta de las reservas | Confundir una reserva de franja con la emisión o renovación efectiva de la libreta. | Explicar el límite funcional en requisitos, manual y transferencia. |
 | Pérdida de datos | Interrupción de la operación y pérdida de adjuntos. | Respaldar la base de datos, los archivos y la configuración. |
 | Exposición de datos | Acceso o publicación indebidos. | Aplicar permisos, revisión de contenidos, controles de archivos y pruebas de seguridad. |
 
@@ -87,6 +87,6 @@ La administración y el mantenimiento posteriores corresponden a la Intendencia.
 - Solo la Directora aprueba; la publicación es una acción posterior.
 - Las consultas del portal llegan a la bandeja del personal.
 - El simulacro corrige con las respuestas almacenadas en el servidor.
-- La agenda académica respeta propiedad, duplicación y capacidad.
+- La agenda respeta propiedad, duplicación y capacidad.
 - El entorno inicia con Docker y conserva datos y archivos entre reinicios.
 - Los requisitos se relacionan con historias, implementación y evidencia.

@@ -2,15 +2,15 @@
 
 **Proyecto:** Educación Vial IMSJ - Portal Vial
 
-**Entorno objetivo:** Ubuntu Server 24.04 LTS
+**Entorno objetivo:** Ubuntu Server 26.04 LTS
 
 ## 1. Inventario del servidor
 
 | Elemento | Configuración |
 |---|---|
-| CPU | 6 vCPU |
-| Memoria | 8 GB RAM |
-| Disco | 50 GB SSD/NVMe |
+| CPU | 2 vCPU iniciales |
+| Memoria | 4 GB RAM |
+| Disco | 30 GB SSD/NVMe; 40–50 GB con siete backups completos locales |
 | Red | IP fija con Netplan |
 | Administración | OpenSSH y Cockpit |
 | Firewall | UFW |
@@ -140,7 +140,7 @@ backup-AAAA-MM-DD_HH-MM-SS/
 └── SHA256SUMS
 ```
 
-La carpeta contiene configuración sensible y debe almacenarse con acceso restringido. Además de la copia local se conserva otra copia en un medio externo protegido.
+La carpeta contiene configuración sensible y debe almacenarse con acceso restringido. La VM de 30 GB conserva dos días de copias locales; las copias válidas se trasladan a un medio externo protegido, donde se mantienen al menos siete copias diarias. Para conservar siete backups completos dentro de la propia VM se amplía el disco a 40–50 GB.
 
 ## 10. Restauración
 

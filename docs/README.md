@@ -1,6 +1,6 @@
 # Documentación del proyecto
 
-**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 22/10/2026.
+**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 23/10/2026.
 
 ## Ingeniería de Software
 
@@ -63,13 +63,6 @@
 
 [Contrato API](../docs_auxiliares/backend/api.md) y [verificación](../docs_auxiliares/evidencias/verificacion.md).
 
-## Referencias de estructura
+## Trazabilidad interna
 
-| Tema | Teórico del curso |
-|---|---|
-| Especificación y modelado | [ADA](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md) |
-| Relevamiento | [Entrevistas](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/entrevistas.md) |
-| Historias | [Historias de usuario](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/user-stories.md) |
-| Backlog | [Backlog](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/backlog.md) |
-| Planning | [Sprint Planning](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/sprint-planning.md) |
-| Review | [Eventos de Scrum](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/scrum-events.md) |
+La [especificación](ingenieria_software/Requerimientos.md), el [backlog](ingenieria_software/backlog.md), el [control de cambios](ingenieria_software/control_cambios.md) y el [plan de pruebas](ingenieria_software/plan_informe_pruebas.md) mantienen la relación entre necesidades del cliente, implementación y evidencia.

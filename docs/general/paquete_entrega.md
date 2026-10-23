@@ -1,6 +1,6 @@
 # Paquete de entrega del proyecto completo
 
-**Preparación al 22/10/2026.** Entrega prevista en el cronograma: 29/10/2026; defensa: 05/11/2026. Los cinco integrantes de RC5 presentan, entregan y defienden el proyecto completo.
+**Preparación al 23/10/2026.** Entrega prevista en el cronograma: 29/10/2026; defensa: 05/11/2026. Los cinco integrantes de RC5 presentan, entregan y defienden el proyecto completo.
 
 ## Inventario
 
@@ -14,7 +14,7 @@
 | Respaldo de transferencia | SQL y adjuntos compatibles con la versión elegida; configuración entregada por canal protegido. Excluir credenciales y datos personales de las copias públicas. |
 | Identificación | Commit exacto, inventario y tag propuesto entrega-final-2026-10-29, a crear sobre el candidato que se entregue. |
 
-El proyecto completo incluye agenda y reservas como implementación académica. Su inclusión no habilita por sí sola un trámite institucional de licencia. Los requisitos y las historias del backlog figuran implementados.
+El proyecto completo incluye agenda y reservas. Una reserva organiza una franja disponible, pero no habilita por sí sola la emisión o renovación institucional de una licencia. Los requisitos y las historias del backlog figuran implementados.
 
 ## Verificación y recepción previstas
 
@@ -24,7 +24,7 @@ El proyecto completo incluye agenda y reservas como implementación académica. 
 4. Ejecutar un recorrido completo del portal, el panel, las categorías de preguntas y las modalidades de reserva.
 5. Obtener constancia de recepción con fecha, versión, inventario y observaciones; registrar por separado cualquier aceptación del cliente.
 
-La restauración del respaldo completo debe comprobarse en Ubuntu Server 24.04 LTS antes de cerrar el paquete de entrega.
+La restauración del respaldo completo debe comprobarse en Ubuntu Server 26.04 LTS antes de cerrar el paquete de entrega.
 
 ## Referencias
 

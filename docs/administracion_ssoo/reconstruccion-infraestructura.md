@@ -2,17 +2,17 @@
 
 **Proyecto:** Educación Vial IMSJ - Portal Vial
 
-**Sistema objetivo:** Ubuntu Server 24.04 LTS
+**Sistema objetivo:** Ubuntu Server 26.04 LTS
 
 ## 1. Preparar el servidor
 
 Crear una máquina virtual o servidor con:
 
-- 6 vCPU;
-- 8 GB de RAM;
-- 50 GB de disco SSD/NVMe;
+- 2 vCPU;
+- 4 GB de RAM;
+- 30 GB de disco SSD/NVMe, o 40–50 GB si se conservarán siete backups completos dentro de la VM;
 - adaptador de red con acceso desde los equipos autorizados;
-- ISO de Ubuntu Server 24.04 LTS.
+- ISO de Ubuntu Server 26.04 LTS.
 
 Durante la instalación seleccionar Ubuntu Server, habilitar OpenSSH Server, crear un usuario administrativo distinto de `root` y utilizar el nombre `srv-imsj` o uno equivalente.
 
@@ -35,7 +35,7 @@ ip -br address
 ip route
 ```
 
-La salida debe identificar Ubuntu 24.04 LTS y los recursos asignados.
+La salida debe identificar Ubuntu 26.04 LTS y los recursos asignados.
 
 ## 3. Configurar la IP fija
 
@@ -261,10 +261,10 @@ crontab -e
 ```
 
 ```cron
-0 2 * * * cd /srv/imsj/Proyecto-IMSJ/backend && ./scripts/backup.sh /srv/backups/imsj >> /srv/backups/imsj/backup.log 2>&1
+0 2 * * * cd /srv/imsj/Proyecto-IMSJ/backend && BACKUP_RETENTION_DAYS=2 ./scripts/backup.sh /srv/backups/imsj >> /srv/backups/imsj/backup.log 2>&1
 ```
 
-Copiar cada backup válido a un medio externo protegido. La copia externa no debe quedar montada permanentemente con permisos de escritura para todos los usuarios.
+La retención de dos días corresponde a la VM base de 30 GB. Copiar cada backup válido a un medio externo protegido y conservar allí al menos siete copias diarias. Si se desea usar la retención local predeterminada de siete días del script, asignar 40–50 GB de disco. La copia externa no debe quedar montada permanentemente con permisos de escritura para todos los usuarios.
 
 ## 12. Probar la restauración
 
@@ -317,4 +317,4 @@ Guardar capturas o salidas de:
 - carpeta de backup, manifiesto y validación SHA-256;
 - restauración aislada funcionando.
 
-No declarar la instalación o la restauración como realizadas hasta obtener esta evidencia en Ubuntu Server 24.04 LTS.
+No declarar la instalación o la restauración como realizadas hasta obtener esta evidencia en Ubuntu Server 26.04 LTS.

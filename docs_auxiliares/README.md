@@ -1,6 +1,6 @@
 # Material técnico auxiliar
 
-**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 22/10/2026.
+**Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 23/10/2026.
 
 ## Backend
 
@@ -14,6 +14,6 @@
 
 [Registro de verificación](evidencias/verificacion.md), [base nativa](evidencias/evidencia_backend_nativo.json), [inicio Docker](evidencias/evidencia_inicio_docker.json), [integración del 21/10](../output/integracion-final.json) y [auditoría API completa](../output/security-api-final.txt).
 
-## Documentación por asignatura
+## Documentación del proyecto
 
 [Índice del proyecto](../docs/README.md).

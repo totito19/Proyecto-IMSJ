@@ -1,6 +1,6 @@
 # Condiciones de operación y transferencia
 
-**Corte:** 22/10/2026. Este documento distingue la instalación académica actual de las condiciones propuestas para habilitar un servicio institucional. Las propuestas no acreditan contratación, designación de personas ni aprobación de políticas de la Intendencia.
+**Corte:** 23/10/2026. Este documento distingue la instalación actual en red controlada de las condiciones propuestas para habilitar un servicio institucional. Las propuestas no acreditan contratación, designación de personas ni aprobación de políticas de la Intendencia.
 
 ## Instalación y responsabilidades actuales
 
@@ -12,7 +12,7 @@
 | Administración posterior | Intendencia de San José. |
 | Interlocución de proyecto | Inspector de Tránsito como referente; Directora para validación de necesidades y aprobación de contenidos. |
 | Infraestructura de demostración | Equipos del grupo y volúmenes Docker; la documentación no compromete un proveedor comercial. |
-| Presupuesto de esta entrega | Alcance académico expresado en trabajo y entregables; no constituye una cotización comercial ni compromiso de gasto institucional. |
+| Presupuesto de esta entrega | Alcance expresado en trabajo y entregables; no constituye una cotización comercial ni compromiso de gasto institucional. |
 
 ## Condiciones para habilitación institucional
 
@@ -23,11 +23,11 @@
 
 ## Propuesta de respaldo y conservación
 
-Como base de operación a validar por la Intendencia, se propone una copia diaria de SQL y adjuntos, una copia previa a cada actualización y una copia final de entrega. Mantener configuración y código compatibles, acceso restringido y una copia separada del equipo de servicio. Conservar siete copias diarias y cuatro semanales como propuesta inicial, verificando que la política institucional autorice ese período.
+Como base de operación a validar por la Intendencia, se propone una copia diaria de SQL y adjuntos, una copia previa a cada actualización y una copia final de entrega. Mantener configuración y código compatibles, acceso restringido y una copia separada del equipo de servicio. La VM base conserva dos días de copias locales; el medio externo protegido conserva siete copias diarias y cuatro semanales como propuesta inicial, verificando que la política institucional autorice ese período. Si se requieren siete copias completas dentro de la VM, el disco debe ampliarse de 30 GB a 40–50 GB.
 
 La conservación de consultas, cuentas e historial requiere una decisión institucional por finalidad. La versión actual no implementa una política automática de vencimiento o purga. El período sugerido para respaldos no establece el período de conservación de los datos personales.
 
-La restauración final debe ejecutarse y comprobarse en Ubuntu Server 24.04 LTS antes de preparar el pendrive de entrega. Hasta contar con esa evidencia no se considera validado el respaldo completo.
+La restauración final debe ejecutarse y comprobarse en Ubuntu Server 26.04 LTS antes de preparar el pendrive de entrega. Hasta contar con esa evidencia no se considera validado el respaldo completo.
 
 ## Soporte y capacitación de transferencia
 

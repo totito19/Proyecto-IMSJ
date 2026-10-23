@@ -86,9 +86,9 @@ Además de PUT JSON y multipart nativo, se conserva **POST multipart con `_metho
 
 Noticias, materiales y preguntas frecuentes siguen `BORRADOR → PENDIENTE → APROBADO → PUBLICADO`. El personal puede preparar, enviar a revisión y publicar contenido aprobado; solo Directora puede aprobar. Editar el contenido lo devuelve a borrador. El portal acepta consultas con nombre, correo y mensaje; el panel permite leerlas y marcarlas como leídas. Las preguntas del simulador admiten una imagen opcional que se muestra sin revelar la respuesta correcta.
 
-No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`.  La cancelación ciudadana se incorporó posteriormente. Agenda y reservas son académicas.
+No se crean rutas del ejemplo de productos ni se adoptan JWT/cookies o `datos`/`mensaje`. La cancelación ciudadana se incorporó posteriormente. Agenda y reservas forman parte del alcance entregado.
 
-La relación con la [letra académica](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/841e992a88e4be1d38feaa93e10b02d69c31f8cc/Proyectos/proyecto_educacion_vial_IMSJ.md) y los resultados técnicos se documentan en [verificación](../evidencias/verificacion.md).
+La relación con los [requerimientos](../../docs/ingenieria_software/Requerimientos.md) y los resultados técnicos se documenta en [verificación](../evidencias/verificacion.md).
 
 ## Cancelación y consulta de agenda
 
@@ -103,7 +103,7 @@ La cancelación no recibe un ID de usuario en el cuerpo. `Auth` exige `PUBLICO_G
 | Login / logout | Credenciales o token válido; límite de intentos en ingreso. | Emitir y revocar sesiones en `auth_tokens`. |
 | Crear o editar contenido | Cuenta administrativa, campos y adjuntos permitidos. | Datos y auditoría; editar contenido validado devuelve a borrador. |
 | Cambiar estado | Transición permitida y Directora para aprobación. | Estado e historial; publicar habilita la consulta pública correspondiente. |
-| Corregir prueba | IDs y opciones válidos, sin duplicar preguntas. | Calcular resultado con la respuesta almacenada; no persiste una calificación académica. |
+| Corregir prueba | IDs y opciones válidos, sin duplicar preguntas. | Calcular resultado con la respuesta almacenada; no persiste una calificación. |
 | Enviar consulta / marcar leída | Campos públicos válidos; personal para gestionar lectura. | Crear la consulta o actualizar su marca de lectura. |
 | Reservar / cancelar | Cuenta ciudadana, cupo/duplicación o propiedad según acción. | Crear o eliminar la relación usuario/franja. |
 

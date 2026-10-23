@@ -86,6 +86,6 @@ La evidencia de integración identifica 43 archivos PHP mediante hashes. El JSON
 | Commit de referencia | 1a43229 |
 | Tag final | Identificador propuesto: entrega-final-2026-10-29; se creará sobre el candidato definitivo. |
 | Acta de aceptación | R-06 y acta de cierre: demostración y aprobación del resultado el 13/10/2026. |
-| Evidencia de restauración | Pendiente de generar mediante una restauración aislada en Ubuntu Server 24.04 LTS. |
+| Evidencia de restauración | Pendiente de generar mediante una restauración aislada en Ubuntu Server 26.04 LTS. |
 
 [Control de cambios](../../docs/ingenieria_software/control_cambios.md), [backlog](../../docs/ingenieria_software/backlog.md) y [entregables de seguridad](../../docs/electiva_ciberseguridad/checklist_ciberseguridad_entrega_final.md).

@@ -2,7 +2,7 @@
 
 **Proyecto:** Educación Vial IMSJ - Portal Vial
 
-**Plataforma objetivo:** Ubuntu Server 24.04 LTS
+**Plataforma objetivo:** Ubuntu Server 26.04 LTS
 
 ## Documentos de entrega
 
@@ -16,17 +16,17 @@
 
 ## Especificación principal
 
-- 40 usuarios simultáneos.
-- 6 vCPU.
-- 8 GB de RAM.
-- 50 GB SSD/NVMe.
+- Objetivo inicial de 90 sesiones simultáneas, sujeto a prueba de carga.
+- 2 vCPU.
+- 4 GB de RAM.
+- 30 GB SSD/NVMe; 40–50 GB si se mantienen siete backups completos dentro de la VM.
 - IP fija con Netplan.
 - OpenSSH y Cockpit.
 - UFW.
 - Docker Engine y Docker Compose v2.
-- Un backup diario, siete copias locales y una copia externa.
+- Un backup diario, las dos copias más recientes en la VM y al menos siete copias diarias en un medio externo protegido.
 
-El dimensionamiento fue calculado con la herramienta docente. Los datos iniciales y el crecimiento son supuestos que deben ajustarse con mediciones reales.
+El dimensionamiento contempla accesos repentinos, como dos clases que abren el portal mediante un código QR durante una charla, además del tráfico habitual. Una sesión abierta no equivale a una solicitud PHP activa permanentemente. La configuración se valida midiendo latencia, errores, CPU, RAM e I/O con 90 sesiones; un uso sostenido superior al 70 % activa la revisión o ampliación del recurso afectado.
 
 ## Archivos operativos
 
@@ -38,11 +38,11 @@ El dimensionamiento fue calculado con la herramienta docente. Los datos iniciale
 
 ## Estado de evidencia
 
-La configuración y el procedimiento están preparados. La instalación, el backup completo y la restauración deben ejecutarse y registrarse en una VM Ubuntu Server 24.04 LTS antes de imprimir la versión final.
+La configuración y el procedimiento están preparados. La instalación, el backup completo y la restauración deben ejecutarse y registrarse en una VM Ubuntu Server 26.04 LTS antes de imprimir la versión final.
 
-## Fuentes docentes
+## Referencias técnicas
 
-- [Requerimientos por asignatura](https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/Lineamientos/requerimientos_por_asignatura.md)
 - [Calculadora de servidor](https://github.com/portalutu/3--Adm-SSOO/blob/main/Teoricos/calculadora_requerimientos_servidor.html)
 - [Plan de servidor Linux con Docker](https://github.com/portalutu/3--Adm-SSOO/blob/main/Teoricos/plan_servidor_linux_docker.md)
-- [Práctica Ubuntu Server 24.04 LTS](https://github.com/portalutu/3--Adm-SSOO/blob/main/Practicas/4_ubuntu_server_completo.md)
+- [Ciclo de soporte de Ubuntu](https://ubuntu.com/about/release-cycle)
+- [Docker Engine en Ubuntu](https://docs.docker.com/engine/install/ubuntu/)

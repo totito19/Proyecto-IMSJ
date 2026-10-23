@@ -10,7 +10,7 @@
 
 | ID | Área | Resultado o referencia | Revisión |
 |---|---|---|---|
-| D-01 | Alcance | Cliente y agenda académica identificados en el charter. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
+| D-01 | Alcance | Cliente, portal, gestión de contenidos, agenda y reservas identificados en el charter. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
 | D-02 | Equipo | Roles y referente registrados. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
 | D-03 | Relevamiento | Guía e informe de entrevista. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
 | D-04 | Requisitos | RF1–RF24 y RNF1–RNF10. | Contenido y referencias documentales presentes; alcance según fuente, sin certificar aceptación final. |
@@ -27,15 +27,8 @@
 
 ## Referencias de estructura
 
-| Documento | Fuente |
-|---|---|
-| Especificación y análisis | [Especificación y modelado](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md) |
-| Entrevista | [Entrevistas](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/entrevistas.md) |
-| Backlog | [Backlog](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/backlog.md) |
-| Historias | [Historias de usuario](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/user-stories.md) |
-| Planning | [Sprint Planning](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/sprint-planning.md) |
-| Review | [Eventos de Scrum](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/scrum-events.md) |
+[Análisis](../../docs/ingenieria_software/analisis_de_requerimientos.md), [especificación](../../docs/ingenieria_software/Requerimientos.md), [backlog](../../docs/ingenieria_software/backlog.md), [planificación](../../docs/ingenieria_software/sprint_planning.md) y [revisiones](../../docs/ingenieria_software/actas_sprint_review.md).
 
 ## Estado
 
-Los requisitos y las historias del backlog figuran implementados. La instalación y restauración en Ubuntu Server 24.04 LTS permanecen como comprobaciones previas a la entrega.
+Los requisitos y las historias del backlog figuran implementados. La instalación y restauración en Ubuntu Server 26.04 LTS permanecen como comprobaciones previas a la entrega.

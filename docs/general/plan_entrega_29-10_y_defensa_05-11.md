@@ -1,6 +1,6 @@
 # Plan de preparación — entrega 29/10/2026 y defensa 05/11/2026
 
-**Actualización documental:** 22/10/2026.
+**Actualización documental:** 23/10/2026.
 
 ## 1. Fechas, alcance y regla de trabajo
 
@@ -43,7 +43,7 @@
 - Validaciones, permisos, manejo de errores y medidas de seguridad básicas.
 - Estructura modular y documentación de instalación.
 - Docker Compose completo y comprobado.
-- Confirmación docente documentada sobre la equivalencia aceptada de PHP nativo frente a Laravel y de Fetch frente a jQuery/AJAX, porque la documentación del proyecto y la implementación no coinciden literalmente en estos puntos.
+- Decisión tecnológica documentada: PHP nativo y Fetch, con su justificación, impacto y comprobación en el producto entregado.
 
 ### Administración de Sistemas Operativos
 
@@ -64,7 +64,7 @@
 
 ### Entrega física
 
-- Una carpeta impresa por asignatura, según indiquen los docentes.
+- Una carpeta impresa por área documental, conforme al inventario de entrega.
 - Pendrive con código, documentación, SQL, Docker, backup y evidencias.
 - Acuse de recibo detallado en dos copias: una queda con la institución y otra vuelve firmada al equipo.
 - Copia idéntica de todo el material fuera del pendrive entregado.
@@ -91,7 +91,7 @@ Cada responsable debe tener un suplente capaz de ejecutar su parte el día de la
 3. Convertir este documento en un tablero simple: `Pendiente`, `En curso`, `Para revisar`, `Terminado`.
 4. Revisar los cambios locales existentes en el momento de ejecución y agruparlos de acuerdo con su propósito.
 5. Elegir la computadora de demostración y comprobar su motor Docker; utilizar el registro de arranque como referencia operativa.
-6. Crear una lista única de bloqueos y dudas docentes.
+6. Crear una lista única de bloqueos y decisiones pendientes.
 
 **Salida del día:** responsables confirmados, tablero visible, equipo de demo elegido y estado inicial guardado.
 
@@ -113,8 +113,8 @@ Cada responsable debe tener un suplente capaz de ejecutar su parte el día de la
    - obligatoria y realizable antes del 25/10;
    - entrega posterior acordada;
    - fuera de alcance con justificación.
-3. Confirmar con docente o referente las diferencias tecnológicas PHP/Laravel y Fetch/jQuery.
-4. Aclarar qué agenda es académica y qué información fue realmente solicitada por el cliente.
+3. Documentar la decisión tecnológica PHP nativo/Fetch y verificar su correspondencia con los requisitos.
+4. Consolidar agenda y reservas dentro del alcance del producto y aclarar que no emiten ni renuevan licencias.
 5. Actualizar backlog, requisitos y control de cambios con esas decisiones.
 
 **Salida del día:** alcance cerrado por escrito. Ninguna función queda en un “más o menos terminado”.
@@ -358,7 +358,7 @@ Si un control no se aprueba, se recorta una mejora opcional y se protege primero
 
 ### Antes de entregar
 
-- [ ] Fecha nueva respaldada por comunicación docente.
+- [ ] Fecha de entrega respaldada por una comunicación registrada.
 - [ ] Alcance y condiciones de entrega aceptados por escrito.
 - [ ] Repositorio limpio, cambios revisados y tag remoto creado.
 - [ ] Docker probado desde cero en otra computadora.
@@ -380,21 +380,14 @@ Si un control no se aprueba, se recorta una mejora opcional y se protege primero
 - [ ] Docker, API y base probados el mismo día.
 - [ ] Alcance, versión y condiciones de operación explicados.
 
-## 9. Guías docentes usadas
+## 9. Documentos de referencia
 
-- Lineamientos generales: https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/Lineamientos/README.md
-- Requisitos por asignatura: https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/Lineamientos/requerimientos_por_asignatura.md
-- Sprint Review: https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/docs_docentes/05_sprint_review.md
-- Control de cambios: https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/docs_docentes/06_control_de_cambios.md
-- Cierre de proyecto: https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/docs_docentes/07_cierre_de_proyecto.md
-- Ética de IA: https://github.com/portalutu/proyecto-3ro-bt-2026/blob/main/docs_docentes/08_etica_uso_de_ia.md
-- Repositorio de Ingeniería de Software: https://github.com/portalutu/ing_software-3ro-bt
-- [Plantillas de Ingeniería de Software](https://github.com/portalutu/ing_software-3ro-bt/tree/main/templates).
-- [Especificación, modelado y trazabilidad](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/ADA.md).
-- Manual de Git: https://github.com/portalutu/ing_software-3ro-bt/blob/main/documentos/manual_git_v2.md
-- Repositorio de Administración de SSOO: https://github.com/portalutu/3--Adm-SSOO
-- Plan de servidor, backup y restauración: https://github.com/portalutu/3--Adm-SSOO/blob/main/Teoricos/plan_servidor_linux_docker.md
-- Guía Docker: https://github.com/portalutu/3--Adm-SSOO/blob/main/docker/docker.md
+- [Constitución del proyecto](../ingenieria_software/project_charter.md).
+- [Análisis de requerimientos](../ingenieria_software/analisis_de_requerimientos.md).
+- [Plan e informe de pruebas](../ingenieria_software/plan_informe_pruebas.md).
+- [Arquitectura propuesta](../administracion_ssoo/arquitectura_propuesta.md).
+- [Reconstrucción de infraestructura](../administracion_ssoo/reconstruccion-infraestructura.md).
+- [Paquete de entrega](paquete_entrega.md).
 
 ## 10. Versión de referencia
 
@@ -407,5 +400,5 @@ Si un control no se aprueba, se recorta una mejora opcional y se protege primero
 | SAST y DAST | Informes y revalidación del 21/10 |
 | Hardening | Usuarios de servicio, raíz de lectura y capacidades reducidas |
 | Tag de entrega | Propuesto: entrega-final-2026-10-29, a crear sobre el commit entregado. |
-| Referencia docente de fechas | Cronograma documental vigente; se conserva como planificación de entrega 29/10 y defensa 05/11, sin atribuir una comunicación docente adicional. |
+| Referencia de fechas | Cronograma documental vigente: entrega 29/10 y presentación 05/11. |
 | Paquete para el cliente | Proyecto completo: código, base, instalación, documentación, pruebas y respaldo; participación de los cinco integrantes. Véase paquete_entrega.md. |

@@ -45,7 +45,7 @@ Las estimaciones y asignaciones se relacionan con la [planificación de sprints]
 
 ## Alcance de la versión
 
-**Estado consolidado al 21/10/2026:** CC-01–CC-05 están Listos. La versión incorpora simulador, consultas, Directora, aprobación diferenciada y gráficos del test. Agenda/reservas siguen siendo académicas.  La cancelación ciudadana se añadió a la agenda académica el 20/10.
+**Estado consolidado al 21/10/2026:** CC-01–CC-05 están Listos. La versión incorpora simulador, consultas, Directora, aprobación diferenciada, gráficos del test, agenda y reservas. La cancelación ciudadana se añadió a la agenda el 20/10.
 
 El crédito y la responsabilidad corresponden al equipo. Los resultados se registran en [verificación](../evidencias/verificacion.md).
 
@@ -64,6 +64,6 @@ Al revisar una instalación se debe comparar el esquema actual, la migración in
 | Verificación de la base nativa | 155 comprobaciones sobre 42 rutas en el registro del 05/10. |
 | Corte técnico posterior | 1a43229; 192 comprobaciones y 46 endpoints al 21/10. |
 | Responsabilidad por área | Tomás Cabrera: backend; Gabriela Romero: datos; Juan Robaina: pruebas y documentación. |
-| Portabilidad y recuperación | Pendiente de comprobar mediante una restauración aislada en Ubuntu Server 24.04 LTS. |
+| Portabilidad y recuperación | Pendiente de comprobar mediante una restauración aislada en Ubuntu Server 26.04 LTS. |
 
 La recuperación se considera válida únicamente cuando el backup se restaura y verifica con una versión de código compatible.

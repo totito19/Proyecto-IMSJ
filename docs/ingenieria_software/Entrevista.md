@@ -76,4 +76,4 @@ Conocer los procesos de la Sección Tránsito y las necesidades de información,
 
 ## Referencia
 
-[Entrevistas del curso](https://github.com/portalutu/ing_software-3ro-bt/blob/main/Teoricos/entrevistas.md).
+[Registro de la entrevista](informe%20entrevista.md) y [requerimientos resultantes](Requerimientos.md).

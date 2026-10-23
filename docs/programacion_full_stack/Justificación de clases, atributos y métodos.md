@@ -44,7 +44,7 @@ Imágenes/enlaces de noticia se conservan como relaciones SQL, serializadas por 
 
 Alta/edición/estado/eliminación administrativa confirma auditoría con sus datos. Archivos nuevos se eliminan si falla la transacción; anteriores se limpian después del commit. Reserva bloquea franja antes de contar cupos y guardar; la combinación usuario/franja también es única en SQL. Gestión de personal conserva al menos un integrante activo e impide quitar el acceso propio.
 
-Consulta ciudadana, rol Directora, aprobación diferenciada y gráfico del test sí están implementados. CC-01–CC-05 están Listos; agenda continúa como alcance académico. El MER y el pasaje a tablas describen el modelo actual; el UML PNG se conserva como antecedente y se acompaña de una vista de clases nativas en [diagramas](Diagramas/README.md).
+Consulta ciudadana, rol Directora, aprobación diferenciada, gráfico del test, agenda y reservas están implementados. CC-01–CC-05 están Listos. El MER y el pasaje a tablas describen el modelo actual; el UML PNG se conserva como antecedente y se acompaña de una vista de clases nativas en [diagramas](Diagramas/README.md).
 
 ## Métodos públicos y responsabilidad por capa
 

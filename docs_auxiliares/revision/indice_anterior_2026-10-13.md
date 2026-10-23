@@ -35,4 +35,4 @@
 
 ## Datos documentales
 
-[Ficha](formulario_datos_documentacion.md), [datos del proyecto](aclaraciones_y_pendientes.md) e [índice por asignatura](../../docs/README.md).
+[Ficha](formulario_datos_documentacion.md), [datos del proyecto](aclaraciones_y_pendientes.md) e [índice documental](../../docs/README.md).
