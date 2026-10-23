@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar sesión — Educación Vial IMSJ</title>
     <meta name="robots" content="noindex, nofollow">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/login.css?v=6">
 </head>
 <body>
 
@@ -14,7 +14,7 @@
         <div class="login-head">
             <img src="img/eSanjo.png" alt="Escudo de la Intendencia de San José">
             <strong>Intendencia de San José</strong>
-            <span>Educación Vial</span>
+            <h1>Portal Vial</h1>
         </div>
 
         <div class="role-tabs">
@@ -34,7 +34,7 @@
                         <div class="field">
                             <label for="ciu-cedula">Cédula</label>
                             <input class="input" id="ciu-cedula" name="cedula" type="text"
-                                   placeholder="X.XXX.XXX-X" autocomplete="username" required>
+                                   placeholder="X.XXX.XXX-X" autocomplete="username" inputmode="numeric" required>
                         </div>
                         <div class="field">
                             <label for="ciu-password">Contraseña</label>
@@ -49,17 +49,33 @@
                         <div class="field">
                             <label for="reg-cedula">Cédula</label>
                             <input class="input" id="reg-cedula" name="cedula" type="text"
-                                   placeholder="X.XXX.XXX-X" autocomplete="username" required>
+                                   placeholder="X.XXX.XXX-X" autocomplete="username" inputmode="numeric"
+                                   aria-describedby="reg-cedula-feedback" required>
+                            <p class="credential-feedback" id="reg-cedula-feedback" aria-live="polite"></p>
                         </div>
                         <div class="field">
                             <label for="reg-password">Contraseña</label>
                             <input class="input" id="reg-password" name="password" type="password"
-                                   placeholder="••••••••" autocomplete="new-password" minlength="6" required>
+                                   placeholder="••••••••" autocomplete="new-password" minlength="6"
+                                   aria-describedby="reg-password-advice" required>
+                            <div class="password-advice" id="reg-password-advice" data-level="weak" hidden>
+                                <div class="password-meter__heading">
+                                    <span>Fortaleza orientativa</span>
+                                    <strong id="reg-password-level"></strong>
+                                </div>
+                                <div class="password-meter__track" role="meter" aria-label="Fortaleza orientativa de la contraseña"
+                                     aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" aria-valuetext="Sin contraseña">
+                                    <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+                                </div>
+                                <p id="reg-password-hint" aria-live="polite"></p>
+                            </div>
                         </div>
                         <div class="field">
                             <label for="reg-password-confirm">Confirmar contraseña</label>
                             <input class="input" id="reg-password-confirm" name="password_confirm" type="password"
-                                   placeholder="••••••••" autocomplete="new-password" minlength="6" required>
+                                   placeholder="••••••••" autocomplete="new-password" minlength="6"
+                                   aria-describedby="reg-password-confirm-feedback" required>
+                            <p class="credential-feedback" id="reg-password-confirm-feedback" aria-live="polite"></p>
                         </div>
                         <button type="submit" class="btn btn-accent" id="btn-ciudadano-registro">Crear cuenta</button>
                         <p class="field-error" id="citizen-register-error" role="alert"></p>
@@ -72,7 +88,7 @@
                     <div class="field">
                         <label for="adm-cedula">Cédula</label>
                         <input class="input" id="adm-cedula" name="cedula" type="text"
-                               placeholder="X.XXX.XXX-X" autocomplete="username" required>
+                               placeholder="X.XXX.XXX-X" autocomplete="username" inputmode="numeric" required>
                     </div>
                     <div class="field">
                         <label for="adm-password">Contraseña</label>
@@ -95,6 +111,7 @@
 </div>
 
 <script src="js/api.js?v=4"></script>
-<script src="js/login.js?v=4"></script>
+<script src="js/credenciales.js?v=6"></script>
+<script src="js/login.js?v=7"></script>
 </body>
 </html>

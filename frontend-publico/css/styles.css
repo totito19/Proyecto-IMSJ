@@ -163,12 +163,13 @@ button{ font-family:inherit; }
 }
 
 .btn-logout{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    width:36px;
-    height:36px;
+    display:grid;
+    place-items:center;
+    flex:0 0 44px;
+    width:44px;
+    height:44px;
     padding:0;
+    line-height:0;
     border-radius:10px;
     border:1.5px solid rgba(255,255,255,.4);
     background:rgba(255,255,255,.08);
@@ -177,7 +178,8 @@ button{ font-family:inherit; }
     transition:background-color .2s, transform .15s, color .2s;
 }
 
-.btn-logout svg{ width:18px; height:18px; }
+.btn-logout [data-lucide]{ display:flex; align-items:center; justify-content:center; width:20px; height:20px; margin:0; }
+.btn-logout svg{ display:block; flex:none; width:20px; height:20px; margin:0; }
 
 .btn-logout:hover{
     background:#fff;

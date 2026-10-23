@@ -120,23 +120,124 @@ const Modal = {
 
 /* ── Sidebar responsive ──────────────────────────────────────────────────── */
 
-/** Conecta el botón móvil, el fondo y el cierre de la navegación lateral. */
+/** Contrae en escritorio y abre un menú accesible en tablet y teléfono. */
 function initSidebar() {
   const sidebar = $('.sidebar');
   const burger = $('.topbar__burger');
   const backdrop = $('.sidebar__backdrop');
   if (!sidebar || !burger) return;
+  const app = $('.app');
+  const content = $('.content');
+  const mobile = window.matchMedia('(max-width: 1100px)');
+  const storageKey = 'imsj:sidebar-collapsed';
+  let collapsed = false;
+  let open = false;
+  try { collapsed = localStorage.getItem(storageKey) === 'true'; } catch { /* Preferencia opcional. */ }
 
-  const toggle = (open) => {
-    sidebar.classList.toggle('is-open', open);
-    if (backdrop) backdrop.classList.toggle('is-open', open);
-    burger.setAttribute('aria-expanded', String(open));
-  };
+  // Los enlaces conservan su nombre accesible al mostrar solamente iconos.
+  $$('.sidebar__link', sidebar).forEach((link) => {
+    const label = link.textContent.trim();
+    link.setAttribute('aria-label', label);
+    link.title = label;
+    Array.from(link.childNodes).filter((node) => node.nodeType === Node.TEXT_NODE).forEach((node) => {
+      if (!node.textContent.trim()) return;
+      const span = document.createElement('span');
+      span.className = 'sidebar__label';
+      span.textContent = node.textContent.trim();
+      node.replaceWith(span);
+    });
+  });
+  const title = $('.sidebar__title', sidebar);
+  const subtitle = $('.sidebar__subtitle', sidebar);
+  if (title) title.textContent = 'Portal Vial';
+  if (subtitle) subtitle.textContent = 'Personal IMSJ';
+  sidebar.setAttribute('aria-label', 'Navegación del panel IMSJ');
+  const closeButton = document.createElement('button');
+  closeButton.type = 'button';
+  closeButton.className = 'sidebar__close';
+  closeButton.setAttribute('aria-label', 'Cerrar menú');
+  closeButton.innerHTML = icon('x', 20);
+  $('.sidebar__brand', sidebar).append(closeButton);
 
-  burger.addEventListener('click', () => toggle(!sidebar.classList.contains('is-open')));
-  if (backdrop) backdrop.addEventListener('click', () => toggle(false));
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 900) toggle(false);
+  function render() {
+    app.classList.toggle('is-sidebar-collapsed', !mobile.matches && collapsed);
+    sidebar.classList.toggle('is-open', mobile.matches && open);
+    if (backdrop) backdrop.classList.toggle('is-open', mobile.matches && open);
+    document.body.classList.toggle('has-sidebar-open', mobile.matches && open);
+    sidebar.inert = mobile.matches && !open;
+    content.inert = mobile.matches && open;
+    if (mobile.matches && open) {
+      sidebar.setAttribute('role', 'dialog');
+      sidebar.setAttribute('aria-modal', 'true');
+    } else {
+      sidebar.removeAttribute('role');
+      sidebar.removeAttribute('aria-modal');
+    }
+    burger.setAttribute('aria-expanded', String(mobile.matches ? open : !collapsed));
+    const label = mobile.matches ? 'Abrir menú' : collapsed ? 'Expandir menú' : 'Contraer menú';
+    burger.setAttribute('aria-label', label);
+    burger.title = label;
+    burger.innerHTML = icon(mobile.matches ? 'menu' : collapsed ? 'chevron-right' : 'chevron-left', 20);
+  }
+  function close(restoreFocus = true) {
+    open = false;
+    render();
+    if (restoreFocus) burger.focus();
+  }
+  burger.addEventListener('click', () => {
+    if (mobile.matches) {
+      open = !open;
+      render();
+      if (open) closeButton.focus();
+    } else {
+      collapsed = !collapsed;
+      try { localStorage.setItem(storageKey, String(collapsed)); } catch { /* Preferencia opcional. */ }
+      render();
+    }
+  });
+  closeButton.addEventListener('click', () => close());
+  if (backdrop) backdrop.addEventListener('click', () => close());
+  sidebar.addEventListener('click', (event) => {
+    if (mobile.matches && event.target.closest('a')) close(false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (!mobile.matches || !open) return;
+    if (event.key === 'Escape') { event.preventDefault(); close(); }
+    if (event.key !== 'Tab') return;
+    const controls = $$('a[href], button:not([disabled])', sidebar);
+    const first = controls[0];
+    const last = controls.at(-1);
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault(); last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault(); first.focus();
+    }
+  });
+  mobile.addEventListener('change', () => close(sidebar.contains(document.activeElement)));
+  render();
+}
+
+/** Etiqueta celdas nuevas sin cambiar los datos ni los eventos de cada módulo. */
+function initResponsiveTables() {
+  $$('table.data').forEach((table) => {
+    const labels = $$('thead th', table).map((cell) => cell.textContent.trim());
+    $$('thead th', table).forEach((cell, index) => {
+      cell.classList.toggle('cell-numeric', /^(Cédula|Cupos|Disponibles|Reserva|ID|Desde|Fecha|Vigencia|Horario)/i.test(labels[index] || ''));
+    });
+    const body = $('tbody', table);
+    if (!body) return;
+    table.classList.add('data--responsive');
+    const labelCells = () => {
+      $$('tr', body).forEach((row) => {
+        Array.from(row.cells).forEach((cell, index) => {
+          cell.dataset.label = labels[index] || '';
+          cell.classList.toggle('cell-wide', cell.colSpan > 1);
+          cell.classList.toggle('cell-numeric', /^(Cédula|Cupos|Disponibles|Reserva|ID|Desde|Fecha|Vigencia|Horario)/i.test(labels[index] || ''));
+        });
+      });
+    };
+    labelCells();
+    new MutationObserver(labelCells).observe(body, { childList: true, subtree: true });
   });
 }
 
@@ -286,6 +387,8 @@ function initHistory() {
   bell.setAttribute('aria-label', 'Abrir historial de acciones');
   bell.setAttribute('aria-expanded', 'false');
   bell.setAttribute('aria-controls', 'history-popover');
+  const dot = $('.bell__dot', bell);
+  if (dot) dot.hidden = true;
 
   const popover = document.createElement('section');
   popover.id = 'history-popover';
@@ -341,6 +444,7 @@ function initShell() {
   initAdminNavigation();
   initUserProfile();
   initSidebar();
+  initResponsiveTables();
   initLogout();
   initHistory();
   Modal.bind();

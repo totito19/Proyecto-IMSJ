@@ -83,7 +83,7 @@ sql((ROOT / 'database.sql').read_text(encoding='utf-8'))
 # La cuenta inicial requiere una acción CLI explícita. Este hash es solo de prueba.
 hash_value = '$2y$12$wHo2qJcmf0kZPEuBo.6jfOunmku6xpF/Ikuv1kuJeQmVS6/SjfzJC'
 sql(f"INSERT INTO usuarios(nombre,cedula,password,rol,activo) VALUES ('Equipo prueba','22222222','{hash_value}','PERSONAL_IMSJ',1);")
-sql(f"INSERT INTO usuarios(nombre,cedula,password,rol,activo) VALUES ('Dirección prueba','22222223','{hash_value}','DIRECTORA',1);")
+sql(f"INSERT INTO usuarios(nombre,cedula,password,rol,activo) VALUES ('Dirección prueba','22222238','{hash_value}','DIRECTORA',1);")
 
 call('GET', '/api/health', fields=['status'])
 call('GET', '/api/me', expect=401)
@@ -92,7 +92,7 @@ call('GET', '/.env', expect=404)
 call('GET', '/api/desconocido', expect=404)
 call('POST', '/api/login', raw=b'{mal', expect=400)
 staff = call('POST', '/api/login', {'cedula': '22222222', 'password': 'prueba123'}, fields=['token', 'usuario', 'expira_en'])['token']
-director = call('POST', '/api/login', {'cedula': '22222223', 'password': 'prueba123'}, fields=['token', 'usuario', 'expira_en'])['token']
+director = call('POST', '/api/login', {'cedula': '22222238', 'password': 'prueba123'}, fields=['token', 'usuario', 'expira_en'])['token']
 user_data = {'cedula': '33333333', 'password': 'prueba123', 'password_confirmation': 'prueba123'}
 citizen = call('POST', '/api/register', user_data, expect=201, fields=['token', 'usuario', 'expira_en'])['token']
 call('GET', '/api/me', token=citizen, fields=['usuario'])
@@ -223,6 +223,19 @@ sql('UPDATE usuarios SET activo=1 WHERE id=1;')
 call('GET', '/api/historial?limite=50', token=staff, fields=['acciones'])
 call('GET', '/api/historial?limite=51', token=staff, expect=422)
 check(int(sql('SELECT COUNT(*) FROM historial_acciones;')) >= 15, 'Auditoría persiste modificaciones')
+history = call('GET', '/api/historial?pagina=1&limite=5', token=staff, fields=['acciones', 'paginacion', 'filtros'])
+history_next = call('GET', '/api/historial?pagina=2&limite=5', token=staff)
+check(len(history['acciones']) == 5 and len(history_next['acciones']) == 5, 'Historial paginado devuelve ambas páginas')
+check(not ({a['id'] for a in history['acciones']} & {a['id'] for a in history_next['acciones']}), 'Historial sin duplicados entre páginas')
+check(history['paginacion']['total'] == int(sql('SELECT COUNT(*) FROM historial_acciones;')), 'Historial cuenta todos los registros')
+filtered_history = call('GET', '/api/historial?pagina=1&limite=50&accion=DESACTIVAR&tipo=User', token=staff)
+check(all(a['accion'] == 'DESACTIVAR' and a['tipo_elemento'] == 'User' for a in filtered_history['acciones']), 'Filtros combinados del historial')
+empty_history = call('GET', '/api/historial?pagina=1&buscar=sin-coincidencias-xyz', token=staff)
+check(empty_history['acciones'] == [] and empty_history['paginacion']['total'] == 0, 'Historial sin coincidencias')
+for query in ['pagina=0', 'pagina=1&limite=51', 'pagina=1&usuario_id=abc', 'pagina=1&desde=2026-02-30', 'pagina=1&desde=2026-10-24&hasta=2026-10-23']:
+    call('GET', '/api/historial?' + query, token=staff, expect=422)
+call('GET', '/api/historial?pagina=1', token=citizen, expect=403)
+call('GET', '/api/historial?pagina=1', expect=401)
 
 # Dos servidores independientes evitan que el servidor PHP serial oculte carreras.
 last = call('POST', '/api/franjas', {**franja, 'hora_inicio': '13:00', 'hora_fin': '14:00', 'cupos_totales': 1}, staff, 201)['franja']['id']

@@ -6,7 +6,7 @@
   <title>Personal IMSJ | IMSJ</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" href="img/escudo-san-jose.png">
-  <link rel="stylesheet" href="css/styles.css?v=3">
+<link rel="stylesheet" href="css/styles.css?v=10">
 </head>
 <body>
 
@@ -57,6 +57,45 @@
         </div>
       </section>
 
+      <section class="card" id="historial-completo" aria-labelledby="historial-title">
+        <div class="card__head">
+          <div>
+            <h2 class="card__title" id="historial-title">Historial de cambios</h2>
+            <p class="card__meta">Consultá todos los registros guardados. Las fechas se muestran en horario de Uruguay.</p>
+          </div>
+          <button class="btn btn--ghost" type="button" id="historial-actualizar">Actualizar</button>
+        </div>
+        <form class="audit-filters" id="form-historial">
+          <div class="field audit-filters__search"><label for="historial-buscar">Buscar en el historial</label><input class="input" id="historial-buscar" name="buscar" type="search" maxlength="200" placeholder="Nombre, cédula o identificador" autocomplete="off"></div>
+          <div class="field"><label for="historial-persona">Persona</label><select class="select" id="historial-persona" name="usuario_id"><option value="">Todas las personas</option></select></div>
+          <div class="field"><label for="historial-accion">Acción</label><select class="select" id="historial-accion" name="accion"><option value="">Todas las acciones</option></select></div>
+          <div class="field"><label for="historial-tipo">Módulo</label><select class="select" id="historial-tipo" name="tipo"><option value="">Todos los módulos</option></select></div>
+          <div class="field"><label for="historial-desde">Desde</label><input class="input" id="historial-desde" name="desde" type="date"></div>
+          <div class="field"><label for="historial-hasta">Hasta</label><input class="input" id="historial-hasta" name="hasta" type="date"></div>
+          <div class="field"><label for="historial-limite">Registros por página</label><select class="select" id="historial-limite" name="limite"><option value="20">20 registros</option><option value="50">50 registros</option></select></div>
+          <div class="audit-filters__actions">
+            <button class="btn btn--primary" type="submit" id="historial-aplicar">Aplicar filtros</button>
+            <button class="btn btn--ghost" type="button" id="historial-limpiar">Limpiar filtros</button>
+          </div>
+        </form>
+        <p class="audit-status" id="historial-status" role="status" hidden></p>
+        <div class="table-wrap" id="historial-resultados" aria-busy="false">
+          <table class="data">
+            <thead><tr><th>Persona</th><th>Acción</th><th>Módulo</th><th>Elemento</th><th>Fecha y hora</th><th>Registro</th></tr></thead>
+            <tbody id="tbody-historial"></tbody>
+          </table>
+          <p class="empty" id="empty-historial" hidden>No hay registros que coincidan con los filtros.</p>
+        </div>
+        <div class="card__foot audit-pagination">
+          <span id="historial-rango" aria-live="polite">Cargando historial...</span>
+          <nav class="audit-pagination__controls" aria-label="Páginas del historial">
+            <button class="btn btn--ghost" type="button" id="historial-anterior" disabled>Anterior</button>
+            <span id="historial-pagina">Página 1</span>
+            <button class="btn btn--ghost" type="button" id="historial-siguiente" disabled>Siguiente</button>
+          </nav>
+        </div>
+      </section>
+
       <div class="modal" id="modal-usuario" role="dialog" aria-modal="true" aria-labelledby="modal-usuario-title">
         <div class="modal__backdrop"></div>
         <div class="modal__panel">
@@ -78,7 +117,8 @@
 
 <script src="js/icons.js?v=3"></script>
 <script src="js/api.js?v=4"></script>
-<script src="js/ui.js?v=7"></script>
-<script src="js/usuarios.js?v=5"></script>
+<script src="js/ui.js?v=8"></script>
+<script src="js/usuarios.js?v=6"></script>
+<script src="js/historial.js?v=1"></script>
 </body>
 </html>

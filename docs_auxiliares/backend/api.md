@@ -96,6 +96,21 @@ La cancelación no recibe un ID de usuario en el cuerpo. `Auth` exige `PUBLICO_G
 
 `GET /reservas/mias`, los listados de franjas y `GET /agenda` excluyen fechas anteriores a hoy. El filtro también se aplica a personal, además del intervalo día/semana/mes solicitado. No existe una ruta alternativa de historial de reservas ni una operación de reprogramación automática.
 
+### Historial completo de cambios
+
+`GET /historial?limite=20` conserva la respuesta de la campana: `acciones`, con las últimas 1–50 acciones. Para recorrer todos los registros guardados, Personal utiliza `GET /historial?pagina=1&limite=20`.
+
+| Parámetro | Regla |
+|---|---|
+| `pagina` | Entero de 1 a 1000000; activa el modo paginado. |
+| `limite` | Entre 1 y 50; 20 por defecto. |
+| `buscar` | Texto literal de hasta 200 caracteres: nombre, cédula, acción, tipo e identificadores de elemento o registro. `%` y `_` no actúan como comodines. |
+| `usuario_id` | Identificador positivo del actor, incluso si su cuenta fue desactivada. |
+| `accion` / `tipo` | Coincidencia exacta; hasta 50 y 100 caracteres respectivamente. |
+| `desde` / `hasta` | Fechas AAAA-MM-DD, inclusivas por día civil en America/Montevideo. El servidor convierte los límites a UTC y rechaza un intervalo invertido. |
+
+El modo paginado responde `acciones`, `paginacion` (`pagina`, `por_pagina`, `total`, `paginas`) y `filtros` (`usuarios`, `acciones`, `tipos`). Las opciones provienen del historial completo y no solo de la página visible. Los filtros se combinan antes de contar y paginar en SQL; el orden es fecha e ID descendentes. No se agrega una ruta ni se amplían permisos: personal y Directora conservan acceso, ciudadanía recibe 403 y una solicitud sin sesión recibe 401.
+
 ## Recorridos y efectos persistentes
 
 | Operación | Validación y autorización | Efecto |

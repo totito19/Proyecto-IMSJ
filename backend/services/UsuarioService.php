@@ -20,6 +20,11 @@ final class UsuarioService
     {
         return $this->repo->historial($limit);
     }
+    /** Devuelve una página del historial completo, sus totales y opciones de filtro. */
+    public function historialCompleto(int $page, int $limit, array $filters): array
+    {
+        return $this->repo->historialCompleto($page, $limit, $filters);
+    }
     /** Inserta los campos validados y devuelve el registro creado. */
     public function crear(string $nombre, string $cedula, string $rol, Usuario $actor): Usuario
     {

@@ -93,6 +93,7 @@ async function guardarUsuario(event) {
     Modal.close('modal-usuario');
     form.reset();
     await cargarUsuarios();
+    document.dispatchEvent(new Event('imsj:personal-actualizado'));
     alert(`Acceso creado para ${payload.usuario.nombre}. Clave inicial: ${payload.clave_inicial}`);
   } catch (error) {
     alert(error.message);
@@ -126,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       await ImsjApi.request(`/usuarios-admin/${item.id}`, { method: 'DELETE' });
       await cargarUsuarios();
+      document.dispatchEvent(new Event('imsj:personal-actualizado'));
     } catch (error) {
       alert(error.message);
     }

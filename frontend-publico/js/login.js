@@ -2,10 +2,73 @@
 
 /** Inicializa pestañas, formularios y redirecciones de la pantalla de acceso. */
 function initLogin() {
+  /** Revalida al escribir y antes de enviar, incluso con valores autocompletados. */
+  function validateCedula(input) {
+    const result = ImsjCredenciales.cedula(input.value);
+    const feedback = document.getElementById(`${input.id}-feedback`);
+    input.setCustomValidity(result.valid ? '' : result.message);
+    input.setAttribute('aria-invalid', String(!result.valid && input.value !== ''));
+    feedback.textContent = input.value ? result.message : '';
+    feedback.dataset.state = result.valid ? 'valid' : 'invalid';
+    return result;
+  }
+
+  const registerCedula = document.getElementById('reg-cedula');
+  registerCedula.addEventListener('input', () => validateCedula(registerCedula));
+  registerCedula.addEventListener('blur', () => validateCedula(registerCedula));
+
+  const registerPassword = document.getElementById('reg-password');
+  const confirmation = document.getElementById('reg-password-confirm');
+  function validateConfirmation() {
+    const mismatch = confirmation.value !== '' && confirmation.value !== registerPassword.value;
+    confirmation.setCustomValidity(mismatch ? 'Las contraseñas no coinciden.' : '');
+    confirmation.setAttribute('aria-invalid', String(mismatch));
+    const feedback = document.getElementById('reg-password-confirm-feedback');
+    feedback.textContent = confirmation.value
+      ? (mismatch ? 'Las contraseñas no coinciden.' : 'Las contraseñas coinciden.')
+      : '';
+    feedback.dataset.state = mismatch ? 'invalid' : 'valid';
+  }
+
+  function analyzePassword(input) {
+    const advice = document.getElementById(`${input.id}-advice`);
+    const checks = ImsjCredenciales.password(input.value);
+    advice.hidden = !input.value;
+    const tooLong = new TextEncoder().encode(input.value).length > 72;
+    const score = checks.filter((check) => check.met).length;
+    const level = tooLong || !checks[0].met || score < 3 ? 1 : score < 5 ? 2 : 3;
+    const states = ['weak', 'medium', 'good'];
+    const labels = ['Débil', 'Media', 'Buena'];
+    const label = tooLong ? 'Demasiado larga' : labels[level - 1];
+    advice.dataset.level = states[level - 1];
+    document.getElementById('reg-password-level').textContent = label;
+    const meter = advice.querySelector('[role="meter"]');
+    meter.setAttribute('aria-valuenow', String(input.value ? level : 0));
+    meter.setAttribute('aria-valuetext', input.value ? label : 'Sin contraseña');
+    const names = ['8 caracteres', 'mayúscula', 'minúscula', 'número', 'símbolo'];
+    const missing = checks.flatMap((check, index) => check.met ? [] : [names[index]]);
+    document.getElementById('reg-password-hint').textContent = tooLong
+      ? 'Supera el límite de 72 bytes.'
+      : missing.length ? `Para mejorar: ${missing.join(', ')}.` : 'Incluye todas las recomendaciones.';
+    const tooShort = input === registerPassword && [...input.value].length < 6;
+    input.setCustomValidity(tooLong ? 'La contraseña supera los 72 bytes admitidos.'
+      : tooShort ? 'Usá al menos seis caracteres.' : '');
+    if (input === registerPassword) validateConfirmation();
+  }
+
+  registerPassword.addEventListener('input', () => analyzePassword(registerPassword));
+  registerPassword.addEventListener('change', () => analyzePassword(registerPassword));
+  confirmation.addEventListener('input', validateConfirmation);
+
   /** Anima la altura del contenedor cuando cambia el formulario visible. */
   function animateHeight(wrap, mutate) {
     if (!wrap) {
       mutate();
+      return;
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      mutate();
+      wrap.style.height = 'auto';
       return;
     }
     const startHeight = wrap.getBoundingClientRect().height;
@@ -64,6 +127,11 @@ function initLogin() {
 
   /** Ejecuta login o registro y centraliza el estado del botón y los errores. */
   async function submit(form, button, errorElement, action, redirectTo) {
+    if (form.id === 'form-ciudadano-registro') {
+      validateCedula(registerCedula);
+      analyzePassword(registerPassword);
+      validateConfirmation();
+    }
     if (!form.reportValidity()) return;
     button.disabled = true;
     const originalText = button.textContent;

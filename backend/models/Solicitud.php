@@ -121,7 +121,7 @@ final class Solicitud
         }
         return $value;
     }
-    public static function cedula(array $data): string
+    public static function cedula(array $data, bool $verificarDigito = true): string
     {
         if (!isset($data['cedula']) || !is_string($data['cedula'])) {
             Response::invalid('cedula', 'Ingrese una cédula.');
@@ -134,6 +134,20 @@ final class Solicitud
         $value = preg_replace('/\D/', '', $raw);
         if (!preg_match('/^\d{7,8}$/D', $value)) {
             Response::invalid('cedula', 'La cédula debe tener entre 7 y 8 dígitos.');
+        }
+        // El login normaliza la cuenta existente; solo las altas exigen el verificador.
+        if (!$verificarDigito) {
+            return $value;
+        }
+        // Módulo 10 con pesos 2,9,8,7,6,3,4; el último dígito es el verificador.
+        $body = str_pad(substr($value, 0, -1), 7, '0', STR_PAD_LEFT);
+        $weights = [2, 9, 8, 7, 6, 3, 4];
+        $sum = 0;
+        for ($i = 0; $i < 7; $i++) {
+            $sum += (int) $body[$i] * $weights[$i];
+        }
+        if ($body === '0000000' || (10 - ($sum % 10)) % 10 !== (int) substr($value, -1)) {
+            Response::invalid('cedula', 'La cédula no existe, revisala.');
         }
         return $value;
     }

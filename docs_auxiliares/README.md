@@ -2,6 +2,10 @@
 
 **Proyecto:** Educación Vial IMSJ — Portal Vial. **Actualización:** 23/10/2026.
 
+## Decisiones técnicas
+
+[Justificación de las decisiones del equipo](justificacion_decisiones_tecnicas.md): tecnologías y versiones, estructura del código, alternativas, datos, seguridad, despliegue y recuperación; revisión del 23/10/2026 sobre el commit `916790d`.
+
 ## Backend
 
 | Documento | Contenido |

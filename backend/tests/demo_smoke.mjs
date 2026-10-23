@@ -28,9 +28,9 @@ const staff = (await request('POST', '/api/login', { body: { cedula: '22222222',
 await request('POST', '/api/usuarios-admin', {
   token: staff,
   expected: 201,
-  body: { nombre: 'Directora Demo', cedula: '22222223', rol: 'DIRECTORA' },
+  body: { nombre: 'Directora Demo', cedula: '22222238', rol: 'DIRECTORA' },
 });
-const directorLogin = await request('POST', '/api/login', { body: { cedula: '22222223', password: 'imsj1234' } });
+const directorLogin = await request('POST', '/api/login', { body: { cedula: '22222238', password: 'imsj1234' } });
 check(directorLogin.usuario.rol === 'DIRECTORA', 'El rol Directora no se conservó');
 const directora = directorLogin.token;
 await request('GET', '/api/noticias', { token: directora });

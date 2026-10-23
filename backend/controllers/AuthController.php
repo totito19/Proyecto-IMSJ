@@ -13,7 +13,7 @@ final class AuthController
     {
         Auth::limitAttempts('login');
         $data = Solicitud::body();
-        Response::json($this->service->login(Solicitud::cedula($data), $this->password($data)));
+        Response::json($this->service->login(Solicitud::cedula($data, false), $this->password($data)));
     }
     /** Las cuentas registradas públicamente siempre tienen rol ciudadano. */
     public function register(): never
