@@ -51,7 +51,7 @@ function confirmarCambioEstadoMaterial(material, estado) {
 /** Decide qué transición editorial puede ofrecerse para el estado y rol actuales. */
 function accionFlujoMaterial(material) {
   const directora = ImsjApi.currentUser()?.rol === 'DIRECTORA';
-  if (material.estado === 'BORRADOR') {
+  if (material.estado === 'BORRADOR' && !directora) {
     return actionBtn('send', 'Enviar a revisión', {
       labeled: true,
       data: { accion: 'estado', estado: 'PENDIENTE', id: material.id },

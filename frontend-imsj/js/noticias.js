@@ -64,7 +64,7 @@ function noticiasFiltradas() {
 /** Calcula la siguiente acción editorial permitida para una noticia. */
 function accionFlujo(noticia) {
   const directora = ImsjApi.currentUser()?.rol === 'DIRECTORA';
-  if (noticia.estado === 'BORRADOR') {
+  if (noticia.estado === 'BORRADOR' && !directora) {
     return actionBtn('send', 'Enviar a revisión', {
       labeled: true,
       data: { accion: 'estado', estado: 'PENDIENTE', id: noticia.id },
