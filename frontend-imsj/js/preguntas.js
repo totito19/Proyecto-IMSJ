@@ -52,6 +52,12 @@ function confirmarCambioEstadoPregunta(item, estado) {
 function accionFlujoPregunta(item) {
   const rol = ImsjApi.currentUser()?.rol;
   const directora = rol === 'DIRECTORA';
+  if (item.estado === 'BORRADOR' && directora) {
+    return actionBtn('check-circle', 'Aprobar', {
+      labeled: true,
+      data: { accion: 'estado', estado: 'APROBADO', id: item.id },
+    });
+  }
   if (item.estado === 'BORRADOR' && rol === 'PERSONAL_IMSJ') {
     return actionBtn('send', 'Enviar a revisión', {
       labeled: true,

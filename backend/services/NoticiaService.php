@@ -92,7 +92,7 @@ final class NoticiaService
         }
         return $noticia;
     }
-    /** Aplica el flujo Borrador -> Pendiente -> Aprobado -> Publicado. */
+    /** Aplica el flujo editorial correspondiente al rol del usuario. */
     public function estado(int $id, string $estado, Usuario $actor): Noticia
     {
         $old = $this->detalle($id);
@@ -101,13 +101,16 @@ final class NoticiaService
         }
         $actual = $old->row['estado'];
         $transiciones = [
-            'BORRADOR' => ['PENDIENTE'],
+            'BORRADOR' => ['PENDIENTE', 'APROBADO'],
             'PENDIENTE' => ['BORRADOR', 'APROBADO'],
             'APROBADO' => ['BORRADOR', 'PUBLICADO'],
             'PUBLICADO' => ['BORRADOR'],
         ];
         if (!in_array($estado, $transiciones[$actual] ?? [], true)) {
             Response::invalid('estado', 'La transición de estado no está permitida.');
+        }
+        if ($estado === 'PENDIENTE' && $actor->rol() !== 'PERSONAL_IMSJ') {
+            throw new ApiException(403, 'Solo el personal IMSJ puede enviar noticias a revisión.');
         }
         if ($estado === 'APROBADO' && $actor->rol() !== 'DIRECTORA') {
             throw new ApiException(403, 'Solo la Directora puede aprobar noticias.');

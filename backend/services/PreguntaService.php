@@ -47,7 +47,7 @@ final class PreguntaService
             $this->repo->eliminar($id);
         });
     }
-    /** Aplica Borrador -> Pendiente -> Aprobado -> Publicado. */
+    /** Aplica el flujo editorial correspondiente al rol del usuario. */
     public function estado(int $id, string $estado, Usuario $actor): Pregunta
     {
         $old = $this->detalle($id);
@@ -56,13 +56,16 @@ final class PreguntaService
         }
         $actual = $old->row['estado'];
         $transiciones = [
-            'BORRADOR' => ['PENDIENTE'],
+            'BORRADOR' => ['PENDIENTE', 'APROBADO'],
             'PENDIENTE' => ['BORRADOR', 'APROBADO'],
             'APROBADO' => ['BORRADOR', 'PUBLICADO'],
             'PUBLICADO' => ['BORRADOR'],
         ];
         if (!in_array($estado, $transiciones[$actual] ?? [], true)) {
             Response::invalid('estado', 'La transición de estado no está permitida.');
+        }
+        if ($estado === 'PENDIENTE' && $actor->rol() !== 'PERSONAL_IMSJ') {
+            throw new ApiException(403, 'Solo el personal IMSJ puede enviar preguntas frecuentes a revisión.');
         }
         if ($estado === 'APROBADO' && $actor->rol() !== 'DIRECTORA') {
             throw new ApiException(403, 'Solo la Directora puede aprobar preguntas frecuentes.');

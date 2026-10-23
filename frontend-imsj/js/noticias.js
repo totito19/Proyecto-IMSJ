@@ -65,6 +65,12 @@ function noticiasFiltradas() {
 function accionFlujo(noticia) {
   const rol = ImsjApi.currentUser()?.rol;
   const directora = rol === 'DIRECTORA';
+  if (noticia.estado === 'BORRADOR' && directora) {
+    return actionBtn('check-circle', 'Aprobar', {
+      labeled: true,
+      data: { accion: 'estado', estado: 'APROBADO', id: noticia.id },
+    });
+  }
   if (noticia.estado === 'BORRADOR' && rol === 'PERSONAL_IMSJ') {
     return actionBtn('send', 'Enviar a revisión', {
       labeled: true,
@@ -151,7 +157,7 @@ function abrirFormulario(noticia = null) {
   $('#n-flujo-nota').textContent =
     noticia && noticia.estado !== 'BORRADOR'
       ? 'Al editar, la noticia vuelve a Borrador y debe aprobarse otra vez.'
-      : 'La noticia se guarda como Borrador. Luego se envía a revisión.';
+      : 'La noticia se guarda como Borrador. La siguiente acción depende del rol.';
   $('[data-file-label]', $('#modal-noticia')).textContent = 'Seleccionar imagen...';
   Modal.open('modal-noticia');
 }
