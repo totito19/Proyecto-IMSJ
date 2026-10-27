@@ -164,19 +164,6 @@ En **Franjas de disponibilidad**, cargar fecha, hora de inicio, hora de fin, tr�
 
 En **Agenda**, seleccionar fecha y vista diaria, semanal o mensual. Las consultas reúnen las reservas vigentes y futuras del intervalo elegido.
 
-## 8. Resolver situaciones habituales
-
-| Situación | Acción |
-|---|---|
-| No aparecen contenidos públicos | Comprobar que estén publicados; para noticias, revisar también la vigencia. |
-| Falta la acción Aprobar | Ingresar con la cuenta Directora y comprobar que el contenido esté pendiente. |
-| Una edición retira una publicación | Revisar el borrador y volver a enviarlo a aprobación. |
-| El archivo es rechazado | Revisar tipo real, extensión y tamaño permitido. |
-| La agenda no ofrece horarios | Revisar trámite, fecha y cupos de las franjas cargadas. |
-| La operación solicita iniciar sesión | Volver a ingresar con el perfil que corresponde. |
-| El video no abre | Comprobar conexión y disponibilidad del sitio del video. |
-| El portal no responde | Comprobar que los servicios de Docker Compose estén activos y que la dirección sea correcta. |
-
-## 9. Documentos relacionados
+## 8. Documentos relacionados
 
 [Requisitos](Requerimientos.md) y [procedimiento de instalación en Linux con Docker](../administracion_ssoo/reconstruccion-infraestructura.md#inicio-manual-en-otros-sistemas).

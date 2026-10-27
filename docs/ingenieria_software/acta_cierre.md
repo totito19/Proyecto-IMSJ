@@ -13,7 +13,7 @@
 
 **Objetivo acordado:** desarrollar una plataforma web para centralizar noticias, materiales de estudio, preguntas frecuentes y otras funciones de educación vial, con un panel para su administración.
 
-**Resultado obtenido:** se completaron el portal público, el panel IMSJ, los simulacros, las consultas ciudadanas, la aprobación de contenidos y la agenda de trámites. El resultado fue presentado al Inspector de Tránsito el 13/10/2026 y quedó aprobado.
+**Resultado obtenido:** se completaron el portal público, el panel IMSJ, los simulacros, las consultas ciudadanas, la aprobación de contenidos y las funciones académicas de agenda. El resultado fue presentado a Nacho el 13/10/2026 y quedó aprobado.
 
 ## 2. Entregables
 
@@ -29,20 +29,17 @@
 
 | Aspecto | Planificado | Resultado final | Observación |
 |---|---|---|---|
-| Alcance | Portal, administración de contenidos y agenda de trámites. | Funciones implementadas. | Alcance completado. |
+| Alcance | Portal, administración de contenidos y agenda académica. | Funciones implementadas. | Alcance completado. |
 | Plazo | Cinco sprints. | Cinco sprints finalizados. | Cumplido. |
 
 | Calidad | Cumplimiento de RF y RNF. | RF1–RF24 y RNF1–RNF10 implementados. | Resultado aprobado en la demostración. |
 
 ## 4. Pendientes y continuidad
 
-No quedan funcionalidades pendientes dentro del alcance acordado. El despliegue en infraestructura institucional corresponde a una etapa posterior.
+No quedan funcionalidades pendientes dentro del alcance acordado. El despliegue en infraestructura institucional corresponde al equipo informatico de la intendencia.
 
 ## 5. Lecciones aprendidas
-
-- **Funcionó bien:** presentar avances al cliente permitió incorporar sus solicitudes.
-- **Debe mejorarse:** mantener la documentación actualizada durante todo el desarrollo.
-- **Recomendación futura:** validar los cambios importantes mediante demostraciones.
+El equipo desarrolló mejores habilidades de comunicación y organización de equipo. Temas como designar tareas, aclarar y ayudar a solucionar errores del otro fueron muy convenientes para el desarrollo y eficiencia del sistema. No encontramos problemas con los roles designados del equipo ya que todas las discordancias siempre terminaron en buenos acuerdos que solucionaban las mismas. Aprendimos a aceptar sugerencias del otro y escuchar el resto del equipo. También aprendimos a emplear de manera efectiva las herramientas actuales y acoplarlas con las debilidades de cada integrante del equipo.
 
 ## 6. Declaración de aceptación
 
