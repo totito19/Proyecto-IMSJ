@@ -58,6 +58,21 @@ docker compose exec \
 unset INITIAL_ADMIN_PASSWORD
 ```
 
+### Contenido para una demostración
+
+La carga opcional agrega ejemplos sin borrar ni reemplazar datos ajenos: noticias, materiales,
+preguntas frecuentes, quince preguntas de simulacro, consultas, franjas futuras, reservas e
+historial. Puede ejecutarse más de una vez porque identifica y actualiza sus propios ejemplos.
+
+```bash
+docker compose exec app php scripts/cargar_demo.php --force
+```
+
+`--force` es obligatorio cuando `APP_ENV=production`, incluso en una instalación local, para
+evitar una carga accidental. También crea las cuentas ciudadanas `90000002` y `90000018`, ambas
+con la clave `DemoVial2026!`. Son exclusivamente para una demo controlada y deben retirarse o
+desactivarse antes de utilizar la instalación con datos reales.
+
 La herramienta se niega a crear la cuenta si ya existe personal activo. Las cuentas siguientes se crean desde el panel administrativo.
 
 Con el puerto predeterminado, el portal está en `http://IP_SERVIDOR:8000/frontend-publico/`, el panel en `http://IP_SERVIDOR:8000/frontend-imsj/` y la comprobación de salud en `http://IP_SERVIDOR:8000/api/health`. Para detener los servicios sin borrar datos:

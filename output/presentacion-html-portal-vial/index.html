@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#12204f" />
+  <title>Portal Vial — Defensa visual</title>
+  <style>
+    :root {
+      --navy: #12204f;
+      --blue: #1a56a8;
+      --blue-2: #345fc8;
+      --orange: #ff7a30;
+      --fog: #f3f5fb;
+      --white: #fff;
+      --ink: #1b1f2e;
+      --muted: #66728c;
+      --green: #35c779;
+      --amber: #f3b641;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    body {
+      font-family: "Segoe UI", Inter, system-ui, sans-serif;
+      background: #091330;
+      color: var(--white);
+      user-select: none;
+    }
+
+    button { font: inherit; }
+    .deck { position: relative; width: 100%; height: 100%; isolation: isolate; }
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transform: translate3d(0, 7vh, 0) scale(.985);
+      transition: opacity .62s var(--ease), transform .82s var(--ease), visibility 0s linear .82s;
+      background: var(--navy);
+    }
+    .slide.is-before { transform: translate3d(0, -5vh, 0) scale(.99); }
+    .slide.is-active {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition-delay: 0s;
+      z-index: 4;
+    }
+
+    .bg {
+      position: absolute;
+      inset: -2%;
+      width: 104%;
+      height: 104%;
+      object-fit: cover;
+      transform: scale(1.075);
+      filter: saturate(.94) contrast(1.02);
+      transition: transform 2.2s var(--ease), filter 1s ease;
+    }
+    .is-active .bg { transform: scale(1); }
+    .bg.contain { object-fit: contain; inset: 0; width: 100%; height: 100%; background: var(--fog); }
+    .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,18,48,.93) 0%, rgba(8,18,48,.74) 30%, rgba(8,18,48,.12) 70%, rgba(8,18,48,.02) 100%); }
+    .shade.top { background: linear-gradient(180deg, rgba(8,18,48,.94), rgba(8,18,48,.2) 42%, transparent 70%); }
+    .shade.soft { background: linear-gradient(180deg, rgba(8,18,48,.05), rgba(8,18,48,.5)); }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      width: min(1120px, 86vw);
+      margin: auto;
+    }
+    .content.left { margin-left: clamp(3rem, 7vw, 8rem); margin-right: auto; }
+    .content.center { text-align: center; }
+    .content.bottom { align-self: end; padding-bottom: 9vh; }
+    .content.top { align-self: start; padding-top: 10vh; }
+    .eyebrow {
+      color: var(--orange);
+      text-transform: uppercase;
+      font-size: clamp(.72rem, .9vw, 1rem);
+      letter-spacing: .14em;
+      font-weight: 800;
+      margin-bottom: 1.4rem;
+    }
+    h1, h2, p { margin: 0; }
+    .hero {
+      max-width: 920px;
+      font-size: clamp(3.3rem, 7.2vw, 8rem);
+      line-height: .91;
+      letter-spacing: -.058em;
+      font-weight: 850;
+      text-wrap: balance;
+    }
+    .hero.small { font-size: clamp(2.8rem, 5.8vw, 6.6rem); }
+    .hero.orange { color: var(--orange); }
+    .hero.navy { color: var(--navy); }
+    .sub {
+      margin-top: 1.6rem;
+      max-width: 700px;
+      color: rgba(255,255,255,.76);
+      font-size: clamp(1.1rem, 1.8vw, 2rem);
+      line-height: 1.25;
+      font-weight: 500;
+      text-wrap: balance;
+    }
+    .sub.ink { color: var(--muted); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      filter: blur(7px);
+      transition: opacity .72s var(--ease), transform .9s var(--ease), filter .8s ease;
+    }
+    .is-active .reveal { opacity: 1; transform: none; filter: none; }
+    .is-active .d1 { transition-delay: .14s; }
+    .is-active .d2 { transition-delay: .28s; }
+    .is-active .d3 { transition-delay: .42s; }
+    .is-active .d4 { transition-delay: .56s; }
+
+    .light { background: var(--fog); color: var(--navy); }
+    .word-slide::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 14px;
+      background: var(--orange);
+    }
+    .word-slide::after {
+      content: "";
+      position: absolute;
+      width: 42vw; height: 42vw;
+      right: -18vw; bottom: -24vw;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 50%;
+      box-shadow: 0 0 0 6vw rgba(255,255,255,.024), 0 0 0 12vw rgba(255,255,255,.018);
+      animation: orbit 12s linear infinite;
+    }
+    @keyframes orbit { to { transform: rotate(360deg); } }
+
+    .brand {
+      position: absolute;
+      z-index: 8;
+      top: 26px;
+      right: 34px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .brand img { width: auto; height: 42px; object-fit: contain; filter: drop-shadow(0 5px 12px rgba(0,0,0,.22)); }
+    .brand img:first-child { height: 34px; }
+    .brand .divider { width: 1px; height: 34px; background: rgba(255,255,255,.32); }
+
+    .screen {
+      width: min(1160px, 91vw);
+      height: min(650px, 82vh);
+      border-radius: 24px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 36px 90px rgba(1,10,40,.34), 0 0 0 1px rgba(255,255,255,.22);
+      transform: perspective(1400px) rotateX(4deg) translateY(34px) scale(.96);
+      opacity: 0;
+      transition: transform 1.1s var(--ease), opacity .7s ease;
+    }
+    .is-active .screen { transform: perspective(1400px) rotateX(0) translateY(0) scale(1); opacity: 1; }
+    .screen img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .screen-label {
+      position: absolute;
+      z-index: 3;
+      top: 32px;
+      left: 42px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(18,32,79,.91);
+      color: white;
+      font-size: .78rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 800;
+      backdrop-filter: blur(14px);
+    }
+
+    .split { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; }
+    .split figure { margin: 0; position: relative; overflow: hidden; }
+    .split img { width: 100%; height: 100%; object-fit: cover; }
+    .split figure::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 48%, rgba(5,14,42,.8)); }
+    .split-label { position: absolute; z-index: 3; bottom: 8vh; width: 50%; text-align: center; font-size: clamp(1.5rem, 2.6vw, 3rem); font-weight: 850; letter-spacing: -.03em; }
+    .split-label.right { left: 50%; color: var(--navy); text-shadow: 0 2px 18px rgba(255,255,255,.7); }
+
+    /* CSS symbols */
+    .symbol {
+      position: absolute;
+      right: 10vw;
+      width: min(300px, 25vw);
+      aspect-ratio: 1;
+      color: var(--orange);
+      opacity: 0;
+      transform: translateX(50px) scale(.82) rotate(6deg);
+      transition: 1s var(--ease);
+    }
+    .is-active .symbol { opacity: 1; transform: none; transition-delay: .2s; }
+    .symbol::before, .symbol::after { content: ""; position: absolute; }
+    .symbol.book::before { inset: 20% 51% 18% 4%; border: 7px solid currentColor; border-radius: 12px 4px 16px 12px; transform: skewY(8deg); }
+    .symbol.book::after { inset: 20% 4% 18% 51%; border: 7px solid currentColor; border-radius: 4px 12px 12px 16px; transform: skewY(-8deg); }
+    .symbol.news::before { inset: 12%; border: 7px solid currentColor; border-radius: 18px; box-shadow: inset 0 26px 0 rgba(255,122,48,.15); }
+    .symbol.news::after { left: 23%; right: 23%; top: 45%; height: 7px; background: currentColor; box-shadow: 0 34px 0 currentColor, 0 68px 0 currentColor; border-radius: 9px; }
+    .symbol.faq::before { inset: 7%; border: 8px solid currentColor; border-radius: 50%; }
+    .symbol.faq::after { content: "?"; inset: 0; display: grid; place-items: center; font-size: clamp(8rem, 15vw, 13rem); font-weight: 900; }
+    .symbol.message::before { inset: 16% 7% 24%; border: 8px solid currentColor; border-radius: 36px; }
+    .symbol.message::after { width: 56px; height: 56px; left: 24%; bottom: 13%; border-left: 8px solid currentColor; border-bottom: 8px solid currentColor; transform: skew(-22deg); }
+    .symbol.quiz::before { width: 52%; height: 52%; inset: 16% 24%; border: 8px solid currentColor; border-radius: 50%; box-shadow: 0 0 0 22px rgba(255,122,48,.14); }
+    .symbol.quiz::after { width: 8px; height: 48%; background: currentColor; left: calc(50% - 4px); top: 29%; transform-origin: 50% 8%; animation: needle 2.2s var(--ease) infinite alternate; }
+    @keyframes needle { from { transform: rotate(-54deg); } to { transform: rotate(38deg); } }
+    .symbol.calendar::before { inset: 14% 8%; border: 8px solid currentColor; border-radius: 24px; box-shadow: inset 0 56px 0 rgba(255,122,48,.18); }
+    .symbol.calendar::after { left: 22%; top: 45%; width: 18px; height: 18px; background: currentColor; box-shadow: 55px 0 0 currentColor,110px 0 0 currentColor,0 50px 0 currentColor,55px 50px 0 currentColor,110px 50px 0 currentColor; border-radius: 4px; }
+    .symbol.panel::before { inset: 8%; border: 8px solid currentColor; border-radius: 24px; background: linear-gradient(90deg, transparent 30%, currentColor 30% 33%, transparent 33% 66%, currentColor 66% 69%, transparent 69%); }
+    .symbol.panel::after { left: 15%; right: 15%; top: 34%; height: 8px; background: currentColor; box-shadow: 0 54px 0 currentColor, 0 108px 0 currentColor; border-radius: 9px; }
+
+    .docs-cloud { position: absolute; inset: 0; pointer-events: none; }
+    .doc {
+      position: absolute;
+      width: 110px; height: 145px;
+      border-radius: 10px;
+      background: var(--fog);
+      box-shadow: 0 18px 55px rgba(0,0,0,.24);
+      transform: translate(var(--x), var(--y)) rotate(var(--r));
+      opacity: 0;
+    }
+    .doc::before { content: ""; position: absolute; left: 18px; right: 18px; top: 28px; height: 9px; background: var(--blue); box-shadow: 0 24px 0 #b7c5e2, 0 48px 0 #b7c5e2, 0 72px 0 #b7c5e2; border-radius: 8px; }
+    .is-active .doc { animation: scatter 1.15s var(--ease) forwards; animation-delay: var(--d); }
+    @keyframes scatter { from { opacity: 0; transform: translate(48vw, 45vh) rotate(0) scale(.2); } to { opacity: .96; transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1); } }
+
+    .bridge-icon { position: relative; width: min(700px, 70vw); height: 250px; margin: 2.5rem auto 0; }
+    .bridge-icon .bank { position: absolute; bottom: 0; width: 32%; height: 90px; background: var(--blue); border-radius: 40px 40px 0 0; }
+    .bridge-icon .bank.right { right: 0; }
+    .bridge-icon .arch { position: absolute; left: 24%; right: 24%; bottom: 48px; height: 130px; border: 26px solid var(--orange); border-bottom: 0; border-radius: 150px 150px 0 0; transform: scaleX(.25); opacity: 0; }
+    .is-active .bridge-icon .arch { animation: bridge .9s .25s var(--ease) forwards; }
+    @keyframes bridge { to { opacity: 1; transform: scaleX(1); } }
+    .bridge-icon .road { position: absolute; left: 26%; right: 26%; bottom: 68px; height: 18px; background: white; transform: scaleX(0); transform-origin: left; }
+    .is-active .bridge-icon .road { animation: draw .8s .8s var(--ease) forwards; }
+    @keyframes draw { to { transform: scaleX(1); } }
+
+    .timeline { width: min(1100px, 86vw); display: grid; grid-template-columns: repeat(6,1fr); align-items: center; gap: 12px; }
+    .step { position: relative; text-align: center; color: var(--navy); font-weight: 800; opacity: 0; transform: translateY(24px); }
+    .step::before { content:""; display:block; width: 28px; height: 28px; border-radius: 50%; margin: 0 auto 18px; background: var(--blue); box-shadow: 0 0 0 8px rgba(26,86,168,.12); }
+    .step:not(:last-child)::after { content:""; position:absolute; top: 13px; left: calc(50% + 22px); width: calc(100% - 28px); height: 3px; background: var(--orange); transform-origin:left; transform:scaleX(0); }
+    .is-active .step { animation: rise .6s var(--ease) forwards; animation-delay: calc(var(--i) * .13s); }
+    .is-active .step:not(:last-child)::after { animation: draw .55s var(--ease) forwards; animation-delay: calc(.2s + var(--i) * .13s); }
+    @keyframes rise { to { opacity:1; transform:none; } }
+
+    .state-flow { display:flex; align-items:center; justify-content:center; gap: 26px; width:min(1100px,90vw); }
+    .state { min-width: 190px; padding: 30px 22px; border: 3px solid var(--blue); border-radius: 24px; text-align:center; font-size: clamp(1rem,1.5vw,1.4rem); font-weight:900; background:white; color:var(--navy); transform:translateY(30px); opacity:0; }
+    .state.pending { border-color:var(--amber); background:#fff4d6; color:#9b6500; }
+    .state.approved { background:#e8f0ff; color:var(--blue); }
+    .state.published { border-color:var(--green); background:#e4f7ed; color:#16824b; }
+    .state-arrow { width:58px; height:4px; background:var(--orange); position:relative; transform:scaleX(0); transform-origin:left; }
+    .state-arrow::after { content:""; position:absolute; right:-2px; top:-7px; border-left:13px solid var(--orange); border-top:9px solid transparent; border-bottom:9px solid transparent; }
+    .is-active .state { animation:rise .6s var(--ease) forwards; animation-delay:calc(var(--i) * .14s); }
+    .is-active .state-arrow { animation:draw .55s var(--ease) forwards; animation-delay:calc(.2s + var(--i) * .14s); }
+
+    .tech-orbit { position:relative; width:min(680px,70vw); height:360px; margin:0 auto; }
+    .tech-core { position:absolute; left:50%; top:50%; width:150px; height:150px; margin:-75px; border-radius:38px; background:var(--orange); display:grid; place-items:center; color:white; font-weight:900; font-size:1.35rem; box-shadow:0 24px 60px rgba(255,122,48,.34); }
+    .tech-pill { position:absolute; width:170px; padding:18px; border:2px solid #89a8df; background:rgba(255,255,255,.07); border-radius:999px; text-align:center; font-weight:800; opacity:0; transform:scale(.7); }
+    .tech-pill:nth-child(2){left:0;top:20px}.tech-pill:nth-child(3){right:0;top:20px}.tech-pill:nth-child(4){left:0;bottom:20px}.tech-pill:nth-child(5){right:0;bottom:20px}
+    .is-active .tech-pill { animation:pop .7s var(--ease) forwards; animation-delay:calc(var(--i)*.12s); }
+    @keyframes pop { to { opacity:1; transform:scale(1); } }
+
+    .route { display:flex; align-items:center; gap:16px; width:min(1180px,92vw); }
+    .route-node { flex:1; min-height:96px; display:grid; place-items:center; padding:12px; border:2px solid var(--blue); border-radius:20px; background:white; color:var(--navy); font-weight:850; text-align:center; opacity:0; transform:translateX(-20px); }
+    .route-node.hot { border-color:var(--orange); color:#c44f14; background:#fff0e6; }
+    .route-node.ok { border-color:var(--green); color:#16824b; background:#e4f7ed; }
+    .route-arrow { width:32px; height:4px; background:var(--orange); transform:scaleX(0); transform-origin:left; }
+    .is-active .route-node { animation:routeIn .5s var(--ease) forwards; animation-delay:calc(var(--i)*.11s); }
+    .is-active .route-arrow { animation:draw .45s var(--ease) forwards; animation-delay:calc(.15s + var(--i)*.11s); }
+    @keyframes routeIn { to { opacity:1; transform:none; } }
+
+    .metric { font-size:clamp(8rem,20vw,21rem); line-height:.8; color:var(--orange); letter-spacing:-.08em; font-weight:900; text-align:center; }
+    .metric.green { color:var(--green); }
+    .metric-label { margin-top:2rem; font-size:clamp(1.3rem,2.5vw,2.6rem); font-weight:800; text-align:center; }
+
+    .chrome { position:absolute; z-index:30; inset:0; pointer-events:none; }
+    .progress { position:absolute; left:0; bottom:0; height:5px; width:var(--progress,2%); background:var(--orange); transition:width .55s var(--ease); box-shadow:0 0 24px rgba(255,122,48,.7); }
+    .counter { position:absolute; right:24px; bottom:18px; color:rgba(255,255,255,.6); font-size:.78rem; letter-spacing:.12em; font-weight:800; }
+    .light-active .counter { color:rgba(18,32,79,.55); }
+    .controls { position:absolute; left:22px; bottom:18px; display:flex; gap:8px; pointer-events:auto; opacity:.14; transition:.2s; }
+    .controls:hover { opacity:1; }
+    .control { width:38px; height:38px; border:1px solid rgba(255,255,255,.24); color:white; background:rgba(5,14,42,.45); border-radius:50%; cursor:pointer; backdrop-filter:blur(12px); }
+    .control:hover { background:var(--orange); border-color:var(--orange); transform:translateY(-2px); }
+
+    .notes {
+      position:fixed; z-index:60; left:50%; bottom:28px; transform:translate(-50%,20px);
+      width:min(820px,88vw); padding:18px 22px; border:1px solid rgba(255,255,255,.2); border-radius:18px;
+      background:rgba(7,16,45,.9); color:white; backdrop-filter:blur(18px); opacity:0; visibility:hidden; transition:.25s;
+      font-size:1rem; line-height:1.45; user-select:text;
+    }
+    body.notes-on .notes { opacity:1; visibility:visible; transform:translate(-50%,0); }
+    .help {
+      position:fixed; z-index:70; inset:0; display:grid; place-items:center; background:rgba(4,11,33,.78); backdrop-filter:blur(16px);
+      opacity:0; visibility:hidden; transition:.25s;
+    }
+    body.help-on .help { opacity:1; visibility:visible; }
+    .help-card { width:min(680px,88vw); padding:34px; border-radius:28px; background:#13245a; box-shadow:0 35px 100px rgba(0,0,0,.4); }
+    .help-card h2 { font-size:2rem; margin-bottom:20px; }
+    .keys { display:grid; grid-template-columns:repeat(2,1fr); gap:14px 24px; color:#dbe5ff; }
+    kbd { display:inline-grid; place-items:center; min-width:34px; height:30px; padding:0 8px; margin-right:8px; border-radius:8px; background:white; color:var(--navy); font-weight:900; box-shadow:inset 0 -3px 0 #c9d3ea; }
+
+    body.blackout .deck { visibility:hidden; }
+    body.blackout { background:#000; }
+
+    body.overview { overflow:auto; background:#08122e; }
+    body.overview .deck { height:auto; min-height:100%; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:24px; padding:30px; }
+    body.overview .slide { position:relative; inset:auto; width:100%; aspect-ratio:16/9; opacity:1; visibility:visible; transform:none; border-radius:16px; cursor:pointer; box-shadow:0 18px 45px rgba(0,0,0,.35); transition:.2s; }
+    body.overview .slide:hover { transform:translateY(-5px) scale(1.015); box-shadow:0 25px 65px rgba(0,0,0,.52); }
+    body.overview .chrome, body.overview .notes { display:none; }
+    body.overview .reveal,
+    body.overview .symbol,
+    body.overview .state,
+    body.overview .tech-pill,
+    body.overview .route-node,
+    body.overview .screen { opacity:1; transform:none; filter:none; animation:none; }
+    body.overview .doc { opacity:.9; transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1); animation:none; }
+    body.overview .bridge-icon .arch { opacity:1; transform:scaleX(1); animation:none; }
+    body.overview .bridge-icon .road,
+    body.overview .state-arrow,
+    body.overview .route-arrow { transform:scaleX(1); animation:none; }
+
+    @media (max-width: 760px) {
+      .content.left { margin-left: 8vw; }
+      .brand { top:16px; right:18px; }
+      .brand img { height:34px; }
+      .symbol { right:5vw; bottom:8vh; width:34vw; }
+      .state-flow { gap:8px; flex-wrap:wrap; }
+      .state { min-width:42%; padding:18px 10px; }
+      .state-arrow { display:none; }
+      .route { gap:8px; flex-wrap:wrap; justify-content:center; }
+      .route-node { flex:0 0 30%; }
+      .route-arrow { display:none; }
+      .timeline { grid-template-columns:repeat(3,1fr); row-gap:44px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" id="deck" aria-live="polite">
+    <section class="slide visual is-active" data-note="Portal Vial nace al conectar una necesidad ciudadana con una necesidad institucional.">
+      <img class="bg" src="assets/03-portal-puente.png" alt="Portal naranja que une a una persona con una institución" />
+      <div class="shade top"></div>
+      <div class="brand"><img src="assets/rc5.png" alt="RC5"><span class="divider"></span><img src="assets/escudo-san-jose.png" alt="Intendencia de San José"></div>
+      <div class="content left top">
+        <div class="eyebrow reveal">Defensa del proyecto</div>
+        <h1 class="hero reveal d1">Portal Vial</h1>
+        <p class="sub reveal d2">Dos necesidades. Una conexión.</p>
+      </div>
+    </section>
+
+    <section class="slide visual" data-note="Presentamos al joven que quiere prepararse para obtener la libreta de conducir.">
+      <img class="bg" src="assets/01-joven-informacion.png" alt="Joven frente a información dispersa" />
+      <div class="content left top"><h2 class="hero small reveal">Quiero sacar<br>la libreta</h2></div>
+    </section>
+
+    <section class="slide visual" data-note="La primera pregunta parece sencilla, pero la respuesta está distribuida entre distintos canales.">
+      <img class="bg" src="assets/01-joven-informacion.png" alt="Joven frente a caminos e información dispersa" />
+      <div class="content left top"><h2 class="hero small reveal">¿Dónde<br>estudio?</h2></div>
+    </section>
+
+    <section class="slide word-slide" data-note="La información existe. El problema es encontrarla y reconocer la versión correcta.">
+      <div class="docs-cloud" aria-hidden="true">
+        <span class="doc" style="--x:10vw;--y:13vh;--r:-12deg;--d:.1s"></span><span class="doc" style="--x:27vw;--y:55vh;--r:9deg;--d:.18s"></span>
+        <span class="doc" style="--x:61vw;--y:10vh;--r:13deg;--d:.26s"></span><span class="doc" style="--x:79vw;--y:49vh;--r:-8deg;--d:.34s"></span>
+        <span class="doc" style="--x:44vw;--y:30vh;--r:4deg;--d:.42s"></span>
+      </div>
+      <div class="content center"><div class="eyebrow reveal">El problema</div><h2 class="hero small reveal d1">Información<br><span style="color:var(--orange)">dispersa</span></h2></div>
+    </section>
+
+    <section class="slide visual light" data-note="La Dirección de Tránsito también enfrenta una necesidad: llegar a los jóvenes de forma directa.">
+      <img class="bg" src="assets/02-direccion-barrera.png" alt="Institución intentando comunicar con jóvenes" />
+      <div class="content center top"><h2 class="hero small navy reveal">Necesitamos<br>llegar</h2></div>
+    </section>
+
+    <section class="slide" data-note="Una parte necesita encontrar. La otra necesita llegar.">
+      <div class="split"><figure><img src="assets/01-joven-informacion.png" alt="Necesidad ciudadana"></figure><figure><img src="assets/02-direccion-barrera.png" alt="Necesidad institucional"></figure></div>
+      <h2 class="split-label reveal">ENCONTRAR</h2><h2 class="split-label right reveal d1">LLEGAR</h2>
+    </section>
+
+    <section class="slide word-slide" data-note="Ambas necesidades se encuentran en una misma brecha de acceso y comunicación.">
+      <div class="content center"><div class="eyebrow reveal">Punto de encuentro</div><h2 class="hero small reveal d1">Una misma<br>brecha</h2><div class="bridge-icon reveal d2" aria-hidden="true"><span class="bank"></span><span class="bank right"></span><span class="arch"></span><span class="road"></span></div></div>
+    </section>
+
+    <section class="slide visual" data-note="Portal Vial conecta a la ciudadanía con la Dirección de Tránsito.">
+      <img class="bg" src="assets/03-portal-puente.png" alt="Portal que conecta ambos lados" />
+      <div class="content left top"><h2 class="hero small reveal">Portal Vial</h2><p class="sub reveal d1">Un único punto de encuentro.</p></div>
+    </section>
+
+    <section class="slide word-slide" data-note="Primera necesidad concreta: acceder al material para preparar el teórico."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Estudiar</h2></div><div class="symbol book" aria-hidden="true"></div></section>
+    <section class="slide light" data-note="El portal reúne materiales de estudio en un mismo lugar."><span class="screen-label">Materiales de estudio</span><div class="screen"><img src="assets/portal-materiales.png" alt="Pantalla de materiales de estudio"></div></section>
+    <section class="slide word-slide" data-note="La ciudadanía también necesita conocer noticias y contenido vigente."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Informarse</h2></div><div class="symbol news" aria-hidden="true"></div></section>
+    <section class="slide light" data-note="Las noticias públicas centralizan novedades y vigencia."><span class="screen-label">Noticias vigentes</span><div class="screen"><img src="assets/portal-noticias.png" alt="Pantalla de noticias"></div></section>
+    <section class="slide word-slide" data-note="Las preguntas frecuentes permiten resolver dudas sin iniciar una gestión."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Resolver</h2></div><div class="symbol faq" aria-hidden="true"></div></section>
+    <section class="slide light" data-note="Las preguntas se presentan por categoría para facilitar la búsqueda."><span class="screen-label">Preguntas frecuentes</span><div class="screen"><img src="assets/portal-faq.png" alt="Pantalla de preguntas frecuentes"></div></section>
+    <section class="slide word-slide" data-note="Cuando la respuesta no está publicada, la persona puede enviar su consulta."><div class="content left"><div class="eyebrow reveal">Si no está respondido</div><h2 class="hero reveal d1">Preguntar</h2></div><div class="symbol message" aria-hidden="true"></div></section>
+    <section class="slide light" data-note="El formulario crea un canal directo con la Dirección de Tránsito."><span class="screen-label">Consulta ciudadana</span><div class="screen"><img src="assets/portal-consulta.png" alt="Formulario de consulta"></div></section>
+    <section class="slide word-slide" data-note="El simulador permite practicar antes de la prueba teórica."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Practicar</h2></div><div class="symbol quiz" aria-hidden="true"></div></section>
+    <section class="slide light" data-note="El simulador presenta preguntas de múltiple opción y corrección inmediata."><span class="screen-label">Simulador teórico</span><div class="screen"><img src="assets/portal-simulador.png" alt="Pantalla del simulador"></div></section>
+    <section class="slide word-slide" data-note="La agenda permite elegir una franja con cupo disponible."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Reservar</h2></div><div class="symbol calendar" aria-hidden="true"></div></section>
+    <section class="slide light" data-note="La persona consulta fechas, horarios y cupos antes de reservar."><span class="screen-label">Agenda y cupos</span><div class="screen"><img src="assets/portal-agenda.png" alt="Pantalla de agenda pública"></div></section>
+    <section class="slide word-slide" data-note="El segundo lado de la solución es el panel de gestión para la Dirección."><div class="content left"><div class="eyebrow reveal">Panel IMSJ</div><h2 class="hero reveal d1">Gestionar</h2><p class="sub reveal d2">Contenido y operación.</p></div><div class="symbol panel" aria-hidden="true"></div></section>
+    <section class="slide light" data-note="El personal mantiene noticias y contenidos desde el panel."><span class="screen-label">Gestión de contenidos</span><div class="screen"><img src="assets/panel-noticias.png" alt="Panel de noticias"></div></section>
+    <section class="slide light" data-note="La Dirección consulta la agenda administrativa y sus reservas."><span class="screen-label">Operación diaria</span><div class="screen"><img src="assets/panel-agenda.png" alt="Agenda administrativa"></div></section>
+    <section class="slide light" data-note="Las consultas ciudadanas llegan a una bandeja interna."><span class="screen-label">Bandeja de consultas</span><div class="screen"><img src="assets/panel-consultas.png" alt="Bandeja de consultas"></div></section>
+
+    <section class="slide visual" data-note="Portal público y panel administrativo son dos experiencias conectadas al mismo sistema.">
+      <img class="bg" src="assets/03-portal-puente.png" alt="Un portal conecta dos extremos" /><div class="content left top"><h2 class="hero small reveal">Un solo<br>sistema</h2><p class="sub reveal d1">Dos experiencias.</p></div>
+    </section>
+
+    <section class="slide word-slide" data-note="Transición: nada de lo mostrado apareció de una vez. Cada función tiene un origen y una validación."><div class="content center"><div class="eyebrow reveal">Proceso</div><h2 class="hero small reveal d1">Nada sale<br>de la nada</h2></div></section>
+    <section class="slide visual" data-note="Cada etapa produjo la entrada de la siguiente: conversación, requisitos, historias, desarrollo, demo, cambios y aprobación."><img class="bg" src="assets/04-proceso.png" alt="Camino de etapas del proyecto"><div class="content left top"><h2 class="hero small reveal">Paso a paso</h2></div></section>
+
+    <section class="slide light" data-note="El 9 de julio se realizó la entrevista con la Dirección de Tránsito."><div class="content center"><div class="eyebrow reveal">Relevamiento</div><h2 class="hero orange reveal d1">09 JUL</h2><p class="sub ink reveal d2" style="margin-inline:auto">Entrevista</p></div></section>
+    <section class="slide word-slide" data-note="La entrevista se convirtió en requisitos ordenados y verificables."><div class="content center"><div class="eyebrow reveal">Puesta en limpio</div><h2 class="hero small reveal d1">Requisitos</h2></div></section>
+    <section class="slide word-slide" data-note="Los requisitos se transformaron en historias de usuario y criterios de aceptación."><div class="content center"><div class="eyebrow reveal">22–28 JUL</div><h2 class="hero small reveal d1">Historias</h2></div></section>
+
+    <section class="slide light" data-note="Los primeros cuatro sprints construyeron una versión funcional.">
+      <div class="content center"><h2 class="hero small navy reveal">Sprints 1–4</h2><div class="timeline reveal d1" style="margin:4rem auto 0"><span class="step" style="--i:0">Analizar</span><span class="step" style="--i:1">Diseñar</span><span class="step" style="--i:2">Construir</span><span class="step" style="--i:3">Probar</span><span class="step" style="--i:4">Integrar</span><span class="step" style="--i:5">Mostrar</span></div></div>
+    </section>
+
+    <section class="slide light" data-note="El 3 de septiembre el producto se mostró antes de considerarlo terminado."><div class="content center"><div class="eyebrow reveal">Validación</div><h2 class="hero orange reveal d1">03 SEP</h2><p class="sub ink reveal d2" style="margin-inline:auto">Primera demo</p></div></section>
+    <section class="slide word-slide" data-note="La demo produjo tres ampliaciones: consultas ciudadanas, aprobación separada e imágenes en el simulador."><div class="content center"><div class="eyebrow reveal">Feedback registrado</div><h2 class="hero small reveal d1">Cambios</h2><p class="sub reveal d2" style="margin-inline:auto">Consultas · Aprobación · Imágenes</p></div></section>
+
+    <section class="slide light" data-note="Aquí aparece la aprobación editorial: la demo reveló que aprobar y publicar debían ser responsabilidades diferentes.">
+      <div class="content center"><div class="eyebrow reveal">CC-03</div><h2 class="hero small navy reveal d1">Aprobar<br><span style="color:var(--orange)">≠</span> publicar</h2></div>
+    </section>
+
+    <section class="slide word-slide" data-note="El sprint 5 implementó las ampliaciones solicitadas y actualizó las pruebas."><div class="content center"><div class="eyebrow reveal">Cambios implementados</div><h2 class="hero small reveal d1">Sprint 5</h2></div></section>
+    <section class="slide light" data-note="El 13 de octubre se mostraron los cambios y el cliente aprobó la solución."><div class="content center"><div class="eyebrow reveal" style="color:var(--green)">Cierre del ciclo</div><h2 class="hero reveal d1" style="color:var(--green)">13 OCT</h2><p class="sub ink reveal d2" style="margin-inline:auto">Segunda demo</p></div></section>
+
+    <section class="slide word-slide" data-note="Abrimos la parte técnica conectándola con el alcance que acabamos de recorrer."><div class="content center"><div class="eyebrow reveal">Ingeniería</div><h2 class="hero small reveal d1">¿Cómo lo<br>hicimos?</h2></div></section>
+    <section class="slide visual" data-note="Una petición pasa por navegador, router, controlador, servicio, repositorio y base de datos."><img class="bg" src="assets/05-arquitectura.png" alt="Sistema web por capas"><div class="content left top"><h2 class="hero small reveal">Capas</h2></div></section>
+
+    <section class="slide word-slide" data-note="La pila tecnológica se mantuvo explícita y proporcional al proyecto.">
+      <div class="content center"><div class="eyebrow reveal">Tecnologías</div><div class="tech-orbit reveal d1"><div class="tech-core">Portal Vial</div><div class="tech-pill" style="--i:1">HTML · CSS · JS</div><div class="tech-pill" style="--i:2">PHP 8.5</div><div class="tech-pill" style="--i:3">PDO · MySQL</div><div class="tech-pill" style="--i:4">Docker</div></div></div>
+    </section>
+
+    <section class="slide light" data-note="Caso concreto: POST /api/reservas recorre archivos reales y aplica reglas antes de persistir.">
+      <div class="content center"><div class="eyebrow reveal">POST /api/reservas</div><div class="route reveal d1"><div class="route-node" style="--i:0">turnos.js</div><span class="route-arrow" style="--i:1"></span><div class="route-node" style="--i:2">index.php</div><span class="route-arrow" style="--i:3"></span><div class="route-node" style="--i:4">Controller</div><span class="route-arrow" style="--i:5"></span><div class="route-node hot" style="--i:6">Service</div><span class="route-arrow" style="--i:7"></span><div class="route-node" style="--i:8">Repository</div><span class="route-arrow" style="--i:9"></span><div class="route-node ok" style="--i:10">201</div></div></div>
+    </section>
+
+    <section class="slide visual" data-note="Cuando dos solicitudes compiten por el último cupo, la transacción permite una sola reserva y rechaza la otra de forma controlada."><img class="bg" src="assets/07-concurrencia.png" alt="Dos solicitudes compiten por un único cupo"><div class="content left top"><h2 class="hero small reveal">Un último<br>cupo</h2></div></section>
+
+    <section class="slide light" data-note="El cambio CC-03 se convirtió en un flujo de estados. Editar un contenido reinicia el ciclo.">
+      <div class="content center"><div class="eyebrow reveal">Aprobación editorial</div><div class="state-flow reveal d1"><div class="state" style="--i:0">BORRADOR</div><span class="state-arrow" style="--i:1"></span><div class="state pending" style="--i:2">PENDIENTE</div><span class="state-arrow" style="--i:3"></span><div class="state approved" style="--i:4">APROBADO</div><span class="state-arrow" style="--i:5"></span><div class="state published" style="--i:6">PUBLICADO</div></div><p class="sub ink reveal d3" style="margin:3rem auto 0">Editar reinicia el ciclo.</p></div>
+    </section>
+
+    <section class="slide visual" data-note="Docker Compose separa la aplicación y la base de datos. Los volúmenes conservan archivos, caché y datos."><img class="bg" src="assets/08-infraestructura.png" alt="Servidor con aplicación, base de datos y almacenamiento"><div class="shade"></div><div class="content left"><h2 class="hero small reveal">Despliegue</h2><p class="sub reveal d1">Ubuntu · Docker · 2 servicios</p></div></section>
+    <section class="slide visual" data-note="La seguridad se verificó por capas: controles internos, SAST, DAST, Nmap y auditoría de la API."><img class="bg" src="assets/06-seguridad.png" alt="Sistema protegido por capas"><div class="shade"></div><div class="content left"><h2 class="hero small reveal">Seguridad<br>por capas</h2><p class="sub reveal d1">SAST · DAST · Nmap · API</p></div></section>
+
+    <section class="slide word-slide" data-note="Se ejecutaron 192 comprobaciones de integración. No representa cobertura de líneas."><div class="content center"><div class="metric reveal">192</div><div class="metric-label reveal d1">comprobaciones de integración</div></div></section>
+    <section class="slide word-slide" data-note="El sistema expone 46 rutas entre portal y panel administrativo."><div class="content center"><div class="metric reveal">46</div><div class="metric-label reveal d1">rutas del sistema</div></div></section>
+    <section class="slide word-slide" data-note="La auditoría de seguridad de la API aprobó 43 comprobaciones."><div class="content center"><div class="metric green reveal">43</div><div class="metric-label reveal d1">comprobaciones de seguridad</div></div></section>
+    <section class="slide word-slide" data-note="La prueba concurrente produjo una creación 201 y un rechazo 422 cuando dos procesos compitieron por el último cupo."><div class="content center"><div class="metric reveal" style="font-size:clamp(6rem,16vw,17rem)">201 / 422</div><div class="metric-label reveal d1">dos solicitudes · un último cupo</div></div></section>
+
+    <section class="slide light" data-note="La capacidad objetivo de 90 sesiones simultáneas todavía requiere una prueba de carga. No debe presentarse como validada.">
+      <div class="content center"><div class="eyebrow reveal" style="color:var(--muted)">Prueba de carga</div><h2 class="hero navy reveal d1">90 sesiones</h2><p class="sub ink reveal d2" style="margin-inline:auto">Pendiente de medición.</p></div>
+    </section>
+
+    <section class="slide visual" data-note="Cerramos donde empezamos: la ciudadanía encuentra y la Dirección llega y gestiona.">
+      <img class="bg" src="assets/03-portal-puente.png" alt="Portal que une ciudadanía e institución" />
+      <div class="shade top"></div>
+      <div class="brand"><img src="assets/rc5.png" alt="RC5"><span class="divider"></span><img src="assets/escudo-san-jose.png" alt="Intendencia de San José"></div>
+      <div class="content left top"><h2 class="hero small reveal">Dos necesidades.<br><span style="color:var(--orange)">Una solución.</span></h2><p class="sub reveal d1">Portal Vial</p></div>
+    </section>
+  </main>
+
+  <div class="chrome" aria-hidden="true">
+    <div class="progress" id="progress"></div>
+    <div class="counter" id="counter">01 / 50</div>
+    <div class="controls">
+      <button class="control" id="prev" title="Anterior" aria-label="Diapositiva anterior">←</button>
+      <button class="control" id="next" title="Siguiente" aria-label="Diapositiva siguiente">→</button>
+      <button class="control" id="fullscreen" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>
+      <button class="control" id="overview" title="Vista general" aria-label="Vista general">▦</button>
+    </div>
+  </div>
+
+  <aside class="notes" id="notes" aria-live="polite"></aside>
+  <div class="help" id="help">
+    <div class="help-card">
+      <h2>Controles</h2>
+      <div class="keys">
+        <span><kbd>→</kbd> avanzar</span><span><kbd>←</kbd> volver</span>
+        <span><kbd>F</kbd> pantalla completa</span><span><kbd>O</kbd> vista general</span>
+        <span><kbd>N</kbd> notas</span><span><kbd>B</kbd> negro</span>
+        <span><kbd>H</kbd> ayuda</span><span><kbd>Esc</kbd> cerrar</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const slides = [...document.querySelectorAll('.slide')];
+      const progress = document.getElementById('progress');
+      const counter = document.getElementById('counter');
+      const notes = document.getElementById('notes');
+      let index = Math.max(0, Math.min(slides.length - 1, Number(location.hash.slice(1)) - 1 || 0));
+      let wheelLock = false;
+      let touchY = null;
+
+      function render(nextIndex, updateHash = true) {
+        index = Math.max(0, Math.min(slides.length - 1, nextIndex));
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('is-active', i === index);
+          slide.classList.toggle('is-before', i < index);
+          slide.setAttribute('aria-hidden', i === index ? 'false' : 'true');
+        });
+        const current = slides[index];
+        document.body.classList.toggle('light-active', current.classList.contains('light'));
+        progress.style.setProperty('--progress', `${((index + 1) / slides.length) * 100}%`);
+        counter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+        notes.textContent = current.dataset.note || '';
+        document.title = `Portal Vial · ${index + 1}/${slides.length}`;
+        if (updateHash) history.replaceState(null, '', `#${index + 1}`);
+      }
+
+      function next() { if (!document.body.classList.contains('overview')) render(index + 1); }
+      function prev() { if (!document.body.classList.contains('overview')) render(index - 1); }
+      function toggleOverview(force) {
+        const on = force ?? !document.body.classList.contains('overview');
+        document.body.classList.toggle('overview', on);
+        if (!on) { window.scrollTo(0, 0); render(index); }
+      }
+      async function toggleFullscreen() {
+        if (!document.fullscreenElement) await document.documentElement.requestFullscreen?.();
+        else await document.exitFullscreen?.();
+      }
+
+      document.addEventListener('keydown', (event) => {
+        const key = event.key.toLowerCase();
+        if (['arrowright','arrowdown',' ','pagedown'].includes(key)) { event.preventDefault(); next(); }
+        if (['arrowleft','arrowup','pageup'].includes(key)) { event.preventDefault(); prev(); }
+        if (key === 'home') render(0);
+        if (key === 'end') render(slides.length - 1);
+        if (key === 'f') toggleFullscreen();
+        if (key === 'o') toggleOverview();
+        if (key === 'n') document.body.classList.toggle('notes-on');
+        if (key === 'b') document.body.classList.toggle('blackout');
+        if (key === 'h' || key === '?') document.body.classList.toggle('help-on');
+        if (key === 'escape') { document.body.classList.remove('help-on','notes-on','blackout'); toggleOverview(false); }
+      });
+
+      document.addEventListener('wheel', (event) => {
+        if (document.body.classList.contains('overview') || wheelLock || Math.abs(event.deltaY) < 18) return;
+        wheelLock = true;
+        event.deltaY > 0 ? next() : prev();
+        setTimeout(() => wheelLock = false, 680);
+      }, { passive: true });
+
+      document.addEventListener('touchstart', e => touchY = e.changedTouches[0].clientY, { passive:true });
+      document.addEventListener('touchend', e => {
+        if (touchY == null) return;
+        const dy = e.changedTouches[0].clientY - touchY;
+        if (Math.abs(dy) > 55) dy < 0 ? next() : prev();
+        touchY = null;
+      }, { passive:true });
+
+      slides.forEach((slide, i) => slide.addEventListener('click', () => {
+        if (document.body.classList.contains('overview')) { index = i; toggleOverview(false); }
+      }));
+      document.getElementById('prev').addEventListener('click', prev);
+      document.getElementById('next').addEventListener('click', next);
+      document.getElementById('fullscreen').addEventListener('click', toggleFullscreen);
+      document.getElementById('overview').addEventListener('click', () => toggleOverview());
+      document.getElementById('help').addEventListener('click', () => document.body.classList.remove('help-on'));
+      addEventListener('hashchange', () => render(Number(location.hash.slice(1)) - 1 || 0, false));
+      render(index, false);
+    })();
+  </script>
+</body>
+</html>

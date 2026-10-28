@@ -5,9 +5,9 @@ import { Presentation, PresentationFile } from '@oai/artifact-tool';
 
 const workspaceDir = 'C:\\Users\\ASUS\\Desktop\\Proyecto1\\Proyecto-IMSJ';
 const buildDir = path.join(workspaceDir, '.codex-build', 'portal-vial-deck');
-const previewDir = path.join(buildDir, 'previews');
+const previewDir = path.join(buildDir, 'previews-diseno');
 const outputDir = path.join(workspaceDir, 'output', 'presentaciones');
-const finalPath = path.join(outputDir, 'Portal_Vial_Defensa_REVISADA.pptx');
+const finalPath = path.join(outputDir, 'Portal_Vial_Defensa_DISENO.pptx');
 const skillDir = 'C:\\Users\\ASUS\\.codex\\plugins\\cache\\openai-primary-runtime\\presentations\\26.1025.11240\\skills\\presentations';
 const pythonExecutable = 'C:\\Users\\ASUS\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe';
 
@@ -150,16 +150,17 @@ function node(slide, value, x, y, w, h, opts = {}) {
   const s = presentation.slides.add();
   s.background.fill = C.navy;
   box(s, 0, 0, 14, H, C.orange);
-  imageBox(s, assets.facade, 760, 0, 520, 720, { alt: 'Fachada de la Intendencia de San José', fit: 'cover' });
-  box(s, 742, 0, 38, H, C.blue);
-  imageBox(s, assets.crest, 66, 56, 68, 68, { alt: 'Escudo de San José', fit: 'contain' });
-  textBox(s, 'INTENDENCIA DE SAN JOSÉ', 154, 60, 400, 24, { size: 15, bold: true, color: '#C7D5F0' });
-  textBox(s, 'EDUCACIÓN VIAL', 154, 84, 360, 32, { size: 23, bold: true, color: C.white });
-  pill(s, 'DEFENSA DEL PROYECTO', 66, 206, 220, '#FFF0E7', '#D94D12');
-  textBox(s, 'Portal Vial', 66, 264, 640, 92, { size: 58, bold: true, color: C.white, valign: 'middle' });
-  textBox(s, 'Dos necesidades. Una solución gestionable.', 66, 370, 610, 72, { size: 26, color: '#DCE5F7' });
-  textBox(s, 'Proyecto académico | RC5', 66, 640, 330, 26, { size: 16, bold: true, color: C.orange });
-  imageBox(s, assets.rc5, 610, 622, 92, 50, { alt: 'Logo RC5', fit: 'contain' });
+  textBox(s, 'DIRECCIÓN DE TRÁNSITO · SAN JOSÉ', 66, 52, 440, 22, { size: 13, bold: true, color: '#C7D5F0' });
+  imageBox(s, assets.rc5, 1010, 46, 90, 42, { alt: 'Logo RC5', fit: 'contain' });
+  box(s, 1120, 48, 1, 38, '#5D6D9E');
+  imageBox(s, assets.crest, 1144, 42, 58, 58, { alt: 'Escudo de San José', fit: 'contain' });
+  box(s, 66, 176, 110, 3, C.orange);
+  textBox(s, 'Portal Vial', 66, 226, 900, 112, { size: 74, bold: true, color: C.white, valign: 'middle' });
+  textBox(s, 'Información, educación y gestión vial\nen un solo lugar', 66, 360, 900, 104, { size: 31, bold: true, color: '#E8EEFA', lineSpacing: 1.12 });
+  textBox(s, 'DEFENSA DEL PROYECTO', 66, 578, 270, 24, { size: 14, bold: true, color: '#C7D5F0' });
+  box(s, 352, 590, 180, 1, '#5D6D9E');
+  textBox(s, '2026', 550, 578, 80, 24, { size: 14, bold: true, color: '#C7D5F0' });
+  textBox(s, '01 / 21', 1110, 646, 92, 22, { size: 13, bold: true, color: '#8FA0CC', align: 'right' });
   note(s, [
     'Abrir con una pausa breve. No presentar tecnologías todavía.',
     'Frase sugerida: Portal Vial nace al conectar una necesidad ciudadana con una necesidad institucional.',
@@ -736,7 +737,7 @@ for (const [index, slide] of presentation.slides.items.entries()) {
   await fs.writeFile(path.join(previewDir, `slide-${String(index + 1).padStart(2, '0')}.png`), new Uint8Array(await png.arrayBuffer()));
 }
 const montage = await presentation.export({ format: 'webp', montage: true });
-await fs.writeFile(path.join(buildDir, 'montage.webp'), new Uint8Array(await montage.arrayBuffer()));
+await fs.writeFile(path.join(buildDir, 'montage-diseno.webp'), new Uint8Array(await montage.arrayBuffer()));
 
 const stagingDir = path.join(buildDir, 'finalizer');
 await fs.mkdir(stagingDir, { recursive: true });
@@ -756,7 +757,7 @@ const result = await finalizePresentation({
   requiredNativeChartOwnerSlides: [],
   fontPolicy: { basis: 'design', families: ['Segoe UI'] },
   verifyArtifactToolImport: true,
-  receiptPath: path.join(stagingDir, 'Portal_Vial_Defensa_REVISADA.validation.json'),
+  receiptPath: path.join(stagingDir, 'Portal_Vial_Defensa_DISENO.validation.json'),
 });
 
 console.log(JSON.stringify({ finalPath, slides: presentation.slides.items.length, result }, null, 2));

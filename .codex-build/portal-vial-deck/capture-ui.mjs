@@ -41,6 +41,24 @@ await context.route('**/api/**', async (route) => {
       { id: 2, categoria: 'Agenda', pregunta: '¿Cómo reservo una fecha para la prueba?', respuesta: 'Ingresá a Agenda, elegí una franja disponible y confirmá la reserva.' },
       { id: 3, categoria: 'Renovación', pregunta: '¿Puedo solicitar una renovación urgente?', respuesta: 'Sí. El portal muestra las franjas disponibles para renovación normal y urgente.' },
     ] };
+  } else if (pathname === '/api/portal/noticias') {
+    body = { noticias: [
+      { id: 1, titulo: 'Semana de la Seguridad Vial', texto: 'Actividades de concientización para estudiantes del departamento.', fecha_fin_vigencia: '2026-11-12', imagen_portada: '' },
+      { id: 2, titulo: 'Nuevo material para aspirantes', texto: 'Manual actualizado con señalización y situaciones frecuentes de circulación.', fecha_fin_vigencia: '2026-12-20', imagen_portada: '' },
+      { id: 3, titulo: 'Agenda de pruebas', texto: 'Nuevas franjas disponibles para pruebas de manejo y renovaciones.', fecha_fin_vigencia: '2026-11-30', imagen_portada: '' },
+    ] };
+  } else if (pathname === '/api/portal/prueba') {
+    body = { preguntas: [
+      { id: 1, pregunta: '¿Qué indica una señal circular con borde rojo?', opciones: { A: 'Una obligación', B: 'Una prohibición', C: 'Una recomendación' } },
+      { id: 2, pregunta: '¿Quién tiene prioridad en una esquina sin señalización?', opciones: { A: 'Quien circula por la derecha', B: 'Quien llega primero', C: 'El vehículo más grande' } },
+      { id: 3, pregunta: '¿Qué distancia debe mantenerse con el vehículo de adelante?', opciones: { A: 'La que permita detenerse con seguridad', B: 'Un metro', C: 'La mitad del largo del vehículo' } },
+    ] };
+  } else if (pathname === '/api/franjas/disponibles') {
+    body = { franjas: [
+      { id: 101, fecha: '2026-10-29', hora_inicio: '09:00', hora_fin: '09:30', tipo: 'PRUEBA_MANEJO', cupos_totales: 4, reservas_count: 1 },
+      { id: 102, fecha: '2026-10-29', hora_inicio: '10:00', hora_fin: '10:30', tipo: 'PRUEBA_MANEJO', cupos_totales: 4, reservas_count: 3 },
+      { id: 103, fecha: '2026-10-30', hora_inicio: '11:00', hora_fin: '11:30', tipo: 'PRUEBA_MANEJO', cupos_totales: 4, reservas_count: 0 },
+    ] };
   } else if (pathname === '/api/noticias') {
     body = { noticias: [
       { id: 1, titulo: 'Semana de la Seguridad Vial', texto: 'Actividades de concientización dirigidas a estudiantes del departamento.', estado: 'PUBLICADO', fecha_inicio_vigencia: '2026-10-20', fecha_fin_vigencia: '2026-11-12' },
@@ -82,6 +100,10 @@ async function shot(name, url, options = {}) {
 await shot('portal-inicio.png', `${base}/frontend-publico/index.html`);
 await shot('portal-materiales.png', `${base}/frontend-publico/estudio.html`, { waitFor: '.card-grid .card' });
 await shot('portal-faq.png', `${base}/frontend-publico/preguntas.html`, { waitFor: '.card-grid .card' });
+await shot('portal-noticias.png', `${base}/frontend-publico/noticias.html`, { waitFor: '#noticias-grid .card' });
+await shot('portal-simulador.png', `${base}/frontend-publico/prueba.html`, { waitFor: '.quiz-question' });
+await shot('portal-agenda.png', `${base}/frontend-publico/agenda.html`, { waitFor: '.slot' });
+await shot('portal-consulta.png', `${base}/frontend-publico/consulta.html`, { waitFor: 'form' });
 await shot('panel-noticias.png', `${base}/frontend-imsj/noticias.html`, { waitFor: '#tbody-noticias tr' });
 await shot('panel-agenda.png', `${base}/frontend-imsj/agenda.html`, { waitFor: '#tbody-reservas tr' });
 await shot('panel-consultas.png', `${base}/frontend-imsj/consultas.html`, { waitFor: '#lista-consultas details' });
