@@ -1,10 +1,10 @@
-<!doctype html>
+0<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#12204f" />
-  <title>Portal Vial — Defensa visual</title>
+  <title>RC5 — Defensa del proyecto</title>
   <style>
     :root {
       --navy: #12204f;
@@ -31,6 +31,7 @@
 
     button { font: inherit; }
     .deck { position: relative; width: 100%; height: 100%; isolation: isolate; }
+    .slide-canvas { display: contents; }
     .slide {
       position: absolute;
       inset: 0;
@@ -167,6 +168,8 @@
     }
     .is-active .screen { transform: perspective(1400px) rotateX(0) translateY(0) scale(1); opacity: 1; }
     .screen img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .screen.contact-screen { background: var(--navy); }
+    .contact-screen img { object-fit: contain; }
     .screen-label {
       position: absolute;
       z-index: 3;
@@ -310,9 +313,12 @@
     body.blackout .deck { visibility:hidden; }
     body.blackout { background:#000; }
 
-    body.overview { overflow:auto; background:#08122e; }
+    html.overview-open { height:auto; min-height:100%; overflow:auto; }
+    body.overview { height:auto; min-height:100vh; overflow:visible; background:#08122e; }
     body.overview .deck { height:auto; min-height:100%; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:24px; padding:30px; }
-    body.overview .slide { position:relative; inset:auto; width:100%; aspect-ratio:16/9; opacity:1; visibility:visible; transform:none; border-radius:16px; cursor:pointer; box-shadow:0 18px 45px rgba(0,0,0,.35); transition:.2s; }
+    body.overview .slide { position:relative; inset:auto; width:100%; aspect-ratio:var(--stage-ratio, 16/9); opacity:1; visibility:visible; transform:none; border-radius:16px; cursor:pointer; box-shadow:0 18px 45px rgba(0,0,0,.35); transition:.2s; }
+    body.overview .slide-canvas { display:grid; place-items:center; position:absolute; left:0; top:0; width:var(--stage-width); height:var(--stage-height); transform:scale(var(--thumb-scale)); transform-origin:top left; overflow:hidden; }
+    body.overview .bg { transform:none; }
     body.overview .slide:hover { transform:translateY(-5px) scale(1.015); box-shadow:0 25px 65px rgba(0,0,0,.52); }
     body.overview .chrome, body.overview .notes { display:none; }
     body.overview .reveal,
@@ -320,10 +326,12 @@
     body.overview .state,
     body.overview .tech-pill,
     body.overview .route-node,
+    body.overview .step,
     body.overview .screen { opacity:1; transform:none; filter:none; animation:none; }
     body.overview .doc { opacity:.9; transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1); animation:none; }
     body.overview .bridge-icon .arch { opacity:1; transform:scaleX(1); animation:none; }
     body.overview .bridge-icon .road,
+    body.overview .step::after,
     body.overview .state-arrow,
     body.overview .route-arrow { transform:scaleX(1); animation:none; }
 
@@ -344,32 +352,54 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
     }
+
+    /* RC5 abre el relato; la identidad del producto se revela más adelante. */
+    .team-content { width: min(1280px, 86vw); }
+    .team-heading { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 5vw; }
+    .team-logo { width: clamp(140px, 18vw, 260px); height: auto; display: block; }
+    .team-roster { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px; list-style: none; margin: 7vh 0 0; padding: 28px 0 0; border-top: 1px solid rgba(255,255,255,.22); }
+    .team-roster strong { display: block; font-size: clamp(1rem, 1.35vw, 1.55rem); line-height: 1.3; font-weight: 650; }
+    .team-roster span { display: block; color: rgba(255,255,255,.7); font-size: clamp(.75rem, .9vw, 1rem); line-height: 1.4; margin-top: 8px; }
+    @media (max-width: 760px) {
+      .team-heading { gap: 20px; }
+      .team-slide .hero { font-size: clamp(3rem, 9vw, 5rem); }
+      .team-slide .sub { font-size: 1.15rem; }
+      .team-logo { width: clamp(84px, 23vw, 140px); }
+      .team-roster { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 16px; margin-top: 4vh; padding-top: 20px; }
+      .team-roster strong { font-size: 1rem; }
+      .team-roster span { margin-top: 4px; font-size: .8rem; }
+    }
   </style>
 </head>
 <body>
   <main class="deck" id="deck" aria-live="polite">
-    <section class="slide visual is-active" data-note="Portal Vial nace al conectar una necesidad ciudadana con una necesidad institucional.">
-      <img class="bg" src="assets/03-portal-puente.png" alt="Portal naranja que une a una persona con una institución" />
-      <div class="shade top"></div>
-      <div class="brand"><img src="assets/rc5.png" alt="RC5"><span class="divider"></span><img src="assets/escudo-san-jose.png" alt="Intendencia de San José"></div>
-      <div class="content left top">
-        <div class="eyebrow reveal">Defensa del proyecto</div>
-        <h1 class="hero reveal d1">Portal Vial</h1>
-        <p class="sub reveal d2">Dos necesidades. Una conexión.</p>
+    <section class="slide team-slide is-active" data-note="Somos RC5: Tomás Cabrera, Juan Robaina, Gabriela Romero, Verónica Romero y Juan Corrales. Cada integrante aportó desde su área y el trabajo es de los cinco. Presentarnos brevemente, sin nombrar todavía la solución. Transición: antes de mostrar lo que construimos, pongámonos en el lugar de una persona que quiere sacar la libreta.">
+      <div class="content team-content">
+        <div class="team-heading">
+          <div><div class="eyebrow reveal">Equipo de desarrollo</div><h1 class="hero reveal d1">Somos RC5.</h1><p class="sub reveal d2">Cinco integrantes.<br>Un mismo equipo.</p></div>
+          <img class="team-logo reveal d2" src="assets/rc5.png" alt="Logo del equipo RC5">
+        </div>
+        <ul class="team-roster reveal d3" aria-label="Integrantes del equipo">
+          <li><strong>Tomás Cabrera</strong><span>Liderazgo · Backend</span></li>
+          <li><strong>Juan Robaina</strong><span>Testing · Documentación</span></li>
+          <li><strong>Gabriela Romero</strong><span>Base de datos</span></li>
+          <li><strong>Verónica Romero</strong><span>Frontend público</span></li>
+          <li><strong>Juan Corrales</strong><span>Panel interno</span></li>
+        </ul>
       </div>
     </section>
 
-    <section class="slide visual" data-note="Presentamos al joven que quiere prepararse para obtener la libreta de conducir.">
+    <section class="slide visual" data-note="Una persona decide sacar la libreta de conducir. Es un objetivo concreto, pero antes de rendir necesita prepararse. Hablar desde su perspectiva; todavía no presentar la herramienta.">
       <img class="bg" src="assets/01-joven-informacion.png" alt="Joven frente a información dispersa" />
       <div class="content left top"><h2 class="hero small reveal">Quiero sacar<br>la libreta</h2></div>
     </section>
 
-    <section class="slide visual" data-note="La primera pregunta parece sencilla, pero la respuesta está distribuida entre distintos canales.">
+    <section class="slide visual" data-note="La decisión trae la primera duda: dónde estudiar y qué información tomar como referencia. Dejar que la pregunta se lea antes de explicar la dispersión.">
       <img class="bg" src="assets/01-joven-informacion.png" alt="Joven frente a caminos e información dispersa" />
       <div class="content left top"><h2 class="hero small reveal">¿Dónde<br>estudio?</h2></div>
     </section>
 
-    <section class="slide word-slide" data-note="La información existe. El problema es encontrarla y reconocer la versión correcta.">
+    <section class="slide word-slide" data-note="No faltaba información: estaba repartida entre distintos canales. La dificultad era encontrarla y reconocer cuál estaba vigente. Transición: hasta acá miramos a quien busca; ahora veamos a quien necesita comunicar.">
       <div class="docs-cloud" aria-hidden="true">
         <span class="doc" style="--x:10vw;--y:13vh;--r:-12deg;--d:.1s"></span><span class="doc" style="--x:27vw;--y:55vh;--r:9deg;--d:.18s"></span>
         <span class="doc" style="--x:61vw;--y:10vh;--r:13deg;--d:.26s"></span><span class="doc" style="--x:79vw;--y:49vh;--r:-8deg;--d:.34s"></span>
@@ -378,51 +408,76 @@
       <div class="content center"><div class="eyebrow reveal">El problema</div><h2 class="hero small reveal d1">Información<br><span style="color:var(--orange)">dispersa</span></h2></div>
     </section>
 
-    <section class="slide visual light" data-note="La Dirección de Tránsito también enfrenta una necesidad: llegar a los jóvenes de forma directa.">
+    <section class="slide visual light" data-note="Del otro lado está la Dirección de Tránsito, que necesita acercar información a los jóvenes. No es solo un problema de búsqueda: también hay una dificultad para llegar.">
       <img class="bg" src="assets/02-direccion-barrera.png" alt="Institución intentando comunicar con jóvenes" />
       <div class="content center top"><h2 class="hero small navy reveal">Necesitamos<br>llegar</h2></div>
     </section>
 
-    <section class="slide" data-note="Una parte necesita encontrar. La otra necesita llegar.">
+    <section class="slide" data-note="Volvemos visibles los dos lados: una persona necesita encontrar y la institución necesita llegar. Marcar la relación entre ambos antes de avanzar.">
       <div class="split"><figure><img src="assets/01-joven-informacion.png" alt="Necesidad ciudadana"></figure><figure><img src="assets/02-direccion-barrera.png" alt="Necesidad institucional"></figure></div>
       <h2 class="split-label reveal">ENCONTRAR</h2><h2 class="split-label right reveal d1">LLEGAR</h2>
     </section>
 
-    <section class="slide word-slide" data-note="Ambas necesidades se encuentran en una misma brecha de acceso y comunicación.">
+    <section class="slide word-slide" data-note="Son dos necesidades que comparten una brecha de acceso y comunicación. Todavía no revelar el nombre ni mostrar pantallas: primero formular la pregunta que va a resolver la presentación.">
       <div class="content center"><div class="eyebrow reveal">Punto de encuentro</div><h2 class="hero small reveal d1">Una misma<br>brecha</h2><div class="bridge-icon reveal d2" aria-hidden="true"><span class="bank"></span><span class="bank right"></span><span class="arch"></span><span class="road"></span></div></div>
     </section>
 
-    <section class="slide visual" data-note="Portal Vial conecta a la ciudadanía con la Dirección de Tránsito.">
+    <section class="slide word-slide" data-note="Un lugar donde la ciudadanía encuentre lo que necesita y Tránsito pueda acercárselo. Hacer una pausa breve después de la pregunta. La siguiente pantalla es la primera revelación de la solución.">
+      <div class="content center"><h2 class="hero small reveal">¿Y si hubiera<br>un solo lugar?</h2></div>
+    </section>
+
+    <section class="slide visual" id="revelacion" data-note="Revelación: ese punto de encuentro es Portal Vial. Ahora sí nombramos el sistema. No enumerar todas sus funciones: mostrar qué puede hacer la persona del comienzo, paso a paso.">
       <img class="bg" src="assets/03-portal-puente.png" alt="Portal que conecta ambos lados" />
-      <div class="content left top"><h2 class="hero small reveal">Portal Vial</h2><p class="sub reveal d1">Un único punto de encuentro.</p></div>
+      <div class="content left top"><h2 class="hero small reveal">Portal Vial</h2><p class="sub reveal d1">La ciudadanía encuentra.<br>Tránsito llega.</p></div>
     </section>
 
-    <section class="slide word-slide" data-note="Primera necesidad concreta: acceder al material para preparar el teórico."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Estudiar</h2></div><div class="symbol book" aria-hidden="true"></div></section>
-    <section class="slide light" data-note="El portal reúne materiales de estudio en un mismo lugar."><span class="screen-label">Materiales de estudio</span><div class="screen"><img src="assets/portal-materiales.png" alt="Pantalla de materiales de estudio"></div></section>
-    <section class="slide word-slide" data-note="La ciudadanía también necesita conocer noticias y contenido vigente."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Informarse</h2></div><div class="symbol news" aria-hidden="true"></div></section>
-    <section class="slide light" data-note="Las noticias públicas centralizan novedades y vigencia."><span class="screen-label">Noticias vigentes</span><div class="screen"><img src="assets/portal-noticias.png" alt="Pantalla de noticias"></div></section>
-    <section class="slide word-slide" data-note="Las preguntas frecuentes permiten resolver dudas sin iniciar una gestión."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Resolver</h2></div><div class="symbol faq" aria-hidden="true"></div></section>
-    <section class="slide light" data-note="Las preguntas se presentan por categoría para facilitar la búsqueda."><span class="screen-label">Preguntas frecuentes</span><div class="screen"><img src="assets/portal-faq.png" alt="Pantalla de preguntas frecuentes"></div></section>
-    <section class="slide word-slide" data-note="Cuando la respuesta no está publicada, la persona puede enviar su consulta."><div class="content left"><div class="eyebrow reveal">Si no está respondido</div><h2 class="hero reveal d1">Preguntar</h2></div><div class="symbol message" aria-hidden="true"></div></section>
-    <section class="slide light" data-note="El formulario crea un canal directo con la Dirección de Tránsito."><span class="screen-label">Consulta ciudadana</span><div class="screen"><img src="assets/portal-consulta.png" alt="Formulario de consulta"></div></section>
-    <section class="slide word-slide" data-note="El simulador permite practicar antes de la prueba teórica."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Practicar</h2></div><div class="symbol quiz" aria-hidden="true"></div></section>
-    <section class="slide light" data-note="El simulador presenta preguntas de múltiple opción y corrección inmediata."><span class="screen-label">Simulador teórico</span><div class="screen"><img src="assets/portal-simulador.png" alt="Pantalla del simulador"></div></section>
-    <section class="slide word-slide" data-note="La agenda permite elegir una franja con cupo disponible."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Reservar</h2></div><div class="symbol calendar" aria-hidden="true"></div></section>
-    <section class="slide light" data-note="La persona consulta fechas, horarios y cupos antes de reservar."><span class="screen-label">Agenda y cupos</span><div class="screen"><img src="assets/portal-agenda.png" alt="Pantalla de agenda pública"></div></section>
-    <section class="slide word-slide" data-note="El segundo lado de la solución es el panel de gestión para la Dirección."><div class="content left"><div class="eyebrow reveal">Panel IMSJ</div><h2 class="hero reveal d1">Gestionar</h2><p class="sub reveal d2">Contenido y operación.</p></div><div class="symbol panel" aria-hidden="true"></div></section>
-    <section class="slide light" data-note="El personal mantiene noticias y contenidos desde el panel."><span class="screen-label">Gestión de contenidos</span><div class="screen"><img src="assets/panel-noticias.png" alt="Panel de noticias"></div></section>
-    <section class="slide light" data-note="La Dirección consulta la agenda administrativa y sus reservas."><span class="screen-label">Operación diaria</span><div class="screen"><img src="assets/panel-agenda.png" alt="Agenda administrativa"></div></section>
-    <section class="slide light" data-note="Las consultas ciudadanas llegan a una bandeja interna."><span class="screen-label">Bandeja de consultas</span><div class="screen"><img src="assets/panel-consultas.png" alt="Bandeja de consultas"></div></section>
-
-    <section class="slide visual" data-note="Portal público y panel administrativo son dos experiencias conectadas al mismo sistema.">
-      <img class="bg" src="assets/03-portal-puente.png" alt="Un portal conecta dos extremos" /><div class="content left top"><h2 class="hero small reveal">Un solo<br>sistema</h2><p class="sub reveal d1">Dos experiencias.</p></div>
+    <section class="slide light" id="inicio-explicacion" data-note="Hacer una pausa para separar la historia de la explicación. Ya presentamos las dos necesidades y revelamos Portal Vial. A partir de aquí explicamos la solución: primero su funcionamiento, luego el desarrollo y finalmente su validación. Dar paso a quien expone el recorrido del portal.">
+      <div class="content center">
+        <h2 class="hero small navy reveal">La solución,<br>en detalle.</h2>
+        <p class="sub ink reveal d1" style="margin-inline:auto">Funcionamiento · Desarrollo · Validación</p>
+      </div>
     </section>
 
-    <section class="slide word-slide" data-note="Transición: nada de lo mostrado apareció de una vez. Cada función tiene un origen y una validación."><div class="content center"><div class="eyebrow reveal">Proceso</div><h2 class="hero small reveal d1">Nada sale<br>de la nada</h2></div></section>
-    <section class="slide visual" data-note="Cada etapa produjo la entrada de la siguiente: conversación, requisitos, historias, desarrollo, demo, cambios y aprobación."><img class="bg" src="assets/04-proceso.png" alt="Camino de etapas del proyecto"><div class="content left top"><h2 class="hero small reveal">Paso a paso</h2></div></section>
+    <section class="slide word-slide" data-note="Primero, la persona necesita prepararse. Comenzamos el recorrido en los materiales de estudio."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Estudiar</h2></div><div class="symbol book" aria-hidden="true"></div></section>
+
+    <section class="slide light" data-note="Mostrar los materiales disponibles y cómo se accede a ellos. La primera duda, dónde estudiar, ya tiene una respuesta concreta."><span class="screen-label">Materiales de estudio</span><div class="screen"><img src="assets/portal-materiales.png" alt="Pantalla de materiales de estudio"></div></section>
+
+    <section class="slide word-slide" data-note="Después de estudiar surge otra pregunta: cómo saber si se está preparado. La siguiente función permite practicar."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Practicar</h2></div><div class="symbol quiz" aria-hidden="true"></div></section>
+
+    <section class="slide light" data-note="Mostrar el simulador, las opciones y la corrección. Esto permite practicar antes del teórico; no reemplaza la prueba oficial."><span class="screen-label">Simulador teórico</span><div class="screen"><img src="assets/portal-simulador.png" alt="Pantalla del simulador"></div></section>
+
+    <section class="slide word-slide" data-note="Durante la preparación aparecen dudas. Antes de iniciar una consulta, la persona puede revisar respuestas publicadas."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Resolver</h2></div><div class="symbol faq" aria-hidden="true"></div></section>
+
+    <section class="slide light" data-note="Mostrar las preguntas frecuentes y sus categorías. Conectar esta pantalla con una duda del recorrido que acabamos de mostrar."><span class="screen-label">Preguntas frecuentes</span><div class="screen"><img src="assets/portal-faq.png" alt="Pantalla de preguntas frecuentes"></div></section>
+
+    <section class="slide word-slide" data-note="Si la respuesta no está publicada, el recorrido no termina ahí: queda un canal para preguntar directamente."><div class="content left"><div class="eyebrow reveal">Si no está respondido</div><h2 class="hero reveal d1">Preguntar</h2></div><div class="symbol message" aria-hidden="true"></div></section>
+
+    <section class="slide light" data-note="Mostrar el contacto ciudadano. Dejar planteada una pregunta para retomar en el panel: ¿a dónde llega este mensaje?"><span class="screen-label">Consulta ciudadana</span><div class="screen contact-screen"><img src="assets/portal-consulta.png" alt="Formulario de contacto del portal con una consulta de ejemplo sin enviar"></div></section>
+
+    <section class="slide word-slide" data-note="Además de prepararse y consultar, la persona necesita conocer novedades que sigan vigentes."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Informarse</h2></div><div class="symbol news" aria-hidden="true"></div></section>
+
+    <section class="slide light" data-note="Mostrar noticias y vigencia. Lo importante es que la persona encuentre información actualizada en el mismo punto de encuentro."><span class="screen-label">Noticias vigentes</span><div class="screen"><img src="assets/portal-noticias.png" alt="Pantalla de noticias"></div></section>
+
+    <section class="slide word-slide" data-note="Cuando está lista para avanzar, la siguiente necesidad es elegir un horario disponible."><div class="content left"><div class="eyebrow reveal">Portal ciudadano</div><h2 class="hero reveal d1">Reservar</h2></div><div class="symbol calendar" aria-hidden="true"></div></section>
+
+    <section class="slide light" data-note="Mostrar fecha, horario y cupos. Cerramos el recorrido ciudadano desde la preparación hasta la reserva. Transición: vimos lo que encuentra la persona; ¿quién mantiene todo esto del otro lado?"><span class="screen-label">Agenda y cupos</span><div class="screen"><img src="assets/portal-agenda.png" alt="Pantalla de agenda pública"></div></section>
+
+    <section class="slide word-slide" data-note="Cambiamos de perspectiva: ahora estamos en el lugar de Tránsito. El contenido y las gestiones que acabamos de mostrar necesitan un panel de trabajo."><div class="content left"><div class="eyebrow reveal">Panel IMSJ</div><h2 class="hero reveal d1">Gestionar</h2><p class="sub reveal d2">Contenido y operación.</p></div><div class="symbol panel" aria-hidden="true"></div></section>
+
+    <section class="slide light" data-note="Mostrar cómo el personal mantiene noticias y contenidos. La información que encuentra la ciudadanía tiene responsables y un proceso editorial."><span class="screen-label">Gestión de contenidos</span><div class="screen"><img src="assets/panel-noticias.png" alt="Panel de noticias"></div></section>
+
+    <section class="slide light" data-note="Retomar la consulta que dejamos planteada: este es el lugar donde llega el mensaje ciudadano y el personal puede leerlo. Conectar ambas experiencias con el mismo caso."><span class="screen-label">Bandeja de consultas</span><div class="screen"><img src="assets/panel-consultas.png" alt="Bandeja de consultas"></div></section>
+
+    <section class="slide light" data-note="Mostrar la agenda administrativa y las reservas. Cerrar las dos perspectivas: la ciudadanía encuentra y reserva; Tránsito recibe y gestiona."><span class="screen-label">Operación diaria</span><div class="screen"><img src="assets/panel-agenda.png" alt="Agenda administrativa"></div></section>
+
+    <section class="slide word-slide" data-note="Ya mostramos el resultado desde ambos lados. Abrimos ahora otra pregunta: cómo pasó el equipo de aquella necesidad inicial a un sistema funcionando. Volvemos al proceso sin repetir la demostración."><div class="content center"><div class="eyebrow reveal">Proceso</div><h2 class="hero small reveal d1">¿Cómo llegamos<br>hasta acá?</h2></div></section>
+
+    <section class="slide visual" data-note="Recorrer el proceso como una cadena de decisiones: conversar, acordar requisitos, construir, mostrar y ajustar. La siguiente pantalla sitúa el comienzo de esa cadena."><img class="bg" src="assets/04-proceso.png" alt="Camino de etapas del proyecto"><div class="content left top"><h2 class="hero small reveal">Paso a paso</h2></div></section>
 
     <section class="slide light" data-note="El 9 de julio se realizó la entrevista con la Dirección de Tránsito."><div class="content center"><div class="eyebrow reveal">Relevamiento</div><h2 class="hero orange reveal d1">09 JUL</h2><p class="sub ink reveal d2" style="margin-inline:auto">Entrevista</p></div></section>
+
     <section class="slide word-slide" data-note="La entrevista se convirtió en requisitos ordenados y verificables."><div class="content center"><div class="eyebrow reveal">Puesta en limpio</div><h2 class="hero small reveal d1">Requisitos</h2></div></section>
+
     <section class="slide word-slide" data-note="Los requisitos se transformaron en historias de usuario y criterios de aceptación."><div class="content center"><div class="eyebrow reveal">22–28 JUL</div><h2 class="hero small reveal d1">Historias</h2></div></section>
 
     <section class="slide light" data-note="Los primeros cuatro sprints construyeron una versión funcional.">
@@ -430,6 +485,7 @@
     </section>
 
     <section class="slide light" data-note="El 3 de septiembre el producto se mostró antes de considerarlo terminado."><div class="content center"><div class="eyebrow reveal">Validación</div><h2 class="hero orange reveal d1">03 SEP</h2><p class="sub ink reveal d2" style="margin-inline:auto">Primera demo</p></div></section>
+
     <section class="slide word-slide" data-note="La demo produjo tres ampliaciones: consultas ciudadanas, aprobación separada e imágenes en el simulador."><div class="content center"><div class="eyebrow reveal">Feedback registrado</div><h2 class="hero small reveal d1">Cambios</h2><p class="sub reveal d2" style="margin-inline:auto">Consultas · Aprobación · Imágenes</p></div></section>
 
     <section class="slide light" data-note="Aquí aparece la aprobación editorial: la demo reveló que aprobar y publicar debían ser responsabilidades diferentes.">
@@ -437,9 +493,11 @@
     </section>
 
     <section class="slide word-slide" data-note="El sprint 5 implementó las ampliaciones solicitadas y actualizó las pruebas."><div class="content center"><div class="eyebrow reveal">Cambios implementados</div><h2 class="hero small reveal d1">Sprint 5</h2></div></section>
+
     <section class="slide light" data-note="El 13 de octubre se mostraron los cambios y el cliente aprobó la solución."><div class="content center"><div class="eyebrow reveal" style="color:var(--green)">Cierre del ciclo</div><h2 class="hero reveal d1" style="color:var(--green)">13 OCT</h2><p class="sub ink reveal d2" style="margin-inline:auto">Segunda demo</p></div></section>
 
-    <section class="slide word-slide" data-note="Abrimos la parte técnica conectándola con el alcance que acabamos de recorrer."><div class="content center"><div class="eyebrow reveal">Ingeniería</div><h2 class="hero small reveal d1">¿Cómo lo<br>hicimos?</h2></div></section>
+    <section class="slide word-slide" data-note="El proceso explica cómo llegamos al producto. Ahora abrimos la parte técnica con otra pregunta: qué sucede detrás de las pantallas que ya vimos."><div class="content center"><div class="eyebrow reveal">Ingeniería</div><h2 class="hero small reveal d1">¿Qué pasa<br>por dentro?</h2></div></section>
+
     <section class="slide visual" data-note="Una petición pasa por navegador, router, controlador, servicio, repositorio y base de datos."><img class="bg" src="assets/05-arquitectura.png" alt="Sistema web por capas"><div class="content left top"><h2 class="hero small reveal">Capas</h2></div></section>
 
     <section class="slide word-slide" data-note="La pila tecnológica se mantuvo explícita y proporcional al proyecto.">
@@ -450,35 +508,39 @@
       <div class="content center"><div class="eyebrow reveal">POST /api/reservas</div><div class="route reveal d1"><div class="route-node" style="--i:0">turnos.js</div><span class="route-arrow" style="--i:1"></span><div class="route-node" style="--i:2">index.php</div><span class="route-arrow" style="--i:3"></span><div class="route-node" style="--i:4">Controller</div><span class="route-arrow" style="--i:5"></span><div class="route-node hot" style="--i:6">Service</div><span class="route-arrow" style="--i:7"></span><div class="route-node" style="--i:8">Repository</div><span class="route-arrow" style="--i:9"></span><div class="route-node ok" style="--i:10">201</div></div></div>
     </section>
 
-    <section class="slide visual" data-note="Cuando dos solicitudes compiten por el último cupo, la transacción permite una sola reserva y rechaza la otra de forma controlada."><img class="bg" src="assets/07-concurrencia.png" alt="Dos solicitudes compiten por un único cupo"><div class="content left top"><h2 class="hero small reveal">Un último<br>cupo</h2></div></section>
+    <section class="slide word-slide" data-note="Las 46 rutas muestran el alcance técnico que conecta portal y panel. Presentarlas como superficie del sistema, no como un resultado de rendimiento."><div class="content center"><div class="metric reveal">46</div><div class="metric-label reveal d1">rutas del sistema</div></div></section>
 
     <section class="slide light" data-note="El cambio CC-03 se convirtió en un flujo de estados. Editar un contenido reinicia el ciclo.">
       <div class="content center"><div class="eyebrow reveal">Aprobación editorial</div><div class="state-flow reveal d1"><div class="state" style="--i:0">BORRADOR</div><span class="state-arrow" style="--i:1"></span><div class="state pending" style="--i:2">PENDIENTE</div><span class="state-arrow" style="--i:3"></span><div class="state approved" style="--i:4">APROBADO</div><span class="state-arrow" style="--i:5"></span><div class="state published" style="--i:6">PUBLICADO</div></div><p class="sub ink reveal d3" style="margin:3rem auto 0">Editar reinicia el ciclo.</p></div>
     </section>
 
+    <section class="slide visual" data-note="Plantear el desafío antes de mostrar la evidencia: quedan un cupo y dos personas intentando reservarlo al mismo tiempo. Preguntar qué debería ocurrir; en la siguiente pantalla aparece el resultado."><img class="bg" src="assets/07-concurrencia.png" alt="Dos solicitudes compiten por un único cupo"><div class="content left top"><h2 class="hero small reveal">Un último<br>cupo</h2></div></section>
+
+    <section class="slide word-slide" data-note="Respuesta al desafío anterior: una solicitud creó la reserva con 201 y la otra recibió un rechazo controlado con 422. La transacción evitó vender dos veces el mismo cupo; esta prueba no equivale a una medición de carga."><div class="content center"><div class="metric reveal" style="font-size:clamp(6rem,16vw,17rem)">201 / 422</div><div class="metric-label reveal d1">dos solicitudes · un último cupo</div></div></section>
+
     <section class="slide visual" data-note="Docker Compose separa la aplicación y la base de datos. Los volúmenes conservan archivos, caché y datos."><img class="bg" src="assets/08-infraestructura.png" alt="Servidor con aplicación, base de datos y almacenamiento"><div class="shade"></div><div class="content left"><h2 class="hero small reveal">Despliegue</h2><p class="sub reveal d1">Ubuntu · Docker · 2 servicios</p></div></section>
+
     <section class="slide visual" data-note="La seguridad se verificó por capas: controles internos, SAST, DAST, Nmap y auditoría de la API."><img class="bg" src="assets/06-seguridad.png" alt="Sistema protegido por capas"><div class="shade"></div><div class="content left"><h2 class="hero small reveal">Seguridad<br>por capas</h2><p class="sub reveal d1">SAST · DAST · Nmap · API</p></div></section>
 
-    <section class="slide word-slide" data-note="Se ejecutaron 192 comprobaciones de integración. No representa cobertura de líneas."><div class="content center"><div class="metric reveal">192</div><div class="metric-label reveal d1">comprobaciones de integración</div></div></section>
-    <section class="slide word-slide" data-note="El sistema expone 46 rutas entre portal y panel administrativo."><div class="content center"><div class="metric reveal">46</div><div class="metric-label reveal d1">rutas del sistema</div></div></section>
-    <section class="slide word-slide" data-note="La auditoría de seguridad de la API aprobó 43 comprobaciones."><div class="content center"><div class="metric green reveal">43</div><div class="metric-label reveal d1">comprobaciones de seguridad</div></div></section>
-    <section class="slide word-slide" data-note="La prueba concurrente produjo una creación 201 y un rechazo 422 cuando dos procesos compitieron por el último cupo."><div class="content center"><div class="metric reveal" style="font-size:clamp(6rem,16vw,17rem)">201 / 422</div><div class="metric-label reveal d1">dos solicitudes · un último cupo</div></div></section>
+    <section class="slide word-slide" data-note="Después de explicar los controles de seguridad, mostrar su evidencia: la auditoría de la API aprobó 43 comprobaciones. La cifra corresponde a esa auditoría y no implica ausencia de todo riesgo."><div class="content center"><div class="metric green reveal">43</div><div class="metric-label reveal d1">comprobaciones de seguridad</div></div></section>
+
+    <section class="slide word-slide" data-note="Cerrar la evidencia funcional con las 192 comprobaciones de integración registradas. No es cobertura de líneas ni una medida de usuarios simultáneos. La siguiente pantalla distingue explícitamente lo que queda por medir."><div class="content center"><div class="metric reveal">192</div><div class="metric-label reveal d1">comprobaciones de integración</div></div></section>
 
     <section class="slide light" data-note="La capacidad objetivo de 90 sesiones simultáneas todavía requiere una prueba de carga. No debe presentarse como validada.">
       <div class="content center"><div class="eyebrow reveal" style="color:var(--muted)">Prueba de carga</div><h2 class="hero navy reveal d1">90 sesiones</h2><p class="sub ink reveal d2" style="margin-inline:auto">Pendiente de medición.</p></div>
     </section>
 
-    <section class="slide visual" data-note="Cerramos donde empezamos: la ciudadanía encuentra y la Dirección llega y gestiona.">
+    <section class="slide visual" data-note="Retomar el inicio: aquella persona necesitaba encontrar y Tránsito necesitaba llegar. Portal Vial conecta ambos lados. Cerrar en nombre de RC5 y dar paso a las preguntas del tribunal.">
       <img class="bg" src="assets/03-portal-puente.png" alt="Portal que une ciudadanía e institución" />
       <div class="shade top"></div>
       <div class="brand"><img src="assets/rc5.png" alt="RC5"><span class="divider"></span><img src="assets/escudo-san-jose.png" alt="Intendencia de San José"></div>
-      <div class="content left top"><h2 class="hero small reveal">Dos necesidades.<br><span style="color:var(--orange)">Una solución.</span></h2><p class="sub reveal d1">Portal Vial</p></div>
+      <div class="content left top"><h2 class="hero small reveal">Dos necesidades.<br><span style="color:var(--orange)">Una conexión.</span></h2><p class="sub reveal d1">RC5 · Portal Vial</p></div>
     </section>
   </main>
 
   <div class="chrome" aria-hidden="true">
     <div class="progress" id="progress"></div>
-    <div class="counter" id="counter">01 / 50</div>
+    <div class="counter" id="counter">01 / 51</div>
     <div class="controls">
       <button class="control" id="prev" title="Anterior" aria-label="Diapositiva anterior">←</button>
       <button class="control" id="next" title="Siguiente" aria-label="Diapositiva siguiente">→</button>
@@ -503,6 +565,13 @@
   <script>
     (() => {
       const slides = [...document.querySelectorAll('.slide')];
+      slides.forEach(slide => {
+        const canvas = document.createElement('div');
+        canvas.className = 'slide-canvas';
+        canvas.append(...slide.childNodes);
+        slide.appendChild(canvas);
+      });
+      const revealIndex = slides.findIndex(slide => slide.id === 'revelacion');
       const progress = document.getElementById('progress');
       const counter = document.getElementById('counter');
       const notes = document.getElementById('notes');
@@ -522,17 +591,31 @@
         progress.style.setProperty('--progress', `${((index + 1) / slides.length) * 100}%`);
         counter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
         notes.textContent = current.dataset.note || '';
-        document.title = `Portal Vial · ${index + 1}/${slides.length}`;
+        document.title = `${index < revealIndex ? 'RC5' : 'Portal Vial'} · ${index + 1}/${slides.length}`;
         if (updateHash) history.replaceState(null, '', `#${index + 1}`);
       }
 
       function next() { if (!document.body.classList.contains('overview')) render(index + 1); }
       function prev() { if (!document.body.classList.contains('overview')) render(index - 1); }
+      function sizeOverview() {
+        if (!document.body.classList.contains('overview')) return;
+        const width = document.documentElement.clientWidth;
+        const height = window.innerHeight;
+        slides.forEach(slide => {
+          slide.style.setProperty('--stage-width', `${width}px`);
+          slide.style.setProperty('--stage-height', `${height}px`);
+          slide.style.setProperty('--stage-ratio', `${width} / ${height}`);
+          slide.style.setProperty('--thumb-scale', slide.clientWidth / width);
+        });
+      }
       function toggleOverview(force) {
         const on = force ?? !document.body.classList.contains('overview');
+        document.documentElement.classList.toggle('overview-open', on);
         document.body.classList.toggle('overview', on);
+        if (on) sizeOverview();
         if (!on) { window.scrollTo(0, 0); render(index); }
       }
+      addEventListener('resize', sizeOverview);
       async function toggleFullscreen() {
         if (!document.fullscreenElement) await document.documentElement.requestFullscreen?.();
         else await document.exitFullscreen?.();

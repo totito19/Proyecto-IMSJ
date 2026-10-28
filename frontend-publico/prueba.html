@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de prueba — Educación Vial IMSJ</title>
-    <link rel="stylesheet" href="css/styles.css?v=7">
+    <link rel="stylesheet" href="css/styles.css?v=8">
 <link rel="stylesheet" href="css/forms.css?v=1">
 <script src="js/forms.js?v=1" defer></script>
 </head>
@@ -15,18 +15,21 @@
     <nav class="main-nav"><ul><li><a href="index.html">Inicio</a></li><li><a href="noticias.html">Noticias</a></li><li><a href="estudio.html">Materiales de estudio</a></li><li><a href="preguntas.html">Preguntas frecuentes</a></li><li><a href="prueba.html">Simulador</a></li><li><a href="agenda.html">Agenda</a></li></ul></nav>
 </div></header>
 
-<section class="hero hero-compact"><div class="container"><span class="hero-eyebrow">Práctica</span><h1>Simulador de prueba teórica</h1><p>Respondé las preguntas de múltiple opción y comprobá tu resultado al instante.</p></div></section>
+<section class="hero hero-compact"><div class="container"><span class="hero-eyebrow">Práctica</span><h1>Simulador de prueba teórica</h1><p>Practicá una pregunta por vez. Comprobá tu respuesta y revisá la devolución antes de continuar.</p></div></section>
 
 <section class="section"><div class="container quiz-shell">
     <p id="prueba-status" class="content-status" role="status">Cargando preguntas...</p>
     <section id="prueba-resultado" class="quiz-result" hidden aria-live="polite"></section>
     <form id="form-prueba" hidden>
+        <div class="quiz-progress"><span id="prueba-progreso-texto"></span><progress id="prueba-progreso" value="0" max="10" aria-label="Preguntas respondidas"></progress></div>
         <div id="preguntas-prueba" class="quiz-list"></div>
+        <section class="quiz-feedback" id="prueba-feedback" role="status" tabindex="-1" hidden></section>
         <div class="quiz-actions">
-            <button type="button" class="btn btn-primary" id="btn-nueva-simulacion" hidden>Nueva simulación</button>
-            <button type="submit" class="btn btn-accent" id="btn-corregir">Corregir respuestas</button>
+            <button type="submit" class="btn btn-accent" id="btn-corregir">Comprobar respuesta</button>
+            <button type="button" class="btn btn-primary" id="btn-siguiente-pregunta" hidden>Siguiente pregunta</button>
         </div>
     </form>
+    <div class="quiz-actions"><button type="button" class="btn btn-primary" id="btn-nueva-simulacion" hidden>Nueva simulación</button></div>
 </div></section>
 
 <footer class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><img class="footer-logo" src="img/eSanjo.png" alt="Logo de la Intendencia de San José"><div><h4>Intendencia de San José — Sección Tránsito</h4><p>Plataforma de educación vial para la ciudadanía del departamento de San José.</p></div></div><div><h4>Navegación</h4><ul><li><a href="noticias.html">Noticias</a></li><li><a href="estudio.html">Materiales de estudio</a></li><li><a href="preguntas.html">Preguntas frecuentes</a></li></ul></div><div><h4>Trámites</h4><ul><li><a href="agenda.html">Agenda</a></li><li><a href="renovagenda.html">Renovar licencia</a></li><li><a href="consulta.html">Consultar reserva</a></li></ul></div></div><div class="footer-bottom">© 2026 Intendencia Municipal de San José — Sección Tránsito.</div></div></footer>
@@ -34,6 +37,6 @@
 <script src="js/icons.js?v=1"></script>
 <script src="js/api.js"></script>
 <script src="js/main.js?v=20"></script>
-<script src="js/prueba.js?v=20"></script>
+<script src="js/prueba.js?v=21"></script>
 </body>
 </html>

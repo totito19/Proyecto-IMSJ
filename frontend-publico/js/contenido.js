@@ -7,6 +7,9 @@
   const status = document.getElementById('contenido-status');
   const categoryFilter = document.getElementById('preguntas-categoria');
   const categoryFilterWrap = document.getElementById('preguntas-filtro');
+  const materialFilters = document.getElementById('materiales-filtros');
+  const typeLabels = {PDF: 'PDF', IMAGEN: 'Imágenes', VIDEO: 'Videos'};
+  let selectedType = '';
 
   /** Muestra un mensaje de carga o error y oculta el área cuando queda vacío. */
   function setStatus(message = '', error = false) {
@@ -18,20 +21,22 @@
   /** Crea una tarjeta de material usando nodos DOM para evitar HTML sin escapar. */
   function materialCard(item) {
     const article = document.createElement('article');
-    article.className = 'card card-plain';
+    article.className = 'card card-plain material-card';
     const body = document.createElement('div');
     body.className = 'card-body';
     const title = document.createElement('h3');
     title.textContent = item.nombre;
-    const type = document.createElement('p');
-    type.textContent = `Recurso ${String(item.tipo || '').toLowerCase()}`;
-    const link = document.createElement('a');
+    const type = document.createElement('span');
+    type.className = 'material-kind';
+    type.dataset.tipo = item.tipo;
+    type.textContent = typeLabels[item.tipo] || 'Material';
+    const link = document.createElement('button');
+    link.type = 'button';
     link.className = 'card-link';
-    link.href = item.ubicacion_recurso;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.textContent = 'Abrir material →';
-    body.append(title, type, link);
+    link.textContent = 'Ver material →';
+    link.setAttribute('aria-label', `Ver ${item.nombre}`);
+    link.addEventListener('click', () => ImsjMaterialViewer.open(item));
+    body.append(type, title, link);
     article.append(body);
     return article;
   }
@@ -39,7 +44,7 @@
   /** Crea el bloque desplegable de una pregunta frecuente publicada. */
   function questionCard(item) {
     const article = document.createElement('article');
-    article.className = 'card card-plain';
+    article.className = 'card card-plain faq-card';
     const body = document.createElement('div');
     body.className = 'card-body';
     const category = document.createElement('span');
@@ -57,9 +62,35 @@
   /** Presenta las FAQ de la categoría elegida y mantiene el estado vacío visible. */
   function renderQuestions(items) {
     const category = categoryFilter?.value || '';
-    const visible = category ? items.filter((item) => item.categoria === category) : items;
+    const visible = category ? items.filter((item) => (item.categoria || 'General') === category) : items;
     root.replaceChildren(...visible.map(questionCard));
     setStatus(visible.length ? '' : 'No hay preguntas frecuentes en esta categoría.');
+  }
+
+  function renderMaterials(items) {
+    const visible = selectedType ? items.filter((item) => item.tipo === selectedType) : items;
+    root.replaceChildren(...visible.map(materialCard));
+    setStatus(visible.length ? '' : 'No hay materiales publicados de este formato.');
+    materialFilters?.querySelectorAll('button').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.tipo === selectedType));
+    });
+  }
+
+  function prepareMaterialFilters(items) {
+    if (!materialFilters) return;
+    materialFilters.replaceChildren();
+    for (const [type, label] of [['', 'Todos'], ...Object.entries(typeLabels)]) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'material-filter';
+      button.dataset.tipo = type;
+      const count = type ? items.filter((item) => item.tipo === type).length : items.length;
+      button.textContent = `${label} (${count})`;
+      button.setAttribute('aria-pressed', String(type === selectedType));
+      button.addEventListener('click', () => { selectedType = type; renderMaterials(items); });
+      materialFilters.appendChild(button);
+    }
+    materialFilters.hidden = !items.length;
   }
 
   /** Genera las opciones de filtro a partir de las categorías publicadas. */
@@ -85,7 +116,8 @@
         renderQuestions(items);
         if (!items.length) setStatus('No hay preguntas frecuentes publicadas.');
       } else {
-        root.replaceChildren(...items.map(materialCard));
+        prepareMaterialFilters(items);
+        renderMaterials(items);
         setStatus(items.length ? '' : 'No hay materiales publicados.');
       }
     } catch (error) {
