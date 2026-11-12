@@ -31,6 +31,7 @@ function initLogin() {
   }
 
   function analyzePassword(input) {
+    // Estas reglas orientan al usuario mientras escribe la contraseña.
     const advice = document.getElementById(`${input.id}-advice`);
     const checks = ImsjCredenciales.password(input.value);
     advice.hidden = !input.value;
@@ -138,6 +139,7 @@ function initLogin() {
     button.textContent = 'Verificando...';
     errorElement.classList.remove('show');
     try {
+      // action llama a login o registro; después se abre la página correspondiente.
       const user = await action();
       if (user) window.location.assign(redirectTo);
     } catch (error) {

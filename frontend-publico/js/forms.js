@@ -1,6 +1,7 @@
 /** Validación y avisos compartidos por el portal público y el panel IMSJ. */
 (function () {
   'use strict';
+  // Map guarda el aviso asociado a cada campo; WeakSet recuerda los formularios ya enviados.
   let sequence = 0;
   const errors = new Map();
   const attempted = new WeakSet();
@@ -9,6 +10,7 @@
     ? controls(field.form).filter((other) => other.type === 'radio' && other.name === field.name)
     : [field];
 
+  /** Traduce ValidityState y las reglas propias a mensajes comprensibles. */
   function message(field) {
     const value = field.value || '';
     const validity = field.validity;
@@ -31,6 +33,7 @@
     return validity.valid ? '' : 'Revisá el valor de este campo.';
   }
 
+  /** Quita el error visual y sus referencias de accesibilidad de todo el grupo. */
   function clear(field) {
     const fields = group(field);
     const node = fields.map((item) => errors.get(item)).find(Boolean);
@@ -46,6 +49,7 @@
     node?.remove();
   }
 
+  /** Vincula el mensaje al campo, o a todos los radios de una misma pregunta. */
   function show(field, text) {
     clear(field);
     if (!text) return;
@@ -63,6 +67,7 @@
     else (field.closest('.password-wrap, .input-wrap') || field).insertAdjacentElement('afterend', node);
   }
 
+  /** Revisa todos los campos y lleva el foco al primero que necesita corrección. */
   function validate(form) {
     attempted.add(form);
     let first = null;
@@ -92,6 +97,7 @@
   }
 
   function notify(text, type = 'error') {
+    // Reemplaza el aviso anterior para que no se acumulen mensajes.
     document.querySelector('.app-notice')?.remove();
     const notice = document.createElement('div');
     notice.className = `app-notice${type === 'success' ? ' app-notice--success' : ''}`;
@@ -111,6 +117,7 @@
     document.body.appendChild(notice);
   }
 
+  /** Resuelve una promesa cuando el usuario confirma o cancela el diálogo. */
   function confirmAction(text) {
     return new Promise((resolve) => {
       const dialog = document.createElement('dialog');
@@ -148,10 +155,13 @@
     });
   }
 
+  /** Conecta la validación a formularios actuales y a los agregados después al DOM. */
   function init() {
+    // Incluye también los formularios que otras pantallas agregan después.
     const prepare = () => document.querySelectorAll('form').forEach((form) => { form.noValidate = true; });
     prepare();
     new MutationObserver(prepare).observe(document.body, {childList: true, subtree: true});
+    // La fase de captura evita que un envío inválido alcance los manejadores de cada pantalla.
     document.addEventListener('submit', (event) => {
       if (event.target instanceof HTMLFormElement && !validate(event.target)) {
         event.preventDefault();

@@ -180,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       if (button.dataset.accion === 'estado') {
         if (!await confirmarCambioEstadoPregunta(item, button.dataset.estado)) return;
+        // PATCH guarda la transición editorial de esta pregunta frecuente.
         await ImsjApi.request(`/preguntas/${item.id}/estado`, {
           method: 'PATCH',
           body: { estado: button.dataset.estado },

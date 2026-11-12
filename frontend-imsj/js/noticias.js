@@ -191,6 +191,7 @@ async function guardarNoticia(event) {
   mostrarErrorFormulario();
   try {
     if (noticiaEnEdicion) {
+      // El archivo se envía por POST y _method pide al servidor tratarlo como PUT.
       data.append('_method', 'PUT');
       await ImsjApi.request(`/noticias/${noticiaEnEdicion.id}`, { method: 'POST', body: data });
     } else {
@@ -221,6 +222,7 @@ async function manejarAccion(event) {
   try {
     if (button.dataset.accion === 'estado') {
       if (!await confirmarCambioEstado(noticia, button.dataset.estado)) return;
+      // PATCH cambia el estado; PUBLICADO hace visible la noticia en el portal.
       await ImsjApi.request(`/noticias/${noticia.id}/estado`, {
         method: 'PATCH',
         body: { estado: button.dataset.estado },

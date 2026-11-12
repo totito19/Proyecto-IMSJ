@@ -17,7 +17,7 @@ function asegurarPersonal() {
   return true;
 }
 
-/** Filtra materiales por nombre, tipo, estado y ubicación del recurso. */
+/** Filtra materiales por nombre, tipo y estado. */
 function materialesFiltrados() {
   if (!queryMateriales) return materiales;
   return materiales.filter((material) =>
@@ -170,6 +170,7 @@ async function guardarMaterial(event) {
   if (id) data.append('_method', 'PUT');
 
   try {
+    // Se usa POST para enviar archivos; _method indica edición cuando hay id.
     await ImsjApi.request(id ? `/materiales/${id}` : '/materiales', {
       method: 'POST',
       body: data,
@@ -208,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       if (button.dataset.accion === 'estado') {
         if (!await confirmarCambioEstadoMaterial(material, button.dataset.estado)) return;
+        // El estado PUBLICADO habilita el material en el portal público.
         await ImsjApi.request(`/materiales/${material.id}/estado`, {
           method: 'PATCH',
           body: { estado: button.dataset.estado },

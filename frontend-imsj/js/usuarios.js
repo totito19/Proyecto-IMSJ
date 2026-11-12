@@ -93,6 +93,7 @@ async function guardarUsuario(event) {
     Modal.close('modal-usuario');
     form.reset();
     await cargarUsuarios();
+    // Avisa al historial que la lista de personal cambió.
     document.dispatchEvent(new Event('imsj:personal-actualizado'));
     ImsjForms.notify(`Acceso creado para ${payload.usuario.nombre}. Clave inicial: ${payload.clave_inicial}`, 'success');
   } catch (error) {

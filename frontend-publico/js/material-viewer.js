@@ -4,14 +4,17 @@
   let stage;
   let status;
   let previousOverflow = '';
+  // Invalida eventos de carga pendientes cuando se cierra o cambia la vista previa.
   let version = 0;
 
+  /** Acepta solamente direcciones HTTP(S) para abrir recursos externos. */
   function resourceURL(value) {
     const url = new URL(value, location.href);
     if (!['http:', 'https:'].includes(url.protocol)) throw new Error('Este material no tiene una dirección válida.');
     return url;
   }
 
+  /** Convierte enlaces reconocidos de YouTube o Vimeo a sus reproductores. */
   function videoEmbed(url) {
     const host = url.hostname.replace(/^www\./, '');
     let id;
@@ -27,6 +30,7 @@
     return null;
   }
 
+  /** Construye el diálogo una sola vez y limpia el recurso al cerrarlo. */
   function createDialog() {
     dialog = document.createElement('dialog');
     dialog.className = 'material-viewer';
@@ -50,6 +54,7 @@
     document.body.appendChild(dialog);
   }
 
+  /** Elige la vista previa según el tipo y conserva el enlace al original. */
   function open(item) {
     let url;
     try { url = resourceURL(item.ubicacion_recurso); }
@@ -72,6 +77,7 @@
       status.hidden = false;
       status.textContent = 'No se pudo mostrar el recurso. Podés abrir el original con el botón de abajo.';
     };
+    // Cada formato necesita un elemento distinto para mostrar su vista previa.
     if (item.tipo === 'IMAGEN') {
       const image = document.createElement('img');
       image.alt = item.nombre;
@@ -87,6 +93,7 @@
       frame.src = url.href;
       stage.appendChild(frame);
     } else if (item.tipo === 'VIDEO') {
+      // Usa un reproductor embebido si reconoce la plataforma del enlace.
       const embed = videoEmbed(url);
       if (embed) {
         const frame = document.createElement('iframe');

@@ -24,8 +24,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  /** Construye con DOM una tarjeta completa de noticia, galería y enlaces. */
+  /** Construye con DOM una tarjeta con imagen, fecha y texto. */
   function createNewsCard(news) {
+    // textContent muestra el texto recibido sin interpretarlo como HTML.
     const article = document.createElement('article');
     article.className = 'card';
 
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   try {
+    // La API pública devuelve las noticias visibles para el visitante.
     const payload = await ImsjApi.request('/portal/noticias');
     const news = payload.noticias || [];
     grid.replaceChildren(...news.map(createNewsCard));

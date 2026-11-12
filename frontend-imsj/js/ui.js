@@ -160,6 +160,7 @@ function initSidebar() {
   $('.sidebar__brand', sidebar).append(closeButton);
 
   function render() {
+    // En móvil abre un panel; en escritorio conserva la preferencia de ancho.
     app.classList.toggle('is-sidebar-collapsed', !mobile.matches && collapsed);
     sidebar.classList.toggle('is-open', mobile.matches && open);
     if (backdrop) backdrop.classList.toggle('is-open', mobile.matches && open);
@@ -237,6 +238,7 @@ function initResponsiveTables() {
       });
     };
     labelCells();
+    // Las filas cargadas por la API también reciben su etiqueta de columna.
     new MutationObserver(labelCells).observe(body, { childList: true, subtree: true });
   });
 }

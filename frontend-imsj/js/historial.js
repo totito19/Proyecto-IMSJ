@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let pagination = null;
   let filters = new URLSearchParams();
   let busy = false;
+  // Evita que una petición antigua reemplace filtros o páginas solicitados después.
   let requestId = 0;
 
   const actions = {
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const actionLabel = (value) => actions[value] || historyActionLabel(value);
   const moduleLabel = (value) => modules[value] || historyElementLabel(value);
 
+  /** Bloquea controles durante la carga y limita la paginación a páginas existentes. */
   function updateControls() {
     $('#historial-resultados').setAttribute('aria-busy', String(busy));
     ['historial-aplicar', 'historial-limpiar', 'historial-actualizar'].forEach((id) => {
@@ -36,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     next.disabled = busy || !pagination || page >= pagination.paginas;
   }
 
+  /** Actualiza filtros ofrecidos por la API sin perder la selección actual. */
   function setOptions(select, items, valueOf, labelOf) {
     const selected = select.value;
     const initial = select.options[0].cloneNode(true);
@@ -44,7 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
     select.value = selected;
   }
 
+  /** Dibuja los registros y resume el rango de la página recibida. */
   function render(payload) {
+    // La respuesta trae registros, paginación y opciones para los filtros.
     pagination = payload.paginacion;
     page = pagination.pagina;
     body.innerHTML = payload.acciones.map((item) => {
@@ -73,8 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setOptions($('#historial-tipo'), options.tipos, (item) => item, moduleLabel);
   }
 
+  /** Solicita al servidor una página con los filtros activos. */
   async function load(requestedPage = page) {
     page = requestedPage;
+    // Identifica esta carga para descartar respuestas que lleguen fuera de orden.
     const currentRequest = ++requestId;
     const query = new URLSearchParams(filters);
     query.set('pagina', String(requestedPage));
@@ -111,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
+    // Comprueba el rango antes de enviar los filtros al servidor.
     const from = $('#historial-desde');
     const until = $('#historial-hasta');
     until.setCustomValidity(from.value && until.value && from.value > until.value

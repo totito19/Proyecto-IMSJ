@@ -41,7 +41,7 @@
     return article;
   }
 
-  /** Crea el bloque desplegable de una pregunta frecuente publicada. */
+  /** Crea la tarjeta de una pregunta frecuente publicada. */
   function questionCard(item) {
     const article = document.createElement('article');
     article.className = 'card card-plain faq-card';
@@ -68,6 +68,7 @@
   }
 
   function renderMaterials(items) {
+    // Filtra en memoria y marca el botón activo para quien navega con teclado.
     const visible = selectedType ? items.filter((item) => item.tipo === selectedType) : items;
     root.replaceChildren(...visible.map(materialCard));
     setStatus(visible.length ? '' : 'No hay materiales publicados de este formato.');
@@ -77,6 +78,7 @@
   }
 
   function prepareMaterialFilters(items) {
+    // Crea un botón por formato con la cantidad de materiales disponible.
     if (!materialFilters) return;
     materialFilters.replaceChildren();
     for (const [type, label] of [['', 'Todos'], ...Object.entries(typeLabels)]) {
@@ -109,6 +111,7 @@
   async function load() {
     setStatus(kind === 'materiales' ? 'Cargando materiales...' : 'Cargando preguntas...');
     try {
+      // La página indica qué contenido pedir mediante data-contenido.
       const payload = await ImsjApi.request(`/portal/${kind}`);
       const items = Array.isArray(payload[kind]) ? payload[kind] : [];
       if (kind === 'preguntas') {

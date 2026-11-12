@@ -14,6 +14,7 @@
   };
 
   function createIcons() {
+    // Sustituye cada marcador una sola vez por su SVG local.
     document.querySelectorAll('[data-lucide]').forEach((placeholder) => {
       const paths = icons[placeholder.dataset.lucide];
       if (!paths || placeholder.dataset.iconReady === '1') return;

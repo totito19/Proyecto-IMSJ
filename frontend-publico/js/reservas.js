@@ -55,6 +55,7 @@
             if (!await ImsjForms.confirm('¿Cancelar esta reserva?')) return;
             cancel.disabled = true;
             try {
+              // DELETE cancela la reserva y luego se quita su tarjeta de la lista.
               await ImsjApi.request(`/reservas/${item.reserva_id}`, { method: 'DELETE' });
               article.remove();
               setStatus(root.children.length ? '' : 'No tenés reservas registradas.');

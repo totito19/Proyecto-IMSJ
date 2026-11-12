@@ -108,6 +108,38 @@ El mismo criterio se aplica al resto del backend: el comentario anterior explica
 - Los nombres de negocio se mantienen en español; los nombres técnicos estándar conservan su forma habitual.
 - Las respuestas de error se centralizan para que toda la API mantenga el mismo formato.
 
+## JavaScript: lo más importante
+
+El JavaScript de este proyecto se ejecuta en el navegador. Lee acciones del usuario, actualiza el HTML y consulta la API PHP. No accede a MySQL directamente. Hay dos conjuntos de pantallas: `frontend-publico/js/` para la ciudadanía y `frontend-imsj/js/` para el personal.
+
+| Concepto | Para qué sirve aquí | Dónde verlo |
+| --- | --- | --- |
+| DOM y eventos | `querySelector` encuentra elementos; `addEventListener` responde a clics, cambios y envíos de formularios. | `frontend-publico/js/main.js`, `frontend-publico/js/turnos.js` |
+| `DOMContentLoaded` | Inicia la lógica cuando el HTML ya está disponible. | `frontend-publico/js/prueba.js`, `frontend-imsj/js/ui.js` |
+| Estado en memoria | Variables como `indicePregunta`, `respuestasSimulacion` o `page` recuerdan la situación actual de una pantalla. | `frontend-publico/js/prueba.js`, `frontend-imsj/js/historial.js` |
+| `async` / `await` | Espera una respuesta de la API sin bloquear la interfaz; `try` / `catch` muestra los fallos. | `frontend-publico/js/api.js`, `frontend-imsj/js/api.js` |
+| `fetch` y JSON | Envían peticiones HTTP a `/api`, con cuerpo JSON cuando corresponde, y leen la respuesta. | Los dos archivos `js/api.js` |
+| Sesión | El token y el usuario se guardan en `sessionStorage` de la pestaña y se envía el token como `Authorization: Bearer`. | Los dos archivos `js/api.js`, `frontend-publico/js/login.js` |
+| Validación | Usa las reglas HTML del formulario y mensajes propios; vincula errores a los campos para lectores de pantalla. | `frontend-publico/js/forms.js`, `frontend-publico/js/credenciales.js` |
+| Creación de contenido seguro | `textContent` inserta texto sin interpretarlo como HTML; `esc` y `escQuiz` escapan datos usados en plantillas. | `frontend-publico/js/contenido.js`, `frontend-imsj/js/ui.js`, `frontend-publico/js/prueba.js` |
+| Filtros y listas | `filter`, `map` y `reduce` transforman datos de la API para mostrarlos y agruparlos. | `frontend-publico/js/contenido.js`, `frontend-publico/js/turnos.js` |
+| Respuestas antiguas | Un contador de versión evita que una petición anterior sobrescriba el resultado de una más reciente. | `frontend-publico/js/prueba.js`, `frontend-imsj/js/historial.js` |
+
+### Recorrido de una reserva desde el navegador
+
+1. `turnos.js` llama a `ImsjApi.request('/franjas/disponibles?...')` para mostrar los horarios.
+2. El usuario pulsa **Reservar**; el manejador del clic toma el identificador de la franja.
+3. Si no hay sesión ciudadana, se abre el ingreso y se conserva la ruta de regreso.
+4. Si hay sesión, `ImsjApi.request('/reservas', { method: 'POST', body: ... })` envía la elección.
+5. `api.js` agrega el token, convierte el objeto a JSON y procesa la respuesta o el error.
+6. `turnos.js` vuelve a cargar los cupos y muestra la confirmación. El backend comprueba el cupo real antes de guardar: la cifra mostrada en la página puede cambiar mientras otra persona reserva.
+
+### Tres ideas para explicar el código
+
+- `ImsjApi` concentra la comunicación HTTP para que cada pantalla trabaje con datos y errores de la misma manera.
+- Los roles también afectan qué acciones muestra la interfaz, pero los permisos se comprueban en la API: una comprobación en JavaScript por sí sola no protege una operación.
+- Los comentarios junto al código explican reglas y decisiones, por ejemplo por qué se escapa texto o se descarta una respuesta antigua. No hace falta comentar cada asignación obvia.
+
 ## Preguntas frecuentes de una defensa
 
 ### ¿Por qué no se consulta MySQL desde el controlador?

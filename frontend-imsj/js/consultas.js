@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const item = consultas.find((consulta) => consulta.id === Number(details.dataset.id));
       if (!item || item.leida) return;
       try {
+        // Abrir una consulta registra su lectura y actualiza el contador local.
         await ImsjApi.request(`/consultas/${item.id}/leida`, { method: 'PATCH' });
         item.leida = true;
         details.classList.remove('consultation--unread');

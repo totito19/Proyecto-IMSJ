@@ -143,6 +143,7 @@ function verDetalle(reserva) {
 /** Solicita a la API las reservas del período actual y vuelve a dibujar la agenda. */
 async function cargarAgenda() {
   try {
+    // El servidor devuelve solo las reservas del período visible.
     const payload = await ImsjApi.request(
       `/agenda?vista=${vistaAgenda}&fecha=${fechaIso(cursorAgenda)}`,
     );

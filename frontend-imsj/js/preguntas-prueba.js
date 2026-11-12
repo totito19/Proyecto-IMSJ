@@ -79,6 +79,7 @@ async function guardarPreguntaPrueba(event) {
   data.append('respuesta_correcta', $('#pp-correcta').value);
   if ($('#pp-imagen').files[0]) data.append('imagen', $('#pp-imagen').files[0]);
   if ($('#pp-quitar-imagen').checked) data.append('eliminar_imagen', '1');
+  // En una edición con archivo se usa POST y el servidor interpreta _method como PUT.
   if (id) data.append('_method', 'PUT');
   try {
     await ImsjApi.request(id ? `/preguntas-prueba/${id}` : '/preguntas-prueba', {

@@ -86,6 +86,7 @@ async function guardarFranja(event) {
   }
   const id = $('#f-id').value;
   try {
+    // El id distingue una franja nueva de una que se está editando.
     await ImsjApi.request(id ? `/franjas/${id}` : '/franjas', {
       method: id ? 'PUT' : 'POST',
       body: {

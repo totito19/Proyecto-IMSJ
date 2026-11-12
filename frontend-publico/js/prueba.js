@@ -3,13 +3,16 @@ let preguntasSimulacion = [];
 let indicePregunta = 0;
 let respuestasSimulacion = [];
 let comprobandoRespuesta = false;
+// Distingue respuestas de peticiones anteriores cuando se inicia una simulación nueva.
 let versionSimulacion = 0;
 
+/** Escapa los datos recibidos antes de insertarlos en plantillas HTML. */
 function escQuiz(value) {
   return String(value ?? '').replace(/[&<>"']/g, (character) =>
     ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[character]));
 }
 
+/** Dibuja la pregunta actual y reinicia los controles de respuesta. */
 function renderSimulacion() {
   const item = preguntasSimulacion[indicePregunta];
   document.getElementById('form-prueba').reset();
@@ -33,6 +36,7 @@ function renderSimulacion() {
   document.getElementById('btn-siguiente-pregunta').hidden = true;
 }
 
+/** Reinicia el estado y obtiene un lote nuevo de preguntas sin soluciones. */
 async function cargarSimulacion() {
   const version = ++versionSimulacion;
   const status = document.getElementById('prueba-status');
@@ -68,6 +72,7 @@ async function cargarSimulacion() {
   }
 }
 
+/** Envía una sola respuesta al servidor y muestra la devolución antes de avanzar. */
 async function corregirSimulacion(event) {
   event.preventDefault();
   if (comprobandoRespuesta || respuestasSimulacion[indicePregunta]) return;
@@ -85,6 +90,7 @@ async function corregirSimulacion(event) {
     const payload = await ImsjApi.request('/portal/prueba/corregir', {
       method: 'POST', body: {respuestas: [{pregunta_id: item.id, opcion: selected}]},
     });
+    // Una simulación reiniciada ignora respuestas de la petición anterior.
     if (version !== versionSimulacion) return;
     const result = payload.resultados?.find((answer) => Number(answer.pregunta_id) === Number(item.id));
     if (!result || typeof result.correcta !== 'boolean' || !Object.hasOwn(item.opciones, result.respuesta_correcta)) {
@@ -120,6 +126,7 @@ async function corregirSimulacion(event) {
   }
 }
 
+/** Avanza únicamente después de corregir, o muestra el resultado final. */
 function siguientePregunta() {
   if (comprobandoRespuesta || !respuestasSimulacion[indicePregunta]) return;
   if (indicePregunta < preguntasSimulacion.length - 1) {
@@ -129,6 +136,7 @@ function siguientePregunta() {
     return;
   }
   const correctas = respuestasSimulacion.filter((answer) => answer.correcta).length;
+  // Cuenta los aciertos guardados y muestra el resumen final.
   const result = document.getElementById('prueba-resultado');
   result.innerHTML = `<strong>${correctas} de ${preguntasSimulacion.length} respuestas correctas</strong><p>${correctas === preguntasSimulacion.length ? '¡Excelente! Todas las respuestas son correctas.' : 'Seguí practicando con una nueva selección de preguntas.'}</p>`;
   result.hidden = false;
