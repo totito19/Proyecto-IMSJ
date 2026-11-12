@@ -60,9 +60,10 @@ unset INITIAL_ADMIN_PASSWORD
 
 ### Contenido para una demostración
 
-La carga opcional agrega ejemplos sin borrar ni reemplazar datos ajenos: noticias, materiales,
-preguntas frecuentes, quince preguntas de simulacro, consultas, franjas futuras, reservas e
-historial. Puede ejecutarse más de una vez porque identifica y actualiza sus propios ejemplos.
+La carga opcional agrega ejemplos sin borrar ni reemplazar datos ajenos: noticias, once
+materiales de estudio (nueve publicados), preguntas frecuentes, quince preguntas de simulacro,
+consultas, 48 franjas en ocho días hábiles (prueba de manejo, renovación normal y urgente),
+reservas e historial. Puede ejecutarse más de una vez porque identifica y actualiza sus propios ejemplos.
 
 ```bash
 docker compose exec app php scripts/cargar_demo.php --force

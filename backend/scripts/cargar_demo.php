@@ -168,6 +168,41 @@ crearPdfDemo($storage . '/materiales/checklist-conduccion-demo.pdf', 'LISTA PREV
     'Telefono guardado y cero alcohol antes de conducir.',
     'Contenido de ejemplo; confirme siempre la normativa vigente.',
 ]);
+crearPdfDemo($storage . '/materiales/senales-viales-demo.pdf', 'SENALES VIALES: REPASO', [
+    'Las senales reglamentarias indican obligaciones y restricciones.',
+    'Las preventivas advierten sobre riesgos o cambios en el camino.',
+    'Las informativas orientan sobre destinos y servicios.',
+    'Observe forma, color y simbolo antes de actuar.',
+    'Material de demostracion; consulte fuentes oficiales vigentes.',
+]);
+crearPdfDemo($storage . '/materiales/convivencia-vial-demo.pdf', 'CONVIVENCIA VIAL', [
+    'Respete los cruces peatonales y reduzca la velocidad al acercarse.',
+    'Deje espacio lateral al pasar junto a bicicletas y motos.',
+    'Senalice con anticipacion y compruebe espejos y puntos ciegos.',
+    'Mantenga una distancia que permita reaccionar y frenar.',
+    'Material de demostracion; consulte fuentes oficiales vigentes.',
+]);
+crearPdfDemo($storage . '/materiales/conduccion-segura-demo.pdf', 'CONDUCCION SEGURA', [
+    'Adapte la velocidad a la visibilidad, el clima y la via.',
+    'Con lluvia, aumente la distancia y evite maniobras bruscas.',
+    'Si siente cansancio, detengase en un lugar seguro y descanse.',
+    'Evite distracciones y no use el telefono mientras conduce.',
+    'Material de demostracion; consulte fuentes oficiales vigentes.',
+]);
+crearPdfDemo($storage . '/materiales/motociclistas-demo.pdf', 'SEGURIDAD EN MOTO', [
+    'Use casco correctamente ajustado y abrochado.',
+    'Revise frenos, luces, neumaticos y espejos antes de salir.',
+    'Hagase visible y anticipe las maniobras de otros vehiculos.',
+    'Conserve espacio suficiente para frenar y cambiar de direccion.',
+    'Material de demostracion; consulte fuentes oficiales vigentes.',
+]);
+crearPdfDemo($storage . '/materiales/preparacion-practica-demo.pdf', 'ANTES DE LA PRUEBA PRACTICA', [
+    'Practique el ajuste del asiento, los espejos y el cinturon.',
+    'Repase senalizacion, prioridad de paso y control del vehiculo.',
+    'Compruebe la documentacion y llegue con tiempo suficiente.',
+    'Escuche las indicaciones completas antes de cada maniobra.',
+    'Material de demostracion; confirme requisitos con la Intendencia.',
+]);
 
 $today = new DateTimeImmutable('today', new DateTimeZone('America/Montevideo'));
 $start = $today->modify('-7 days')->format('Y-m-d');
@@ -222,6 +257,11 @@ $resumen = Database::transaction(function () use ($start, $end, $actor): array {
     $materials = [
         ['Guía rápida para preparar la prueba teórica', 'PDF', 'materiales/guia-prueba-teorica-demo.pdf', 'PUBLICADO'],
         ['Lista de control antes de conducir', 'PDF', 'materiales/checklist-conduccion-demo.pdf', 'PUBLICADO'],
+        ['Señales viales: repaso básico', 'PDF', 'materiales/senales-viales-demo.pdf', 'PUBLICADO'],
+        ['Convivencia con peatones, ciclistas y motos', 'PDF', 'materiales/convivencia-vial-demo.pdf', 'PUBLICADO'],
+        ['Conducción segura en distintas condiciones', 'PDF', 'materiales/conduccion-segura-demo.pdf', 'PUBLICADO'],
+        ['Seguridad básica para motociclistas', 'PDF', 'materiales/motociclistas-demo.pdf', 'PUBLICADO'],
+        ['Preparación para la prueba práctica', 'PDF', 'materiales/preparacion-practica-demo.pdf', 'PUBLICADO'],
         ['Referencia visual de la sede de atención', 'IMAGEN', 'materiales/demo-sede.png', 'PUBLICADO'],
         ['Videos de educación y seguridad vial', 'VIDEO', 'https://www.youtube.com/results?search_query=UNASEV+educacion+vial', 'PUBLICADO'],
         ['Curso para motociclistas — próxima publicación', 'VIDEO', 'https://www.youtube.com/results?search_query=UNASEV+motociclistas', 'PENDIENTE'],
@@ -330,9 +370,12 @@ $resumen = Database::transaction(function () use ($start, $end, $actor): array {
         ['08:30:00', '09:00:00', 'PRUEBA_MANEJO', 4],
         ['09:15:00', '09:45:00', 'RENOVACION_NORMAL', 6],
         ['10:00:00', '10:30:00', 'RENOVACION_URGENTE', 2],
+        ['11:00:00', '11:30:00', 'PRUEBA_MANEJO', 4],
+        ['13:30:00', '14:00:00', 'RENOVACION_NORMAL', 6],
+        ['14:15:00', '14:45:00', 'RENOVACION_URGENTE', 2],
     ];
     $slotIds = [];
-    foreach (fechasHabilesDemo(6) as $date) {
+    foreach (fechasHabilesDemo(8) as $date) {
         foreach ($slots as [$from, $to, $type, $capacity]) {
             Database::query(
                 'INSERT INTO franjas_disponibilidad (fecha, hora_inicio, hora_fin, tipo, cupos_totales, created_at, updated_at)
