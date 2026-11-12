@@ -158,10 +158,10 @@
     .choice-card strong{font-size:clamp(.95rem,1.3vw,1.3rem);font-weight:850}
     .choice-card.is-scanning{border-color:var(--cyan);color:white;background:rgba(115,216,235,.14);box-shadow:0 0 30px rgba(115,216,235,.24)}
     .choice-card.chosen{z-index:2;border-color:var(--orange);color:white;background:linear-gradient(145deg,rgba(255,133,84,.3),rgba(65,111,255,.2));box-shadow:0 0 0 3px rgba(255,133,84,.45),0 25px 70px rgba(255,133,84,.28)}
-    .choice-card.chosen::after{content:"SELECCIONADO";position:absolute;left:50%;bottom:-1rem;transform:translateX(-50%);padding:.45rem .7rem;border-radius:99px;background:var(--orange);color:#101733;font-size:.62rem;font-weight:950;letter-spacing:.12em;opacity:0}
+    .selection-badge{position:absolute;z-index:1;left:50%;bottom:-1rem;transform:translateX(-50%);width:max-content;padding:.45rem .7rem;border-radius:99px;background:var(--orange);color:#101733;font-size:.62rem;font-weight:950;letter-spacing:.12em;opacity:0}
     .feature-question.active .choice-card{animation:card-arrive .45s var(--ease) both;animation-delay:calc(.1s + var(--i)*.05s)}
     .feature-question.active .choice-card.chosen{animation:lock-in .65s var(--ease) both}
-    .feature-question.active .choice-card.chosen::after{animation:badge-arrive .45s .2s var(--ease) both}
+    .feature-question.active .selector-stage.settled .selection-badge{animation:badge-arrive .45s .2s var(--ease) both}
     @keyframes card-arrive{to{opacity:1;transform:none}}
     @keyframes lock-in{0%{opacity:.6;transform:scale(.85)}60%{opacity:1;transform:scale(1.14)}100%{opacity:1;transform:scale(1.06)}}
     @keyframes badge-arrive{to{opacity:1;transform:translate(-50%,-.4rem)}}
@@ -206,7 +206,7 @@
     .overview .slide .inner{transform:scale(.33);transform-origin:center;width:300%;margin-left:-100%}
     .overview .slide .reveal,.overview .slide .flow .step,.overview .slide .choice-card,.overview .slide .shot-screen{opacity:1;transform:none;filter:none;animation:none}
     .overview .slide .choice-card[data-target="true"]{border-color:var(--orange);color:white;background:linear-gradient(145deg,rgba(255,133,84,.3),rgba(65,111,255,.2))}
-    .overview .slide .choice-card[data-target="true"]::after{content:"SELECCIONADO";position:absolute;left:50%;bottom:-1rem;transform:translate(-50%,-.4rem);padding:.45rem .7rem;border-radius:99px;background:var(--orange);color:#101733;font-size:.62rem;font-weight:950;letter-spacing:.12em;opacity:1;animation:none}
+    .overview .slide .selection-badge{opacity:1;transform:translate(-50%,-.4rem);animation:none}
     .overview .slide .chosen-category{opacity:1;transform:none;filter:none}
     .overview .slide:hover{outline:3px solid var(--orange)}
     .overview .chrome,.overview .notes{display:none}
@@ -377,7 +377,7 @@
       ];
       const icon=key=>'<svg class="section-icon" aria-hidden="true"><use href="#icon-'+key+'"></use></svg>';
       document.getElementById('feature-slides').outerHTML=features.flatMap((feature,selected)=>[
-        '<section class="slide feature-question" data-title="'+feature.question+'" data-note="'+feature.questionNote+'"><div class="inner"><div class="kicker reveal">Portal ciudadano</div><h2 class="reveal d1">'+feature.question+'</h2><div class="choice-caption reveal d2">Secciones del portal</div><div class="selector-stage"><div class="choice-carousel" aria-label="Selector de secciones"><div class="choice-track">'+Array.from({length:3},(_,lap)=>features.map((item,i)=>'<div class="choice-card'+(lap===1&&i===selected?' chosen':'')+'" style="--i:'+i+'"'+(lap===1&&i===selected?' data-target="true"':'')+(lap===1?'':' aria-hidden="true"')+'>'+icon(item.icon)+'<strong>'+item.name+'</strong></div>')).flat().join('')+'</div></div><div class="selector-window" aria-hidden="true"></div></div><div class="chosen-category">'+feature.name+'</div></div></section>',
+        '<section class="slide feature-question" data-title="'+feature.question+'" data-note="'+feature.questionNote+'"><div class="inner"><div class="kicker reveal">Portal ciudadano</div><h2 class="reveal d1">'+feature.question+'</h2><div class="choice-caption reveal d2">Secciones del portal</div><div class="selector-stage"><div class="choice-carousel" aria-label="Selector de secciones"><div class="choice-track">'+Array.from({length:3},(_,lap)=>features.map((item,i)=>'<div class="choice-card'+(lap===1&&i===selected?' chosen':'')+'" style="--i:'+i+'"'+(lap===1&&i===selected?' data-target="true"':'')+(lap===1?'':' aria-hidden="true"')+'>'+icon(item.icon)+'<strong>'+item.name+'</strong></div>')).flat().join('')+'</div></div><div class="selector-window" aria-hidden="true"><span class="selection-badge">SELECCIONADO</span></div></div><div class="chosen-category">'+feature.name+'</div></div></section>',
         '<section class="slide light feature-shot" data-title="'+feature.title+'" data-note="'+feature.shotNote+'"><div class="inner"><div class="kicker reveal">Portal ciudadano</div><div class="shot-head reveal d1">'+icon(feature.icon)+'<span>Sección seleccionada · '+feature.name+'</span></div><h2 class="reveal d2">'+feature.title+'</h2><div class="shot-screen"><img src="assets/'+feature.image+'" alt="'+feature.alt+'"></div></div></section>'
       ]).join('');
       const slides=[...document.querySelectorAll('.slide')],progress=document.getElementById('progress'),counter=document.getElementById('counter'),notes=document.getElementById('notes'),section=document.getElementById('section-label'),brand=document.getElementById('brand');
